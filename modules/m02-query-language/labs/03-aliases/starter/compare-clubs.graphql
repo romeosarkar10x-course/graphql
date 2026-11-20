@@ -1,0 +1,11 @@
+# Lab 2.3: the program reads data.left, data.right and currentBook.rating. Make this return them.
+query CompareClubs($a: ID!, $b: ID!) {
+  club(id: $a) {
+    name
+    memberCount
+    currentBook {
+      title
+      averageRating
+    }
+  }
+}

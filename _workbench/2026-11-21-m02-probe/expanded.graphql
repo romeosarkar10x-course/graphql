@@ -1,0 +1,84 @@
+query ProfilePage($id: ID!, $q: String!) {
+  user(id: $id) {
+    ... on User {
+      id
+      name
+      handle
+      avatarUrl
+    }
+    bio
+    location
+    clubs {
+      ... on Club {
+        id
+        name
+        memberCount
+        visibility
+        owner {
+          ... on User {
+            id
+            name
+            handle
+            avatarUrl
+          }
+        }
+      }
+      currentBook {
+        ... on Book {
+          id
+          title
+          authors
+          publishedYear
+          averageRating
+        }
+      }
+    }
+    reviews {
+      ... on Review {
+        id
+        rating
+        body
+        createdAt
+        book {
+          ... on Book {
+            id
+            title
+            authors
+            publishedYear
+            averageRating
+          }
+        }
+      }
+    }
+  }
+  search(text: $q) {
+    __typename
+    ... on Book {
+      id
+      title
+      authors
+      publishedYear
+      averageRating
+    }
+    ... on Club {
+      id
+      name
+      memberCount
+      visibility
+      owner {
+        ... on User {
+          id
+          name
+          handle
+          avatarUrl
+        }
+      }
+    }
+    ... on User {
+      id
+      name
+      handle
+      avatarUrl
+    }
+  }
+}

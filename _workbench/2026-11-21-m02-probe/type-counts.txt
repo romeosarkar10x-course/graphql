@@ -1,0 +1,5 @@
+https://countries.trevorblades.com/: 13 types 
+https://swapi-graphql.netlify.app/graphql: full introspection rejected, retrying with the legacy query 58 types 
+https://graphql.anilist.co: full introspection rejected, retrying with the legacy query 188 types 
+https://rickandmortyapi.com/graphql: full introspection rejected, retrying with the legacy query 17 types 
+http://shelfie-ref:8080/graphql: 14 types 

@@ -1,0 +1,9 @@
+query Profile($login: String!) {
+  user(login: $login) {
+    login name bio company location createdAt
+    followers { totalCount } following { totalCount }
+    repositories(ownerAffiliations: OWNER, privacy: PUBLIC) { totalCount }
+    pinnedItems(first: 6, types: REPOSITORY) { nodes { ... on Repository { name stargazerCount primaryLanguage { name } } } }
+    contributionsCollection { contributionCalendar { totalContributions } }
+  }
+}

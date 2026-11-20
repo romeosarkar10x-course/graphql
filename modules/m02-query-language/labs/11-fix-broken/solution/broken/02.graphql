@@ -1,0 +1,2 @@
+# Intent: the name of club c1's owner
+{ club(id: "c1") { owner { name } } }

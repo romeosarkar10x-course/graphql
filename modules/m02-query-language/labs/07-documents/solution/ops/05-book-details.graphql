@@ -1,0 +1,18 @@
+# Description: The book page. The number of reviews shown is up to the caller; 5 by default.
+query BookDetails($id: ID!, $reviewsLast: Int = 5) {
+  book(id: $id) {
+    title
+    authors
+    publishedYear
+    pageCount
+    synopsis
+    averageRating
+    reviews(last: $reviewsLast) {
+      rating
+      body
+      author {
+        name
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+query ClubCard($id: ID!) {
+  club(id: $id) {
+    name
+    description
+    visibility
+    owner {
+      name
+    }
+    currentBook {
+      title
+      authors
+    }
+  }
+}

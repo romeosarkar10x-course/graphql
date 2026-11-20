@@ -1,0 +1,59 @@
+# Lab 2.4 reference: the same document with 4 named fragments. Output is byte-identical because every
+# fragment is spread where its fields stood, so the first occurrence of each field keeps its position.
+query ProfilePage($id: ID!, $q: String!) {
+  user(id: $id) {
+    ...UserCard
+    bio
+    location
+    clubs {
+      ...ClubSummary
+      currentBook {
+        ...BookSummary
+      }
+    }
+    reviews {
+      ...ReviewItem
+    }
+  }
+  search(text: $q) {
+    __typename
+    ...BookSummary
+    ...ClubSummary
+    ...UserCard
+  }
+}
+
+fragment UserCard on User {
+  id
+  name
+  handle
+  avatarUrl
+}
+
+fragment BookSummary on Book {
+  id
+  title
+  authors
+  publishedYear
+  averageRating
+}
+
+fragment ClubSummary on Club {
+  id
+  name
+  memberCount
+  visibility
+  owner {
+    ...UserCard
+  }
+}
+
+fragment ReviewItem on Review {
+  id
+  rating
+  body
+  createdAt
+  book {
+    ...BookSummary
+  }
+}

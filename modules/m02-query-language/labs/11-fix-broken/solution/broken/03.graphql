@@ -1,0 +1,2 @@
+# Intent: the handle of user u2
+{ user(id: "u2") { handle } }

@@ -1,0 +1,4 @@
+club      Booker Shortlist Survivors         The Midnight Readers
+members   5                                  8
+reading   The Seven Moons of Maali Almeida   The Left Hand of Darkness
+rating    4.5                                4.2

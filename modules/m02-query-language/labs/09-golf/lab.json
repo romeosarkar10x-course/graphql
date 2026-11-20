@@ -1,0 +1,7 @@
+{
+  "title": "Game: GraphQL golf",
+  "lecture": "2.3",
+  "kind": "game",
+  "grading": "auto",
+  "needs": ["ref"]
+}

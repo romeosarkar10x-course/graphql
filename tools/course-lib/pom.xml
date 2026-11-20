@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Resolves the jars that single-file labs and jshell put on their class path:
-  Jackson 3 (same line as Spring Boot 4.2.0) and the JUnit console launcher.
-  bin/course runs `mvn -f tools/course-lib/pom.xml package` once; jars land in .cache/course-lib/.
+  Jackson 3 (same line as Spring Boot 4.2.0), graphql-java 26.1 (same as the Spring Boot 4.2.0 BOM;
+  Module 2 parses and prints documents with it) and the JUnit console launcher.
+  bin/course runs `mvn -f tools/course-lib/pom.xml package` when this file changes; jars land in .cache/course-lib/.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -29,6 +30,11 @@
     <dependency>
       <groupId>tools.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java</artifactId>
+      <version>26.1</version>
     </dependency>
     <dependency>
       <groupId>org.junit.platform</groupId>

@@ -1,0 +1,3 @@
+# Intent: the title of club c1's current book, through fragment B
+{ club(id: "c1") { ...B } }
+fragment B on Book { title }

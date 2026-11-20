@@ -1,0 +1,5 @@
+# Lab 2.3, experiment: write a document that asks for two different clubs under the SAME response key.
+# Keep the operation name and variables. The test expects the server to reject it.
+query Collision($a: ID!, $b: ID!) {
+  hello
+}

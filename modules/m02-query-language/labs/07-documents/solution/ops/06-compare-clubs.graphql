@@ -1,0 +1,11 @@
+# Description: Two clubs side by side (lab 2.3): the same field twice under different aliases.
+query CompareClubs($a: ID!, $b: ID!) {
+  left: club(id: $a) {
+    name
+    memberCount
+  }
+  right: club(id: $b) {
+    name
+    memberCount
+  }
+}

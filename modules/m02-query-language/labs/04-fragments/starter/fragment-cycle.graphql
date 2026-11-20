@@ -1,0 +1,7 @@
+# Lab 2.4, experiment: write a fragment on Club that (through some path) spreads itself.
+# Keep the operation name and the $id variable. The test expects the server to reject it.
+query Cycle($id: ID!) {
+  club(id: $id) {
+    name
+  }
+}

@@ -2,7 +2,7 @@
 # Course runner. Builds, tests and servers all run inside the course Docker image, never on the host.
 #
 #   bin/course doctor                     check host + image + services; tells you what to fix
-#   bin/course ref up|down|status|logs    reference Shelfie server (+ Toxiproxy)
+#   bin/course ref up [--rebuild]|down|status|logs   reference Shelfie server (+ Toxiproxy)
 #   bin/course toxi latency <ms> | reset  add/remove latency on the slow Shelfie URL (:8666)
 #   bin/course list [mNN]                 modules and labs
 #   bin/course start mNN/NN [--force]     copy a lab's starter into workspace/
@@ -11,9 +11,10 @@
 #   bin/course check [mNN] [--starters]   course self-test: every solution passes (and starters fail)
 #   bin/course checkpoint NN              verify a module's checkpoint and git-tag workspace/
 #   bin/course hurl <file.hurl> [args]    run Hurl inside the course network ({{ref}}, {{slow}} preset)
-#   bin/course jshell [file.jsh]          jshell with Jackson on the class path
-#   bin/course java <File.java> [args]    run a single-file Java program with Jackson on the class path
-#   bin/course shell                      bash inside the course image, repo at /course
+#   bin/course jshell [file.jsh]          jshell with Jackson 3 and graphql-java on the class path
+#   bin/course java <File.java> [args]    run a single-file Java program with the same class path
+#   bin/course gql validate|operations|schema-lines ...   document and schema helpers (tools/gql/Gql.java)
+#   bin/course shell [-c 'cmd']           bash inside the course image, repo at /course
 #   bin/course image                      (re)build the course image
 set -euo pipefail
 
@@ -45,23 +46,30 @@ in_image() {
 cmd="${1:-help}"; shift || true
 
 case "$cmd" in
-  help|-h|--help) sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+  help|-h|--help) awk 'NR > 1 && !/^#/ {exit} NR > 1 {sub(/^# ?/, ""); print}' "$0"; exit 0 ;;
   image) build_image; exit 0 ;;
 esac
 
 command -v docker >/dev/null || die "docker not found. See SETUP.md."
 docker image inspect "$IMAGE" >/dev/null 2>&1 || { echo "course: building image $IMAGE (first run)..." >&2; build_image >&2; }
 mkdir -p "$ROOT/.cache/m2" "$ROOT/workspace"
-[[ -d "$ROOT/.cache/course-lib" ]] || in_image mvn -q -f tools/course-lib/pom.xml package
+lib_stamp=$(sha256sum "$ROOT/tools/course-lib/pom.xml" | cut -c1-16)
+if [[ "$(cat "$ROOT/.cache/course-lib/.stamp" 2>/dev/null)" != "$lib_stamp" ]]; then
+  rm -rf "$ROOT/.cache/course-lib"
+  in_image mvn -q -f tools/course-lib/pom.xml package && echo "$lib_stamp" >"$ROOT/.cache/course-lib/.stamp"
+fi
 
 case "$cmd" in
   ref)
     sub="${1:-status}"
     case "$sub" in
       up)
-        [[ -f "$ROOT/reference/shelfie-ref/target/shelfie-ref.jar" && "${2:-}" != "--rebuild" ]] \
-          || in_image mvn -q -f reference/shelfie-ref/pom.xml -DskipTests package
-        compose up -d --wait
+        recreate=()
+        if [[ ! -f "$ROOT/reference/shelfie-ref/target/shelfie-ref.jar" || "${2:-}" == "--rebuild" ]]; then
+          in_image mvn -q -f reference/shelfie-ref/pom.xml -DskipTests package
+          recreate=(--force-recreate)   # a running JVM must not keep serving from a replaced jar
+        fi
+        compose up -d --wait "${recreate[@]}"
         # Toxiproxy route: toxiproxy:8666 -> shelfie-ref:8080 (idempotent)
         curl -fsS -o /dev/null -X POST localhost:8474/proxies \
           -d '{"name":"shelfie","listen":"0.0.0.0:8666","upstream":"shelfie-ref:8080"}' 2>/dev/null || true
@@ -93,6 +101,6 @@ case "$cmd" in
   doctor)
     "$ROOT/tools/doctor-host.sh" "$ROOT" "$IMAGE" || true
     in_image /course/tools/course.sh doctor ;;
-  shell) in_image bash ;;
+  shell) in_image bash "$@" ;;   # bin/course shell -c "cmd" runs one command
   *) in_image /course/tools/course.sh "$cmd" "$@" ;;
 esac

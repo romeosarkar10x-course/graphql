@@ -1,0 +1,2 @@
+# Intent: the ratings of the 3 newest reviews of book b1
+{ book(id: "b1") { reviews(last: 3) { rating } } }

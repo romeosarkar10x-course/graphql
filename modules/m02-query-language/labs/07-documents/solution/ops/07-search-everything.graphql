@@ -1,0 +1,18 @@
+# Description: The global search box. Results are a union, so each kind selects its own fields.
+query SearchEverything($text: String!) {
+  search(text: $text) {
+    __typename
+    ... on Book {
+      id
+      title
+    }
+    ... on Club {
+      id
+      name
+    }
+    ... on User {
+      id
+      handle
+    }
+  }
+}

@@ -1,0 +1,34 @@
+# One request for the whole card. Checked against GitHub's public schema (tools/schemas/).
+query Profile($login: String!, $pinned: Int = 6) {
+  user(login: $login) {
+    login
+    name
+    company
+    location
+    followers {
+      totalCount
+    }
+    following {
+      totalCount
+    }
+    repositories(ownerAffiliations: OWNER, privacy: PUBLIC) {
+      totalCount
+    }
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+      }
+    }
+    pinnedItems(first: $pinned, types: REPOSITORY) {
+      nodes {
+        ... on Repository {
+          name
+          stargazerCount
+          primaryLanguage {
+            name
+          }
+        }
+      }
+    }
+  }
+}

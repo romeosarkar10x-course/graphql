@@ -1,0 +1,2 @@
+# Intent: the title of book b2
+{ book(id: "b2") { name } }

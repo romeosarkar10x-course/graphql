@@ -1,0 +1,12 @@
+# Description: The "all clubs" screen: one row per club.
+query ClubList {
+  clubs {
+    id
+    name
+    visibility
+    memberCount
+    owner {
+      name
+    }
+  }
+}

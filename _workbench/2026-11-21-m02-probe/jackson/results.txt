@@ -1,0 +1,12 @@
+## extra field description in query, not in record
+The Midnight Readers [PUBLIC] · 8 members
+owner    Kemi Adeyemi (@kemia)
+reading  The Left Hand of Darkness, by Ursula K. Le Guin
+## handle removed from query
+The Midnight Readers [PUBLIC] · 8 members
+owner    Kemi Adeyemi (@null)
+reading  The Left Hand of Darkness, by Ursula K. Le Guin
+## memberCount (int) removed
+Exception in thread "main" tools.jackson.databind.exc.MismatchedInputException: Cannot map `null` into type `int` (set `DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES` to 'false' to allow)
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); byte offset: #UNKNOWN] (through reference chain: ClubCard$GraphQlResponse["data"]->ClubCard$Data["club"]->ClubCard$Club["memberCount"])
+	at tools.jackson.databind.exc.MismatchedInputException.from(MismatchedInputException.java:67)

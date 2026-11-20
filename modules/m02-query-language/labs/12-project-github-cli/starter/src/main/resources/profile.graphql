@@ -1,0 +1,8 @@
+# Lab 2.12: one request for the whole card. Explore GitHub's schema in the explorer or GraphiQL,
+# then validate locally: ../../../bin/course gql validate src/main/resources/profile.graphql --schema ../../../tools/schemas/github-2026-11-21.graphql
+query Profile($login: String!) {
+  user(login: $login) {
+    login
+    name
+  }
+}

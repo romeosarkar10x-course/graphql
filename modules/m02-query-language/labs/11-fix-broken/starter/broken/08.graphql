@@ -1,0 +1,2 @@
+# Intent: the name of the club whose id is in the variables (c2)
+query ClubName($clubId: ID!) { club(id: $id) { name } }

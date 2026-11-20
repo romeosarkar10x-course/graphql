@@ -1,0 +1,1 @@
+{ club(id: "c2") { members { name } } }

@@ -1,0 +1,7 @@
+{
+  "title": "Game: fix the broken query",
+  "lecture": "2.4",
+  "kind": "game",
+  "grading": "auto",
+  "needs": ["ref"]
+}

@@ -6,11 +6,15 @@ import dev.shelfie.ref.data.Model.Meetup;
 import dev.shelfie.ref.data.Model.Review;
 import dev.shelfie.ref.data.Model.User;
 import dev.shelfie.ref.data.Store;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
+import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
 
 /**
  * GraphQL over the same Store. You do not need to understand this yet: Module 5 builds it by hand
@@ -51,8 +55,31 @@ public class ShelfieGraphQlController {
     }
 
     @QueryMapping
-    public List<Book> books() {
-        return store.books();
+    public List<Book> books(@Argument String titleContains, @Argument int first) {
+        String needle = titleContains == null ? "" : titleContains.toLowerCase(Locale.ROOT);
+        return store.books().stream()
+                .filter(b -> b.title().toLowerCase(Locale.ROOT).contains(needle))
+                .limit(Math.max(0, first))
+                .toList();
+    }
+
+    /** Union members resolve by class name: the records are called Book, Club and User. */
+    @QueryMapping
+    public List<Object> search(@Argument String text) {
+        String needle = text.toLowerCase(Locale.ROOT);
+        List<Object> hits = new ArrayList<>();
+        store.books().stream().filter(b -> b.title().toLowerCase(Locale.ROOT).contains(needle)).forEach(hits::add);
+        store.clubs().stream().filter(c -> c.name().toLowerCase(Locale.ROOT).contains(needle)).forEach(hits::add);
+        store.users().stream()
+                .filter(u -> u.name().toLowerCase(Locale.ROOT).contains(needle) || u.handle().toLowerCase(Locale.ROOT).contains(needle))
+                .forEach(hits::add);
+        return hits;
+    }
+
+    /** Never emits: the schema needs a Subscription type for Module 2.5; delivery arrives in Module 11. */
+    @SubscriptionMapping
+    public Flux<Meetup> meetupScheduled(@Argument String clubId) {
+        return Flux.never();
     }
 
     @SchemaMapping

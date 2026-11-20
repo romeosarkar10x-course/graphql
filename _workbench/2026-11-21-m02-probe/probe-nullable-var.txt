@@ -1,0 +1,2 @@
+{"data":{}}
+{"errors":[{"message":"Validation error (VariableTypeMismatch@[hello]) : Variable 'd' of type 'Boolean' used in position expecting type 'Boolean!'","locations":[{"line":1,"column":43}],"extensions":{"classification":"ValidationError"}}]}

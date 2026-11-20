@@ -1,0 +1,9 @@
+{
+  "data": {
+    "__typename": "Query",
+    "club": {
+      "__typename": "Club",
+      "visibility": "PRIVATE"
+    }
+  }
+}

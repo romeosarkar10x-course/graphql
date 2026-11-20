@@ -1,0 +1,5 @@
+# Lab 2.6: describe the Club type with __type: its name, kind, and for every field its name, its
+# arguments (name, defaultValue) and its type. Wrapped types (non-null, lists) nest through ofType.
+query TypeOfClub {
+  __typename
+}

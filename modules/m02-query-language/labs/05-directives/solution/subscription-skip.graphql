@@ -1,0 +1,10 @@
+# The spec (September 2025, "Single Root Field") forbids @skip and @include on the root of a
+# subscription: the server must know the one root field without looking at variables.
+# graphql-java 26.1 reports this document as valid, and with a variable instead of `false`
+# its validator throws a NullPointerException (the reference server answers HTTP 500).
+subscription NextMeetup {
+  meetupScheduled(clubId: "c1") @skip(if: false) {
+    id
+    title
+  }
+}

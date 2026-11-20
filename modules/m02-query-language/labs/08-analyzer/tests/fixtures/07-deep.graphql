@@ -1,0 +1,20 @@
+# Club -> owner -> clubs -> members -> reviews -> book -> reviews -> author: legal, and expensive.
+query Deep {
+  club(id: "c1") {
+    owner {
+      clubs {
+        members(first: 10) {
+          reviews {
+            book {
+              reviews(last: 5) {
+                author {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

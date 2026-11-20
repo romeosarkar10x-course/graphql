@@ -1,5 +1,5 @@
 """
-Shelfie reference schema, Modules 0 and 1. Deliberately small: timestamps are plain Strings until
+Shelfie reference schema, Modules 0 to 2. Deliberately small: timestamps are plain Strings until
 custom scalars arrive in Module 3, and lists are plain lists until connections arrive in Module 8.
 """
 type Query {
@@ -9,7 +9,18 @@ type Query {
   clubs: [Club!]!
   user(id: ID!): User
   book(id: ID!): Book
-  books: [Book!]!
+  "All books in catalogue order. `titleContains` filters, ignoring case; `first` caps the list."
+  books(titleContains: String, first: Int = 20): [Book!]!
+  "Books, clubs and users whose title, name or handle contains `text`, ignoring case. Books first, then clubs, then users."
+  search(text: String!): [SearchResult!]!
+}
+
+"Anything `search` can return. Module 2.4 selects from it with inline fragments."
+union SearchResult = Book | Club | User
+
+type Subscription {
+  "Fires when a club schedules a meetup. Declared for Module 2.5 validation exercises; Module 11 delivers events."
+  meetupScheduled(clubId: ID!): Meetup!
 }
 
 type Club {

@@ -155,6 +155,10 @@ EOF
     [[ $# -ge 1 ]] || die "usage: bin/course java <File.java> [args]"
     cd "$CALLER"; exec java -cp "$(lib_cp)" "$@" ;;
 
+  gql)
+    [[ $# -ge 1 ]] || set -- help
+    cd "$CALLER"; exec java -cp "$(lib_cp)" /course/tools/gql/Gql.java "$@" ;;
+
   doctor) exec tools/doctor-image.sh ;;
   *) usage ;;
 esac

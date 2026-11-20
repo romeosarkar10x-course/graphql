@@ -1,0 +1,6 @@
+query BookSearch($text: String!, $first: Int = 5) {
+  books(titleContains: $text, first: $first) {
+    publishedYear
+    title
+  }
+}

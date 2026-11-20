@@ -1,0 +1,4 @@
+ERR  operation description -> InvalidSyntaxException: Invalid syntax with offending token '"Club card"' at line 1 column 1
+ERR  fragment arguments -> InvalidSyntaxException: Invalid syntax with offending token '(' at line 1 column 13
+OK   directive on variable def -> query Q($a:Int@deprecated){hello}
+defaults: graphql.parser.ParserOptions@52719fb6

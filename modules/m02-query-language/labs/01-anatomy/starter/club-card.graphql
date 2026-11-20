@@ -1,0 +1,6 @@
+# Lab 2.1: select everything the card needs (see README). Only the name is here so far.
+query ClubCard($id: ID!) {
+  club(id: $id) {
+    name
+  }
+}

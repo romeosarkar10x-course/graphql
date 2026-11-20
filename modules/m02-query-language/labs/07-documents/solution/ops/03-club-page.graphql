@@ -1,0 +1,30 @@
+# Description: The full club page from Module 1's contract, in one request.
+query ClubPage($id: ID!) {
+  club(id: $id) {
+    name
+    description
+    owner {
+      name
+    }
+    memberCount
+    members(first: 5) {
+      name
+    }
+    currentBook {
+      title
+      authors
+      reviews(last: 3) {
+        author {
+          name
+        }
+        rating
+        body
+      }
+    }
+    meetups(upcomingOnly: true) {
+      title
+      startsAt
+      location
+    }
+  }
+}

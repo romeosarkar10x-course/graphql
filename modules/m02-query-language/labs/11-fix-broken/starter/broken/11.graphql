@@ -1,0 +1,2 @@
+# Intent: the titles of the books that a search for "rose" finds
+{ search(text: "rose") { title } }

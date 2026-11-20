@@ -1,0 +1,3 @@
+subscription S($off: Boolean = false) {
+  meetupScheduled(clubId: "c1") @skip(if: $off) { id }
+}

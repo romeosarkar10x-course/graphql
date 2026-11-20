@@ -1,0 +1,71 @@
+# Lab 2.4: refactor this into at least 4 named fragments. The response must stay byte-identical.
+query ProfilePage($id: ID!, $q: String!) {
+  user(id: $id) {
+    id
+    name
+    handle
+    avatarUrl
+    bio
+    location
+    clubs {
+      id
+      name
+      memberCount
+      visibility
+      owner {
+        id
+        name
+        handle
+        avatarUrl
+      }
+      currentBook {
+        id
+        title
+        authors
+        publishedYear
+        averageRating
+      }
+    }
+    reviews {
+      id
+      rating
+      body
+      createdAt
+      book {
+        id
+        title
+        authors
+        publishedYear
+        averageRating
+      }
+    }
+  }
+  search(text: $q) {
+    __typename
+    ... on Book {
+      id
+      title
+      authors
+      publishedYear
+      averageRating
+    }
+    ... on Club {
+      id
+      name
+      memberCount
+      visibility
+      owner {
+        id
+        name
+        handle
+        avatarUrl
+      }
+    }
+    ... on User {
+      id
+      name
+      handle
+      avatarUrl
+    }
+  }
+}

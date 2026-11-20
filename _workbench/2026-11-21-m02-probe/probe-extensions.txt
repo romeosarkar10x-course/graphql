@@ -1,0 +1,10 @@
+## extensions in request
+{"data":{"hello":"Hello from Shelfie!"}}
+## extensions not an object
+{"timestamp":"2026-11-20T20:21:58.881Z","status":400,"error":"Bad Request","path":"/graphql"} HTTP 400
+## unknown top-level key
+{"data":{"hello":"Hello from Shelfie!"}} HTTP 200
+## operationName not in doc
+{"errors":[{"message":"Unknown operation named 'B'.","extensions":{"classification":"ValidationError"}}]}
+## anonymous + named
+{"errors":[{"message":"Validation error (LoneAnonymousOperationViolation) : Operation 'B' is following anonymous operation","locations":[{"line":1,"column":11}],"extensions":{"classification":"ValidationError"}}]}

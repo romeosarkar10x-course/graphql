@@ -1,0 +1,7 @@
+{
+  "title": "Game: predict the response",
+  "lecture": "2.5",
+  "kind": "game",
+  "grading": "auto",
+  "needs": ["ref"]
+}

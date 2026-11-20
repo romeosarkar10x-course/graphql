@@ -1,0 +1,7 @@
+Linus Torvalds (@torvalds)
+Portland, OR · Linux Foundation
+followers 250000 · following 0 · public repos 8 · contributions 2400 this year
+pinned
+  linux                        ★ 200000  C
+  subsurface-for-dirk          ★ 350     C++
+  uemacs                       ★ 1500    C

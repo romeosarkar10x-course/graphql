@@ -1,0 +1,11 @@
+# Description: Compact or detailed club card from one document (lab 2.5).
+query ClubCardVariant($id: ID!, $detailed: Boolean! = false) {
+  club(id: $id) {
+    name
+    memberCount
+    description @include(if: $detailed)
+    owner @include(if: $detailed) {
+      name
+    }
+  }
+}

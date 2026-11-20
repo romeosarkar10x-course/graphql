@@ -1,0 +1,44 @@
+Exception in thread "main" java.lang.NullPointerException: Cannot invoke "java.lang.Boolean.booleanValue()" because the return value of "java.util.Map.get(Object)" is null
+	at graphql.execution.conditional.ConditionalNodes.getIfValue(ConditionalNodes.java:149)
+	at graphql.execution.conditional.ConditionalNodes.getDirectiveResult(ConditionalNodes.java:136)
+	at graphql.execution.conditional.ConditionalNodes.shouldInclude(ConditionalNodes.java:91)
+	at graphql.execution.conditional.ConditionalNodes.shouldInclude(ConditionalNodes.java:39)
+	at graphql.execution.FieldCollector.collectField(FieldCollector.java:136)
+	at graphql.execution.FieldCollector.collectFields(FieldCollector.java:76)
+	at graphql.execution.FieldCollector.collectFields(FieldCollector.java:67)
+	at graphql.execution.FieldCollector.collectFields(FieldCollector.java:61)
+	at graphql.validation.OperationValidator.validateSubscriptionUniqueRootField(OperationValidator.java:1822)
+	at graphql.validation.OperationValidator.checkOperationDefinition(OperationValidator.java:817)
+	at graphql.validation.OperationValidator.enter(OperationValidator.java:480)
+	at graphql.validation.LanguageTraversal.traverseImpl(LanguageTraversal.java:33)
+	at graphql.validation.LanguageTraversal.traverseImpl(LanguageTraversal.java:38)
+	at graphql.validation.LanguageTraversal.traverse(LanguageTraversal.java:28)
+	at graphql.validation.Validator.validateDocument(Validator.java:51)
+	at graphql.ParseAndValidate.validate(ParseAndValidate.java:139)
+	at graphql.GraphQL.validate(GraphQL.java:620)
+	at graphql.GraphQL.parseAndValidate(GraphQL.java:575)
+	at graphql.GraphQL.lambda$parseValidateAndExecute$0(GraphQL.java:545)
+	at graphql.execution.preparsed.NoOpPreparsedDocumentProvider.getDocumentAsync(NoOpPreparsedDocumentProvider.java:16)
+	at graphql.GraphQL.parseValidateAndExecute(GraphQL.java:547)
+	at graphql.GraphQL.lambda$executeAsync$1(GraphQL.java:508)
+	at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1208)
+	at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2368)
+	at graphql.EngineRunningState.compose(EngineRunningState.java:91)
+	at graphql.GraphQL.lambda$executeAsync$0(GraphQL.java:497)
+	at graphql.EngineRunningState.engineRun(EngineRunningState.java:202)
+	at graphql.GraphQL.executeAsync(GraphQL.java:489)
+	at graphql.GraphQL.execute(GraphQL.java:431)
+	at Validate.main(Validate.java:8)
+subscription { meetupScheduled(clubId: "c1") @skip(if: false) { id } }
+  -> []
+subscription { meetupScheduled(clubId: "c1") @include(if: true) { id } }
+  -> []
+subscription { meetupScheduled(clubId: "c1") { id } other: __typename }
+  -> [ValidationError{validationErrorType=SubscriptionMultipleRootFields, queryPath=[], message=Validation error (SubscriptionMultipleRootFields) : Subscription operation '' must have exactly one root field, locations=[SourceLocation{line=1, column=1}], description='Validation error (SubscriptionMultipleRootFields) : Subscription operation '' must have exactly one root field', extensions=[]}]
+subscription { meetupScheduled(clubId: "c1") { id title @include(if: false) } }
+  -> []
+query { hello @skip(if: false) }
+  -> [NonNullableFieldWasNullError{message='The field at path '/hello' was declared as a non null type, but the code involved in retrieving data has wrongly returned a null value.  The graphql specification requires that the parent field be set to null, or if that is non nullable that it bubble up null to its parent and so on. The non-nullable type is 'String' within parent type 'Query'', path=[hello]}]
+Exception in thread "main" java.lang.NullPointerException: Cannot invoke "java.lang.Boolean.booleanValue()" because the return value of "java.util.Map.get(Object)" is null
+	at graphql.execution.conditional.ConditionalNodes.getIfValue(ConditionalNodes.java:149)
+	at graphql.execution.conditional.ConditionalNodes.getDirectiveResult(ConditionalNodes.java:136)

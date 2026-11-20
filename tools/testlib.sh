@@ -7,7 +7,7 @@
 #   REF       reference Shelfie, e.g. http://shelfie-ref:8080
 #   SLOW      the same server behind Toxiproxy, http://toxiproxy:8666
 #   TOXI_API  Toxiproxy admin API, http://toxiproxy:8474
-#   LIB       jars for single-file Java programs (Jackson 3, JUnit console)
+#   LIB       jars for single-file Java programs (Jackson 3, graphql-java 26.1, JUnit console)
 
 export REF="${REF:-http://shelfie-ref:8080}"
 export SLOW="${SLOW:-http://toxiproxy:8666}"
@@ -25,7 +25,12 @@ note() { printf '        %s\n' "$1"; }
 # Exit status for tests/run.sh
 finish() { (( T_FAILS == 0 )) || { echo "  $T_FAILS check(s) failed"; exit 1; }; }
 
-lib_cp() { local IFS=:; local jars=("$LIB"/jackson-*.jar); echo "${jars[*]}"; }
+# Class path for single-file programs: every jar in LIB except the JUnit console launcher.
+lib_cp() {
+  local IFS=: j jars=()
+  for j in "$LIB"/*.jar; do [[ "$j" == *junit-platform-console* ]] || jars+=("$j"); done
+  echo "${jars[*]}"
+}
 
 ref_up() { curl -fsS -o /dev/null -m 3 "$REF/actuator/health" 2>/dev/null; }
 ref_reset_stats() { curl -fsS -o /dev/null -X POST "$REF/_course/reset"; }

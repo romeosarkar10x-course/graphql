@@ -1,0 +1,112 @@
+### search
+{ search(text: "the") { __typename ... on Book { title } ... on Club { name } ... on User { handle } } }
+{"data":{"search":[{"__typename":"Book","title":"The Left Hand of Darkness"},{"__typename":"Book","title":"The Remains of the Day"},{"__typename":"Book","title":"The Name of the Rose"},{"__typename":"Book","title":"The Dispossessed"},{"__typename":"Book","title":"The Seven Moons of Maali Almeida"},{"__typename":"Book","title":"Klara and the Sun"},{"__typename":"Club","name":"The Midnight Readers"}]}}
+
+### alias-ok
+{ a: club(id: "c1") { name } b: club(id: "c2") { name } }
+{"data":{"a":{"name":"The Midnight Readers"},"b":{"name":"Slow Burn Mysteries"}}}
+
+### alias-collision
+{ x: club(id: "c1") { name } x: club(id: "c2") { name } }
+{"errors":[{"message":"Validation error (FieldsConflict) : 'x' : fields have different arguments","locations":[{"line":1,"column":3},{"line":1,"column":30}],"extensions":{"classification":"ValidationError"}}]}
+
+### alias-collision-field
+{ club(id: "c1") { name: description name } }
+{"errors":[{"message":"Validation error (FieldsConflict) : 'club/name' : fields have different nullability shapes","locations":[{"line":1,"column":20},{"line":1,"column":38}],"extensions":{"classification":"ValidationError"}}]}
+
+### fragment-cycle
+{ club(id: "c1") { ...A } } fragment A on Club { owner { clubs { ...A } } }
+{"errors":[{"message":"Validation error (FragmentCycle@[A]) : Fragment cycles not allowed","locations":[{"line":1,"column":29}],"extensions":{"classification":"ValidationError"}}]}
+
+### fragment-unused
+{ hello } fragment A on Club { name }
+{"errors":[{"message":"Validation error (UnusedFragment) : Unused fragment 'A'","locations":[{"line":1,"column":11}],"extensions":{"classification":"ValidationError"}}]}
+
+### fragment-wrong-type
+{ club(id: "c1") { ...B } } fragment B on Book { title }
+{"errors":[{"message":"Validation error (InvalidFragmentType@[club]) : Fragment 'B' cannot be spread here as objects of type 'Club' can never be of type 'Book'","locations":[{"line":1,"column":20}],"extensions":{"classification":"ValidationError"}}]}
+
+### two-ops-no-name
+query A { hello } query B { clubs { name } }
+{"errors":[{"message":"Must provide operation name if query contains multiple operations.","extensions":{"classification":"ValidationError"}}]}
+
+### two-ops-named
+query A { hello } query B { clubs { name } }
+{"data":{"clubs":[{"name":"The Midnight Readers"},{"name":"Slow Burn Mysteries"},{"name":"Booker Shortlist Survivors"}]}}
+
+### skip-subscription-root
+subscription S($off: Boolean = false) { meetupScheduled(clubId: "c1") @skip(if: $off) { id } }
+{"timestamp":"2026-11-20T20:09:45.603Z","status":500,"error":"Internal Server Error","path":"/graphql"}
+
+### include-subscription-nested
+subscription S($on: Boolean = true) { meetupScheduled(clubId: "c1") { id title @include(if: $on) } }
+{"errors":[{"message":"Operation type 'SUBSCRIPTION' is not allowed for this request","extensions":{"classification":"OperationNotSupported"}}]}
+
+### missing-required-var
+query C($id: ID!) { club(id: $id) { name } }
+{"errors":[{"message":"Variable 'id' has an invalid value: Variable 'id' has coerced Null value for NonNull type 'ID!'","locations":[{"line":1,"column":9}],"extensions":{"classification":"ValidationError"}}]}
+
+### var-default
+query C($id: ID! = "c2") { club(id: $id) { name } }
+{"data":{"club":{"name":"Slow Burn Mysteries"}}}
+
+### var-unused
+query C($id: ID!) { hello }
+{"errors":[{"message":"Validation error (UnusedVariable) : Unused variable 'id'","locations":[{"line":1,"column":9}],"extensions":{"classification":"ValidationError"}}]}
+
+### var-wrong-type
+query C($id: ID!) { club(id: $id) { members(first: $id) { name } } }
+{"errors":[{"message":"Validation error (VariableTypeMismatch@[club/members]) : Variable 'id' of type 'ID!' used in position expecting type 'Int'","locations":[{"line":1,"column":52}],"extensions":{"classification":"ValidationError"}}]}
+
+### injected-format
+{ club(id: "") { __schema { types { name } } } #") { name } }
+{"errors":[{"message":"Invalid syntax with offending token '<EOF>' at line 1 column 62","locations":[{"line":1,"column":62}],"extensions":{"classification":"InvalidSyntax"}}]}
+
+### injected-format2
+{ club(id: "") { name } __schema { types { name } } #") { name } }
+{"errors":[{"message":"Invalid syntax with offending token '<EOF>' at line 1 column 67","locations":[{"line":1,"column":67}],"extensions":{"classification":"InvalidSyntax"}}]}
+
+### unknown-field
+{ club(id: "c1") { title } }
+{"errors":[{"message":"Validation error (FieldUndefined@[club/title]) : Field 'title' in type 'Club' is undefined","locations":[{"line":1,"column":20}],"extensions":{"classification":"ValidationError"}}]}
+
+### missing-subselection
+{ club(id: "c1") { owner } }
+{"errors":[{"message":"Validation error (SubselectionRequired@[club/owner]) : Subselection required for type 'User!' of field 'owner'","locations":[{"line":1,"column":20}],"extensions":{"classification":"ValidationError"}}]}
+
+### scalar-subselection
+{ club(id: "c1") { name { x } } }
+{"errors":[{"message":"Validation error (SubselectionNotAllowed@[club/name]) : Subselection not allowed on leaf type 'String!' of field 'name'","locations":[{"line":1,"column":20}],"extensions":{"classification":"ValidationError"}}]}
+
+### typename-root
+{ __typename }
+{"data":{"__typename":"Query"}}
+
+### type-count
+{ __schema { types { name } } }
+{"data":{"__schema":{"types":[{"name":"Book"},{"name":"Boolean"},{"name":"Club"},{"name":"Float"},{"name":"ID"},{"name":"Int"},{"name":"Meetup"},{"name":"Query"},{"name":"Review"},{"name":"SearchResult"},{"name":"String"},{"name":"Subscription"},{"name":"User"},{"name":"Visibility"},{"name":"__Directive"},{"name":"__DirectiveLocation"},{"name":"__EnumValue"},{"name":"__Field"},{"name":"__InputValue"},{"name":"__Schema"},{"name":"__Type"},{"name":"__TypeKind"}]}}}
+
+### nonexistent-club
+{ club(id: "zz") { name } }
+{"data":{"club":null}}
+
+### directive-unknown
+{ hello @uppercase }
+{"errors":[{"message":"Validation error (UnknownDirective@[hello]) : Unknown directive 'uppercase'","locations":[{"line":1,"column":9}],"extensions":{"classification":"ValidationError"}}]}
+
+### directive-wrong-location
+query Q @include(if: true) { hello }
+{"errors":[{"message":"Validation error (MisplacedDirective) : Directive 'include' not allowed here","locations":[{"line":1,"column":9}],"extensions":{"classification":"ValidationError"}}]}
+
+### skip-and-include
+{ hello @skip(if: false) @include(if: false) }
+{"data":{}}
+
+### op-description
+"Card" query Card { hello }
+{"errors":[{"message":"Invalid syntax with offending token '\"Card\"' at line 1 column 1","locations":[{"line":1,"column":1}],"extensions":{"classification":"InvalidSyntax"}}]}
+
+### fragment-args
+{ ...F(x: 1) } fragment F($x: Int = 0) on Query { hello }
+{"errors":[{"message":"Invalid syntax with offending token '(' at line 1 column 7","locations":[{"line":1,"column":7}],"extensions":{"classification":"InvalidSyntax"}}]}
+

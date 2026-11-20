@@ -1,0 +1,27 @@
+# Lab 2.5 reference: one document, two cards. The compact card is the default; the detailed card
+# switches on a fragment with @include and drops the teaser with @skip.
+query ClubCard($id: ID!, $detailed: Boolean! = false) {
+  club(id: $id) {
+    id
+    name
+    memberCount
+    teaser: members(first: 1) @skip(if: $detailed) {
+      name
+    }
+    ...ClubDetails @include(if: $detailed)
+  }
+}
+
+fragment ClubDetails on Club {
+  description
+  owner {
+    name
+  }
+  members(first: 3) {
+    name
+  }
+  currentBook {
+    title
+    authors
+  }
+}

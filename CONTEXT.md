@@ -43,3 +43,16 @@ in Docker.
   GraphQL-over-HTTP spec allows that). The lab records it as a finding, not a bug. Probe:
   `_workbench/2026-11-21-http-probe/probe.txt`.
 - Versions: see VERSIONS.md (Boot 4.2.0 / Spring for GraphQL 2.1.0 / DGS 12 are newer than the plan's).
+- Module 2 (2026-11-21), from probes in `_workbench/2026-11-21-m02-probe/`:
+  - graphql-java 26.1 rejects operation descriptions (September 2025 grammar), so lab 2.7 uses a
+    `# Description:` comment and lecture 2.7 teaches the gap.
+  - Syllabus 2.5's experiment ("put `@skip` on a subscription root field; read why it is now invalid")
+    cannot show an error on graphql-java 26.1: it accepts the literal form and throws a
+    `NullPointerException` with a variable. The lab validates with `bin/course gql validate` and grades
+    the spec-vs-implementation write-up instead.
+  - Syllabus 2.2's injection payload does not parse against a `club(id: "%s")` template; the lab uses
+    `books(titleContains: "%s", first: 5)` and a payload that does parse.
+  - The reference schema grew (`books` arguments, `search` union, `Subscription`) so Module 2 has
+    unions and a subscription to work with; the Subscription never emits until Module 11.
+  - GitHub-dependent work (golf bonus holes, the CLI's live run) is optional: tests use a stub server
+    and a saved schema snapshot when there is no `GITHUB_TOKEN`.

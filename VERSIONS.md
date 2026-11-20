@@ -22,3 +22,6 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | grpcurl | 1.9.4 | — | |
 | Toxiproxy | 2.13.0 | — | |
 | GraphiQL | 6.0.1 (bundled by Spring for GraphQL 2.1) | 5 | measured from `/graphiql` |
+| picocli | 4.7.7 | — | lab 2.12 |
+| maven-compiler / jar / dependency plugins | 3.16.0 / 3.5.1 / 3.11.0 | — | latest 3.x lines; 4.0.0 betas skipped |
+| GitHub GraphQL schema snapshot | 2026-11-21 | — | `tools/schemas/github-2026-11-21.graphql`, for offline validation; refresh each term |

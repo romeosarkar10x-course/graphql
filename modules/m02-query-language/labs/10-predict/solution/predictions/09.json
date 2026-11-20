@@ -1,0 +1,16 @@
+{
+  "errors": [
+    {
+      "message": "Validation error (SubselectionRequired@[club/owner]) : Subselection required for type 'User!' of field 'owner'",
+      "locations": [
+        {
+          "line": 1,
+          "column": 20
+        }
+      ],
+      "extensions": {
+        "classification": "ValidationError"
+      }
+    }
+  ]
+}

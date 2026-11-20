@@ -1,0 +1,2 @@
+# Intent: the names of the first 3 members of club c1, with the limit in a variable
+query Members($n: String) { club(id: "c1") { members(first: $n) { name } } }

@@ -1,0 +1,1 @@
+subscription { meetupScheduled(clubId: "c1") @skip(if: false) { id } }

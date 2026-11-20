@@ -1,0 +1,16 @@
+# Description: The compact card in the club list (lab 2.1).
+query ClubCard($id: ID!) {
+  club(id: $id) {
+    name
+    visibility
+    memberCount
+    owner {
+      name
+      handle
+    }
+    currentBook {
+      title
+      authors
+    }
+  }
+}

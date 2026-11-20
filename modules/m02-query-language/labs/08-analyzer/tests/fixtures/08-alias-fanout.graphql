@@ -1,0 +1,15 @@
+# Aliases multiply work: the same expensive selection five times in one request.
+query Fanout {
+  a: clubs { ...Big }
+  b: clubs { ...Big }
+  c: clubs { ...Big }
+  d: clubs { ...Big }
+  e: clubs { ...Big }
+}
+
+fragment Big on Club {
+  members(first: 10) {
+    nick: handle
+    reviews { body }
+  }
+}

@@ -1,0 +1,7 @@
+# Description: Title search with a caller-chosen limit (lab 2.2).
+query BookSearch($text: String!, $first: Int = 5) {
+  books(titleContains: $text, first: $first) {
+    publishedYear
+    title
+  }
+}

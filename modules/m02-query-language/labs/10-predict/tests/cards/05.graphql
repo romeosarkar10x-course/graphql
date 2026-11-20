@@ -1,0 +1,1 @@
+{ x: club(id: "c1") { name } x: club(id: "c1") { memberCount } }

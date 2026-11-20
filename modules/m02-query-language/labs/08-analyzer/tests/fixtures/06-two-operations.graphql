@@ -1,0 +1,12 @@
+# Two operations in one document. The server runs exactly one: the one named by operationName.
+query ClubNames {
+  clubs {
+    name
+  }
+}
+
+query BookTitles {
+  books {
+    title
+  }
+}

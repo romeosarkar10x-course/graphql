@@ -1,0 +1,1 @@
+query Two($n: Int = 2) { club(id: "c1") { members(first: $n) { name } } }

@@ -1,0 +1,23 @@
+# Lab 2.5: one document, two cards. Today it always returns the detailed card.
+# Add $detailed (Boolean!, default false) and use @include / @skip as the README describes.
+query ClubCard($id: ID!) {
+  club(id: $id) {
+    id
+    name
+    memberCount
+    teaser: members(first: 1) {
+      name
+    }
+    description
+    owner {
+      name
+    }
+    members(first: 3) {
+      name
+    }
+    currentBook {
+      title
+      authors
+    }
+  }
+}

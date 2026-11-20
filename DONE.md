@@ -6,7 +6,8 @@
       tool versions verified (`_workbench/2026-11-21-version-probe/image-tools.txt`)
 - [x] `docker/compose.yaml`: reference server + Toxiproxy 2.13.0 on network `gqlcourse`
 - [x] `bin/course` runner: doctor, ref, toxi, list, start, test, grade, check, checkpoint, hurl, jshell, java, shell, image
-- [x] `tools/`: in-image runner, test helpers, host and image doctors, course-lib (Jackson 3.1.8, JUnit console 6.1.3)
+- [x] `tools/`: in-image runner, test helpers, host and image doctors, course-lib (Jackson 3.1.8, graphql-java 26.1,
+      JUnit console 6.1.3; rebuilt when its pom changes), `gql` helper (validate, operations, schema-lines), GitHub schema snapshot
 - [x] Reference Shelfie server (Spring Boot 4.2.0, Maven): REST `/api`, GraphQL `/graphql` + GraphiQL 6.0.1,
       gRPC :9090 with reflection, `/_course/stats` request counter; deterministic seed
 - [x] Switched every build from Gradle to Maven at the user's request; syllabus edited to match
@@ -29,4 +30,16 @@
 - [x] Extra rubric parts at the user's request: m01/01 consequences.md, m01/04 change-impact.md, m01/09
 - [x] Reference measurements (c1, 700 ms latency): REST 11 requests, 4,917 B, 2,182 ms; GraphQL 1 request, 824 B, 834 ms
 
-`bin/course check --starters` (2026-11-21): 11 auto-graded labs, 0 problems; Module 1 re-checked after the rubric additions (`_workbench/2026-11-21-check-starters.log`).
+## Module 2 (8 lectures, 8 labs, 1 mini-project, 3 games)
+
+- [x] Lectures 2.1–2.8; README (incl. spec-vs-graphql-java gaps); checkpoint quiz; checkpoint.json
+- [x] m02/01 records · m02/02 variables vs injection · m02/03 aliases · m02/04 fragments (byte-identical) ·
+      m02/05 directives · m02/06 introspection to SDL · m02/07 12 named operations · m02/08 analyzer ·
+      m02/09 golf · m02/10 predict · m02/11 fix the broken query · m02/12 GitHub profile CLI (picocli, stub-tested)
+- [x] Reference server: `books(titleContains:, first:)`, `search` union, `Subscription.meetupScheduled`
+- [x] Simulated learner run of `bin/course checkpoint 02` tagged correctly
+
+`bin/course check --starters` (2026-11-21, after Module 2): 23 auto-graded labs, 0 problems
+(`_workbench/2026-11-21-m02-check-starters.log`).
+
+Earlier: `bin/course check --starters` (2026-11-21): 11 auto-graded labs, 0 problems; Module 1 re-checked after the rubric additions (`_workbench/2026-11-21-check-starters.log`).

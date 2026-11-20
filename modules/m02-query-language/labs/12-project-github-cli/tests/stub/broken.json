@@ -1,0 +1,1 @@
+{"errors":[{"path":["query","user","pinnedItems"],"extensions":{"code":"argumentLiteralsIncompatible"},"locations":[{"line":4,"column":5}],"message":"Argument 'first' on Field 'pinnedItems' has an invalid value."}]}

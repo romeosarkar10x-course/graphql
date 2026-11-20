@@ -1,0 +1,20 @@
+{
+  "data": {
+    "club": {
+      "members": [
+        {
+          "name": "Grace Kim"
+        },
+        {
+          "name": "Elena Petrova"
+        },
+        {
+          "name": "Ines Duarte"
+        },
+        {
+          "name": "Liu Wei"
+        }
+      ]
+    }
+  }
+}

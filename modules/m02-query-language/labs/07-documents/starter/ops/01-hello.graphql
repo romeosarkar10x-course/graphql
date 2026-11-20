@@ -1,0 +1,4 @@
+# Description: Smoke test. Proves the endpoint answers before anything else runs.
+query Hello {
+  hello
+}

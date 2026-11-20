@@ -1,0 +1,1 @@
+{search(text:"ur"){__typename...on Club{id}}}

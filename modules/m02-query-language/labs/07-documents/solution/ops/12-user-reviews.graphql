@@ -1,0 +1,15 @@
+# Description: Everything one member has reviewed, with the book it was about.
+query UserReviews($id: ID!) {
+  user(id: $id) {
+    name
+    reviews {
+      rating
+      body
+      createdAt
+      book {
+        title
+        averageRating
+      }
+    }
+  }
+}

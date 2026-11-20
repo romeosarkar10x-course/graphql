@@ -1,0 +1,2 @@
+# Intent: the names of clubs c1 and c2, under the keys "first" and "second"
+{ first: club(id: "c1") { name } second: club(id: "c2") { name } }

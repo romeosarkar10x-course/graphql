@@ -1,0 +1,25 @@
+# Description: A member's profile: who they are, their clubs, what they reviewed.
+query UserProfile($id: ID!) {
+  user(id: $id) {
+    ...UserChip
+    bio
+    location
+    clubs {
+      id
+      name
+    }
+    reviews {
+      rating
+      book {
+        title
+      }
+    }
+  }
+}
+
+fragment UserChip on User {
+  id
+  name
+  handle
+  avatarUrl
+}

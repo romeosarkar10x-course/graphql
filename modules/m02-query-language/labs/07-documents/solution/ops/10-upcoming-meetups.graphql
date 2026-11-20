@@ -1,0 +1,11 @@
+# Description: A club's calendar strip: upcoming meetups only, soonest first.
+query UpcomingMeetups($clubId: ID!) {
+  club(id: $clubId) {
+    name
+    meetups(upcomingOnly: true) {
+      title
+      startsAt
+      location
+    }
+  }
+}

@@ -1,0 +1,16 @@
+# A fragment that spreads itself through owner -> clubs: expanding it would never end, so validation
+# rejects it (FragmentCycle). Cycles are invalid even though the data (users in clubs) is finite.
+query Cycle($id: ID!) {
+  club(id: $id) {
+    ...ClubWithOwner
+  }
+}
+
+fragment ClubWithOwner on Club {
+  name
+  owner {
+    clubs {
+      ...ClubWithOwner
+    }
+  }
+}

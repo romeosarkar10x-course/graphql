@@ -1,0 +1,18 @@
+query CompareClubs($a: ID!, $b: ID!) {
+  left: club(id: $a) {
+    name
+    memberCount
+    currentBook {
+      title
+      rating: averageRating
+    }
+  }
+  right: club(id: $b) {
+    name
+    memberCount
+    currentBook {
+      title
+      rating: averageRating
+    }
+  }
+}

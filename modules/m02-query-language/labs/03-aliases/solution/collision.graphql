@@ -1,0 +1,6 @@
+# Two root fields share the response key `club` but take different arguments: the response could not
+# hold both, so validation rejects the document (FieldsConflict) before anything runs.
+query Collision($a: ID!, $b: ID!) {
+  club(id: $a) { name }
+  club(id: $b) { name }
+}

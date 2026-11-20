@@ -1,0 +1,4 @@
+club      The Midnight Readers               Slow Burn Mysteries
+members   8                                  4
+reading   The Left Hand of Darkness          The Name of the Rose
+rating    4.2                                4.5
