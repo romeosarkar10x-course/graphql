@@ -1,0 +1,33 @@
+"Game 4a: reading-challenge points. Every mutation carries a client-generated requestId: retries reuse it."
+type Query {
+  balance(userId: ID!): Int!
+  stock(rewardId: ID!): Int!
+}
+
+type Mutation {
+  awardPoints(input: AwardPointsInput!): PointsPayload!
+  transferPoints(input: TransferPointsInput!): PointsPayload!
+  redeemReward(input: RedeemRewardInput!): RedeemPayload!
+}
+
+input AwardPointsInput { requestId: ID! userId: ID! points: Int! }
+input TransferPointsInput { requestId: ID! fromUserId: ID! toUserId: ID! amount: Int! }
+input RedeemRewardInput { requestId: ID! userId: ID! rewardId: ID! }
+
+type PointsPayload {
+  "The acting user's balance after the mutation (the sender's, for a transfer)."
+  balance: Int
+  userErrors: [UserError!]!
+}
+
+type RedeemPayload {
+  balance: Int
+  remainingStock: Int
+  userErrors: [UserError!]!
+}
+
+type UserError {
+  message: String!
+  "INSUFFICIENT_POINTS, OUT_OF_STOCK or INVALID."
+  code: String!
+}

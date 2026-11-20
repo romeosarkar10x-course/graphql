@@ -1,0 +1,3 @@
+starter multipart peak heapUsed: 219.5 MB
+solution multipart peak heapUsed: 48.1 MB
+solution presigned peak heapUsed: 48.1 MB

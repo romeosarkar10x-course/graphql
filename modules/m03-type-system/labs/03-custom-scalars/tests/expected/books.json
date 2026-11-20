@@ -1,0 +1,56 @@
+{
+  "data": {
+    "books": [
+      {
+        "id": "b1",
+        "isbn": "9780441478125",
+        "listPrice": 12.99
+      },
+      {
+        "id": "b2",
+        "isbn": "9781635575637",
+        "listPrice": 10.50
+      },
+      {
+        "id": "b3",
+        "isbn": "9780679731726",
+        "listPrice": null
+      },
+      {
+        "id": "b4",
+        "isbn": "9780156001311",
+        "listPrice": null
+      },
+      {
+        "id": "b5",
+        "isbn": "9780060853976",
+        "listPrice": null
+      },
+      {
+        "id": "b6",
+        "isbn": "9780593135204",
+        "listPrice": 18.00
+      },
+      {
+        "id": "b7",
+        "isbn": "9780061054884",
+        "listPrice": null
+      },
+      {
+        "id": "b8",
+        "isbn": "9780385353304",
+        "listPrice": null
+      },
+      {
+        "id": "b9",
+        "isbn": "9781324064824",
+        "listPrice": null
+      },
+      {
+        "id": "b10",
+        "isbn": "9780593318171",
+        "listPrice": null
+      }
+    ]
+  }
+}

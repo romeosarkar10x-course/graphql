@@ -1,0 +1,114 @@
+{
+  "1-addStar": {
+    "input": 2,
+    "payload": 2,
+    "errors": 0,
+    "retry": 2,
+    "naming": 2,
+    "why": {
+      "input": "One input object; the only required field is non-null.",
+      "payload": "Returns the starrable, so the client can refresh its star count and viewerHasStarred.",
+      "errors": "Failures (not found, no permission) arrive only as top-level errors.",
+      "retry": "Starring twice leaves one star: naturally idempotent.",
+      "naming": "Verb first, says exactly what happens."
+    }
+  },
+  "2-createIssue": {
+    "input": 2,
+    "payload": 1,
+    "errors": 0,
+    "retry": 0,
+    "naming": 2,
+    "why": {
+      "input": "One input; repositoryId and title non-null, the rest optional.",
+      "payload": "Returns the issue but not the repository, so issue counts on the repository need a refetch.",
+      "errors": "Validation and permission failures are top-level errors only.",
+      "retry": "A retried create makes a second issue; no idempotency key (clientMutationId is only echoed).",
+      "naming": "Verb first and says what it creates."
+    }
+  },
+  "3-mergePullRequest": {
+    "input": 2,
+    "payload": 2,
+    "errors": 0,
+    "retry": 2,
+    "naming": 2,
+    "why": {
+      "input": "One input, a typed enum for the method with a default.",
+      "payload": "Returns the pull request (now merged) and the actor.",
+      "errors": "Merge conflicts and failed checks surface as top-level errors.",
+      "retry": "expectedHeadOid is optimistic concurrency: merge only the commit you reviewed; merging twice fails safely.",
+      "naming": "Verb first; says what happens."
+    }
+  },
+  "4-deleteIssue": {
+    "input": 2,
+    "payload": 2,
+    "errors": 0,
+    "retry": 1,
+    "naming": 2,
+    "why": {
+      "input": "One input with the id.",
+      "payload": "Returns the parent repository, the right object for a client to refresh after a delete.",
+      "errors": "Failures arrive only as top-level errors, untyped in the schema.",
+      "retry": "A retry after success fails with not found: no double effect, but the client sees an error for a success.",
+      "naming": "Verb first and names the object it deletes."
+    }
+  },
+  "5-SaveMediaListEntry": {
+    "input": 0,
+    "payload": 1,
+    "errors": 0,
+    "retry": 1,
+    "naming": 1,
+    "why": {
+      "input": "Sixteen loose, all-nullable arguments; nothing says which are needed to create vs update.",
+      "payload": "Returns the entry, nothing about the list or media counts.",
+      "errors": "Failures arrive only as top-level errors, untyped in the schema.",
+      "retry": "Upsert with absolute values is safe to repeat, but creating (no id) twice is not clearly safe.",
+      "naming": "PascalCase and 'save' hides whether it creates or updates."
+    }
+  },
+  "6-ToggleFavourite": {
+    "input": 0,
+    "payload": 1,
+    "errors": 0,
+    "retry": 0,
+    "naming": 1,
+    "why": {
+      "input": "Five nullable ids where exactly one is meant: a @oneOf input before @oneOf existed.",
+      "payload": "Returns the whole favourites collection, heavy but enough to update.",
+      "errors": "Failures arrive only as top-level errors, untyped in the schema.",
+      "retry": "A toggle retried after a lost response undoes itself: the worst possible retry behaviour.",
+      "naming": "PascalCase; 'toggle' hides the resulting state; setFavourite(value) would say it."
+    }
+  },
+  "7-DeleteMediaListEntry": {
+    "input": 0,
+    "payload": 0,
+    "errors": 0,
+    "retry": 1,
+    "naming": 1,
+    "why": {
+      "input": "The id is nullable: deleting nothing is expressible.",
+      "payload": "Deleted { deleted: Boolean } tells the client nothing to update its list with.",
+      "errors": "Failures arrive only as top-level errors, untyped in the schema.",
+      "retry": "Deleting twice is harmless, but the second answer differs from the first.",
+      "naming": "PascalCase breaks field naming convention; otherwise clear."
+    }
+  },
+  "8-createReviewTyped": {
+    "input": 2,
+    "payload": 1,
+    "errors": 2,
+    "retry": 0,
+    "naming": 1,
+    "why": {
+      "input": "One input object, all fields non-null.",
+      "payload": "ReviewCreated has the review (and its book), but the member types are hand-rolled per outcome.",
+      "errors": "Every domain outcome is a typed union member clients must handle.",
+      "retry": "No idempotency key: a retry is a DUPLICATE error, not a replay (lab 4.4 fixes this).",
+      "naming": "The 'Typed' suffix names the implementation style, not the action."
+    }
+  }
+}

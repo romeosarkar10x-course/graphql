@@ -1,0 +1,33 @@
+# graphql-java-extended-validation's directives must be declared to be used.
+directive @Size(min: Int = 0, max: Int = 2147483647, message: String = "graphql.validation.Size.message") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+directive @Range(min: Int = 0, max: Int = 2147483647, message: String = "graphql.validation.Range.message") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+directive @Pattern(regexp: String!, message: String = "graphql.validation.Pattern.message") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+directive @ContainerSize(min: Int = 0, max: Int = 2147483647, message: String = "graphql.validation.ContainerSize.message") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION
+
+type Query { ok: Boolean }
+
+type Mutation {
+  "As u1. Shape rules live in the schema, cross-field rules on the Java record, facts about the world in the resolver."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+}
+
+input CreateReviewInput {
+  bookId: ID! @Pattern(regexp: "b[0-9]+")
+  rating: Int! @Range(min: 1, max: 5)
+  body: String! @Size(min: 10, max: 2000)
+  "At most 5 (@ContainerSize: the list), each at most 20 characters (@Size on a list applies to every element), no repeats."
+  tags: [String!] = [] @ContainerSize(max: 5) @Size(max: 20)
+}
+
+type CreateReviewPayload {
+  review: Review
+  userErrors: [UserError!]!
+}
+
+type Review { id: ID! bookId: ID! rating: Int! body: String! tags: [String!]! }
+
+type UserError {
+  field: [String!]
+  message: String!
+  code: String!
+}

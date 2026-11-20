@@ -1,9 +1,9 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 2
+## Now: user review of Modules 3 and 4
 
-Answered 2026-11-21: single-file Java for small clients is fine; more rubric parts wanted (added to
-m01/01, m01/04, new m01/09). Keep a generous rubric share in later modules.
+The user asked (2026-11-21) for two modules, then stop. Modules 3 and 4 are built; wait for review
+before Module 5. Earlier answers still hold: single-file Java for small clients, a generous rubric share.
 
 ## Verification debt
 
@@ -14,13 +14,17 @@ m01/01, m01/04, new m01/09). Keep a generous rubric share in later modules.
       `rateLimit { cost }` in m02/12's reference notes. Confirm the reference notes' claims that GitHub
       REST has no pinned-items endpoint and that contributions are GraphQL-only.
 - [ ] Refresh `tools/schemas/github-*.graphql` and the m02/06 public API type counts each term.
+- [ ] Open `/voyager.html` in a browser once (game 3c): only the CDN assets and the JS API names were
+      checked with curl, not the rendering.
+- [ ] Re-check graphql-java-extended-validation for a release built against graphql-java 26 and Hibernate
+      Validator 9; lift the HV 8 pin if so.
+- [ ] Re-check MinIO image availability; the course uses SeaweedFS 4.54 meanwhile.
+- [ ] Game 4b signatures: refresh from the GitHub snapshot and AniList introspection each term.
 - [ ] Check whether a newer graphql-java fixes the subscription-root `@skip` gap and parses operation
       descriptions; update lectures 2.5 and 2.7 and the module README table if so.
 
 ## Next modules (in order)
 
-- [ ] M3 Type system and SDL (records-to-SDL generator; nullability lab)
-- [ ] M4 Mutations and input design (chaos harness; undo tokens)
 - [ ] M5 graphql-java from scratch (the Shelfie Maven project starts here: `./mvnw verify`; 40 Hurl tests)
 - [ ] M6–M18, capstone, per plan/syllabus.md
 - [ ] Update Module 6.7 text for DGS 12 and the Maven codegen plugin (VERSIONS.md)

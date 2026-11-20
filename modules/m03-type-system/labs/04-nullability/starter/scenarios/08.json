@@ -1,0 +1,9 @@
+{
+  "title": "A non-null field returns null without throwing, under a non-null root list",
+  "sdl": "type Query { clubs: [Club!]! }\ntype Club { id: ID! name: String! description: String owner: User! members: [User!]! currentBook: Book }\ntype User { id: ID! name: String! }\ntype Book { id: ID! title: String! averageRating: Float! reviews: [Review!]! }\ntype Review { id: ID! rating: Int! author: User! }\n",
+  "query": "{ clubs { id name } }",
+  "throw": [],
+  "returnNull": [
+    "Club.name@c2"
+  ]
+}

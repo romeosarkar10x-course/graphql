@@ -1,0 +1,10 @@
+== quay.io/minio/minio:latest
+Error response from daemon: unauthorized: access to the requested resource is not authorized
+== minio/minio:RELEASE.2025-09-07T16-13-09Z
+Error response from daemon: pull access denied for minio/minio, repository does not exist or may require 'docker login': denied: requested access to the resource is denied
+== chrislusf/seaweedfs:latest
+docker.io/chrislusf/seaweedfs:latest
+== dxflrs/garage:v2.1.0
+docker.io/dxflrs/garage:v2.1.0
+== adobe/s3mock:latest
+docker.io/adobe/s3mock:latest

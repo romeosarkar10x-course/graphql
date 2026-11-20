@@ -1,0 +1,54 @@
+{
+  "data": {
+    "book": {
+      "title": "The Left Hand of Darkness",
+      "authors": [
+        "Ursula K. Le Guin"
+      ],
+      "publishedYear": 1969,
+      "averageRating": 4.2,
+      "reviews": [
+        {
+          "id": "r5",
+          "rating": 4,
+          "body": "Estraven deserved better.",
+          "author": {
+            "handle": "hugos"
+          }
+        },
+        {
+          "id": "r4",
+          "rating": 3,
+          "body": "Beautiful but I wanted more physics.",
+          "author": {
+            "handle": "jonasb"
+          }
+        },
+        {
+          "id": "r3",
+          "rating": 5,
+          "body": "The ice crossing chapter. That's it, that's the review.",
+          "author": {
+            "handle": "chloem"
+          }
+        },
+        {
+          "id": "r2",
+          "rating": 4,
+          "body": "Slow first half, devastating second.",
+          "author": {
+            "handle": "benok"
+          }
+        },
+        {
+          "id": "r1",
+          "rating": 5,
+          "body": "Changed how I think about gender in fiction.",
+          "author": {
+            "handle": "asha"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -2,7 +2,10 @@
 <!--
   Resolves the jars that single-file labs and jshell put on their class path:
   Jackson 3 (same line as Spring Boot 4.2.0), graphql-java 26.1 (same as the Spring Boot 4.2.0 BOM;
-  Module 2 parses and prints documents with it) and the JUnit console launcher.
+  Module 2 parses and prints documents with it), graphql-java-extended-scalars (Module 3.3),
+  graphql-java-extended-validation with Hibernate Validator (Module 4.5) and the JUnit console launcher.
+  The extended-* libraries are built against graphql-java 24.1; the course pins 26.1 and probes them
+  (_workbench/2026-11-21-m03-probe/).
   bin/course runs `mvn -f tools/course-lib/pom.xml package` when this file changes; jars land in .cache/course-lib/.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -35,6 +38,30 @@
       <groupId>com.graphql-java</groupId>
       <artifactId>graphql-java</artifactId>
       <version>26.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java-extended-scalars</artifactId>
+      <version>24.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.graphql-java</groupId>
+      <artifactId>graphql-java-extended-validation</artifactId>
+      <version>24.0</version>
+      <exclusions>
+        <exclusion><groupId>org.hibernate.validator</groupId><artifactId>hibernate-validator</artifactId></exclusion>
+        <exclusion><groupId>org.glassfish</groupId><artifactId>jakarta.el</artifactId></exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>8.0.6.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.expressly</groupId>
+      <artifactId>expressly</artifactId>
+      <version>5.0.0</version>
     </dependency>
     <dependency>
       <groupId>org.junit.platform</groupId>

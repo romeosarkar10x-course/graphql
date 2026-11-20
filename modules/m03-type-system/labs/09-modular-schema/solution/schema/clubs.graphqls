@@ -1,0 +1,57 @@
+type Club implements Node & Timestamped {
+  id: ID!
+  name: String!
+  description: String
+  owner: User!
+  members(first: Int = 10): [User!]!
+  memberCount: Int!
+  currentBook: Book
+  visibility: Visibility!
+  rules: ClubRules!
+  meetups(upcomingOnly: Boolean = true): [Meetup!]!
+  createdAt: DateTime!
+  "Use `memberCount`."
+  size: Int! @deprecated(reason: "Use `memberCount`.")
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+type ClubRules {
+  maxMembers: Int!
+  approvalRequired: Boolean!
+  cadence: MeetingCadence!
+}
+
+enum MeetingCadence {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+type Meetup implements Node {
+  id: ID!
+  title: String!
+  startsAt: DateTime!
+  location: String!
+  club: Club!
+}
+
+extend type Query {
+  club(id: ID!): Club
+  clubs(visibility: Visibility): [Club!]!
+}
+
+input JoinClubInput {
+  clubId: ID!
+}
+
+type JoinClubPayload {
+  club: Club
+}
+
+extend type Mutation {
+  joinClub(input: JoinClubInput!): JoinClubPayload!
+}

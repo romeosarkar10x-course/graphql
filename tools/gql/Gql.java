@@ -8,9 +8,17 @@
  *   operations <doc.graphql>
  *       List the operations in a document, one per line: "<type> <name or (anonymous)> uses=<features>",
  *       where features are alias, fragment-spread, inline-fragment, directive, variables.
- *   schema-lines <file.graphqls | url>
+ *   schema-lines <file.graphqls | dir | url>
  *       Print a schema as sorted one-line facts ("Club.owner: User!", "union SearchResult = ...").
  *       Two schemas are equivalent when their lines are equal, whatever the order or formatting.
+ *   coordinates <schema> <coordinate>...      (Module 3.9)
+ *       Resolve schema coordinates (September 2025 spec, "Schema Coordinates"): Type, Type.field,
+ *       Type.field(arg:), Enum.VALUE, Input.field, @directive, @directive(arg:). Prints
+ *       "ok <coordinate> <kind>" or "missing <coordinate>"; exit 1 if any is missing.
+ *   stats <schema>                            (Module 3.9)
+ *       JSON counts: named types (no built-ins), deprecated fields/arguments/input fields/enum values.
+ *
+ * A <schema> that is a directory means every *.graphqls file in it, merged (type extensions allowed).
  *
  * Exit status: 0 ok, 1 invalid document, 2 usage or I/O problem.
  */
@@ -42,6 +50,8 @@ public class Gql {
             }
             case "schema-lines" -> schemaLines(schema(args[1])).forEach(System.out::println);
             case "operations" -> System.exit(operations(Files.readString(Path.of(args[1]))));
+            case "coordinates" -> System.exit(coordinates(schema(args[1]), List.of(args).subList(2, args.length)));
+            case "stats" -> System.out.println(stats(schema(args[1])));
             default -> usage();
         }
     }
@@ -104,10 +114,78 @@ public class Gql {
                     HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() != 200) fail("GET " + source + " returned HTTP " + res.statusCode());
             sdl = res.body();
+        } else if (Files.isDirectory(Path.of(source))) {
+            var registry = new graphql.schema.idl.TypeDefinitionRegistry();
+            try (var files = Files.list(Path.of(source))) {
+                for (Path f : files.filter(f -> f.toString().endsWith(".graphqls")).sorted().toList()) {
+                    registry.merge(new SchemaParser().parse(Files.readString(f)));
+                }
+            }
+            return UnExecutableSchemaGenerator.makeUnExecutableSchema(registry);
         } else {
             sdl = Files.readString(Path.of(source));
         }
         return UnExecutableSchemaGenerator.makeUnExecutableSchema(new SchemaParser().parse(sdl));
+    }
+
+    static final java.util.regex.Pattern COORD = java.util.regex.Pattern.compile(
+            "(@)?([_A-Za-z][_0-9A-Za-z]*)(?:\\.([_A-Za-z][_0-9A-Za-z]*))?(?:\\(([_A-Za-z][_0-9A-Za-z]*):\\))?");
+
+    /** The kind of element a coordinate names, or null if it names nothing in this schema. */
+    static String resolve(GraphQLSchema schema, String coordinate) {
+        var m = COORD.matcher(coordinate);
+        if (!m.matches()) return null;
+        String name = m.group(2), member = m.group(3), arg = m.group(4);
+        if (m.group(1) != null) {
+            if (member != null) return null;
+            GraphQLDirective d = schema.getDirective(name);
+            if (d == null) return null;
+            if (arg == null) return "directive";
+            return d.getArgument(arg) != null ? "directive-argument" : null;
+        }
+        GraphQLNamedType t = (GraphQLNamedType) schema.getType(name);
+        if (t == null || name.startsWith("__")) return null;
+        if (member == null) return arg == null ? "type" : null;
+        return switch (t) {
+            case GraphQLFieldsContainer fc -> {
+                GraphQLFieldDefinition f = fc.getFieldDefinition(member);
+                if (f == null) yield null;
+                if (arg == null) yield "field";
+                yield f.getArgument(arg) != null ? "argument" : null;
+            }
+            case GraphQLInputObjectType in -> arg == null && in.getFieldDefinition(member) != null ? "input-field" : null;
+            case GraphQLEnumType e -> arg == null && e.getValue(member) != null ? "enum-value" : null;
+            default -> null;
+        };
+    }
+
+    static int coordinates(GraphQLSchema schema, List<String> coords) {
+        int missing = 0;
+        for (String c : coords) {
+            String kind = resolve(schema, c);
+            if (kind == null) { System.out.println("missing " + c); missing++; }
+            else System.out.println("ok " + c + " " + kind);
+        }
+        return missing == 0 ? 0 : 1;
+    }
+
+    static String stats(GraphQLSchema schema) {
+        int types = 0, fields = 0, args = 0, inputFields = 0, enumValues = 0;
+        var builtIn = java.util.Set.of("String", "Int", "Float", "Boolean", "ID");
+        for (GraphQLNamedType t : schema.getAllTypesAsList()) {
+            if (t.getName().startsWith("__") || builtIn.contains(t.getName())) continue;
+            types++;
+            if (t instanceof GraphQLFieldsContainer fc) {
+                for (GraphQLFieldDefinition f : fc.getFieldDefinitions()) {
+                    if (f.isDeprecated()) fields++;
+                    for (GraphQLArgument a : f.getArguments()) if (a.isDeprecated()) args++;
+                }
+            }
+            if (t instanceof GraphQLInputObjectType in) for (var f : in.getFieldDefinitions()) if (f.isDeprecated()) inputFields++;
+            if (t instanceof GraphQLEnumType e) for (var v : e.getValues()) if (v.isDeprecated()) enumValues++;
+        }
+        return "{\"types\":" + types + ",\"deprecated\":{\"fields\":" + fields + ",\"arguments\":" + args
+                + ",\"inputFields\":" + inputFields + ",\"enumValues\":" + enumValues + "}}";
     }
 
     static List<String> schemaLines(GraphQLSchema schema) {
@@ -157,7 +235,9 @@ public class Gql {
     static void usage() {
         fail("usage: bin/course gql validate <doc.graphql> [--schema <sdl file or url>]\n"
                 + "       bin/course gql operations <doc.graphql>\n"
-                + "       bin/course gql schema-lines <sdl file or url>");
+                + "       bin/course gql schema-lines <sdl file, dir or url>\n"
+                + "       bin/course gql coordinates <sdl file, dir or url> <coordinate>...\n"
+                + "       bin/course gql stats <sdl file, dir or url>");
     }
 
     static void fail(String msg) {

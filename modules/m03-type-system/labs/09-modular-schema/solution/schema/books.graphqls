@@ -1,0 +1,59 @@
+type Book implements Node {
+  id: ID!
+  title: String!
+  authors: [String!]!
+  isbn: ISBN!
+  publishedYear: Int
+  coverUrl: Url
+  averageRating: Float
+  reviews(last: Int = 5): [Review!]!
+}
+
+type Review implements Node & Timestamped {
+  id: ID!
+  rating: Int!
+  body: String!
+  spoilerLevel: SpoilerLevel!
+  author: User!
+  book: Book!
+  createdAt: DateTime!
+}
+
+enum SpoilerLevel {
+  NONE
+  MILD
+  MAJOR
+}
+
+"Exactly one key (lab 3.8)."
+input BookLookup @oneOf {
+  id: ID
+  isbn: ISBN
+  title: String
+}
+
+extend type Query {
+  book(by: BookLookup!): Book
+  books(
+    "Use `search` instead: it matches authors too."
+    titleContains: String @deprecated(reason: "Use `search`.")
+    search: String
+    first: Int = 20
+  ): [Book!]!
+}
+
+input CreateReviewInput {
+  bookId: ID!
+  rating: Int!
+  body: String!
+  spoiler: Boolean @deprecated(reason: "Use `spoilerLevel`: spoilers are not yes or no.")
+  spoilerLevel: SpoilerLevel = NONE
+}
+
+type CreateReviewPayload {
+  review: Review
+}
+
+extend type Mutation {
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+}

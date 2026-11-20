@@ -1,0 +1,18 @@
+{
+  "data": {
+    "shelf": [
+      {
+        "bookId": "b1",
+        "status": "FINISHED"
+      },
+      {
+        "bookId": "b6",
+        "status": "READING"
+      },
+      {
+        "bookId": "b10",
+        "status": "WANT_TO_READ"
+      }
+    ]
+  }
+}

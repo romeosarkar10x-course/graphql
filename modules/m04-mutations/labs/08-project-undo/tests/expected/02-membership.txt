@@ -1,0 +1,7 @@
+01 {"data":{"joinClub":{"club":{"memberIds":["u7","u5","u4"]},"undoToken":"<token>","userErrors":[]}}}
+02 {"data":{"joinClub":{"club":{"memberIds":["u7","u5","u4"]},"undoToken":null,"userErrors":[]}}}
+03 {"data":{"undo":{"undone":"join c2","undoToken":"<token>","userErrors":[]}}}
+04 {"data":{"club":{"name":"Slow Burn Mysteries","memberIds":["u7","u5"]}}}
+05 {"data":{"leaveClub":{"club":{"memberIds":["u11","u2"]},"undoToken":"<token>","userErrors":[]}}}
+06 {"data":{"undo":{"undone":"leave c1","undoToken":"<token>","userErrors":[]}}}
+07 {"data":{"club":{"name":"The Midnight Readers","memberIds":["u11","u2","u1"]}}}

@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: shelfie-ref
+  servlet:
+    multipart:
+      max-file-size: 100MB      # Module 4.6 uploads a 50 MB cover
+      max-request-size: 110MB
   threads:
     virtual:
       enabled: true
@@ -22,3 +26,8 @@ management:
 shelfie:
   grpc:
     port: 9090
+  storage:                  # SeaweedFS in docker/compose.yaml (Module 4.6)
+    endpoint: http://storage:8333
+    bucket: covers
+    access-key: shelfie
+    secret-key: shelfie-secret

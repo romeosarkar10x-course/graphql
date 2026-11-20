@@ -1,0 +1,14 @@
+{"name": "01-id", "query": "{ book(by: {id: \"b2\"}) { title } }", "variables": {}}
+{"name": "02-isbn", "query": "{ book(by: {isbn: \"9780441478125\"}) { title } }", "variables": {}}
+{"name": "03-title", "query": "{ book(by: {title: \"piranesi\"}) { id } }", "variables": {}}
+{"name": "04-unknown-id", "query": "{ book(by: {id: \"zz\"}) { title } }", "variables": {}}
+{"name": "05-empty", "query": "{ book(by: {}) { title } }", "variables": {}}
+{"name": "06-two-keys", "query": "{ book(by: {id: \"b1\", isbn: \"9781635575637\"}) { title } }", "variables": {}}
+{"name": "07-two-keys-one-null", "query": "{ book(by: {id: \"b1\", title: null}) { title } }", "variables": {}}
+{"name": "08-null-key", "query": "{ book(by: {id: null}) { title } }", "variables": {}}
+{"name": "09-var-two-keys", "query": "query ($b: BookLookup!) { book(by: $b) { title } }", "variables": {"b": {"id": "b1", "isbn": "9781635575637"}}}
+{"name": "10-var-null-key", "query": "query ($b: BookLookup!) { book(by: $b) { title } }", "variables": {"b": {"id": null}}}
+{"name": "11-var-ok", "query": "query ($b: BookLookup!) { book(by: $b) { title } }", "variables": {"b": {"isbn": "9781635575637"}}}
+{"name": "12-inner-nullable-var-unset", "query": "query ($i: ID) { book(by: {id: $i}) { title } }", "variables": {}}
+{"name": "13-inner-non-null-var", "query": "query ($i: ID!) { book(by: {id: $i}) { title } }", "variables": {"i": "b6"}}
+{"name": "14-unknown-key", "query": "{ book(by: {author: \"Ursula K. Le Guin\"}) { title } }", "variables": {}}

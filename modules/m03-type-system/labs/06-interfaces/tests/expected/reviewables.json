@@ -1,0 +1,104 @@
+{
+  "data": {
+    "reviewables": [
+      {
+        "__typename": "Book",
+        "id": "b3",
+        "averageRating": 5.0,
+        "reviews": [
+          {
+            "rating": 5,
+            "author": {
+              "name": "Ines Duarte"
+            }
+          }
+        ],
+        "title": "The Remains of the Day"
+      },
+      {
+        "__typename": "Book",
+        "id": "b2",
+        "averageRating": 4.5,
+        "reviews": [
+          {
+            "rating": 4,
+            "author": {
+              "name": "Farid Haddad"
+            }
+          }
+        ],
+        "title": "Piranesi"
+      },
+      {
+        "__typename": "Book",
+        "id": "b4",
+        "averageRating": 4.5,
+        "reviews": [
+          {
+            "rating": 4,
+            "author": {
+              "name": "Liu Wei"
+            }
+          }
+        ],
+        "title": "The Name of the Rose"
+      },
+      {
+        "__typename": "Book",
+        "id": "b6",
+        "averageRating": 4.5,
+        "reviews": [
+          {
+            "rating": 4,
+            "author": {
+              "name": "Dev Patel"
+            }
+          }
+        ],
+        "title": "Project Hail Mary"
+      },
+      {
+        "__typename": "Book",
+        "id": "b9",
+        "averageRating": 4.5,
+        "reviews": [
+          {
+            "rating": 4,
+            "author": {
+              "name": "Chloe Martin"
+            }
+          }
+        ],
+        "title": "The Seven Moons of Maali Almeida"
+      },
+      {
+        "__typename": "Book",
+        "id": "b1",
+        "averageRating": 4.2,
+        "reviews": [
+          {
+            "rating": 4,
+            "author": {
+              "name": "Hugo Silva"
+            }
+          }
+        ],
+        "title": "The Left Hand of Darkness"
+      },
+      {
+        "__typename": "Book",
+        "id": "b8",
+        "averageRating": 4.0,
+        "reviews": [
+          {
+            "rating": 4,
+            "author": {
+              "name": "Asha Rao"
+            }
+          }
+        ],
+        "title": "Station Eleven"
+      }
+    ]
+  }
+}

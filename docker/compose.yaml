@@ -1,6 +1,8 @@
 # Course services. Started by `bin/course ref up`; do not run by hand unless you know why.
 #   shelfie-ref  reference server: REST /api, GraphQL /graphql, GraphiQL /graphiql, gRPC :9090
 #   toxiproxy    adds latency between you and shelfie-ref (Module 1.2): proxy on :8666, API on :8474
+#   storage      S3-compatible object storage for pre-signed cover uploads (Module 4.6): S3 API on :8333.
+#                SeaweedFS, because MinIO (the plan's choice) no longer publishes container images.
 name: gqlcourse
 
 services:
@@ -16,6 +18,19 @@ services:
       - "9090:9090"
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health"]
+      interval: 2s
+      timeout: 2s
+      retries: 60
+
+  storage:
+    image: chrislusf/seaweedfs:4.54
+    command: ["server", "-s3", "-s3.config=/etc/seaweedfs/s3.json", "-dir=/data"]
+    volumes:
+      - ./storage/s3.json:/etc/seaweedfs/s3.json:ro
+    ports:
+      - "8333:8333"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9333/cluster/status"]
       interval: 2s
       timeout: 2s
       retries: 60

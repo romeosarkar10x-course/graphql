@@ -1,0 +1,7 @@
+{
+  "title": "Unions as Java sealed types: let the compiler find the missing case",
+  "lecture": "3.7",
+  "kind": "lab",
+  "grading": "both",
+  "needs": []
+}

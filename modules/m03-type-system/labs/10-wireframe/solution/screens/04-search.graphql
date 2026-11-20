@@ -1,0 +1,11 @@
+query Search($text: String!) {
+  search(text: $text) {
+    total
+    hits {
+      __typename
+      ... on Book { id title authors coverUrl }
+      ... on Club { id name memberCount }
+      ... on User { id name handle avatarUrl }
+    }
+  }
+}

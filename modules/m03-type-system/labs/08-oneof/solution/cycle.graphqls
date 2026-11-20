@@ -1,0 +1,3 @@
+# A oneOf value must set exactly one non-null field; the only field is another A. No finite value exists.
+type Query { x(a: A): Int }
+input A @oneOf { a: A }

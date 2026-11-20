@@ -1,0 +1,10 @@
+[
+  {"case": "01", "record": "CreateReviewInput", "input": {"bookId": "b2", "rating": 4, "body": "Halls and tides, wonderful."}},
+  {"case": "02", "record": "UpdateClubInput", "input": {"clubId": "c1", "name": "Midnight Readers"}},
+  {"case": "03", "record": "UpdateClubInput", "input": {"clubId": "c1", "description": null}},
+  {"case": "04", "record": "UpdateClubInput", "input": {"clubId": "c1", "name": "X", "description": "New", "visibility": "PRIVATE"}},
+  {"case": "05", "record": "SetShelfStatusInput", "input": {"bookId": "b6", "status": "READING", "notifyFollowers": false}},
+  {"case": "06", "record": "DeleteReviewsInput", "input": {"reviewIds": ["r1", "r2"]}},
+  {"case": "07", "record": "CreateReviewInput", "input": {"bookId": "b2", "body": "No rating given here."}},
+  {"case": "08", "record": "JoinClubInput", "input": {"clubId": "c2"}}
+]

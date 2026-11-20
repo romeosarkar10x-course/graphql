@@ -1,0 +1,5 @@
+# Hints, lab 4.5
+
+1. The extended-validation directives must be declared in the SDL with their arguments, e.g. `directive @Range(min: Int = 0, max: Int = 2147483647, message: String = "graphql.validation.Range.message") on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION`, then wired: `RuntimeWiring.newRuntimeWiring().directiveWiring(new ValidationSchemaWiring(ValidationRules.newValidationRules().onValidationErrorStrategy(OnValidationErrorStrategy.RETURN_NULL).build()))`.
+2. On a list, `@Size` checks **each element**; the list's own length is `@ContainerSize`. Case 13 and case 14 tell them apart.
+3. Bean Validation: `jakarta.validation.Validation.byDefaultProvider().configure().messageInterpolator(new ParameterMessageInterpolator()).buildValidatorFactory().getValidator()`, then `validate(record)`. Annotations go on record components; `@AssertTrue` goes on a `public boolean isTagsUnique()` method, and the violation's property is `tagsUnique`. Sort violations by property path so the output is stable.

@@ -1,0 +1,32 @@
+"""
+Shelfie, full schema, Module 3. Split by area: each file owns its types and extends Query with
+its own entry points. The files merge in name order; this one goes first.
+"""
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+"ISBN-13 as 13 digits (lab 3.3)."
+scalar ISBN @specifiedBy(url: "https://www.isbn-international.org/content/isbn-users-manual")
+scalar DateTime @specifiedBy(url: "https://scalars.graphql.org/chillicream/date-time.html")
+scalar Url
+
+"Anything with a global id."
+interface Node {
+  id: ID!
+}
+
+interface Timestamped {
+  createdAt: DateTime!
+}
+
+type Query {
+  "Any object by its global id."
+  node(id: ID!): Node
+}
+
+type Mutation {
+  "Smoke test: always true. Areas extend Mutation with real writes."
+  ping: Boolean!
+}

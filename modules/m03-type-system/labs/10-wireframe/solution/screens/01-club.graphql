@@ -1,0 +1,12 @@
+query ClubPage($id: ID!) {
+  club(id: $id) {
+    name
+    bannerUrl
+    memberCount
+    owner { name avatarUrl }
+    members(first: 5) { id avatarUrl }
+    viewerIsMember
+    currentBook { title authors coverUrl averageRating }
+    nextMeetup { title startsAt location }
+  }
+}

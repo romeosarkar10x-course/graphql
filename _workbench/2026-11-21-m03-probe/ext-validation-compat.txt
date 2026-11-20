@@ -1,0 +1,4 @@
+graphql-java-extended-validation 24.0 (built for graphql-java 24.1, Hibernate Validator 7.0.1):
+- with Hibernate Validator 9.2.0.Final: NoSuchMethodError MessageInterpolatorContext.<init> on the first violation (HV internals changed)
+- with Hibernate Validator 8.0.3.Final / 8.0.6.Final + expressly 5.0.0: works on graphql-java 26.1 (see probe2.txt)
+Course pins HV 8.0.6.Final + expressly 5.0.0 in tools/course-lib.

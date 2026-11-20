@@ -1,0 +1,27 @@
+"ISBN-13 as 13 digits, no hyphens. Accepts ISBN-10 or ISBN-13 input, hyphens and spaces allowed."
+scalar ISBN @specifiedBy(url: "https://www.isbn-international.org/content/isbn-users-manual")
+scalar DateTime @specifiedBy(url: "https://scalars.graphql.org/chillicream/date-time.html")
+scalar BigDecimal
+scalar Url
+
+type Query {
+  book(isbn: ISBN!): Book
+  "Echoes the coerced input: the lab's probe for input coercion."
+  check(isbn: ISBN!): ISBN!
+  books: [Book!]!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  isbn: ISBN!
+  coverUrl: Url!
+  listPrice: BigDecimal
+  reviews: [Review!]!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  createdAt: DateTime!
+}

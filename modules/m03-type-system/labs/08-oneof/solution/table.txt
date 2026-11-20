@@ -1,0 +1,14 @@
+01-id ok {"book":{"title":"Piranesi"}}
+02-isbn ok {"book":{"title":"The Left Hand of Darkness"}}
+03-title ok {"book":{"id":"b2"}}
+04-unknown-id ok {"book":null}
+05-empty rejected/validation
+06-two-keys rejected/validation
+07-two-keys-one-null rejected/validation
+08-null-key rejected/execution
+09-var-two-keys rejected/variable-coercion
+10-var-null-key rejected/variable-coercion
+11-var-ok ok {"book":{"title":"Piranesi"}}
+12-inner-nullable-var-unset rejected/execution
+13-inner-non-null-var ok {"book":{"title":"Project Hail Mary"}}
+14-unknown-key rejected/validation

@@ -1,0 +1,9 @@
+01 {"data":{"createReview":{"review":{"id":"r16"},"undoToken":"<token>","userErrors":[]}}}
+02 {"data":{"deleteReview":{"review":null,"undoToken":null,"userErrors":[{"code":"FORBIDDEN"}]}}}
+03 {"data":{"deleteReview":{"review":{"id":"r16"},"undoToken":"<token>","userErrors":[]}}}
+04 {"data":{"review":null}}
+05 {"data":{"undo":{"undone":null,"undoToken":null,"userErrors":[{"code":"CONFLICT"}]}}}
+06 {"data":{"undo":{"undone":"delete r16","undoToken":"<token>","userErrors":[]}}}
+07 {"data":{"review":{"id":"r16","body":"Undo me if you can."}}}
+08 {"data":{"undo":{"undone":"create r16","undoToken":"<token>","userErrors":[]}}}
+09 {"data":{"review":null}}

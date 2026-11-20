@@ -1,0 +1,31 @@
+type Query {
+  "All clubs, or only those with the given visibility."
+  clubs(visibility: Visibility): [Club!]!
+  "A user's shelf, in the order books were added."
+  shelf(userId: ID!): [ShelfEntry!]!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  visibility: Visibility!
+}
+
+"Stored as one-letter codes in the legacy clubs table: P and X."
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+type ShelfEntry {
+  bookId: ID!
+  status: ReadingStatus!
+}
+
+enum ReadingStatus {
+  WANT_TO_READ
+  READING
+  FINISHED
+  "Stopped part-way. Added in v2: old clients must not crash on it."
+  ABANDONED
+}

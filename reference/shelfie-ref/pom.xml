@@ -2,6 +2,7 @@
 <!--
   Shelfie reference server: the "provided" server Modules 0 and 1 run against.
   Serves the same data three ways: REST (Spring MVC), GraphQL (Spring for GraphQL), gRPC.
+  Module 4 adds mutations, the multipart upload convention and pre-signed URLs to object storage.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -63,6 +64,17 @@
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java</artifactId>
       <version>${protobuf-java.version}</version>
+    </dependency>
+    <!-- Module 4.6: pre-signed URLs only (signing is offline), so no AWS HTTP client is needed -->
+    <dependency>
+      <groupId>software.amazon.awssdk</groupId>
+      <artifactId>s3</artifactId>
+      <version>2.59.5</version>
+      <exclusions>
+        <exclusion><groupId>software.amazon.awssdk</groupId><artifactId>netty-nio-client</artifactId></exclusion>
+        <exclusion><groupId>software.amazon.awssdk</groupId><artifactId>apache-client</artifactId></exclusion>
+        <exclusion><groupId>software.amazon.awssdk</groupId><artifactId>apache5-client</artifactId></exclusion>
+      </exclusions>
     </dependency>
     <!-- @Generated in the grpc stubs -->
     <dependency>

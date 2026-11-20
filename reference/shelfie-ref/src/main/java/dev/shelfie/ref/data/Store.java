@@ -19,6 +19,10 @@ import org.springframework.stereotype.Component;
 /**
  * Deterministic in-memory seed. Tests and expected outputs in modules/ depend on these exact values:
  * change them and the Module 0 and 1 expected files must change too.
+ *
+ * <p>From Module 4 the store is writable (reviews, memberships, covers). {@link #reset()} restores the
+ * seed; {@code POST /_course/reset-data} calls it, and {@code bin/course test} does so before every lab.
+ * Writes are {@code synchronized}: the reference server is about behaviour, not throughput.
  */
 @Component
 public class Store {
@@ -28,8 +32,21 @@ public class Store {
     private final Map<String, Club> clubs = new LinkedHashMap<>();
     private final Map<String, Review> reviews = new LinkedHashMap<>();
     private final Map<String, Meetup> meetups = new LinkedHashMap<>();
+    private final Map<String, String> covers = new LinkedHashMap<>();
+    private int nextReview;
 
     public Store() {
+        reset();
+    }
+
+    /** Back to the seed: every write since start-up is forgotten. */
+    public synchronized void reset() {
+        users.clear(); books.clear(); clubs.clear(); reviews.clear(); meetups.clear(); covers.clear();
+        nextReview = 16;
+        seed();
+    }
+
+    private void seed() {
         String[][] people = {
             {"u1", "Asha Rao", "asha", "Reads sci-fi on the night bus.", "Bengaluru"},
             {"u2", "Ben Okafor", "benok", "Fantasy maps collector.", "Lagos"},
@@ -123,35 +140,69 @@ public class Store {
         meetups.put(id, new Meetup(id, clubId, title, startsAt, location, upcoming));
     }
 
-    public Optional<User> user(String id) { return Optional.ofNullable(users.get(id)); }
-    public Optional<Book> book(String id) { return Optional.ofNullable(books.get(id)); }
-    public Optional<Club> club(String id) { return Optional.ofNullable(clubs.get(id)); }
+    // ---- writes (Module 4) ----
 
-    public List<User> users() { return List.copyOf(users.values()); }
-    public List<Book> books() { return List.copyOf(books.values()); }
-    public List<Club> clubs() { return List.copyOf(clubs.values()); }
+    /** Adds a review with the next id (r16, r17, ...). Callers validate first. */
+    public synchronized Review addReview(String bookId, String authorId, int rating, String body, String createdAt) {
+        Review r = new Review("r" + nextReview++, bookId, authorId, rating, body, createdAt);
+        reviews.put(r.id(), r);
+        return r;
+    }
+
+    public synchronized Optional<Review> removeReview(String id) {
+        return Optional.ofNullable(reviews.remove(id));
+    }
+
+    public synchronized Optional<Review> review(String id) { return Optional.ofNullable(reviews.get(id)); }
+
+    public synchronized Optional<Review> reviewOf(String bookId, String authorId) {
+        return reviews.values().stream().filter(r -> r.bookId().equals(bookId) && r.authorId().equals(authorId)).findFirst();
+    }
+
+    /** Replaces the club's member list; returns the updated club. */
+    public synchronized Club setMembers(String clubId, List<String> memberIds) {
+        Club c = clubs.get(clubId);
+        Club updated = new Club(c.id(), c.name(), c.description(), c.ownerId(), List.copyOf(memberIds),
+                c.currentBookId(), c.createdAt(), c.bannerUrl(), c.visibility(), c.rules());
+        clubs.put(clubId, updated);
+        return updated;
+    }
+
+    /** Records where a book's uploaded cover lives (Module 4.6). */
+    public synchronized void setCover(String bookId, String url) { covers.put(bookId, url); }
+
+    /** The uploaded cover URL if one was uploaded since the last reset, else the seed URL. */
+    public synchronized String coverUrl(Book book) { return covers.getOrDefault(book.id(), book.coverUrl()); }
+
+    public synchronized Optional<User> user(String id) { return Optional.ofNullable(users.get(id)); }
+    public synchronized Optional<Book> book(String id) { return Optional.ofNullable(books.get(id)); }
+    public synchronized Optional<Club> club(String id) { return Optional.ofNullable(clubs.get(id)); }
+
+    public synchronized List<User> users() { return List.copyOf(users.values()); }
+    public synchronized List<Book> books() { return List.copyOf(books.values()); }
+    public synchronized List<Club> clubs() { return List.copyOf(clubs.values()); }
 
     /** Reviews for a book, newest first. */
-    public List<Review> reviewsForBook(String bookId) {
+    public synchronized List<Review> reviewsForBook(String bookId) {
         return reviews.values().stream()
                 .filter(r -> r.bookId().equals(bookId))
                 .sorted(Comparator.comparing(Review::createdAt).reversed())
                 .toList();
     }
 
-    public List<Review> reviewsByUser(String userId) {
+    public synchronized List<Review> reviewsByUser(String userId) {
         return reviews.values().stream()
                 .filter(r -> r.authorId().equals(userId))
                 .sorted(Comparator.comparing(Review::createdAt).reversed())
                 .toList();
     }
 
-    public List<Club> clubsOfUser(String userId) {
+    public synchronized List<Club> clubsOfUser(String userId) {
         return clubs.values().stream().filter(c -> c.memberIds().contains(userId)).toList();
     }
 
     /** Meetups for a club, soonest first. */
-    public List<Meetup> meetupsForClub(String clubId, boolean upcomingOnly) {
+    public synchronized List<Meetup> meetupsForClub(String clubId, boolean upcomingOnly) {
         List<Meetup> out = new ArrayList<>();
         for (Meetup m : meetups.values()) {
             if (m.clubId().equals(clubId) && (!upcomingOnly || m.upcoming())) out.add(m);
@@ -160,7 +211,7 @@ public class Store {
         return out;
     }
 
-    public Double averageRating(String bookId) {
+    public synchronized Double averageRating(String bookId) {
         var rs = reviewsForBook(bookId);
         if (rs.isEmpty()) return null;
         double avg = rs.stream().mapToInt(Review::rating).average().orElseThrow();

@@ -1,0 +1,33 @@
+{
+  "data": {
+    "clubs": [
+      {
+        "id": "c1",
+        "name": "The Midnight Readers",
+        "visibility": "PUBLIC",
+        "memberCount": 8,
+        "currentBook": {
+          "title": "The Left Hand of Darkness"
+        }
+      },
+      {
+        "id": "c2",
+        "name": "Slow Burn Mysteries",
+        "visibility": "PUBLIC",
+        "memberCount": 4,
+        "currentBook": {
+          "title": "The Name of the Rose"
+        }
+      },
+      {
+        "id": "c3",
+        "name": "Booker Shortlist Survivors",
+        "visibility": "PRIVATE",
+        "memberCount": 5,
+        "currentBook": {
+          "title": "The Seven Moons of Maali Almeida"
+        }
+      }
+    ]
+  }
+}

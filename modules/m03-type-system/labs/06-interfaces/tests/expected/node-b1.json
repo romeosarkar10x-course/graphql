@@ -1,0 +1,10 @@
+{
+  "data": {
+    "node": {
+      "__typename": "Book",
+      "id": "b1",
+      "title": "The Left Hand of Darkness",
+      "averageRating": 4.2
+    }
+  }
+}

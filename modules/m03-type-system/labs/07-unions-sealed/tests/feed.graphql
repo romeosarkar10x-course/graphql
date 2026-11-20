@@ -1,0 +1,9 @@
+query ($club: ID!) {
+  feed(clubId: $club) {
+    __typename
+    ... on ReviewPosted { at reviewer { name } book { title } rating }
+    ... on MemberJoined { at member { name } }
+    ... on MeetupScheduled { at title startsAt }
+    ... on BookFinished { at book { title } readers }
+  }
+}

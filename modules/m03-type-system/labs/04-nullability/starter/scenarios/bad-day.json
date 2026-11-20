@@ -1,0 +1,10 @@
+{
+  "title": "Bad day: the ratings service is down and one profile is corrupt",
+  "sdl": "type Query { club(id: ID!): Club }\ntype Club { id: ID! name: String! description: String owner: User! members: [User!]! currentBook: Book }\ntype User { id: ID! name: String! }\ntype Book { id: ID! title: String! averageRating: Float! reviews: [Review!]! }\ntype Review { id: ID! rating: Int! author: User! }\n",
+  "query": "{ club(id: \"c1\") { name owner { name } members { name } currentBook { title averageRating } } }",
+  "throw": [
+    "Book.averageRating",
+    "User.name@u2"
+  ],
+  "returnNull": []
+}

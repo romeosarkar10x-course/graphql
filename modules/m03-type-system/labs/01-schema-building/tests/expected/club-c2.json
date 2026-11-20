@@ -1,0 +1,44 @@
+{
+  "data": {
+    "club": {
+      "id": "c2",
+      "name": "Slow Burn Mysteries",
+      "owner": {
+        "name": "Grace Kim"
+      },
+      "members": [
+        {
+          "name": "Grace Kim",
+          "handle": "gracek"
+        },
+        {
+          "name": "Elena Petrova",
+          "handle": "elenap"
+        },
+        {
+          "name": "Ines Duarte",
+          "handle": "inesd"
+        }
+      ],
+      "memberCount": 4,
+      "currentBook": {
+        "title": "The Name of the Rose",
+        "averageRating": 4.5,
+        "reviews": [
+          {
+            "rating": 4,
+            "author": {
+              "name": "Liu Wei"
+            }
+          },
+          {
+            "rating": 5,
+            "author": {
+              "name": "Grace Kim"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

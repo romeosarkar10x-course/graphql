@@ -1,0 +1,58 @@
+{
+  "1-addStar": {
+    "input": 2,
+    "payload": 2,
+    "errors": 0,
+    "retry": 2,
+    "naming": 2
+  },
+  "2-createIssue": {
+    "input": 2,
+    "payload": 1,
+    "errors": 0,
+    "retry": 0,
+    "naming": 2
+  },
+  "3-mergePullRequest": {
+    "input": 2,
+    "payload": 2,
+    "errors": 0,
+    "retry": 2,
+    "naming": 2
+  },
+  "4-deleteIssue": {
+    "input": 2,
+    "payload": 2,
+    "errors": 0,
+    "retry": 1,
+    "naming": 2
+  },
+  "5-SaveMediaListEntry": {
+    "input": 0,
+    "payload": 1,
+    "errors": 0,
+    "retry": 1,
+    "naming": 1
+  },
+  "6-ToggleFavourite": {
+    "input": 0,
+    "payload": 1,
+    "errors": 0,
+    "retry": 0,
+    "naming": 1
+  },
+  "7-DeleteMediaListEntry": {
+    "input": 0,
+    "payload": 0,
+    "errors": 0,
+    "retry": 1,
+    "naming": 1
+  },
+  "8-createReviewTyped": {
+    "input": 2,
+    "payload": 1,
+    "errors": 2,
+    "retry": 0,
+    "naming": 1
+  }
+}

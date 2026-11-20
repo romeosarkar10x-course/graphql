@@ -1,0 +1,55 @@
+"Mini-project 4: every change can be undone. Mutations act as the viewer in the GraphQL context."
+type Query {
+  club(id: ID!): Club
+  review(id: ID!): Review
+}
+
+type Mutation {
+  renameClub(input: RenameClubInput!): ClubPayload!
+  joinClub(input: ClubInput!): ClubPayload!
+  leaveClub(input: ClubInput!): ClubPayload!
+  createReview(input: CreateReviewInput!): ReviewPayload!
+  deleteReview(input: DeleteReviewInput!): ReviewPayload!
+  """
+  Reverse the change a token came from. Tokens are single-use. Undo refuses (CONFLICT) when the state
+  has moved on since: it never overwrites someone else's change. Its own payload carries a token
+  that redoes the change.
+  """
+  undo(input: UndoInput!): UndoPayload!
+}
+
+input RenameClubInput { clubId: ID! name: String! }
+input ClubInput { clubId: ID! }
+input CreateReviewInput { bookId: ID! rating: Int! body: String! }
+input DeleteReviewInput { reviewId: ID! }
+input UndoInput { token: ID! }
+
+type ClubPayload {
+  club: Club
+  "Null when nothing changed (a no-op) or on error."
+  undoToken: ID
+  userErrors: [UserError!]!
+}
+
+type ReviewPayload {
+  review: Review
+  undoToken: ID
+  userErrors: [UserError!]!
+}
+
+type UndoPayload {
+  "What was undone, e.g. \"rename c1\"."
+  undone: String
+  "Undo the undo."
+  undoToken: ID
+  userErrors: [UserError!]!
+}
+
+type Club { id: ID! name: String! memberIds: [ID!]! }
+type Review { id: ID! bookId: ID! authorId: ID! rating: Int! body: String! }
+
+type UserError {
+  message: String!
+  "NOT_FOUND, USED, CONFLICT, FORBIDDEN."
+  code: String!
+}

@@ -1,0 +1,1 @@
+{ reviewables { __typename id averageRating reviews(last: 1) { rating author { name } } ... on Book { title } } }

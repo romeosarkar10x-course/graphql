@@ -1,0 +1,4 @@
+{"name":"SaveMediaListEntry","returns":"MediaList","args":["id: Int","mediaId: Int","status: MediaListStatus","score: Float","scoreRaw: Int","progress: Int","progressVolumes: Int","repeat: Int","priority: Int","private: Boolean","notes: String","hiddenFromStatusLists: Boolean","customLists: LIST String","advancedScores: LIST Float","startedAt: FuzzyDateInput","completedAt: FuzzyDateInput"]}
+{"name":"DeleteMediaListEntry","returns":"Deleted","args":["id: Int"]}
+{"name":"ToggleFavourite","returns":"Favourites","args":["animeId: Int","mangaId: Int","characterId: Int","staffId: Int","studioId: Int"]}
+{"name":"SaveReview","returns":"Review","args":["id: Int","mediaId: Int","body: String","summary: String","score: Int","private: Boolean"]}

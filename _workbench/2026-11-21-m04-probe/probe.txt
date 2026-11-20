@@ -1,0 +1,28 @@
+## typed: anonymous, bad input, ok
+{"data":{"createReviewTyped":{"__typename":"NotAllowed","reason":"Sign in first: send an X-Shelfie-User header naming a user, e.g. u1."}}}
+{"data":{"createReviewTyped":{"__typename":"ValidationFailed","problems":[{"field":["input","bookId"],"message":"No book with id zz."},{"field":["input","rating"],"message":"Rating must be from 1 to 5."},{"field":["input","body"],"message":"Body must be 10 to 2000 characters (got 5)."}]}}}
+{"data":{"createReviewTyped":{"__typename":"ReviewCreated","review":{"id":"r16"}}}}
+## join/leave
+{"data":{"joinClub":{"club":{"id":"c1","memberCount":9},"userErrors":[]}}}
+{"data":{"joinClub":{"club":{"id":"c1","memberCount":9},"userErrors":[]}}}
+{"data":{"joinClub":{"club":{"id":"c2","memberCount":5},"userErrors":[]}}}
+{"data":{"joinClub":{"club":null,"userErrors":[{"code":"FORBIDDEN","message":"This club is private: ask the owner for an invite."}]}}}
+{"data":{"leaveClub":{"club":null,"userErrors":[{"code":"FORBIDDEN","message":"The owner cannot leave their own club."}]}}}
+{"data":{"leaveClub":{"club":{"id":"c1","memberCount":8},"userErrors":[]}}}
+## delete
+{"data":{"deleteReview":{"deletedReviewId":null,"book":null,"userErrors":[{"code":"FORBIDDEN","message":"Only the author can delete a review."}]}}}
+{"data":{"deleteReview":{"deletedReviewId":"r1","book":{"id":"b1","averageRating":4.0},"userErrors":[]}}}
+## upload as JSON variable
+{"errors":[{"message":"Variable 'f' has an invalid value: Upload values come from a multipart request's file parts, not from JSON (got String)","locations":[{"line":1,"column":19}],"extensions":{"classification":"ValidationError"}}]}
+## multipart without preflight header
+{"errors":[{"message":"Multipart requests need a GraphQL-Require-Preflight header (CSRF protection, Module 4.6)"}]} HTTP 400
+## multipart with header
+{"data":{"uploadCover":{"bytes":1048576,"sha256":"e50c5c6c2e0b6384e439927dc501a64fc3d1e48cd585e48fedf79722baac9d1b","serverBufferedBytes":1048576,"userErrors":[]}}}
+e50c5c6c2e0b6384e439927dc501a64fc3d1e48cd585e48fedf79722baac9d1b  /tmp/cover.jpg
+## presigned
+{"uploadId":"up1","url":"http://storage:8333/covers/b2/up1.jpg?X-Amz-Algorithm=AWS4-H"}
+{"data":{"confirmCoverUpload":{"book":{"id":"b2","coverUrl":"http://storage:8333/covers/b2/up1.jpg"},"bytes":1048576,"sha256":"dec2d8e6999aad6b4f2a45961f5eac9f64bb7a3616e4082be70d52326e1a40a5","serverBufferedBytes":8192,"userErrors":[]}}}
+PUT 200
+{"data":{"confirmCoverUpload":{"book":null,"bytes":null,"sha256":null,"serverBufferedBytes":null,"userErrors":[{"code":"NOT_FOUND","message":"Unknown or already confirmed upload."}]}}}
+PUT wrong type 403
+{"data":{"book":{"averageRating":4.2,"coverUrl":"https://cdn.shelfie.dev/covers/9780441478125.jpg"},"club":{"memberCount":8}}}

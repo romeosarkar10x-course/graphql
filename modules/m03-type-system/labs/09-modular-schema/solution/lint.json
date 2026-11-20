@@ -1,0 +1,16 @@
+{
+  "description": "Shelfie schema lint config. Every rule names the elements it applies to by schema coordinate.",
+  "rules": [
+    {"coordinate": "Query.node(id:)", "rule": "global-id", "why": "node lookups take opaque global ids"},
+    {"coordinate": "Club.members(first:)", "rule": "max-page-size", "max": 100, "why": "bounded lists (Module 8)"},
+    {"coordinate": "Book.reviews(last:)", "rule": "max-page-size", "max": 50, "why": "bounded lists"},
+    {"coordinate": "Club.size", "rule": "remove-after", "date": "2027-06-30", "why": "deprecated for memberCount"},
+    {"coordinate": "Query.books(titleContains:)", "rule": "remove-after", "date": "2027-06-30", "why": "deprecated for search"},
+    {"coordinate": "CreateReviewInput.spoiler", "rule": "remove-after", "date": "2027-06-30", "why": "deprecated for spoilerLevel"},
+    {"coordinate": "ReadingStatus.ON_HOLD", "rule": "remove-after", "date": "2027-01-31", "why": "migrated rows"},
+    {"coordinate": "User.shelf", "rule": "requires-auth", "why": "a shelf is private to its owner"},
+    {"coordinate": "Query.viewer", "rule": "requires-auth", "why": "null without a signed-in user"},
+    {"coordinate": "ISBN", "rule": "custom-scalar-has-specifiedBy", "why": "clients must find the format"},
+    {"coordinate": "@deprecated(reason:)", "rule": "reason-required", "why": "every deprecation says what to use instead"}
+  ]
+}

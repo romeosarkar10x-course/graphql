@@ -1,0 +1,19 @@
+{
+  "data": {
+    "nodes": [
+      {
+        "__typename": "User",
+        "id": "u11"
+      },
+      null,
+      {
+        "__typename": "Review",
+        "id": "r3"
+      },
+      {
+        "__typename": "Club",
+        "id": "c2"
+      }
+    ]
+  }
+}

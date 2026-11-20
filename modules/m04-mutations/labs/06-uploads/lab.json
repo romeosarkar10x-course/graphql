@@ -1,0 +1,7 @@
+{
+  "title": "File uploads: the multipart convention vs pre-signed URLs, 50 MB, 48 MB heap",
+  "lecture": "4.6",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["ref"]
+}

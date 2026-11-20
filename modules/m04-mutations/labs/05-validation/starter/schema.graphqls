@@ -1,0 +1,28 @@
+
+type Query { ok: Boolean }
+
+type Mutation {
+  "As u1."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+}
+
+input CreateReviewInput {
+  bookId: ID!
+  rating: Int!
+  body: String!
+  "At most 5, each at most 20 characters, no repeats."
+  tags: [String!] = []
+}
+
+type CreateReviewPayload {
+  review: Review
+  userErrors: [UserError!]!
+}
+
+type Review { id: ID! bookId: ID! rating: Int! body: String! tags: [String!]! }
+
+type UserError {
+  field: [String!]
+  message: String!
+  code: String!
+}

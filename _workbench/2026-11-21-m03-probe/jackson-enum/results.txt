@@ -1,0 +1,3 @@
+strict: InvalidFormatException: Cannot deserialize value of type `E$T` from String "C": not one of the values accepted for Enum class: [A, B]
+default-value: R[s=UNKNOWN]
+as-null: Q[s=null]

@@ -1,0 +1,93 @@
+"Model answer for game 3a. Other designs can score full marks; the rubric grades the reasoning."
+scalar DateTime
+scalar Url
+
+type Query {
+  club(id: ID!): Club
+  book(id: ID!): Book
+  user(id: ID!): User
+  "The signed-in user, null when signed out."
+  viewer: User
+  search(text: String!, first: Int = 20): SearchResults!
+}
+
+interface Node {
+  id: ID!
+}
+
+type Club implements Node {
+  id: ID!
+  name: String!
+  bannerUrl: Url
+  memberCount: Int!
+  owner: User!
+  members(first: Int = 5): [User!]!
+  currentBook: Book
+  "The soonest upcoming meetup, if any."
+  nextMeetup: Meetup
+  "False when signed out."
+  viewerIsMember: Boolean!
+}
+
+type Meetup implements Node {
+  id: ID!
+  title: String!
+  startsAt: DateTime!
+  location: String!
+}
+
+type Book implements Node {
+  id: ID!
+  title: String!
+  authors: [String!]!
+  publishedYear: Int
+  coverUrl: Url
+  averageRating: Float
+  reviewCount: Int!
+  "Newest first."
+  reviews(first: Int = 3): [Review!]!
+  clubsReading(first: Int = 3): [Club!]!
+  "Null when signed out or not on the viewer's shelf."
+  viewerShelfStatus: ReadingStatus
+}
+
+type Review implements Node {
+  id: ID!
+  rating: Int!
+  body: String!
+  spoiler: SpoilerLevel!
+  "Null when the author deleted their account."
+  author: User
+}
+
+enum SpoilerLevel {
+  NONE
+  MILD
+  MAJOR
+}
+
+enum ReadingStatus {
+  WANT_TO_READ
+  READING
+  FINISHED
+}
+
+type User implements Node {
+  id: ID!
+  name: String!
+  handle: String!
+  avatarUrl: Url
+  bio: String
+  location: String
+  booksRead: Int!
+  reviewCount: Int!
+  shelf(status: ReadingStatus!, first: Int = 12): [Book!]!
+  clubs: [Club!]!
+}
+
+union SearchHit = Book | Club | User
+
+type SearchResults {
+  total: Int!
+  hits: [SearchHit!]!
+}

@@ -1,0 +1,30 @@
+type User implements Node {
+  id: ID!
+  name: String!
+  handle: String!
+  bio: String
+  avatarUrl: Url
+  clubs: [Club!]!
+  reviews: [Review!]!
+  shelf(status: ReadingStatus): [ShelfEntry!]!
+}
+
+type ShelfEntry {
+  book: Book!
+  status: ReadingStatus!
+  updatedAt: DateTime!
+}
+
+enum ReadingStatus {
+  WANT_TO_READ
+  READING
+  FINISHED
+  ABANDONED
+  ON_HOLD @deprecated(reason: "Merged into READING in 2026; old rows were migrated.")
+}
+
+extend type Query {
+  user(id: ID!): User
+  "The signed-in user, or null."
+  viewer: User
+}

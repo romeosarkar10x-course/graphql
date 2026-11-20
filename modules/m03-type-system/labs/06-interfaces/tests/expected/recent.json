@@ -1,0 +1,36 @@
+{
+  "data": {
+    "recent": [
+      {
+        "__typename": "Review",
+        "createdAt": "2026-10-15T23:59:00Z",
+        "rating": 4
+      },
+      {
+        "__typename": "Review",
+        "createdAt": "2026-10-12T19:00:00Z",
+        "rating": 3
+      },
+      {
+        "__typename": "Review",
+        "createdAt": "2026-10-09T22:45:00Z",
+        "rating": 5
+      },
+      {
+        "__typename": "Review",
+        "createdAt": "2026-10-05T08:30:00Z",
+        "rating": 4
+      },
+      {
+        "__typename": "Review",
+        "createdAt": "2026-10-02T21:10:00Z",
+        "rating": 5
+      },
+      {
+        "__typename": "Review",
+        "createdAt": "2026-10-01T11:11:00Z",
+        "rating": 4
+      }
+    ]
+  }
+}

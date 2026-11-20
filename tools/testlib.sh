@@ -35,10 +35,28 @@ lib_cp() {
 ref_up() { curl -fsS -o /dev/null -m 3 "$REF/actuator/health" 2>/dev/null; }
 ref_reset_stats() { curl -fsS -o /dev/null -X POST "$REF/_course/reset"; }
 ref_stats() { curl -fsS "$REF/_course/stats"; }   # {"api":N,"graphql":M}
+ref_reset_data() { curl -fsS -o /dev/null -X POST "$REF/_course/reset-data"; }   # Module 4: back to the seed
+
+# POST a GraphQL request to the reference server as user $1 ("" = anonymous). $2 query, $3 variables JSON.
+gql_as() {
+  local who="$1" q="$2" v="${3:-{\}}"
+  jq -n --arg q "$q" --argjson v "$v" '{query: $q, variables: $v}' \
+    | curl -sS -H 'Content-Type: application/json' ${who:+-H "X-Shelfie-User: $who"} --data-binary @- "$REF/graphql"
+}
 
 require_file() { # $1 path relative to LAB_DIR, $2 description
   if [[ -s "$LAB_DIR/$1" ]]; then pass "$1 exists"; return 0; fi
   fail "$1 is missing or empty" "${2:-}"; return 1
+}
+
+# Written work: passes when $1 (default notes.md) has at least $2 (default 60) more words, outside
+# heading and comment lines, than the starter's copy: headings and empty tables are not answers.
+notes_check() { # $1 file, $2 extra words, $3 lab id for the rubric hint
+  local f="${1:-notes.md}" extra="${2:-60}" id="${3:-}" mine base
+  mine=$(grep -vE '^\s*#' "$LAB_DIR/$f" 2>/dev/null | wc -w)
+  base=$(grep -vE '^\s*#' "$LAB_HOME/starter/$f" 2>/dev/null | wc -w)
+  if (( mine >= base + extra )); then pass "$f filled in${id:+ (rubric: bin/course grade $id)}"
+  else fail "$f: answer the questions (rubric-graded${id:+: bin/course grade $id})"; fi
 }
 
 # Run a Hurl file against the reference server; quiet on success, verbose on failure.

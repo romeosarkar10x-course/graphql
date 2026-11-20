@@ -1,0 +1,71 @@
+[
+ {
+  "as": "u3",
+  "doc": "mutation($b: ID!) { createReview(input: {bookId: $b, rating: 4, body: \"Undo me if you can.\"}) { review { id } undoToken userErrors { code } } }",
+  "vars": {
+   "b": "b2"
+  },
+  "save": {
+   "t1": "createReview"
+  }
+ },
+ {
+  "as": "u4",
+  "doc": "mutation($r: ID!) { deleteReview(input: {reviewId: $r}) { review { id } undoToken userErrors { code } } }",
+  "vars": {
+   "r": "r16"
+  }
+ },
+ {
+  "as": "u3",
+  "doc": "mutation($r: ID!) { deleteReview(input: {reviewId: $r}) { review { id } undoToken userErrors { code } } }",
+  "vars": {
+   "r": "r16"
+  },
+  "save": {
+   "t2": "deleteReview"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "query($r: ID!) { review(id: $r) { id body } }",
+  "vars": {
+   "r": "r16"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "mutation($t: ID!) { undo(input: {token: $t}) { undone undoToken userErrors { code } } }",
+  "vars": {
+   "t": "$t1"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "mutation($t: ID!) { undo(input: {token: $t}) { undone undoToken userErrors { code } } }",
+  "vars": {
+   "t": "$t2"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "query($r: ID!) { review(id: $r) { id body } }",
+  "vars": {
+   "r": "r16"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "mutation($t: ID!) { undo(input: {token: $t}) { undone undoToken userErrors { code } } }",
+  "vars": {
+   "t": "$t1"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "query($r: ID!) { review(id: $r) { id body } }",
+  "vars": {
+   "r": "r16"
+  }
+ }
+]

@@ -1,0 +1,9 @@
+{
+  "data": {
+    "node": {
+      "__typename": "Review",
+      "id": "r1",
+      "createdAt": "2026-10-02T21:10:00Z"
+    }
+  }
+}

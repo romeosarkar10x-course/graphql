@@ -1,0 +1,1 @@
+query ($isbn: ISBN!) { book(isbn: $isbn) { id title isbn coverUrl listPrice reviews { id rating createdAt } } }

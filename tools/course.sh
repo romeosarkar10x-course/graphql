@@ -27,6 +27,8 @@ run_tests() { # $1 lab dir, $2 dir under test
   fi
   [[ -x "$lab/tests/run.sh" ]] || die "$lab/tests/run.sh missing or not executable"
   needs_check "$lab" || return 1
+  # Module 4 labs write to the reference server; every lab starts from the seed data.
+  ref_up && curl -fsS -o /dev/null -X POST "$REF/_course/reset-data" 2>/dev/null || true
   LAB_HOME="/course/$lab" LAB_DIR="/course/$target" bash "$lab/tests/run.sh"
 }
 

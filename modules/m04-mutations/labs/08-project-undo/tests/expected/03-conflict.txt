@@ -1,0 +1,6 @@
+01 {"data":{"renameClub":{"club":{"name":"A"},"undoToken":"<token>","userErrors":[]}}}
+02 {"data":{"renameClub":{"club":{"name":"B"},"undoToken":"<token>","userErrors":[]}}}
+03 {"data":{"undo":{"undone":null,"undoToken":null,"userErrors":[{"code":"CONFLICT"}]}}}
+04 {"data":{"undo":{"undone":"rename c1","undoToken":"<token>","userErrors":[]}}}
+05 {"data":{"undo":{"undone":"rename c1","undoToken":"<token>","userErrors":[]}}}
+06 {"data":{"club":{"name":"The Midnight Readers","memberIds":["u11","u1","u2"]}}}

@@ -1,0 +1,8 @@
+01 CreateReviewInput[bookId=b2, rating=4, body=Halls and tides, wonderful.]
+02 UpdateClubInput[clubId=c1, name=Optional[Midnight Readers], description=null, visibility=null]
+03 UpdateClubInput[clubId=c1, name=null, description=Optional.empty, visibility=null]
+04 UpdateClubInput[clubId=c1, name=Optional[X], description=Optional[New], visibility=Optional[PRIVATE]]
+05 SetShelfStatusInput[bookId=b6, status=READING, notifyFollowers=false]
+06 DeleteReviewsInput[reviewIds=[r1, r2]]
+07 error IllegalArgumentException
+08 JoinClubInput[clubId=c2]

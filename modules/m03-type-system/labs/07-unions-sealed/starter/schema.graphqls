@@ -1,0 +1,42 @@
+"One entry in a club's activity feed. The members share no fields, so this is a union, not an interface."
+union FeedItem = ReviewPosted | MemberJoined | MeetupScheduled | BookFinished
+
+type ReviewPosted {
+  at: String!
+  reviewer: User!
+  book: Book!
+  rating: Int!
+}
+
+type MemberJoined {
+  at: String!
+  member: User!
+}
+
+type MeetupScheduled {
+  at: String!
+  title: String!
+  startsAt: String!
+}
+
+type BookFinished {
+  at: String!
+  book: Book!
+  "How many members marked it finished."
+  readers: Int!
+}
+
+type User {
+  id: ID!
+  name: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+}
+
+type Query {
+  "Newest first."
+  feed(clubId: ID!): [FeedItem!]!
+}

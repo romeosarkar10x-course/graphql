@@ -1,0 +1,38 @@
+{
+  "data": {
+    "book": {
+      "id": "b1",
+      "title": "The Left Hand of Darkness",
+      "isbn": "9780441478125",
+      "coverUrl": "https://cdn.shelfie.dev/covers/9780441478125.jpg",
+      "listPrice": 12.99,
+      "reviews": [
+        {
+          "id": "r5",
+          "rating": 4,
+          "createdAt": "2026-10-15T23:59:00.000Z"
+        },
+        {
+          "id": "r4",
+          "rating": 3,
+          "createdAt": "2026-10-12T19:00:00.000Z"
+        },
+        {
+          "id": "r3",
+          "rating": 5,
+          "createdAt": "2026-10-09T22:45:00.000Z"
+        },
+        {
+          "id": "r2",
+          "rating": 4,
+          "createdAt": "2026-10-05T08:30:00.000Z"
+        },
+        {
+          "id": "r1",
+          "rating": 5,
+          "createdAt": "2026-10-02T21:10:00.000Z"
+        }
+      ]
+    }
+  }
+}

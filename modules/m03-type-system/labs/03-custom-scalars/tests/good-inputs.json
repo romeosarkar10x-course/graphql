@@ -1,0 +1,8 @@
+[
+  {"label": "g1 ISBN-13 digits", "value": "9780441478125"},
+  {"label": "g2 ISBN-13 hyphens", "value": "978-0-441-47812-5"},
+  {"label": "g3 ISBN-10", "value": "0441478123"},
+  {"label": "g4 ISBN-10 hyphens and spaces", "value": "0 441 47812-3"},
+  {"label": "g5 ISBN-10 lower-case x", "value": "080442957x"},
+  {"label": "g6 979 prefix", "value": "979-10-90636-07-1"}
+]

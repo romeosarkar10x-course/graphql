@@ -1,0 +1,25 @@
+<!doctype html>
+<!-- Module 3 "Voyager reveal": GraphQL Voyager rendering this server's schema. Loads graphql-voyager
+     2.1.0 from jsDelivr, so the browser needs internet access. Open http://localhost:8080/voyager.html -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Shelfie schema in Voyager</title>
+  <style>body { height: 100vh; margin: 0; } #voyager { height: 100vh; }</style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/graphql-voyager@2.1.0/dist/voyager.css">
+  <script src="https://cdn.jsdelivr.net/npm/graphql-voyager@2.1.0/dist/voyager.standalone.js"></script>
+</head>
+<body>
+  <div id="voyager">Loading Voyager...</div>
+  <script type="module">
+    const { voyagerIntrospectionQuery: query } = GraphQLVoyager;
+    const response = await fetch('/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+    });
+    const introspection = await response.json();
+    GraphQLVoyager.renderVoyager(document.getElementById('voyager'), { introspection });
+  </script>
+</body>
+</html>

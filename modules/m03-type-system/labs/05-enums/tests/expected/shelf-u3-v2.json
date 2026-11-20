@@ -1,0 +1,14 @@
+{
+  "data": {
+    "shelf": [
+      {
+        "bookId": "b9",
+        "status": "FINISHED"
+      },
+      {
+        "bookId": "b4",
+        "status": "ABANDONED"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+"Find a book by exactly one of its keys (RFC #825, in the September 2025 spec)."
+input BookLookup @oneOf {
+  id: ID
+  "ISBN-13 digits."
+  isbn: String
+  "Exact title, ignoring case."
+  title: String
+}
+
+type Book {
+  id: ID!
+  title: String!
+  isbn: String!
+}
+
+type Query {
+  "Null when nothing matches."
+  book(by: BookLookup!): Book
+}

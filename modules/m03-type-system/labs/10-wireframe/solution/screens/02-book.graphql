@@ -1,0 +1,13 @@
+query BookPage($id: ID!) {
+  book(id: $id) {
+    title
+    authors
+    publishedYear
+    coverUrl
+    averageRating
+    reviewCount
+    viewerShelfStatus
+    reviews(first: 3) { id rating body spoiler author { name avatarUrl } }
+    clubsReading(first: 3) { id name memberCount }
+  }
+}

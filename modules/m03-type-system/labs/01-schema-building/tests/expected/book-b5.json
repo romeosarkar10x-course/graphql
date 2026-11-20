@@ -1,0 +1,14 @@
+{
+  "data": {
+    "book": {
+      "title": "Good Omens",
+      "authors": [
+        "Terry Pratchett",
+        "Neil Gaiman"
+      ],
+      "publishedYear": 1990,
+      "averageRating": null,
+      "reviews": []
+    }
+  }
+}

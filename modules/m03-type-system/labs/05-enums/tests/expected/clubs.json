@@ -1,0 +1,24 @@
+{
+  "data": {
+    "all": [
+      {
+        "id": "c1",
+        "visibility": "PUBLIC"
+      },
+      {
+        "id": "c2",
+        "visibility": "PUBLIC"
+      },
+      {
+        "id": "c3",
+        "visibility": "PRIVATE"
+      }
+    ],
+    "private": [
+      {
+        "id": "c3",
+        "name": "Booker Shortlist Survivors"
+      }
+    ]
+  }
+}

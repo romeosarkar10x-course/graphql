@@ -1,0 +1,21 @@
+00-valid ok
+01-rating-0 directive @Range
+02-rating-6 directive @Range
+03-rating-string type variable-coercion
+04-rating-float type variable-coercion
+05-rating-missing type variable-coercion
+06-body-short directive @Size
+07-body-blank bean input.body
+08-body-long directive @Size
+09-body-null type variable-coercion
+10-bookid-shape directive @Pattern
+11-bookid-unknown business NOT_FOUND
+12-already-reviewed business DUPLICATE
+13-six-tags directive @ContainerSize
+14-long-tag directive @Size
+15-repeated-tag bean input.tagsUnique
+16-unknown-field type variable-coercion
+17-input-null type variable-coercion
+18-two-directives directive @Range, directive @Size
+19-literal-range directive @Range
+20-literal-type type validation

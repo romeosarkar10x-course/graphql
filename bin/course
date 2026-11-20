@@ -2,7 +2,7 @@
 # Course runner. Builds, tests and servers all run inside the course Docker image, never on the host.
 #
 #   bin/course doctor                     check host + image + services; tells you what to fix
-#   bin/course ref up [--rebuild]|down|status|logs   reference Shelfie server (+ Toxiproxy)
+#   bin/course ref up [--rebuild]|down|status|logs|reset   reference Shelfie (+ Toxiproxy, storage); reset = seed data
 #   bin/course toxi latency <ms> | reset  add/remove latency on the slow Shelfie URL (:8666)
 #   bin/course list [mNN]                 modules and labs
 #   bin/course start mNN/NN [--force]     copy a lab's starter into workspace/
@@ -13,7 +13,7 @@
 #   bin/course hurl <file.hurl> [args]    run Hurl inside the course network ({{ref}}, {{slow}} preset)
 #   bin/course jshell [file.jsh]          jshell with Jackson 3 and graphql-java on the class path
 #   bin/course java <File.java> [args]    run a single-file Java program with the same class path
-#   bin/course gql validate|operations|schema-lines ...   document and schema helpers (tools/gql/Gql.java)
+#   bin/course gql validate|operations|schema-lines|coordinates|stats ...   document and schema helpers (tools/gql/Gql.java)
 #   bin/course shell [-c 'cmd']           bash inside the course image, repo at /course
 #   bin/course image                      (re)build the course image
 set -euo pipefail
@@ -73,16 +73,21 @@ case "$cmd" in
         # Toxiproxy route: toxiproxy:8666 -> shelfie-ref:8080 (idempotent)
         curl -fsS -o /dev/null -X POST localhost:8474/proxies \
           -d '{"name":"shelfie","listen":"0.0.0.0:8666","upstream":"shelfie-ref:8080"}' 2>/dev/null || true
+        # Bucket for pre-signed cover uploads (Module 4.6); "already exists" is fine
+        compose exec -T storage sh -c 'echo "s3.bucket.create -name covers" | weed shell' >/dev/null 2>&1 || true
         echo "Shelfie reference server is up:"
         echo "  GraphiQL   http://localhost:8080/graphiql"
         echo "  GraphQL    http://localhost:8080/graphql      (inside the image: http://shelfie-ref:8080/graphql)"
         echo "  REST       http://localhost:8080/api/clubs/c1"
         echo "  gRPC       localhost:9090                     (grpcurl -plaintext shelfie-ref:9090 list)"
-        echo "  slow path  http://localhost:8666              (bin/course toxi latency 700)" ;;
+        echo "  slow path  http://localhost:8666              (bin/course toxi latency 700)"
+        echo "  storage    http://localhost:8333              (S3 API, inside the image: http://storage:8333)"
+        echo "  Voyager    http://localhost:8080/voyager.html (needs internet in your browser)" ;;
+      reset) curl -fsS -X POST localhost:8080/_course/reset-data && echo "Reference data back to the seed." ;;
       down) compose down ;;
       logs) compose logs -f shelfie-ref ;;
       status) compose ps ;;
-      *) die "usage: bin/course ref up [--rebuild]|down|status|logs" ;;
+      *) die "usage: bin/course ref up [--rebuild]|down|status|logs|reset" ;;
     esac ;;
   toxi)
     case "${1:-}" in

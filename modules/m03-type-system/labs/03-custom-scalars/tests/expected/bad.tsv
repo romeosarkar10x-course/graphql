@@ -1,0 +1,15 @@
+01 wrong check digit	rejected/validation	rejected/variable-coercion
+02 JSON number	rejected/validation	rejected/variable-coercion
+03 empty string	rejected/validation	rejected/variable-coercion
+04 12 digits	rejected/validation	rejected/variable-coercion
+05 14 digits	rejected/validation	rejected/variable-coercion
+06 ISBN-10 wrong check	rejected/validation	rejected/variable-coercion
+07 Arabic-Indic digits	rejected/validation	rejected/variable-coercion
+08 full-width last digit	rejected/validation	rejected/variable-coercion
+09 underscore	rejected/validation	rejected/variable-coercion
+10 ISBN prefix	rejected/validation	rejected/variable-coercion
+11 trailing newline	rejected/validation	rejected/variable-coercion
+12 null	rejected/validation	rejected/variable-coercion
+13 boolean	rejected/validation	rejected/variable-coercion
+14 object	rejected/validation	rejected/variable-coercion
+15 bad prefix, valid sum	rejected/validation	rejected/variable-coercion

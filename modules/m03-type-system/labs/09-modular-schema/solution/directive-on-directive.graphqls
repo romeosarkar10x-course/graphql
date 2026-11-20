@@ -1,0 +1,4 @@
+# RFC #1206 (directives on directive definitions), accepted in 2026: not in the September 2025 spec.
+directive @meta on DIRECTIVE_DEFINITION
+directive @tag(name: String!) @meta on FIELD_DEFINITION
+type Query { x: Int @tag(name: "a") }

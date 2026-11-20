@@ -1,0 +1,19 @@
+"Find a book by id, ISBN or title."
+input BookLookup {
+  id: ID
+  "ISBN-13 digits."
+  isbn: String
+  "Exact title, ignoring case."
+  title: String
+}
+
+type Book {
+  id: ID!
+  title: String!
+  isbn: String!
+}
+
+type Query {
+  "Null when nothing matches."
+  book(by: BookLookup!): Book
+}

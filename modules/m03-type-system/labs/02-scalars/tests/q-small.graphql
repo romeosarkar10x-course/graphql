@@ -1,0 +1,1 @@
+{ review(id: "42") { id rating } }

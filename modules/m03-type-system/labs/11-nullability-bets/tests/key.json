@@ -1,0 +1,23 @@
+{
+  "salt": "m03-bets",
+  "winning": {
+    "Book.title": "de0fed665c3705ed",
+    "Book.coverUrl": "6ad1716fa2809d5c",
+    "Club.owner": "645003610fd6b40c",
+    "Review.author": "f4f6101977d381e4",
+    "Book.averageRating": "510d265e77f32402",
+    "User.handle": "b695a272930acbd7",
+    "Club.memberCount": "b3844b1783be2309",
+    "Club.currentBook": "ceb13a17253d49e3"
+  },
+  "scenarios": {
+    "Book.title": "A librarian imports 3,000 books; one row arrives without a title. Is the book still a book? Non-null makes the import bug loud. (non-null wins)",
+    "Book.coverUrl": "The cover CDN times out for 20 minutes. With non-null, every book page, list and search result that shows a cover is blank. (nullable wins)",
+    "Club.owner": "Kemi deletes her account; The Midnight Readers has 7 other members who want to keep the club. With non-null, the club page errors until someone patches data. (nullable wins)",
+    "Review.author": "Hugo deletes his account; Shelfie keeps reviews as \"former member\". With non-null, `[Review!]!` takes the whole review list, and the book page with it. (nullable wins)",
+    "Book.averageRating": "A new book has no reviews. Non-null forces 0.0, a lie that sorts it last and looks like a terrible book. (nullable wins)",
+    "User.handle": "Handles are required at sign-up and live in the users row. Nullable forces every client to handle a case that cannot happen. (non-null wins)",
+    "Club.memberCount": "The last member leaves a club. The count is 0, computed in-process; nothing can fail independently. (non-null wins)",
+    "Club.currentBook": "The Midnight Readers finished October's book and vote on December's next week. (nullable wins)"
+  }
+}

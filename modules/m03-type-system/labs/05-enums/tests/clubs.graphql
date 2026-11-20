@@ -1,0 +1,1 @@
+{ all: clubs { id visibility } private: clubs(visibility: PRIVATE) { id name } }

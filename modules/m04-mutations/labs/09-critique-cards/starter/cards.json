@@ -1,0 +1,114 @@
+{
+  "1-addStar": {
+    "input": null,
+    "payload": null,
+    "errors": null,
+    "retry": null,
+    "naming": null,
+    "why": {
+      "input": "",
+      "payload": "",
+      "errors": "",
+      "retry": "",
+      "naming": ""
+    }
+  },
+  "2-createIssue": {
+    "input": null,
+    "payload": null,
+    "errors": null,
+    "retry": null,
+    "naming": null,
+    "why": {
+      "input": "",
+      "payload": "",
+      "errors": "",
+      "retry": "",
+      "naming": ""
+    }
+  },
+  "3-mergePullRequest": {
+    "input": null,
+    "payload": null,
+    "errors": null,
+    "retry": null,
+    "naming": null,
+    "why": {
+      "input": "",
+      "payload": "",
+      "errors": "",
+      "retry": "",
+      "naming": ""
+    }
+  },
+  "4-deleteIssue": {
+    "input": null,
+    "payload": null,
+    "errors": null,
+    "retry": null,
+    "naming": null,
+    "why": {
+      "input": "",
+      "payload": "",
+      "errors": "",
+      "retry": "",
+      "naming": ""
+    }
+  },
+  "5-SaveMediaListEntry": {
+    "input": null,
+    "payload": null,
+    "errors": null,
+    "retry": null,
+    "naming": null,
+    "why": {
+      "input": "",
+      "payload": "",
+      "errors": "",
+      "retry": "",
+      "naming": ""
+    }
+  },
+  "6-ToggleFavourite": {
+    "input": null,
+    "payload": null,
+    "errors": null,
+    "retry": null,
+    "naming": null,
+    "why": {
+      "input": "",
+      "payload": "",
+      "errors": "",
+      "retry": "",
+      "naming": ""
+    }
+  },
+  "7-DeleteMediaListEntry": {
+    "input": null,
+    "payload": null,
+    "errors": null,
+    "retry": null,
+    "naming": null,
+    "why": {
+      "input": "",
+      "payload": "",
+      "errors": "",
+      "retry": "",
+      "naming": ""
+    }
+  },
+  "8-createReviewTyped": {
+    "input": null,
+    "payload": null,
+    "errors": null,
+    "retry": null,
+    "naming": null,
+    "why": {
+      "input": "",
+      "payload": "",
+      "errors": "",
+      "retry": "",
+      "naming": ""
+    }
+  }
+}

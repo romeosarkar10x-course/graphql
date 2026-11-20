@@ -1,0 +1,7 @@
+01 {"data":{"renameClub":{"club":{"name":"Whodunit Club"},"undoToken":"<token>","userErrors":[]}}}
+02 {"data":{"undo":{"undone":"rename c2","undoToken":"<token>","userErrors":[]}}}
+03 {"data":{"club":{"name":"Slow Burn Mysteries","memberIds":["u7","u5"]}}}
+04 {"data":{"undo":{"undone":"rename c2","undoToken":"<token>","userErrors":[]}}}
+05 {"data":{"club":{"name":"Whodunit Club","memberIds":["u7","u5"]}}}
+06 {"data":{"undo":{"undone":"rename c2","undoToken":"<token>","userErrors":[]}}}
+07 {"data":{"club":{"name":"Slow Burn Mysteries","memberIds":["u7","u5"]}}}

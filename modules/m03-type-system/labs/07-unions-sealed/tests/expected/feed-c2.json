@@ -1,0 +1,24 @@
+{
+  "data": {
+    "feed": [
+      {
+        "__typename": "ReviewPosted",
+        "at": "2026-08-20T20:00:00Z",
+        "reviewer": {
+          "name": "Grace Kim"
+        },
+        "book": {
+          "title": "The Name of the Rose"
+        },
+        "rating": 5
+      },
+      {
+        "__typename": "MemberJoined",
+        "at": "2026-08-01T09:00:00Z",
+        "member": {
+          "name": "Liu Wei"
+        }
+      }
+    ]
+  }
+}

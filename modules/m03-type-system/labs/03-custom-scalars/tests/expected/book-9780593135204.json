@@ -1,0 +1,23 @@
+{
+  "data": {
+    "book": {
+      "id": "b6",
+      "title": "Project Hail Mary",
+      "isbn": "9780593135204",
+      "coverUrl": "https://cdn.shelfie.dev/covers/9780593135204.jpg",
+      "listPrice": 18.00,
+      "reviews": [
+        {
+          "id": "r11",
+          "rating": 4,
+          "createdAt": "2026-04-12T21:00:00.000Z"
+        },
+        {
+          "id": "r10",
+          "rating": 5,
+          "createdAt": "2026-04-11T18:20:00.000Z"
+        }
+      ]
+    }
+  }
+}

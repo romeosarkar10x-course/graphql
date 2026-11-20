@@ -1,0 +1,49 @@
+"Lab 4.2 reference redesign. Every mutation: one `input`, a dedicated payload, typed user errors."
+type Query { ok: Boolean }
+
+type Mutation {
+  "The author is the signed-in user, never an argument."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+  "Only fields present in the input change; null clears `description`."
+  updateClub(input: UpdateClubInput!): UpdateClubPayload!
+  "Joining twice is a no-op, not an error."
+  joinClub(input: JoinClubInput!): JoinClubPayload!
+  leaveClub(input: LeaveClubInput!): LeaveClubPayload!
+  setShelfStatus(input: SetShelfStatusInput!): SetShelfStatusPayload!
+  "All or nothing: either every review is deleted or none is."
+  deleteReviews(input: DeleteReviewsInput!): DeleteReviewsPayload!
+}
+
+type UserError {
+  "Path to the input field, e.g. [\"input\", \"rating\"]."
+  field: [String!]
+  message: String!
+  code: UserErrorCode!
+}
+
+enum UserErrorCode { NOT_FOUND INVALID FORBIDDEN DUPLICATE }
+
+input CreateReviewInput { bookId: ID! rating: Int! body: String! }
+type CreateReviewPayload { review: Review  book: Book  userErrors: [UserError!]! }
+
+input UpdateClubInput { clubId: ID! name: String description: String visibility: Visibility }
+type UpdateClubPayload { club: Club  userErrors: [UserError!]! }
+
+input JoinClubInput { clubId: ID! }
+type JoinClubPayload { club: Club  userErrors: [UserError!]! }
+
+input LeaveClubInput { clubId: ID! }
+type LeaveClubPayload { club: Club  userErrors: [UserError!]! }
+
+enum ReadingStatus { WANT_TO_READ READING FINISHED }
+input SetShelfStatusInput { bookId: ID! status: ReadingStatus! notifyFollowers: Boolean = false }
+type SetShelfStatusPayload { entry: ShelfEntry  userErrors: [UserError!]! }
+
+input DeleteReviewsInput { reviewIds: [ID!]! }
+type DeleteReviewsPayload { deletedReviewIds: [ID!]!  userErrors: [UserError!]! }
+
+enum Visibility { PUBLIC PRIVATE }
+type Club { id: ID! name: String! description: String visibility: Visibility! memberCount: Int! }
+type Book { id: ID! averageRating: Float }
+type Review { id: ID! rating: Int! body: String! book: Book! }
+type ShelfEntry { book: Book! status: ReadingStatus! }

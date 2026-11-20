@@ -1,0 +1,17 @@
+[
+  {"label": "01 wrong check digit", "value": "978-0-441-47812-6"},
+  {"label": "02 JSON number", "value": 9780441478125},
+  {"label": "03 empty string", "value": ""},
+  {"label": "04 12 digits", "value": "978044147812"},
+  {"label": "05 14 digits", "value": "97804414781250"},
+  {"label": "06 ISBN-10 wrong check", "value": "0441478124"},
+  {"label": "07 Arabic-Indic digits", "value": "٩٧٨٠٤٤١٤٧٨١٢٥"},
+  {"label": "08 full-width last digit", "value": "978044147812５"},
+  {"label": "09 underscore", "value": "978_0441478125"},
+  {"label": "10 ISBN prefix", "value": "ISBN 9780441478125"},
+  {"label": "11 trailing newline", "value": "9780441478125\n"},
+  {"label": "12 null", "value": null},
+  {"label": "13 boolean", "value": true},
+  {"label": "14 object", "value": {"isbn": "9780441478125"}},
+  {"label": "15 bad prefix, valid sum", "value": "1230441478123"}
+]

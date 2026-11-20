@@ -1,0 +1,13 @@
+query Profile($id: ID!, $tab: ReadingStatus! = READING) {
+  user(id: $id) {
+    name
+    handle
+    avatarUrl
+    location
+    bio
+    booksRead
+    reviewCount
+    shelf(status: $tab) { id coverUrl }
+    clubs { id name }
+  }
+}

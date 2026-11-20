@@ -1,0 +1,83 @@
+"Lab 4.4. Everyone is u1 here: authentication is not this lab's topic."
+type Query {
+  review(id: ID!): Review
+  club(id: ID!): Club
+  job(id: ID!): Job
+  reviewCount: Int!
+}
+
+type Mutation {
+  "Safe to retry: the same idempotencyKey with the same input returns the first result."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+  "Optimistic locking: fails with CONFLICT unless expectedVersion is the club's current version."
+  renameClub(input: RenameClubInput!): RenameClubPayload!
+  "Returns at once with a job; poll job(id) until DONE."
+  importBooks(input: ImportBooksInput!): ImportBooksPayload!
+}
+
+input CreateReviewInput {
+  "A client-generated unique id for this attempt, e.g. a UUID. Reuse it only to retry the same request."
+  idempotencyKey: ID!
+  bookId: ID!
+  rating: Int!
+  body: String!
+}
+
+type CreateReviewPayload {
+  review: Review
+  "True when this response replays an earlier request with the same key."
+  replayed: Boolean!
+  userErrors: [UserError!]!
+}
+
+input RenameClubInput {
+  clubId: ID!
+  name: String!
+  expectedVersion: Int!
+}
+
+type RenameClubPayload {
+  club: Club
+  userErrors: [UserError!]!
+}
+
+input ImportBooksInput {
+  isbns: [String!]!
+}
+
+type ImportBooksPayload {
+  job: Job!
+}
+
+type Job {
+  id: ID!
+  status: JobStatus!
+  total: Int!
+  imported: Int!
+}
+
+enum JobStatus {
+  QUEUED
+  RUNNING
+  DONE
+}
+
+type Review {
+  id: ID!
+  bookId: ID!
+  rating: Int!
+  body: String!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  version: Int!
+}
+
+type UserError {
+  field: [String!]
+  message: String!
+  "NOT_FOUND, CONFLICT or KEY_REUSED."
+  code: String!
+}

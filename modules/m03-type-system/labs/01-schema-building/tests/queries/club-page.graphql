@@ -1,0 +1,10 @@
+query ClubPage($id: ID!) {
+  club(id: $id) {
+    id
+    name
+    owner { name }
+    members(first: 3) { name handle }
+    memberCount
+    currentBook { title averageRating reviews(last: 2) { rating author { name } } }
+  }
+}

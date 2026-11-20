@@ -1,0 +1,9 @@
+{
+  "title": "Two root fields, one fails deep inside",
+  "sdl": "type Query { club(id: ID!): Club }\ntype Club { id: ID! name: String! description: String owner: User! members: [User!]! currentBook: Book }\ntype User { id: ID! name: String! }\ntype Book { id: ID! title: String! averageRating: Float! reviews: [Review!]! }\ntype Review { id: ID! rating: Int! author: User! }\n",
+  "query": "{ a: club(id: \"c1\") { name currentBook { reviews { author { name } } } } b: club(id: \"c2\") { name } }",
+  "throw": [
+    "User.name@u2"
+  ],
+  "returnNull": []
+}

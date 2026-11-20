@@ -1,0 +1,51 @@
+"Anything with a global id. `node(id:)` fetches any of them."
+interface Node {
+  id: ID!
+}
+
+interface Timestamped {
+  "ISO-8601, UTC."
+  createdAt: String!
+}
+
+"Something people rate. An interface that implements another (RFC #373, spec since 2021)."
+interface Reviewable implements Node {
+  id: ID!
+  averageRating: Float
+  reviews(last: Int = 3): [Review!]!
+}
+
+type Book implements Reviewable & Node {
+  id: ID!
+  title: String!
+  averageRating: Float
+  reviews(last: Int = 3): [Review!]!
+}
+
+type Club implements Node & Timestamped {
+  id: ID!
+  name: String!
+  createdAt: String!
+}
+
+type User implements Node {
+  id: ID!
+  name: String!
+}
+
+type Review implements Node & Timestamped {
+  id: ID!
+  rating: Int!
+  createdAt: String!
+  author: User!
+}
+
+type Query {
+  node(id: ID!): Node
+  "Same order as `ids`; null for ids that match nothing."
+  nodes(ids: [ID!]!): [Node]!
+  "Every book that has at least one review, best average first, ties in catalogue order."
+  reviewables: [Reviewable!]!
+  "Clubs and reviews, newest first."
+  recent(first: Int = 5): [Timestamped!]!
+}

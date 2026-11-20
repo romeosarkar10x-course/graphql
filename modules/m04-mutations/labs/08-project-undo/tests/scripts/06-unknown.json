@@ -1,0 +1,16 @@
+[
+ {
+  "as": "u1",
+  "doc": "mutation($t: ID!) { undo(input: {token: $t}) { undone undoToken userErrors { code } } }",
+  "vars": {
+   "t": "undo-does-not-exist"
+  }
+ },
+ {
+  "as": "u9",
+  "doc": "mutation($c: ID!) { leaveClub(input: {clubId: $c}) { club { memberIds } undoToken userErrors { code } } }",
+  "vars": {
+   "c": "c1"
+  }
+ }
+]

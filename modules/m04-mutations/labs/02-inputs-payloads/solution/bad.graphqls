@@ -1,0 +1,22 @@
+# Five real-looking first drafts. Do not edit: redesign them in redesign.graphqls.
+type Query { ok: Boolean }
+
+type Mutation {
+  "Adds a review. Returns true if it worked."
+  addReview(bookId: ID!, rating: Int!, text: String!, userId: ID!): Boolean
+
+  "Updates a club; pass only what changes."
+  club_update(id: ID!, name: String, desc: String, private: Boolean): Club
+
+  "action is JOIN or LEAVE."
+  doMembership(clubId: ID!, userId: ID!, action: String!): String
+
+  "status is WANT_TO_READ, READING or FINISHED."
+  setShelf(userId: ID!, bookId: ID!, status: String!, notifyFollowers: Boolean, clientMutationId: String): ShelfEntry!
+
+  "Returns how many were deleted."
+  deleteReviews(ids: [ID]): Int
+}
+
+type Club { id: ID! name: String! description: String isPrivate: Boolean! }
+type ShelfEntry { bookId: ID! status: String! }

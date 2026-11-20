@@ -1,0 +1,11 @@
+query ($id: ID!) {
+  node(id: $id) {
+    __typename
+    id
+    ... on Book { title }
+    ... on Club { name }
+    ... on User { name }
+    ... on Timestamped { createdAt }
+    ... on Reviewable { averageRating }
+  }
+}

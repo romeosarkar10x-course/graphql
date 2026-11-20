@@ -26,4 +26,8 @@ Rules:
   `bin/course java`, which puts Jackson 3 on the class path.
 - Expected outputs come from running the reference solution, never from typing them by hand.
 - Tests must not print the answer: hash answer keys (see `m00/06`, `m01/01`).
+- Written work in `both` labs is checked with `notes_check <file> 60 mNN/NN` (testlib): the learner's
+  file must add 60+ words beyond the starter's copy, so headings and empty tables do not pass.
+- Labs that write to the reference server rely on the runner's `/_course/reset-data` before each test;
+  reset again at the end of `run.sh` if the lab leaves state behind.
 - Facts in lectures are verified (probe output in `_workbench/`) or explicitly marked unverified.

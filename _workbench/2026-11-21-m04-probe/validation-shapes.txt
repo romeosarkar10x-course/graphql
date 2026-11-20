@@ -1,0 +1,2 @@
+{"errors":[{"message":"/createReview/input/rating range must be between 1 and 5","locations":[{"line":1,"column":40}],"path":["createReview"],"extensions":{"classification":{"type":"ExtendedValidationError","validatedPath":["createReview","input","rating"],"constraint":"@Range"}}}],"data":null}
+{"data":{"createReview":{"review":null,"userErrors":[{"field":["input","body"],"message":"must not be blank","code":"INVALID"}]}}}

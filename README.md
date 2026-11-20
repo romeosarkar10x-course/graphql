@@ -29,11 +29,11 @@ bin/course test m00/01 --solution  # see the reference pass (spoiler-free: it pr
 | Command | What it does |
 |---|---|
 | `bin/course doctor` | Host + image + services check, with a fix for each failure |
-| `bin/course ref up [--rebuild]\|down\|status\|logs` | Reference server (REST, GraphQL, gRPC) and Toxiproxy; `--rebuild` after a course update |
+| `bin/course ref up [--rebuild]\|down\|status\|logs\|reset` | Reference server (REST, GraphQL, gRPC), Toxiproxy and object storage; `--rebuild` after a course update; `reset` puts the data back to the seed |
 | `bin/course toxi latency 700` / `toxi reset` | Add or remove latency on `localhost:8666` |
 | `bin/course hurl file.hurl` | Hurl inside the course network, `{{ref}}` preset |
-| `bin/course java File.java` / `jshell` | Single-file Java or jshell with Jackson 3 and graphql-java 26.1 on the class path |
-| `bin/course gql validate\|operations\|schema-lines` | Validate a document against a schema, list its operations, diff schemas |
+| `bin/course java File.java` / `jshell` | Single-file Java or jshell with Jackson 3, graphql-java 26.1, extended-scalars and extended-validation on the class path |
+| `bin/course gql validate\|operations\|schema-lines\|coordinates\|stats` | Validate a document, list its operations, diff schemas, resolve schema coordinates, count types and deprecations (a schema may be a directory of `.graphqls` files) |
 | `bin/course shell [-c 'cmd']` | bash in the course image, or one command |
 | `bin/course checkpoint NN` | Verify a module's checkpoint and tag `checkpoint-NN` in `workspace/` |
 | `bin/course check --starters` | Course self-test |
@@ -50,7 +50,8 @@ Playing with friends: [docs/GROUP_PLAY.md](docs/GROUP_PLAY.md).
 | Foundations | [M0 Orientation and the Java toolchain](modules/m00-orientation/README.md) | Ready |
 | | [M1 Why GraphQL exists](modules/m01-why-graphql/README.md) | Ready |
 | | [M2 The query language, driven from Java](modules/m02-query-language/README.md) | Ready |
-| | M3 Type system and SDL · M4 Mutations | Planned |
+| | [M3 The type system and SDL with graphql-java](modules/m03-type-system/README.md) | Ready |
+| | [M4 Mutations and input design](modules/m04-mutations/README.md) | Ready |
 | Building servers | M5 graphql-java from scratch · M6 Spring for GraphQL, DGS, Quarkus · M7 Schema design · M8 Pagination and errors | Planned |
 | Production | M9 Performance · M10 Security · M11 Real-time · M12 Clients · M13 Testing · M14 Advanced patterns | Planned |
 | Platform | M15 Federation · M16 Production · M17 Under the hood · M18 The frontier · Capstone | Planned |

@@ -1,0 +1,2 @@
+# Write the uninhabitable @oneOf input from the lecture here: a oneOf input whose only field is itself.
+type Query { x: Int }

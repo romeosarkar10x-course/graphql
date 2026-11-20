@@ -1,0 +1,52 @@
+"""
+Shelfie, Module 3.1: the same shape as the reference server's read side, built by hand with graphql-java.
+"""
+schema {
+  query: Query
+}
+
+type Query {
+  "A club by id, or null when there is none."
+  club(id: ID!): Club
+  "All clubs, in seed order."
+  clubs: [Club!]!
+  book(id: ID!): Book
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String
+  owner: User!
+  "Members in join order. `first` caps the list."
+  members(first: Int = 10): [User!]!
+  membersCount: Int!
+  "The book the club is reading now, if any."
+  currentBook: Book
+  visibility: String!
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  authors: [String!]!
+  publishedYear: Int
+  "Mean rating rounded to 2 decimals, null when there are no reviews."
+  averageRating: Float
+  "Newest first. `last` caps the list."
+  reviews(last: Int = 5): [Review!]!
+}
+
+type Review {
+  id: ID!
+  "1 to 5."
+  rating: Int!
+  body: String!
+  author: User!
+}

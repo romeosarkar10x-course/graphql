@@ -1,0 +1,79 @@
+## 1 missing Club.owner wiring
+{errors=[{message=The field at path '/club/owner' was declared as a non null type, but the code involved in retrieving data has wrongly returned a null value.  The graphql specification requires that the parent field be set to null, or if that is non nullable that it bubble up null to its parent and so on. The non-nullable type is 'User' within parent type 'Club', path=[club, owner], extensions={classification=NullValueInNonNullableField}}], data={club=null}}
+## 1b nullable owner, missing wiring
+{data={club={id=c1, name=Night Owls, owner=null}}}
+## 2 Long.MAX_VALUE as Int etc
+{errors=[{message=Can't serialize value (/big) : Expected a value that can be converted to type 'Int' but it was a 'Long', path=[big], extensions={classification=DataFetchingException}}], data={big=null, small=42, id=9007199254740993, f=0.1, bigLong=9223372036854775807}}
+## 2b non-null Int overflow
+{errors=[{message=Can't serialize value (/n) : Expected a value that can be converted to type 'Int' but it was a 'Long', path=[n], extensions={classification=DataFetchingException}}], data=null}
+## 2c Int literal 3000000000
+{errors=[{message=Validation error (WrongType@[echo]) : argument 'n' with value 'IntValue{value=3000000000}' is not a valid 'Int' - Expected value to be in the integer range, but it was a '3000000000', locations=[{line=1, column=8}], extensions={classification=ValidationError}}]}
+## 2d Int variable 3000000000
+{errors=[{message=Variable 'n' has an invalid value: Expected value to be in the integer range, but it was a '3000000000', locations=[{line=1, column=7}], extensions={classification=ValidationError}}]}
+## 2e Int variable 1.0
+{data={echo=1}}
+## 2f Int variable "7"
+{errors=[{message=Variable 'n' has an invalid value: Expected a value that can be converted to type 'Int' but it was a 'String', locations=[{line=1, column=7}], extensions={classification=ValidationError}}]}
+## 4 extended scalars out
+{data={at=2026-11-21T18:30:00.000+05:30, d=12.50, u=https://shelfie.dev}}
+## 4b DateTime literal bad
+{errors=[{message=Validation error (WrongType@[echoAt]) : argument 'at' with value 'StringValue{value='2026-13-01T00:00:00Z'}' is not a valid 'DateTime' - Invalid RFC3339 value : '2026-13-01T00:00:00Z'. because of : 'Text '2026-13-01T00:00:00Z' could not be parsed: Invalid value for MonthOfYear (valid values 1 - 12): 13', locations=[{line=1, column=10}], extensions={classification=ValidationError}}]}
+## 4c DateTime variable bad
+{errors=[{message=Variable 'a' has an invalid value: Invalid RFC3339 value : '2026-13-01T00:00:00Z'. because of : 'Text '2026-13-01T00:00:00Z' could not be parsed: Invalid value for MonthOfYear (valid values 1 - 12): 13', locations=[{line=1, column=7}], extensions={classification=ValidationError}}]}
+## 4d DateTime no offset
+{errors=[{message=Variable 'a' has an invalid value: Invalid RFC3339 value : '2026-11-01T00:00:00'. because of : 'Text '2026-11-01T00:00:00' could not be parsed at index 19', locations=[{line=1, column=7}], extensions={classification=ValidationError}}]}
+## 4e Url bad
+{errors=[{message=Variable 'u' has an invalid value: Invalid URL value : 'not a url'., locations=[{line=1, column=7}], extensions={classification=ValidationError}}]}
+## 6 interface without TypeResolver
+graphql.schema.idl.errors.SchemaProblem: errors=[There is no type resolver defined for interface / union 'Node' type]
+## 6b union without TypeResolver
+graphql.schema.idl.errors.SchemaProblem: errors=[There is no type resolver defined for interface / union 'S' type]
+## 6c interface implements interface (with resolver)
+graphql.schema.idl.errors.SchemaProblem: errors=[There is no type resolver defined for interface / union 'Node' type]
+## 6d object misses transitive interface
+graphql.schema.idl.errors.SchemaProblem: errors=[The object type 'U' [@1:109] must implement 'Node' [@1:25] because it is implemented by 'Named' [@1:52], There is no type resolver defined for interface / union 'Node' type]
+## 8a one field
+{data={book={isbn=9780141439518}}}
+## 8b two fields literal
+{errors=[{message=Validation error (WrongType@[book]) : Exactly one key must be specified for OneOf type 'BookLookup'., locations=[{line=1, column=8}], extensions={classification=ValidationError}}]}
+## 8c zero fields
+{errors=[{message=Validation error (WrongType@[book]) : Exactly one key must be specified for OneOf type 'BookLookup'., locations=[{line=1, column=8}], extensions={classification=ValidationError}}]}
+## 8d null field literal
+{errors=[{message=Exception while fetching data (/book) : OneOf type field 'BookLookup.id' must be non-null., locations=[{line=1, column=3}], path=[book], extensions={classification=DataFetchingException}}], data={book=null}}
+## 8e variable two fields
+{errors=[{message=Exactly one key must be specified for OneOf type 'BookLookup'., extensions={classification=ValidationError}}]}
+## 8f variable null field
+{errors=[{message=OneOf type field 'BookLookup.id' must be non-null., extensions={classification=ValidationError}}]}
+## 8g nullable variable inside
+{errors=[{message=Exception while fetching data (/book) : OneOf type field 'BookLookup.id' must be non-null., locations=[{line=1, column=17}], path=[book], extensions={classification=DataFetchingException}}], data={book=null}}
+## 8h non-null variable inside
+{data={book={id=b1}}}
+## 8i input A @oneOf { a: A }
+graphql.schema.validation.InvalidSchemaException: invalid schema:
+OneOf Input Object A must be inhabited but all fields recursively reference only other OneOf Input Objects forming an unresolvable cycle.
+## 8j input A @oneOf { a: A, b: Int }
+BUILT OK
+## 8k input A { a: A! } (non-oneOf cycle)
+graphql.schema.validation.InvalidSchemaException: invalid schema:
+[a!] forms an unsatisfiable cycle
+## 8l oneOf with non-null field
+graphql.schema.validation.InvalidSchemaException: invalid schema:
+OneOf input field A.a must be nullable.
+## 8m oneOf with default
+graphql.schema.validation.InvalidSchemaException: invalid schema:
+OneOf input field A.a cannot have a default value.
+## 9a deprecated arg, input field, enum value
+BUILT OK
+## 9b deprecated required arg
+graphql.schema.validation.InvalidSchemaException: invalid schema:
+Required argument 'old' on field 'x' cannot be deprecated.
+## 9c deprecated required input field
+graphql.schema.validation.InvalidSchemaException: invalid schema:
+Required input field 'I.a' cannot be deprecated.
+## 9d directive on directive definition
+graphql.schema.idl.errors.SchemaProblem: errors=[InvalidSyntaxError{ message=Invalid syntax with offending token '@' at line 1 column 71 ,offendingToken=@ ,locations=[SourceLocation{line=1, column=71}] ,sourcePreview=directive @meta on DIRECTIVE_DEFINITION directive @tag(name: String!) @meta on FIELD_DEFINITION type Query { x: Int @tag(name: "a") }
+}]
+## 9e extend type across
+graphql.schema.idl.errors.SchemaProblem: errors=['schema' [@-1:-1] tried to use a directive 'deprecated' in the 'SCHEMA' location but that is illegal]
+## 9f extend unknown type
+graphql.schema.idl.errors.SchemaProblem: errors=[The extension 'Nope' type [@1:23] is missing its base underlying type]

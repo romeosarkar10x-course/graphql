@@ -1,0 +1,16 @@
+{
+  "errors": [
+    {
+      "message": "Can't serialize value (/shelf[1]/status) : Invalid input for enum 'ReadingStatus'. Unknown value 'ABANDONED'",
+      "path": [
+        "shelf",
+        1,
+        "status"
+      ],
+      "extensions": {
+        "classification": "DataFetchingException"
+      }
+    }
+  ],
+  "data": null
+}

@@ -1,0 +1,1 @@
+{ clubs { id name visibility memberCount currentBook { title } } }

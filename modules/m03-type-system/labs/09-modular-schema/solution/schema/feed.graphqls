@@ -1,0 +1,22 @@
+"One entry in a club's activity feed (lab 3.7)."
+union FeedItem = ReviewPosted | MemberJoined | MeetupScheduled
+
+type ReviewPosted {
+  at: DateTime!
+  review: Review!
+}
+
+type MemberJoined {
+  at: DateTime!
+  member: User!
+}
+
+type MeetupScheduled {
+  at: DateTime!
+  meetup: Meetup!
+}
+
+extend type Club {
+  "Newest first."
+  feed(first: Int = 20): [FeedItem!]!
+}

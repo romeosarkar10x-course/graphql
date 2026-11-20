@@ -1,0 +1,2 @@
+# Fix the cycle: the same input, plus one field that lets a value end.
+type Query { x: Int }

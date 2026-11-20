@@ -1,0 +1,1 @@
+Exception in thread "main" SchemaProblem{errors=[The object type 'Book' [@18:1] must implement 'Node' [@1:1] because it is implemented by 'Reviewable' [@11:1]]}

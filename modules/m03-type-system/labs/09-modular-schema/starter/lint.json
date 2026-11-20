@@ -1,0 +1,7 @@
+{
+  "description": "Shelfie schema lint config. Every rule names the elements it applies to by schema coordinate.",
+  "rules": [
+    {"coordinate": "Club.members(first:)", "rule": "max-page-size", "max": 100, "why": "bounded lists (Module 8)"},
+    {"coordinate": "Club.size", "rule": "remove-after", "date": "2027-06-30", "why": "replaced by memberCount"}
+  ]
+}

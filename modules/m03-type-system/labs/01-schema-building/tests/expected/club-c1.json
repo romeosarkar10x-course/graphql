@@ -1,0 +1,44 @@
+{
+  "data": {
+    "club": {
+      "id": "c1",
+      "name": "The Midnight Readers",
+      "owner": {
+        "name": "Kemi Adeyemi"
+      },
+      "members": [
+        {
+          "name": "Kemi Adeyemi",
+          "handle": "kemia"
+        },
+        {
+          "name": "Asha Rao",
+          "handle": "asha"
+        },
+        {
+          "name": "Ben Okafor",
+          "handle": "benok"
+        }
+      ],
+      "memberCount": 8,
+      "currentBook": {
+        "title": "The Left Hand of Darkness",
+        "averageRating": 4.2,
+        "reviews": [
+          {
+            "rating": 4,
+            "author": {
+              "name": "Hugo Silva"
+            }
+          },
+          {
+            "rating": 3,
+            "author": {
+              "name": "Jonas Berg"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

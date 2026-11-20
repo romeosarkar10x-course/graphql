@@ -1,0 +1,21 @@
+"From graphql-java-extended-scalars: a 64-bit integer, serialised as a JSON number."
+scalar Long @specifiedBy(url: "https://github.com/graphql-java/graphql-java-extended-scalars")
+
+type Query {
+  "A review from the analytics store. Null when the id is malformed or unknown."
+  review(id: ID!): AnalyticsReview
+  stats: Stats!
+}
+
+type AnalyticsReview {
+  "The store's 64-bit key, exposed as an opaque ID (a JSON string), so no client rounds it."
+  id: ID!
+  bookId: ID!
+  rating: Int!
+}
+
+type Stats {
+  reviewCount: Int!
+  "Over 2^31 already: Int cannot hold it."
+  totalPageViews: Long!
+}

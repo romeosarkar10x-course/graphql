@@ -1,0 +1,16 @@
+01 wrong check digit	ok 978-0-441-47812-6	ok 9780441478126
+02 JSON number	rejected/validation	ok 9780441478125
+03 empty string	ok 	rejected/variable-coercion
+04 12 digits	ok 978044147812	rejected/variable-coercion
+05 14 digits	ok 97804414781250	rejected/variable-coercion
+06 ISBN-10 wrong check	ok 0441478124	ok 0441478124
+07 Arabic-Indic digits	ok ٩٧٨٠٤٤١٤٧٨١٢٥	rejected/variable-coercion
+08 full-width last digit	ok 978044147812５	rejected/variable-coercion
+09 underscore	ok 978_0441478125	ok 9780441478125
+10 ISBN prefix	ok ISBN 9780441478125	ok 9780441478125
+11 trailing newline	ok 9780441478125
+	ok 9780441478125
+12 null	rejected/validation	rejected/variable-coercion
+13 boolean	rejected/validation	rejected/variable-coercion
+14 object	rejected/validation	ok 9780441478125
+15 bad prefix, valid sum	ok 1230441478123	ok 1230441478123

@@ -14,7 +14,13 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | Netflix DGS | 12.1.1 | 11 | update Module 6.7 text when built |
 | DGS codegen (Maven) | `io.github.deweyjose:graphqlcodegen-maven-plugin` 3.11.0 | DGS Gradle plugin | official DGS codegen is Gradle-only |
 | java-dataloader | 6.0.0 | — | |
-| extended-scalars / extended-validation | 24.0 / 24.0 | — | check compatibility with graphql-java 26 in Module 3 |
+| extended-scalars / extended-validation | 24.0 / 24.0 | — | built for graphql-java 24.1; both work on 26.1 (probes in `_workbench/2026-11-21-m03-probe/`) |
+| Hibernate Validator / Expressly | 8.0.6.Final / 5.0.0 | — | extended-validation 24.0 breaks on HV 9.2.0 (`NoSuchMethodError` in `MessageInterpolatorContext`) |
+| H2 | 2.5.252 | — | lab 4.4 |
+| AWS SDK v2 `s3` (presigner only) | 2.59.5 | — | reference server, lab 4.6; HTTP clients excluded |
+| SeaweedFS | 4.54 (`chrislusf/seaweedfs`) | MinIO | MinIO images are gone from Docker Hub and quay.io (pull denied, 2026-11-21) |
+| GraphQL Voyager | 2.1.0 (jsDelivr) | — | `/voyager.html`, game 3c |
+| jspecify | 1.0.0 | — | mini-project 3 |
 | Testcontainers | 2.0.5 | — | |
 | grpc-java / protobuf | 1.84.1 / 4.36.2 (Boot BOM) | — | protoc via `io.github.ascopes:protobuf-maven-plugin` 5.1.12 |
 | JUnit | 6.1.3 (Boot BOM) | — | |

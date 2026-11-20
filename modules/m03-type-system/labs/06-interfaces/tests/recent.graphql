@@ -1,0 +1,1 @@
+{ recent(first: 6) { __typename createdAt ... on Club { name } ... on Review { rating } } }

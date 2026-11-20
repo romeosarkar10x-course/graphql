@@ -1,0 +1,2 @@
+# Redesign the five mutations from bad.graphqls here (README has the rules).
+type Query { ok: Boolean }

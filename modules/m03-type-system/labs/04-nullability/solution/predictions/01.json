@@ -1,0 +1,20 @@
+{
+  "club": {
+    "name": "The Midnight Readers",
+    "owner": {
+      "name": "Kemi Adeyemi"
+    },
+    "members": [
+      {
+        "name": "Kemi Adeyemi"
+      },
+      {
+        "name": "Asha Rao"
+      },
+      {
+        "name": "Ben Okafor"
+      }
+    ],
+    "currentBook": null
+  }
+}

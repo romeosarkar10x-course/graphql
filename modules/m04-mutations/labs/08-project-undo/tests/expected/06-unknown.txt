@@ -1,0 +1,2 @@
+01 {"data":{"undo":{"undone":null,"undoToken":null,"userErrors":[{"code":"NOT_FOUND"}]}}}
+02 {"data":{"leaveClub":{"club":{"memberIds":["u11","u1","u2"]},"undoToken":null,"userErrors":[]}}}

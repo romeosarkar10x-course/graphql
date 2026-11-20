@@ -1,0 +1,49 @@
+== com/graphql-java/graphql-java-extended-scalars
+<latest>2023-01-24T02-11-56-babda5f
+<release>2023-01-24T02-11-56-babda5f
+<lastUpdated>20261117044748
+<version>2022-04-14T11-21-07-f770172 <version>2022-11-23T22-19-24-17e7881 <version>2022-01-08T22-41-15-9df62b5 <version>2022-07-24T22-44-12-313b221 <version>2022-01-08T22-46-25-c2e844f <version>2023-01-24T02-11-56-babda5f 
+== com/graphql-java/graphql-java-extended-validation
+<latest>2022-09-18T21-40-44-3d1969c
+<release>2022-09-18T21-40-44-3d1969c
+<lastUpdated>20251006210331
+<version>2022-09-26T06-28-44-05a6d69 <version>2022-05-25T09-31-27-3409635 <version>2022-05-25T09-33-11-a07d5a7 <version>2022-12-08T13-00-07-d0fb9c4 <version>2022-03-04T15-19-47-0cf370c <version>2022-09-18T21-40-44-3d1969c 
+== org/hibernate/validator/hibernate-validator
+<latest>9.2.0.Final
+<release>9.2.0.Final
+<lastUpdated>20261120190746
+<version>9.1.5.Final <version>9.1.6.Final <version>9.2.0.Beta1 <version>9.2.0.CR1 <version>9.2.0.CR2 <version>9.2.0.Final 
+== org/glassfish/expressly/expressly
+<latest>6.0.0
+<release>6.0.0
+<lastUpdated>20250520172640
+<version>5.0.0-M1 <version>5.0.0-M2 <version>5.0.0 <version>6.0.0-M1 <version>6.0.0 
+== com/h2database/h2
+<latest>2.5.252
+<release>2.5.252
+<lastUpdated>20260926144259
+<version>2.2.224 <version>2.3.230 <version>2.3.232 <version>2.4.240 <version>2.5.250 <version>2.5.252 
+== io/minio/minio
+<latest>9.0.4
+<release>9.0.4
+<lastUpdated>20261030212805
+<version>8.6.0 <version>9.0.0 <version>9.0.1 <version>9.0.2 <version>9.0.3 <version>9.0.4 
+== software/amazon/awssdk/s3
+<latest>2.59.5
+<release>2.59.5
+<lastUpdated>20261119221940
+<version>2.59.0 <version>2.59.1 <version>2.59.2 <version>2.59.3 <version>2.59.4 <version>2.59.5 
+== com/graphql-java/graphql-java
+<latest>230521-nf-execution
+<release>230521-nf-execution
+<lastUpdated>20261118023832
+<version>2021-03-18T23-19-42-52ebe904 <version>2021-04-11T23-40-30-f362d619 <version>2021-04-11T23-42-01-1d16e703 <version>2021-04-11T23-42-55-656f4e35 <version>2021-04-11T23-47-53-93cc5158 <version>230521-nf-execution 
+== jakarta/validation/jakarta.validation-api
+<latest>4.0.0-M1
+<release>4.0.0-M1
+<lastUpdated>20251022203002
+<version>3.0.2 <version>3.1.0-M1 <version>3.1.0-M2 <version>3.1.0 <version>3.1.1 <version>4.0.0-M1 
+== com/graphql-java/graphql-java-extended-scalars
+<version>20.1 <version>20.2 <version>21.0 <version>22.0 <version>24.0 
+== com/graphql-java/graphql-java-extended-validation
+<version>20.0 <version>20.0-validator-6.2.0.Final <version>21.0 <version>22.0 <version>24.0 

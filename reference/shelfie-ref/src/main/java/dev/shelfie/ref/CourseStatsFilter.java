@@ -15,11 +15,18 @@ import org.springframework.web.filter.OncePerRequestFilter;
  *
  *   GET  /_course/stats   -> {"api":N,"graphql":M}
  *   POST /_course/reset   -> zeroes both counters
+ *   POST /_course/reset-data -> puts the Store back to its seed (Module 4 writes)
  */
 @Component
 public class CourseStatsFilter extends OncePerRequestFilter {
 
     private final AtomicLong api = new AtomicLong();
+    private final dev.shelfie.ref.data.Store store;
+
+    public CourseStatsFilter(dev.shelfie.ref.data.Store store) {
+        this.store = store;
+    }
+
     private final AtomicLong graphql = new AtomicLong();
 
     @Override
@@ -34,6 +41,11 @@ public class CourseStatsFilter extends OncePerRequestFilter {
         if (path.equals("/_course/reset") && req.getMethod().equals("POST")) {
             api.set(0);
             graphql.set(0);
+            res.setStatus(204);
+            return;
+        }
+        if (path.equals("/_course/reset-data") && req.getMethod().equals("POST")) {
+            store.reset();
             res.setStatus(204);
             return;
         }

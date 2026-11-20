@@ -1,0 +1,49 @@
+{
+  "data": {
+    "feed": [
+      {
+        "__typename": "MeetupScheduled",
+        "at": "2026-10-20T12:00:00Z",
+        "title": "Left Hand of Darkness, part 2",
+        "startsAt": "2026-11-27T19:00:00Z"
+      },
+      {
+        "__typename": "ReviewPosted",
+        "at": "2026-10-15T23:59:00Z",
+        "reviewer": {
+          "name": "Hugo Silva"
+        },
+        "book": {
+          "title": "The Left Hand of Darkness"
+        },
+        "rating": 4
+      },
+      {
+        "__typename": "ReviewPosted",
+        "at": "2026-10-02T21:10:00Z",
+        "reviewer": {
+          "name": "Asha Rao"
+        },
+        "book": {
+          "title": "The Left Hand of Darkness"
+        },
+        "rating": 5
+      },
+      {
+        "__typename": "BookFinished",
+        "at": "2026-09-28T20:00:00Z",
+        "book": {
+          "title": "Project Hail Mary"
+        },
+        "readers": 6
+      },
+      {
+        "__typename": "MemberJoined",
+        "at": "2026-09-01T10:00:00Z",
+        "member": {
+          "name": "Jonas Berg"
+        }
+      }
+    ]
+  }
+}

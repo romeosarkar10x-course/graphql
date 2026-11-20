@@ -1,0 +1,29 @@
+## serial-vs-parallel query
+{data={a=1, b=1, c=1}}
+query total ms 231
+start c    107 ms 
+start a    106 ms 
+start b    107 ms 
+end   b    313 ms
+end   a    313 ms
+end   c    313 ms
+## serial-vs-parallel mutation
+{data={a=1, b=1, c=1}}
+mutation total ms 602
+start a    317 ms 
+end   a    517 ms
+start b    517 ms 
+end   b    718 ms
+start c    718 ms 
+end   c    918 ms
+## enum legacy codes in/out
+{data={v=PRIVATE}}
+## enum unknown internal value
+{errors=[{message=Can't serialize value (/legacy) : Invalid input for enum 'Visibility'. Unknown value 'Q', path=[legacy], extensions={classification=DataFetchingException}}], data={legacy=null}}
+arg class class java.lang.String
+## java enum out by name
+{data={v=PUBLIC}}
+## ext-validation ok
+{data={createReview=ok {rating=5, body=A fine long body}}}
+## ext-validation bad
+{errors=[{message=/createReview/input/rating range must be between 1 and 5, locations=[{line=1, column=12}], path=[createReview], extensions={classification={type=ExtendedValidationError, validatedPath=[createReview, input, rating], constraint=@Range}}}, {message=/createReview/input/body size must be between 10 and 2000, locations=[{line=1, column=12}], path=[createReview], extensions={classification={type=ExtendedValidationError, validatedPath=[createReview, input, body], constraint=@Size}}}], data={createReview=null}}

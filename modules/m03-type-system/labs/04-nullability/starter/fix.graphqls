@@ -1,0 +1,6 @@
+type Query { club(id: ID!): Club }
+type Club { id: ID! name: String! description: String owner: User! members: [User!]! currentBook: Book }
+type User { id: ID! name: String! }
+type Book { id: ID! title: String! averageRating: Float! reviews: [Review!]! }
+type Review { id: ID! rating: Int! author: User! }
+

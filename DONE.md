@@ -39,6 +39,38 @@
 - [x] Reference server: `books(titleContains:, first:)`, `search` union, `Subscription.meetupScheduled`
 - [x] Simulated learner run of `bin/course checkpoint 02` tagged correctly
 
+## Module 3 (9 lectures, 9 labs, 1 mini-project, 3 games)
+
+- [x] Lectures 3.1–3.9; README (incl. graphql-java 26.1 vs spec table); checkpoint quiz; checkpoint.json
+- [x] m03/01 schema by hand + wiring audit · m03/02 long IDs · m03/03 ISBN scalar (15 bad inputs, both
+      paths) + extended scalars · m03/04 nullability lab (8 scenarios + bad-day fix) · m03/05 enums
+      (legacy codes, strict vs tolerant client) · m03/06 interfaces · m03/07 sealed union (compiler test) ·
+      m03/08 `@oneOf` (14 lookups, inhabitability) · m03/09 full Shelfie SDL in 5 files + coordinates lint
+- [x] Games: m03/10 wireframe to schema · m03/11 nullability bets · m03/12 Voyager reveal (rubric only)
+- [x] Mini-project m03/13 records-to-SDL generator (Maven, jspecify `@NonNull`)
+- [x] Tools: `gql coordinates`, `gql stats`, schema directories; `/voyager.html` on the reference server;
+      extended-scalars 24.0 in `tools/course-lib`
+- [x] Simulated learner run of `bin/course checkpoint 03` tagged correctly
+
+## Module 4 (6 lectures, 6 labs, 1 mini-project, 2 games)
+
+- [x] Lectures 4.1–4.6; README (incl. changes from the plan); checkpoint quiz; checkpoint.json
+- [x] m04/01 first mutations (request count checked) + serial vs parallel timing · m04/02 redesign 5
+      mutations (lint) + record binder with patch semantics · m04/03 userErrors vs result union → one
+      sealed type · m04/04 idempotency keys, optimistic locking, jobs (Maven, H2, 50-thread harness) ·
+      m04/05 four validation layers, 21 inputs · m04/06 multipart vs pre-signed upload, 50 MB at 48 MB heap
+- [x] Games: m04/07 chaos button (5 seeds × 2,000 ops) · m04/09 design critique cards (8 real signatures)
+- [x] Mini-project m04/08 undo everything (command pattern, 6 scripts)
+- [x] Reference server: Mutation type (createReview, createReviewTyped, deleteReview, joinClub,
+      leaveClub, uploadCover, createCoverUpload, confirmCoverUpload), `X-Shelfie-User`, multipart
+      convention with CSRF header, pre-signed URLs to SeaweedFS (`storage` in compose),
+      `/_course/reset-data` (runner resets before every lab), `bin/course ref reset`
+- [x] `notes_check` in testlib: written work must add 60+ words beyond the starter
+- [x] Simulated learner run of `bin/course checkpoint 04` tagged correctly
+
+`bin/course check --starters` (2026-11-21, after Module 4): 44 auto-graded labs, 0 problems
+(`_workbench/2026-11-21-m04-check-starters.log`). After Module 3 alone: 35, 0 problems.
+
 `bin/course check --starters` (2026-11-21, after Module 2): 23 auto-graded labs, 0 problems
 (`_workbench/2026-11-21-m02-check-starters.log`).
 

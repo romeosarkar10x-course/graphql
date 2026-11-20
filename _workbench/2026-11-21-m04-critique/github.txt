@@ -1,0 +1,29 @@
+Mutation.addStar(input: AddStarInput!): AddStarPayload
+Mutation.createIssue(input: CreateIssueInput!): CreateIssuePayload
+Mutation.deleteIssue(input: DeleteIssueInput!): DeleteIssuePayload
+Mutation.mergePullRequest(input: MergePullRequestInput!): MergePullRequestPayload
+Mutation.updateIssue(input: UpdateIssueInput!): UpdateIssuePayload
+CreateIssuePayload.clientMutationId: String
+CreateIssuePayload.issue: Issue
+DeleteIssuePayload.clientMutationId: String
+DeleteIssuePayload.repository: Repository
+MergePullRequestPayload.actor: Actor
+MergePullRequestPayload.clientMutationId: String
+MergePullRequestPayload.pullRequest: PullRequest
+input CreateIssueInput.agentAssignment: AgentAssignmentInput
+input CreateIssueInput.assigneeIds: [ID!]
+input CreateIssueInput.body: String
+input CreateIssueInput.clientMutationId: String
+input CreateIssueInput.issueFields: [IssueFieldCreateOrUpdateInput!]
+input CreateIssueInput.issueTemplate: String
+input CreateIssueInput.issueTypeId: ID
+input CreateIssueInput.labelIds: [ID!]
+input CreateIssueInput.milestoneId: ID
+input CreateIssueInput.parentIssueId: ID
+input CreateIssueInput.projectIds: [ID!]
+input CreateIssueInput.projectV2Ids: [ID!]
+input CreateIssueInput.repositoryId: ID!
+input CreateIssueInput.statusId: ID
+input CreateIssueInput.title: String!
+input DeleteIssueInput.clientMutationId: String
+input DeleteIssueInput.issueId: ID!

@@ -1,0 +1,10 @@
+{
+  "Book.title":          {"bet": "?", "stake": 2},
+  "Book.coverUrl":       {"bet": "?", "stake": 2},
+  "Club.owner":          {"bet": "?", "stake": 2},
+  "Review.author":       {"bet": "?", "stake": 2},
+  "Book.averageRating":  {"bet": "?", "stake": 2},
+  "User.handle":         {"bet": "?", "stake": 2},
+  "Club.memberCount":    {"bet": "?", "stake": 2},
+  "Club.currentBook":    {"bet": "?", "stake": 2}
+}

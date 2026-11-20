@@ -1,0 +1,10 @@
+{
+  "Book.title":          {"bet": "non-null", "stake": 2},
+  "Book.coverUrl":       {"bet": "nullable", "stake": 3},
+  "Club.owner":          {"bet": "nullable", "stake": 1},
+  "Review.author":       {"bet": "nullable", "stake": 2},
+  "Book.averageRating":  {"bet": "nullable", "stake": 3},
+  "User.handle":         {"bet": "non-null", "stake": 2},
+  "Club.memberCount":    {"bet": "non-null", "stake": 2},
+  "Club.currentBook":    {"bet": "nullable", "stake": 1}
+}

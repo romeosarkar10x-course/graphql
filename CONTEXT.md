@@ -56,3 +56,19 @@ in Docker.
     unions and a subscription to work with; the Subscription never emits until Module 11.
   - GitHub-dependent work (golf bonus holes, the CLI's live run) is optional: tests use a stub server
     and a saved schema snapshot when there is no `GITHUB_TOKEN`.
+- Module 3 (2026-11-21), probes in `_workbench/2026-11-21-m03-probe/`:
+  - Every lab runs graphql-java in-process (`bin/course java`, multi-file source launch for `Data.java`);
+    the reference server's schema is unchanged by Module 3 (it keeps String timestamps).
+  - Syllabus 3.9 "directives on directive definitions (accepted 2026)": graphql-java 26.1's parser rejects
+    them; the lab records the parse error as the finding.
+  - Game "Voyager reveal": the reference server serves `/voyager.html` (Voyager 2.1.0 from jsDelivr), so
+    it needs a browser with internet access.
+- Module 4 (2026-11-21), probes in `_workbench/2026-11-21-m04-probe/` and `-m04-storage/`:
+  - The reference server became writable. `POST /_course/reset-data` restores the seed and the runner
+    calls it before every lab, so earlier modules' expected outputs stay valid.
+  - 4.4 uses JDBC with a version column instead of JPA `@Version` (same SQL; JPA arrives in Module 6).
+  - 4.6 uses SeaweedFS for S3 (MinIO no longer publishes images) and a hand-written multipart handler in
+    the reference server (Spring for GraphQL has none; the plan's DGS/multipart-spring-graphql options
+    would add a second framework in Module 4).
+  - The chaos button (game 4a) runs in-process against the learner's service (a harness drops responses,
+    duplicates requests and races 16 clients), not through a network proxy, so runs are reproducible by seed.

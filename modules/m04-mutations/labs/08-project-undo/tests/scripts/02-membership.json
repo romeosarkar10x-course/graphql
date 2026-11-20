@@ -1,0 +1,57 @@
+[
+ {
+  "as": "u4",
+  "doc": "mutation($c: ID!) { joinClub(input: {clubId: $c}) { club { memberIds } undoToken userErrors { code } } }",
+  "vars": {
+   "c": "c2"
+  },
+  "save": {
+   "t1": "joinClub"
+  }
+ },
+ {
+  "as": "u4",
+  "doc": "mutation($c: ID!) { joinClub(input: {clubId: $c}) { club { memberIds } undoToken userErrors { code } } }",
+  "vars": {
+   "c": "c2"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "mutation($t: ID!) { undo(input: {token: $t}) { undone undoToken userErrors { code } } }",
+  "vars": {
+   "t": "$t1"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "query($c: ID!) { club(id: $c) { name memberIds } }",
+  "vars": {
+   "c": "c2"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "mutation($c: ID!) { leaveClub(input: {clubId: $c}) { club { memberIds } undoToken userErrors { code } } }",
+  "vars": {
+   "c": "c1"
+  },
+  "save": {
+   "t2": "leaveClub"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "mutation($t: ID!) { undo(input: {token: $t}) { undone undoToken userErrors { code } } }",
+  "vars": {
+   "t": "$t2"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "query($c: ID!) { club(id: $c) { name memberIds } }",
+  "vars": {
+   "c": "c1"
+  }
+ }
+]

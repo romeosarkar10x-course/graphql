@@ -1,0 +1,61 @@
+[
+ {
+  "as": "u1",
+  "doc": "mutation($c: ID!, $n: String!) { renameClub(input: {clubId: $c, name: $n}) { club { name } undoToken userErrors { code } } }",
+  "vars": {
+   "c": "c2",
+   "n": "Whodunit Club"
+  },
+  "save": {
+   "t1": "renameClub"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "mutation($t: ID!) { undo(input: {token: $t}) { undone undoToken userErrors { code } } }",
+  "vars": {
+   "t": "$t1"
+  },
+  "save": {
+   "t2": "undo"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "query($c: ID!) { club(id: $c) { name memberIds } }",
+  "vars": {
+   "c": "c2"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "mutation($t: ID!) { undo(input: {token: $t}) { undone undoToken userErrors { code } } }",
+  "vars": {
+   "t": "$t2"
+  },
+  "save": {
+   "t3": "undo"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "query($c: ID!) { club(id: $c) { name memberIds } }",
+  "vars": {
+   "c": "c2"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "mutation($t: ID!) { undo(input: {token: $t}) { undone undoToken userErrors { code } } }",
+  "vars": {
+   "t": "$t3"
+  }
+ },
+ {
+  "as": "u1",
+  "doc": "query($c: ID!) { club(id: $c) { name memberIds } }",
+  "vars": {
+   "c": "c2"
+  }
+ }
+]

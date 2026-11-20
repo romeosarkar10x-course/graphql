@@ -1,0 +1,49 @@
+Book.authors: [String!]!
+Book.averageRating: Float
+Book.id: ID!
+Book.publishedYear: Int
+Book.reviews: [Review!]!
+Book.title: String!
+Club.currentBook: Book
+Club.description: String
+Club.id: ID!
+Club.memberCount: Int!
+Club.members: [User!]!
+Club.name: String!
+Club.owner: User!
+Club.visibility: Visibility!
+MemberJoined.club: Club!
+MemberJoined.member: User!
+Node.id: ID!
+Query.clubs: [Club!]!
+Query.featured: Club
+Query.feed: [FeedItem!]!
+Query.nodes: [Node]
+Review.author: User!
+Review.body: String!
+Review.id: ID!
+Review.rating: Int!
+Review.spoiler: Boolean!
+ReviewPosted.club: Club!
+ReviewPosted.review: Review!
+User.bio: String
+User.handle: String!
+User.id: ID!
+User.name: String!
+enum Visibility.PRIVATE
+enum Visibility.PUBLIC
+interface Node
+scalar Boolean
+scalar Float
+scalar ID
+scalar Int
+scalar String
+schema query=Query
+type Book implements Node
+type Club implements Node
+type MemberJoined
+type Query
+type Review
+type ReviewPosted
+type User implements Node
+union FeedItem = MemberJoined | ReviewPosted
