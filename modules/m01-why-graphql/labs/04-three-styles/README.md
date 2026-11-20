@@ -17,6 +17,8 @@ and a *screen* RPC (`GetClubPage`) that some backend developer had to write for 
 
 1. Finish `calls.sh` so each line prints what it says. Run it with `bin/course shell`, then `bash calls.sh`.
 2. Fill in `tradeoff-matrix.md` for all 5 scenarios.
+3. Fill in `change-impact.md`: one product change (reading progress on the club page) traced through
+   all three implementations. Open the real files; name what changes.
 
 ## Done when
 

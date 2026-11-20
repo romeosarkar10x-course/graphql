@@ -13,4 +13,8 @@ grep -q 'variables' "$LAB_DIR/calls.sh" && pass "GraphQL call uses variables" ||
 m="$LAB_DIR/tradeoff-matrix.md"
 [[ -s "$m" ]] && (( $(grep -cE '^\*\*Pick:\*\* *[A-Za-z]' "$m") >= 5 )) \
   && pass "tradeoff-matrix.md has 5 picks (rubric: bin/course grade m01/04)" || fail "tradeoff-matrix.md: make a **Pick:** for all 5 scenarios"
+c="$LAB_DIR/change-impact.md"
+if [[ -s "$c" ]] && cmp -s "$c" "$LAB_HOME/starter/change-impact.md"; then fail "change-impact.md: still the template"
+elif [[ -s "$c" ]] && (( $(wc -w < "$c") > 200 )); then pass "change-impact.md written (rubric: bin/course grade m01/04)"
+else fail "change-impact.md: answer all three styles and the verdict"; fi
 finish

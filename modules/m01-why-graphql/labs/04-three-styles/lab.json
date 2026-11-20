@@ -1,7 +1,9 @@
 {
-  "title": "Three styles, one domain: REST, gRPC, GraphQL + trade-off matrix",
+  "title": "Three styles, one domain: REST, gRPC, GraphQL + trade-off matrix + change impact",
   "lecture": "1.4",
   "kind": "lab",
   "grading": "both",
-  "needs": ["ref"]
+  "needs": [
+    "ref"
+  ]
 }

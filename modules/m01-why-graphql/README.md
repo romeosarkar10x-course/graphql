@@ -11,11 +11,11 @@ gRPC, tRPC or OData is the better call, with numbers you measured yourself.
 
 | # | Lecture | Lab | Grading |
 |---|---|---|---|
-| 1.1 | [Where GraphQL came from](lectures/1.1-origins.md) | [m01/01 Card sort: 12 milestones](labs/01-timeline/README.md) | auto |
+| 1.1 | [Where GraphQL came from](lectures/1.1-origins.md) | [m01/01 Card sort: 12 milestones](labs/01-timeline/README.md) | auto + rubric |
 | 1.2 | [The pain it targets](lectures/1.2-the-pain.md) | [m01/02 The REST waterfall](labs/02-rest-waterfall/README.md) | auto + rubric |
 | 1.3 | [The mental model](lectures/1.3-mental-model.md) | [m01/03 One GraphQL call](labs/03-one-graphql-call/README.md) | auto + rubric |
 | 1.4 | [GraphQL vs REST vs gRPC vs tRPC vs OData](lectures/1.4-comparison.md) | [m01/04 Three styles, one domain](labs/04-three-styles/README.md) | auto + rubric |
-| 1.5 | [When not to use it, and who does](lectures/1.5-when-not.md) | [m01/05 When not to](labs/05-when-not-to/README.md) | rubric |
+| 1.5 | [When not to use it, and who does](lectures/1.5-when-not.md) | [m01/05 When not to](labs/05-when-not-to/README.md), [m01/09 Case-study teardown](labs/09-case-study-teardown/README.md) | rubric |
 
 The shared contract for 1.2 and 1.3: [contract/club-page.md](contract/club-page.md).
 

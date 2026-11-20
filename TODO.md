@@ -2,9 +2,8 @@
 
 ## Now: user review of infra + Module 0 + Module 1 (CONTEXT.md §2.3)
 
-Open questions for the user:
-- Is the lab format (single-file Java for small clients, Maven projects for bigger ones) right?
-- Rubric-lab volume: Module 1 has 5 rubric parts. More, fewer?
+Answered 2026-11-21: single-file Java for small clients is fine; more rubric parts wanted (added to
+m01/01, m01/04, new m01/09). Keep a generous rubric share in later modules.
 
 ## Verification debt
 

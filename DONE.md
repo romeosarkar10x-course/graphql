@@ -25,7 +25,8 @@
 - [x] Lectures 1.1–1.5; README; checkpoint quiz; club-page contract with expected outputs for c1–c3
 - [x] m01/01 card sort · m01/02 REST waterfall · m01/03 one GraphQL call · m01/04 three styles + matrix ·
       m01/05 when not to (rubric) · m01/06 latency lab (11 JUnit tests + slider page) · m01/07 card game ·
-      m01/08 debate
+      m01/08 debate · m01/09 case-study teardown (rubric)
+- [x] Extra rubric parts at the user's request: m01/01 consequences.md, m01/04 change-impact.md, m01/09
 - [x] Reference measurements (c1, 700 ms latency): REST 11 requests, 4,917 B, 2,182 ms; GraphQL 1 request, 824 B, 834 ms
 
-`bin/course check --starters` (2026-11-21): 11 auto-graded labs, 0 problems (`_workbench/2026-11-21-check-starters.log`).
+`bin/course check --starters` (2026-11-21): 11 auto-graded labs, 0 problems; Module 1 re-checked after the rubric additions (`_workbench/2026-11-21-check-starters.log`).

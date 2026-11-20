@@ -20,3 +20,4 @@ Every game and group activity has a solo and a group variant. For the group vari
 | 1 | Latency lab: vote on the clearest page | 2+ | 45 min + 10 |
 | 1 | REST or GraphQL? cards | 3–8 | 30 min |
 | 1 | Debate: bank goes GraphQL-first | 4+ | 25 min |
+| 1 | Case-study teardown: one company each, vote on the best lesson | 2+ | 40 min |

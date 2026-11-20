@@ -26,4 +26,8 @@ for i in $(seq 0 11); do
 done
 if [[ "$(printf '%s' "$got" | sha256sum | cut -c1-16)" == "$KEY" ]]; then pass "all 12 in order"
 else fail "$inplace of 12 cards are in the right position"; fi
+c="$LAB_DIR/consequences.md"
+[[ -s "$c" ]] && (( $(grep -cE '^## [0-9]\. Card [A-L]' "$c") == 4 )) && (( $(wc -w < "$c") > 150 )) \
+  && pass "consequences.md: 4 cards written up (rubric: bin/course grade m01/01)" \
+  || fail "consequences.md: pick 4 cards (\"## 1. Card X\") and write each up"
 finish
