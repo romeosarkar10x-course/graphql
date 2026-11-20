@@ -1,0 +1,34 @@
+{
+  "currentBook": {
+    "authors": [
+      "Umberto Eco"
+    ],
+    "title": "The Name of the Rose"
+  },
+  "description": "Whodunits read at a civilised pace.",
+  "latestReviews": [
+    {
+      "body": "Read every Latin footnote. Worth it.",
+      "rating": 4,
+      "reviewer": "Liu Wei"
+    },
+    {
+      "body": "Labyrinthine in every sense.",
+      "rating": 5,
+      "reviewer": "Grace Kim"
+    }
+  ],
+  "memberCount": 4,
+  "members": [
+    "Grace Kim",
+    "Elena Petrova",
+    "Ines Duarte",
+    "Liu Wei"
+  ],
+  "name": "Slow Burn Mysteries",
+  "nextMeetup": {
+    "startsAt": "2026-11-25T18:30:00Z",
+    "title": "Chapter 3 suspects"
+  },
+  "owner": "Grace Kim"
+}

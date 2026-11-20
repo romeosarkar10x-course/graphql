@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latency Lab</title>
+<style>
+  :root { --bg: #fafaf7; --fg: #1d1d1b; --muted: #6b6b66; --rest: #c2410c; --gql: #0f766e; --track: #e7e5e0; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161615; --fg: #ecebe6; --muted: #a3a29c; --rest: #fb923c; --gql: #2dd4bf; --track: #2a2a28; }
+  }
+  body { background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; margin: 0 auto; max-width: 760px; padding: 24px 16px; }
+  h1 { font-size: 1.5rem; margin: 0 0 4px; }
+  p.lede { color: var(--muted); margin: 0 0 24px; }
+  .controls { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 28px; }
+  label { display: grid; grid-template-columns: 170px 1fr 90px; align-items: center; gap: 12px; }
+  label output { text-align: right; font-variant-numeric: tabular-nums; }
+  input[type=range] { width: 100%; }
+  .bar-row { display: grid; grid-template-columns: 90px 1fr 100px; align-items: center; gap: 12px; margin: 10px 0; }
+  .track { background: var(--track); border-radius: 4px; height: 26px; overflow: hidden; }
+  .bar { height: 100%; border-radius: 4px; transition: width .15s; }
+  .rest .bar { background: var(--rest); } .gql .bar { background: var(--gql); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .detail { color: var(--muted); font-size: .9rem; margin-top: 18px; }
+  @media (max-width: 560px) { label { grid-template-columns: 1fr 70px; } label span { grid-column: 1 / -1; } }
+</style>
+</head>
+<body>
+<h1>Latency lab</h1>
+<p class="lede">Shelfie's club page: 13 REST calls in 3 dependency waves, or 1 GraphQL call. Move the sliders.</p>
+
+<div class="controls">
+  <label><span>Round trip (ms)</span><input id="rtt" type="range" min="0" max="2000" step="10" value="700"><output id="rttOut"></output></label>
+  <label><span>Server time per call (ms)</span><input id="server" type="range" min="0" max="200" step="1" value="10"><output id="serverOut"></output></label>
+  <label><span>Bandwidth (kbit/s)</span><input id="kbps" type="range" min="0" max="100" step="1" value="40"><output id="kbpsOut"></output></label>
+  <label><span>Parallel requests</span><input id="par" type="range" min="1" max="12" step="1" value="6"><output id="parOut"></output></label>
+</div>
+
+<div class="bar-row rest"><span>REST</span><div class="track"><div class="bar" id="restBar"></div></div><span class="num" id="restMs"></span></div>
+<div class="bar-row gql"><span>GraphQL</span><div class="track"><div class="bar" id="gqlBar"></div></div><span class="num" id="gqlMs"></span></div>
+<p class="detail" id="detail"></p>
+
+<script>
+// Same model as LatencyModel.java: sum over waves of ceil(n / parallel) * (rtt + server) + bytes * 8 / kbps
+const REST_WAVES = [1, 9, 3];        // club | owner, 5 members, book, reviews, meetups | 3 reviewers
+const REST_BYTES = 13 * 450;         // about 450 bytes per REST response (lab 1.2 measured 4,917 for 11)
+const GQL_WAVES = [1];
+const GQL_BYTES = 824;               // lab 1.3 measurement
+
+const $ = id => document.getElementById(id);
+// bandwidth slider is logarithmic: 0..100 maps to 64 kbit/s .. 100 Mbit/s
+const kbpsFromSlider = v => Math.round(64 * Math.pow(100000 / 64, v / 100));
+
+function pageMs(waves, bytes, rtt, server, kbps, parallel) {
+  const trips = waves.reduce((sum, n) => sum + Math.ceil(n / parallel), 0);
+  return { trips, ms: trips * (rtt + server) + bytes * 8 / kbps };
+}
+
+function render() {
+  const rtt = +$('rtt').value, server = +$('server').value, par = +$('par').value, kbps = kbpsFromSlider(+$('kbps').value);
+  $('rttOut').textContent = rtt + ' ms';
+  $('serverOut').textContent = server + ' ms';
+  $('kbpsOut').textContent = kbps >= 1000 ? (kbps / 1000).toFixed(1) + ' Mbit/s' : kbps + ' kbit/s';
+  $('parOut').textContent = par;
+  const rest = pageMs(REST_WAVES, REST_BYTES, rtt, server, kbps, par);
+  const gql = pageMs(GQL_WAVES, GQL_BYTES, rtt, server, kbps, par);
+  const max = Math.max(rest.ms, gql.ms, 1);
+  $('restBar').style.width = (100 * rest.ms / max) + '%';
+  $('gqlBar').style.width = (100 * gql.ms / max) + '%';
+  $('restMs').textContent = Math.round(rest.ms).toLocaleString() + ' ms';
+  $('gqlMs').textContent = Math.round(gql.ms).toLocaleString() + ' ms';
+  $('detail').textContent = `REST: ${rest.trips} sequential round trips, ${REST_BYTES.toLocaleString()} bytes. ` +
+    `GraphQL: ${gql.trips} round trip, ${GQL_BYTES} bytes. ` +
+    (rest.ms > gql.ms ? `GraphQL is ${(rest.ms / gql.ms).toFixed(1)}x faster here.` : `REST is as fast or faster here.`);
+}
+document.querySelectorAll('input').forEach(i => i.addEventListener('input', render));
+render();
+</script>
+</body>
+</html>

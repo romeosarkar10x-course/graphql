@@ -1,0 +1,13 @@
+# Oldest first. Reference order with dates.
+A | Facebook starts building GraphQL while rebuilding its native mobile apps (2012)
+F | Facebook publishes a draft spec and the graphql-js reference implementation             (Jul 2015)
+K | GitHub announces its public GraphQL API                                                 (Sep 2016)
+C | Facebook relicenses the spec under OWFa 1.0 and graphql-js under MIT                    (Sep 2017)
+H | A new spec edition: June 2018                                                           (Jun 2018)
+B | The GraphQL Foundation launches under the Linux Foundation                              (Nov 2018)
+L | Apollo announces Apollo Federation                                                      (May 2019)
+E | Netflix open-sources the DGS framework                                                  (Feb 2021)
+J | A new spec edition: October 2021                                                        (Oct 2021)
+D | Spring for GraphQL 1.0 is released                                                      (May 2022)
+I | Shopify marks its REST Admin API as legacy                                              (Oct 2024)
+G | A new spec edition: September 2025                                                     (Sep 2025)

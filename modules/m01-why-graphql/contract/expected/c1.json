@@ -1,0 +1,40 @@
+{
+  "currentBook": {
+    "authors": [
+      "Ursula K. Le Guin"
+    ],
+    "title": "The Left Hand of Darkness"
+  },
+  "description": "Speculative fiction, one book a month, arguments optional.",
+  "latestReviews": [
+    {
+      "body": "Estraven deserved better.",
+      "rating": 4,
+      "reviewer": "Hugo Silva"
+    },
+    {
+      "body": "Beautiful but I wanted more physics.",
+      "rating": 3,
+      "reviewer": "Jonas Berg"
+    },
+    {
+      "body": "The ice crossing chapter. That's it, that's the review.",
+      "rating": 5,
+      "reviewer": "Chloe Martin"
+    }
+  ],
+  "memberCount": 8,
+  "members": [
+    "Kemi Adeyemi",
+    "Asha Rao",
+    "Ben Okafor",
+    "Chloe Martin",
+    "Dev Patel"
+  ],
+  "name": "The Midnight Readers",
+  "nextMeetup": {
+    "startsAt": "2026-11-27T19:00:00Z",
+    "title": "Left Hand of Darkness, part 2"
+  },
+  "owner": "Kemi Adeyemi"
+}

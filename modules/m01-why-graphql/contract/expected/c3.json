@@ -1,0 +1,35 @@
+{
+  "currentBook": {
+    "authors": [
+      "Shehan Karunatilaka"
+    ],
+    "title": "The Seven Moons of Maali Almeida"
+  },
+  "description": "We read the whole shortlist. Every year. Send help.",
+  "latestReviews": [
+    {
+      "body": "The afterlife as bureaucracy, brilliant.",
+      "rating": 4,
+      "reviewer": "Chloe Martin"
+    },
+    {
+      "body": "Funny and furious.",
+      "rating": 5,
+      "reviewer": "Elena Petrova"
+    }
+  ],
+  "memberCount": 5,
+  "members": [
+    "Elena Petrova",
+    "Chloe Martin",
+    "Liu Wei",
+    "Ines Duarte",
+    "Asha Rao"
+  ],
+  "name": "Booker Shortlist Survivors",
+  "nextMeetup": {
+    "startsAt": "2026-11-29T17:00:00Z",
+    "title": "Shortlist debrief"
+  },
+  "owner": "Elena Petrova"
+}

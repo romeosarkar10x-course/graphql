@@ -1,0 +1,77 @@
+"""
+Shelfie reference schema, Modules 0 and 1. Deliberately small: timestamps are plain Strings until
+custom scalars arrive in Module 3, and lists are plain lists until connections arrive in Module 8.
+"""
+type Query {
+  "A friendly smoke-test field. Module 0.1 asserts on it."
+  hello: String!
+  club(id: ID!): Club
+  clubs: [Club!]!
+  user(id: ID!): User
+  book(id: ID!): Book
+  books: [Book!]!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String
+  owner: User!
+  "Members in join order. `first` caps the list."
+  members(first: Int = 10): [User!]!
+  memberCount: Int!
+  "The book the club is reading right now, if any."
+  currentBook: Book
+  meetups(upcomingOnly: Boolean = true): [Meetup!]!
+  visibility: Visibility!
+  createdAt: String!
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  bio: String
+  avatarUrl: String
+  location: String
+  clubs: [Club!]!
+  reviews: [Review!]!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  authors: [String!]!
+  isbn: String
+  publishedYear: Int
+  pageCount: Int
+  coverUrl: String
+  synopsis: String
+  "Mean rating rounded to 2 decimals, null when there are no reviews."
+  averageRating: Float
+  "Newest first. `last` caps the list."
+  reviews(last: Int = 5): [Review!]!
+}
+
+type Review {
+  id: ID!
+  "1 to 5."
+  rating: Int!
+  body: String!
+  createdAt: String!
+  author: User!
+  book: Book!
+}
+
+type Meetup {
+  id: ID!
+  title: String!
+  startsAt: String!
+  location: String!
+  club: Club!
+}

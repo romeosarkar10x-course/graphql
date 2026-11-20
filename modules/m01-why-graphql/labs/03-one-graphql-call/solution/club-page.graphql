@@ -1,0 +1,23 @@
+# Everything the club page needs, in one request. Compare with the REST waterfall in lab 1.2.
+query ClubPage($id: ID!) {
+  club(id: $id) {
+    name
+    description
+    owner { name }
+    memberCount
+    members(first: 5) { name }
+    currentBook {
+      title
+      authors
+      reviews(last: 3) {
+        rating
+        body
+        author { name }
+      }
+    }
+    meetups(upcomingOnly: true) {
+      title
+      startsAt
+    }
+  }
+}

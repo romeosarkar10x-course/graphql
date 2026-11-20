@@ -1,0 +1,7 @@
+{
+  "title": "Game: jshell speedrun (fewest lines to a SWAPI film title)",
+  "lecture": "0.4",
+  "kind": "game",
+  "grading": "auto",
+  "needs": ["internet"]
+}

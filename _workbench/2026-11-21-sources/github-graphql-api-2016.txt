@@ -1,0 +1,153 @@
+
+The GitHub GraphQL API - The GitHub Blog
+GitHub Engineering
+·
+@github
+			September 14, 2016		
+|
+				Updated November 17, 2021			
+|
+				9 minutes			
+			Share:		
+GitHub announced a public API 
+one month after the site launched
+. We’ve evolved this platform through three versions, adhering to RFC standards and embracing new design patterns to provide a clear and consistent interface. We’ve often heard that our REST API was an inspiration for other companies; countless tutorials refer to our endpoints. Today, we’re excited to announce our biggest change to the API since we snubbed XML in favor of JSON: we’re making the GitHub API available through GraphQL.
+GraphQL is, at its core, a specification for a data querying language. We’d like to talk a bit about GraphQL, including the problems we believe it solves and the opportunities it provides to integrators.
+Why?
+You may be wondering why we chose to start supporting GraphQL. Our API was designed to be RESTful and hypermedia-driven. We’re fortunate to have 
+dozens of different open-source clients
+ written in a plethora of languages. Businesses grew around these endpoints.
+Like most technology, REST is not perfect and has some drawbacks. Our ambition to change our API focused on solving two problems.
+The first was scalability. The REST API is responsible for over 60% of the requests made to our database tier. This is partly because, by its nature, hypermedia navigation requires a client to repeatedly communicate with a server so that it can get all the information it needs. Our responses were bloated and filled with all sorts of 
+*_url
+ hints in the JSON responses to help people continue to navigate through the API to get what they needed. Despite all the information we provided, we heard from integrators that our REST API also wasn’t very flexible. It sometimes required two or three separate calls to assemble a complete view of a resource. It seemed like our responses simultaneously sent too much data 
+and
+ didn’t include data that consumers needed.
+As we began to audit our endpoints in preparation for an APIv4, we encountered our second problem. We wanted to collect some meta-information about our endpoints. For example, we wanted to identify the OAuth scopes required for each endpoint. We wanted to be smarter about how our resources were paginated. We wanted assurances of type-safety for user-supplied parameters. We wanted to generate documentation from our code. We wanted to generate clients instead of manually supplying patches to 
+our Octokit suite
+. We studied a variety of API specifications built to make some of this easier, but we found that none of the standards totally matched our requirements.
+And then we learned about GraphQL.
+The switch
+GraphQL
+ is a querying language developed by Facebook over the course of several years. In essence, you construct your request by defining the resources you want. You send this via a 
+POST
+ to a server, and the response matches the format of your request.
+For example, say you wanted to fetch just a few attributes off of a user. Your GraphQL query might look like this:
+{
+  viewer {
+    login
+    bio
+    location
+    isBountyHunter
+  }
+}
+And the response back might look like this:
+{
+  "data": {
+    "viewer": {
+      "login": "octocat",
+      "bio": "I've been around the world, from London to the Bay.",
+      "location": "San Francisco, CA",
+      "isBountyHunter": true
+    }
+  }
+}
+You can see that the keys and values in the JSON response match right up with the terms in the query string.
+What if you wanted something more complicated? Let’s say you wanted to know how many repositories you’ve starred. You also want to get the names of your first three repositories, as well as their total number of stars, total number of forks, total number of watchers, and total number of open issues. That query might look like this:
+{
+  viewer {
+    login
+    starredRepositories {
+      totalCount
+    }
+    repositories(first: 3) {
+      edges {
+        node {
+          name
+          stargazers {
+            totalCount
+          }
+          forks {
+            totalCount
+          }
+          watchers {
+            totalCount
+          }
+          issues(states:[OPEN]) {
+            totalCount
+          }
+        }
+      }
+    }
+  }
+}
+The response from our API might be:
+{  
+  "data":{  
+    "viewer":{  
+      "login": "octocat",
+      "starredRepositories": {
+        "totalCount": 131
+      },
+      "repositories":{
+        "edges":[
+          {
+            "node":{
+              "name":"octokit.rb",
+              "stargazers":{
+                "totalCount": 17
+              },
+              "forks":{
+                "totalCount": 3
+              },
+              "watchers":{
+                "totalCount": 3
+              },
+              "issues": {
+                "totalCount": 1
+              }
+            }
+          },
+          {  
+            "node":{  
+              "name":"octokit.objc",
+              "stargazers":{
+                "totalCount": 2
+              },
+              "forks":{
+                "totalCount": 0
+              },
+              "watchers":{
+                "totalCount": 1
+              },
+              "issues": {
+                "totalCount": 10
+              }
+            }
+          },
+          {
+            "node":{
+              "name":"octokit.net",
+              "stargazers":{
+                "totalCount": 19
+              },
+              "forks":{
+                "totalCount": 7
+              },
+              "watchers":{
+                "totalCount": 3
+              },
+              "issues": {
+                "totalCount": 4
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+You just made 
+one
+ request to fetch all the data you wanted.
+This type of design enables clients where smaller payload sizes are essential. For exampl

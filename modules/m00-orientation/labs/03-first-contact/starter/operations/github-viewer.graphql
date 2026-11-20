@@ -1,0 +1,2 @@
+# GitHub (https://api.github.com/graphql, needs GITHUB_TOKEN, see SETUP.md)
+# Fetch your own login, and the names of your first 3 repositories.

@@ -1,0 +1,8 @@
+# Lab 1.3: everything the club page needs, in one request.
+# Explore the schema at http://localhost:8080/graphiql (docs pane, Ctrl+Space).
+query ClubPage($id: ID!) {
+  club(id: $id) {
+    name
+    # TODO
+  }
+}

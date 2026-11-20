@@ -1,0 +1,7 @@
+{
+  "title": "Write your own setup doctor in Java",
+  "lecture": "0.2",
+  "kind": "lab",
+  "grading": "auto",
+  "needs": ["ref"]
+}

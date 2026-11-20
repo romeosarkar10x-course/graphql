@@ -1,0 +1,2 @@
+# SWAPI (https://swapi-graphql.netlify.app/graphql)
+# Fetch the film whose id is "ZmlsbXM6MQ==": its title, director and releaseDate.

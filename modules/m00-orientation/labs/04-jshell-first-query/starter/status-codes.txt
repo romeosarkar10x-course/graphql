@@ -1,0 +1,5 @@
+# Send `{ hello }` to the reference server three wrong ways and record the HTTP status code of each.
+# Use curl from bin/course shell, or HttpClient in jshell. Replace each ??? with a number.
+GET=???
+TEXT_PLAIN=???
+NO_BODY=???

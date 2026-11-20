@@ -1,0 +1,21 @@
+# GitHub GraphQL API scavenger hunt. Use ONLY the docs pane of the GitHub GraphQL Explorer
+# (https://docs.github.com/en/graphql/overview/explorer) or of GraphiQL with your token.
+# No web search, no reading the schema file. Fill in each value after the "=".
+# Case does not matter; lists are comma-separated in alphabetical order, no spaces.
+
+# Q1. Which type does the root field `repository` return? (just the type name)
+Q1=
+# Q2. Which two arguments of `repository` are required? (alphabetical, e.g. a,b)
+Q2=
+# Q3. What is the full type of `Repository.stargazerCount`, including any `!`?
+Q3=
+# Q4. What is the name of the enum type of `Repository.visibility`?
+Q4=
+# Q5. List every value of that enum (alphabetical).
+Q5=
+# Q6. `Issue` and `PullRequest` both get their `closed` field from one interface. Which?
+Q6=
+# Q7. `search` returns a connection. Its `nodes` are of which union type?
+Q7=
+# Q8. Which field of the type returned by `rateLimit` tells you how many points you have left?
+Q8=

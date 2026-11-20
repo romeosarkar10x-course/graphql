@@ -1,0 +1,7 @@
+query FirstFilm {
+  film(id: "ZmlsbXM6MQ==") {
+    title
+    director
+    releaseDate
+  }
+}

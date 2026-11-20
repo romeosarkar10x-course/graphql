@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+# Course runner. Builds, tests and servers all run inside the course Docker image, never on the host.
+#
+#   bin/course doctor                     check host + image + services; tells you what to fix
+#   bin/course ref up|down|status|logs    reference Shelfie server (+ Toxiproxy)
+#   bin/course toxi latency <ms> | reset  add/remove latency on the slow Shelfie URL (:8666)
+#   bin/course list [mNN]                 modules and labs
+#   bin/course start mNN/NN [--force]     copy a lab's starter into workspace/
+#   bin/course test  mNN/NN [--solution|--starter]   grade your copy (or the reference solution)
+#   bin/course grade mNN/NN               print the rubric prompt for an AI grader (rubric labs)
+#   bin/course check [mNN] [--starters]   course self-test: every solution passes (and starters fail)
+#   bin/course checkpoint NN              verify a module's checkpoint and git-tag workspace/
+#   bin/course hurl <file.hurl> [args]    run Hurl inside the course network ({{ref}}, {{slow}} preset)
+#   bin/course jshell [file.jsh]          jshell with Jackson on the class path
+#   bin/course java <File.java> [args]    run a single-file Java program with Jackson on the class path
+#   bin/course shell                      bash inside the course image, repo at /course
+#   bin/course image                      (re)build the course image
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+IMAGE="${GQL_COURSE_IMAGE:-graphql-course:1}"
+NETWORK=gqlcourse
+export COURSE_UID="$(id -u)" COURSE_GID="$(id -g)"
+
+die() { echo "course: $*" >&2; exit 1; }
+build_image() { docker build -t "$IMAGE" "$ROOT/docker"; }
+
+compose() { docker compose -f "$ROOT/docker/compose.yaml" "$@"; }
+
+# Run a command in the course image, on the course network when it exists.
+in_image() {
+  local net=() tty=(-i)
+  docker network inspect "$NETWORK" >/dev/null 2>&1 && net=(--network "$NETWORK")
+  [[ -t 0 && -t 1 ]] && tty=(-it)
+  local workdir=/course
+  case "$PWD/" in "$ROOT"/*) workdir="/course${PWD#"$ROOT"}" ;; esac
+  docker run --rm "${tty[@]}" "${net[@]}" \
+    -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp \
+    -e GITHUB_TOKEN="${GITHUB_TOKEN:-}" \
+    ${SHELFIE_URL:+-e SHELFIE_URL="$SHELFIE_URL"} \
+    -v "$ROOT":/course -w "$workdir" \
+    "$IMAGE" "$@"
+}
+
+cmd="${1:-help}"; shift || true
+
+case "$cmd" in
+  help|-h|--help) sed -n '2,19p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+  image) build_image; exit 0 ;;
+esac
+
+command -v docker >/dev/null || die "docker not found. See SETUP.md."
+docker image inspect "$IMAGE" >/dev/null 2>&1 || { echo "course: building image $IMAGE (first run)..." >&2; build_image >&2; }
+mkdir -p "$ROOT/.cache/m2" "$ROOT/workspace"
+[[ -d "$ROOT/.cache/course-lib" ]] || in_image mvn -q -f tools/course-lib/pom.xml package
+
+case "$cmd" in
+  ref)
+    sub="${1:-status}"
+    case "$sub" in
+      up)
+        [[ -f "$ROOT/reference/shelfie-ref/target/shelfie-ref.jar" && "${2:-}" != "--rebuild" ]] \
+          || in_image mvn -q -f reference/shelfie-ref/pom.xml -DskipTests package
+        compose up -d --wait
+        # Toxiproxy route: toxiproxy:8666 -> shelfie-ref:8080 (idempotent)
+        curl -fsS -o /dev/null -X POST localhost:8474/proxies \
+          -d '{"name":"shelfie","listen":"0.0.0.0:8666","upstream":"shelfie-ref:8080"}' 2>/dev/null || true
+        echo "Shelfie reference server is up:"
+        echo "  GraphiQL   http://localhost:8080/graphiql"
+        echo "  GraphQL    http://localhost:8080/graphql      (inside the image: http://shelfie-ref:8080/graphql)"
+        echo "  REST       http://localhost:8080/api/clubs/c1"
+        echo "  gRPC       localhost:9090                     (grpcurl -plaintext shelfie-ref:9090 list)"
+        echo "  slow path  http://localhost:8666              (bin/course toxi latency 700)" ;;
+      down) compose down ;;
+      logs) compose logs -f shelfie-ref ;;
+      status) compose ps ;;
+      *) die "usage: bin/course ref up [--rebuild]|down|status|logs" ;;
+    esac ;;
+  toxi)
+    case "${1:-}" in
+      latency)
+        ms="${2:?usage: bin/course toxi latency <ms>}"
+        curl -fsS -o /dev/null -X DELETE localhost:8474/proxies/shelfie/toxics/latency 2>/dev/null || true
+        curl -fsS -o /dev/null -X POST localhost:8474/proxies/shelfie/toxics \
+          -d "{\"name\":\"latency\",\"type\":\"latency\",\"stream\":\"downstream\",\"attributes\":{\"latency\":$ms}}" \
+          || die "toxiproxy not reachable; run bin/course ref up"
+        echo "Added ${ms} ms per response on http://localhost:8666 (image: http://toxiproxy:8666)" ;;
+      reset)
+        curl -fsS -o /dev/null -X DELETE localhost:8474/proxies/shelfie/toxics/latency 2>/dev/null || true
+        echo "Latency removed." ;;
+      *) die "usage: bin/course toxi latency <ms> | reset" ;;
+    esac ;;
+  doctor)
+    "$ROOT/tools/doctor-host.sh" "$ROOT" "$IMAGE" || true
+    in_image /course/tools/course.sh doctor ;;
+  shell) in_image bash ;;
+  *) in_image /course/tools/course.sh "$cmd" "$@" ;;
+esac

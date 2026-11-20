@@ -1,0 +1,6 @@
+bad json, application/json: 400
+no body, application/json: 400
+text/plain, application/json: 415
+bad json, application/graphql-response+json: 400
+no body, application/graphql-response+json: 400
+text/plain, application/graphql-response+json: 415

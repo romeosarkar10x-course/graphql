@@ -1,0 +1,8 @@
+Q1=Repository
+Q2=name,owner
+Q3=Int!
+Q4=RepositoryVisibility
+Q5=INTERNAL,PRIVATE,PUBLIC
+Q6=Closable
+Q7=SearchResultItem
+Q8=remaining

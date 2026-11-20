@@ -1,0 +1,2 @@
+# Countries API (https://countries.trevorblades.com/graphql)
+# Fetch the country with code "IN": name, capital, currency, and the name of each language.

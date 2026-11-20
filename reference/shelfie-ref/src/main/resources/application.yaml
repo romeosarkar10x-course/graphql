@@ -1,0 +1,24 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: shelfie-ref
+  threads:
+    virtual:
+      enabled: true
+  graphql:
+    graphiql:
+      enabled: true
+    schema:
+      printer:
+        enabled: true   # GET /graphql/schema returns the SDL
+    http:
+      path: /graphql
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+shelfie:
+  grpc:
+    port: 9090

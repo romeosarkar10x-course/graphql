@@ -1,0 +1,36 @@
+{
+  "name": "The Midnight Readers",
+  "description": "Speculative fiction, one book a month, arguments optional.",
+  "owner_name": "Kemi Adeyemi",
+  "member_count": 8,
+  "member_names": [
+    "Kemi Adeyemi",
+    "Asha Rao",
+    "Ben Okafor",
+    "Chloe Martin",
+    "Dev Patel"
+  ],
+  "current_book_title": "The Left Hand of Darkness",
+  "current_book_authors": [
+    "Ursula K. Le Guin"
+  ],
+  "latest_reviews": [
+    {
+      "reviewer_name": "Hugo Silva",
+      "rating": 4,
+      "body": "Estraven deserved better."
+    },
+    {
+      "reviewer_name": "Jonas Berg",
+      "rating": 3,
+      "body": "Beautiful but I wanted more physics."
+    },
+    {
+      "reviewer_name": "Chloe Martin",
+      "rating": 5,
+      "body": "The ice crossing chapter. That's it, that's the review."
+    }
+  ],
+  "next_meetup_title": "Left Hand of Darkness, part 2",
+  "next_meetup_starts_at": "2026-11-27T19:00:00Z"
+}

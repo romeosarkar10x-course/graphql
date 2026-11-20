@@ -1,0 +1,16 @@
+ GraphQL three years ago to fill this need. Today it powers hundreds of billions of API calls a day. This year we’ve begun the process of open-sourcing GraphQL by drafting a specification, releasing a reference implementation, and forming a community around it at 
+graphql.org
+.
+Why GraphQL?
+Back in 2012, we began an effort to rebuild Facebook’s native mobile applications.
+At the time, our iOS and Android apps were thin wrappers around views of our mobile website. While this brought us close to a platonic ideal of the “write once, run anywhere” mobile application, in practice it pushed our mobile-webview apps beyond their limits. As Facebook’s mobile apps became more complex, they suffered poor performance and frequently crashed.
+As we transitioned to natively implemented models and views, we found ourselves for the first time needing an API data version of News Feed — which up until that point had only been delivered as HTML. We evaluated our options for delivering News Feed data to our mobile apps, including RESTful server resources and FQL tables (Facebook’s SQL-like API). We were frustrated with the differences between the data we wanted to use in our apps and the server queries they required. We don’t think of data in terms of resource URLs, secondary keys, or join tables; we think about it in terms of a graph of objects and the models we ultimately use in our apps like NSObjects or JSON.
+There was also a considerable amount of code to write on both the server to prepare the data and on the client to parse it. This frustration inspired a few of us to start the project that ultimately became GraphQL. GraphQL was our opportunity to rethink mobile app data-fetching from the perspective of product designers and developers. It moved the focus of development to the client apps, where designers and developers spend their time and attention.
+What is GraphQL?
+A GraphQL query is a string that is sent to a server to be interpreted and fulfilled, which then returns JSON back to the client.
+Defines a data shape:
+ The first thing you’ll notice is that GraphQL queries mirror their response. This makes it easy to predict the shape of the data returned from a query, as well as to write a query if you know the data your app needs. More important, this makes GraphQL really easy to learn and use. GraphQL is unapologetically driven by the data requirements of products and of the designers and developers who build them.
+Hierarchical:
+ Another important aspect of GraphQL is its hierarchical nature. GraphQL naturally follows relationships between objects, where a RESTful service may require multiple round-trips (resource-intensive on mobile networks) or a complex join statement in SQL. This data hierarchy pairs well with graph-structured data stores and ultimately with the hierarchical user interfaces it’s used within.
+Strongly typed:
+ Each level of a GraphQL query co

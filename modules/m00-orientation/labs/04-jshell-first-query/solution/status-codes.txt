@@ -1,0 +1,6 @@
+# GET /graphql?query={hello}
+GET=405
+# POST with Content-Type: text/plain
+TEXT_PLAIN=415
+# POST application/json with an empty body
+NO_BODY=400

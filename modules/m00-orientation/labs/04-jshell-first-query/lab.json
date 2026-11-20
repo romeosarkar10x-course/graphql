@@ -1,0 +1,7 @@
+{
+  "title": "One request under the hood: GraphQL from jshell",
+  "lecture": "0.4",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["ref"]
+}

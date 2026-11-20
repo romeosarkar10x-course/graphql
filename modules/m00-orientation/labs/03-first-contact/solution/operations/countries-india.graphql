@@ -1,0 +1,10 @@
+query India {
+  country(code: "IN") {
+    name
+    capital
+    currency
+    languages {
+      name
+    }
+  }
+}

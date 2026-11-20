@@ -1,0 +1,31 @@
+# Course services. Started by `bin/course ref up`; do not run by hand unless you know why.
+#   shelfie-ref  reference server: REST /api, GraphQL /graphql, GraphiQL /graphiql, gRPC :9090
+#   toxiproxy    adds latency between you and shelfie-ref (Module 1.2): proxy on :8666, API on :8474
+name: gqlcourse
+
+services:
+  shelfie-ref:
+    image: graphql-course:1
+    user: "${COURSE_UID:-1000}:${COURSE_GID:-1000}"
+    working_dir: /course
+    volumes:
+      - ..:/course
+    command: ["java", "-XX:TieredStopAtLevel=1", "-jar", "reference/shelfie-ref/target/shelfie-ref.jar"]
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health"]
+      interval: 2s
+      timeout: 2s
+      retries: 60
+
+  toxiproxy:
+    image: ghcr.io/shopify/toxiproxy:2.13.0
+    ports:
+      - "8474:8474"
+      - "8666:8666"
+
+networks:
+  default:
+    name: gqlcourse

@@ -1,0 +1,7 @@
+{
+  "title": "One GraphQL call: the same club page",
+  "lecture": "1.3",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["ref", "toxiproxy"]
+}

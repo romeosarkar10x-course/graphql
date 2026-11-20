@@ -1,0 +1,14 @@
+# Lab 1.1 card sort. Reorder the 12 lines below, oldest first. Do not edit the text; only move lines.
+# No searching before your first attempt: guess, run the test, then research the ones you got wrong.
+A | Facebook starts building GraphQL while rebuilding its native mobile apps
+B | The GraphQL Foundation launches under the Linux Foundation
+C | Facebook relicenses the spec under OWFa 1.0 and graphql-js under MIT
+D | Spring for GraphQL 1.0 is released
+E | Netflix open-sources the DGS framework
+F | Facebook publishes a draft spec and the graphql-js reference implementation
+G | A new spec edition: September 2025
+H | A new spec edition: June 2018
+I | Shopify marks its REST Admin API as legacy
+J | A new spec edition: October 2021
+K | GitHub announces its public GraphQL API
+L | Apollo announces Apollo Federation
