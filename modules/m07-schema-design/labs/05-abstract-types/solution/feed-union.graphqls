@@ -1,0 +1,16 @@
+# Option 2: a union. The kinds share nothing the schema knows about.
+type Query {
+  "A club's activity, newest first."
+  feed(clubId: ID!): [FeedItem!]!
+}
+
+type User { id: ID! name: String! }
+type Book { id: ID! title: String! }
+type Review { id: ID! rating: Int! book: Book! }
+type Meetup { id: ID! title: String! startsAt: String! }
+
+union FeedItem = ReviewPosted | MemberJoined | MeetupScheduled
+
+type ReviewPosted { id: ID! happenedAt: String! actor: User! review: Review! }
+type MemberJoined { id: ID! happenedAt: String! actor: User! welcomeMessage: String }
+type MeetupScheduled { id: ID! happenedAt: String! actor: User! meetup: Meetup! }

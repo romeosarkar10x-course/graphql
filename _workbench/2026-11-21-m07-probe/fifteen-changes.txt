@@ -1,0 +1,15 @@
+01 verdict: SAFE | inspector: [log] ✔  Field memberCount was added to object type Club 
+02 verdict: BREAKING | inspector: [log] ✖  Field description was removed from object type Club 
+03 verdict: BREAKING | inspector: [log] ✖  Field coverUrl was removed from object type Book [log] ✔  Field coverImageUrl was added to object type Book 
+04 verdict: DANGEROUS | inspector: [log] ⚠  Enum value ABANDONED was added to enum ShelfStatus 
+05 verdict: BREAKING | inspector: [log] ✖  Type for argument first on field Club.members changed from Int to Int! [log] ⚠  Default value for argument first on field Club.members changed from 10 to undefined 
+06 verdict: SAFE | inspector: [log] ⚠  Argument author: String added to field Query.books 
+07 verdict: DANGEROUS | inspector: [log] ✔  Field Club.description is deprecated 
+08 verdict: SAFE | inspector: [log] ✔  Field Club.currentBook changed type from Book to Book! 
+09 verdict: BREAKING | inspector: [log] ✖  Field Club.name changed type from String! to String 
+10 verdict: BREAKING | inspector: [log] ✖  Input field language of type String! was added to input object type CreateReviewInput 
+11 verdict: SAFE | inspector: [log] ✔  Input field spoiler of type Boolean was added to input object type CreateReviewInput 
+12 verdict: BREAKING | inspector: [log] ✖  Field Book.publishedYear changed type from Int to String 
+13 verdict: DANGEROUS | inspector: [log] ⚠  Member User was added to Union type SearchResult 
+14 verdict: BREAKING | inspector: [log] ✖  Enum value WANT_TO_READ was removed from enum ShelfStatus 
+15 verdict: DANGEROUS | inspector: [log] ⚠  Default value for argument first on field Query.books changed from 10 to 20 

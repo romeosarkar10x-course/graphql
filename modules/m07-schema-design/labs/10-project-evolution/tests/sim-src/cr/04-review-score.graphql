@@ -1,0 +1,1 @@
+query ReviewScore($id: ID!) { book(id: $id) { id reviews { id score } } }

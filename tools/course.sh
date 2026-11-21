@@ -161,6 +161,10 @@ EOF
     [[ $# -ge 1 ]] || set -- help
     cd "$CALLER"; exec java -cp "$(lib_cp)" /course/tools/gql/Gql.java "$@" ;;
 
+  design)
+    [[ $# -ge 1 ]] || set -- help
+    cd "$CALLER"; exec java -cp "$(lib_cp)" /course/tools/design/Design.java "$@" ;;
+
   doctor) exec tools/doctor-image.sh ;;
   *) usage ;;
 esac

@@ -1,0 +1,2 @@
+type Query { a: String @deprecated(reason: "no") b(x: Int, y: Int!): Int e: E! c: Int }
+enum E { X Y Z }

@@ -1,0 +1,161 @@
+"""
+Card 05: Book.averageRating becomes Float!.
+Shelfie, the Jenga tower: lab 7.1's schema. The clients in frozen/ were built against it and are
+installed on phones that will never update.
+"""
+schema { query: Query }
+
+"An instant in time, ISO-8601 with a zone, for example `2026-12-03T21:00:00Z`."
+scalar DateTime
+
+"An absolute http(s) URL."
+scalar Url
+
+type Query {
+  "A club by id, or null if there is no such club. The club page's entry point."
+  club(id: ID!): Club
+  "A book by id, or null. The book page's entry point."
+  book(id: ID!): Book
+  "A member by handle (the `@asha` in a profile link), or null."
+  user(handle: String!): User
+}
+
+"A reading club: people who read one book at a time together."
+type Club {
+  "Stable identifier."
+  id: ID!
+  "Display name, unique across Shelfie."
+  name: String!
+  "What the club reads and when it meets, in the owner's words. Null when the owner wrote nothing."
+  description: String
+  "How many people belong to the club, owner included."
+  memberCount: Int!
+  "Whether the signed-in viewer belongs to this club. Null when nobody is signed in."
+  viewerIsMember: Boolean
+  "The member who created the club and can hand it over."
+  owner: User!
+  "The book the club is reading now. Null between books."
+  currentBook: Book
+  "The next meetup that has not started yet. Null when none is planned."
+  nextMeetup: Meetup
+  "Members by join date, oldest first. The club page shows the first 5."
+  members(first: Int = 10): [User!]!
+}
+
+"A member of Shelfie."
+type User {
+  "Stable identifier."
+  id: ID!
+  "Full display name."
+  name: String!
+  "Unique handle, without the @."
+  handle: String!
+  "A short self-description. Null when the member wrote none."
+  bio: String
+  "Square avatar image. Null for members without a picture: show initials."
+  avatarUrl: Url
+  "When the member signed up."
+  joinedAt: DateTime!
+  "The clubs this member belongs to, with their role in each, newest first."
+  memberships: [Membership!]!
+  "Books on this member's shelf, most recently changed first."
+  shelf: [ShelfEntry!]!
+}
+
+"One member's place in one club."
+type Membership {
+  "The club."
+  club: Club!
+  "The member."
+  user: User!
+  "What the member may do in this club."
+  role: ClubRole!
+  "When the member joined this club."
+  joinedAt: DateTime!
+}
+
+"What a member may do in a club."
+enum ClubRole {
+  "Created the club; can rename it, hand it over or close it."
+  OWNER
+  "Can schedule meetups and remove reviews."
+  MODERATOR
+  "Reads, reviews and comes to meetups."
+  MEMBER
+}
+
+"A book on a member's shelf."
+type ShelfEntry {
+  "The book."
+  book: Book!
+  "Where the member is with it."
+  status: ShelfStatus!
+}
+
+"Where a member is with a book."
+enum ShelfStatus {
+  "On the list, not started."
+  WANT_TO_READ
+  "Started, not finished."
+  READING
+  "Finished."
+  FINISHED
+}
+
+"A book in the Shelfie catalogue."
+type Book {
+  "Stable identifier."
+  id: ID!
+  "Title as printed on the cover."
+  title: String!
+  "Front cover image. Null when the publisher sent none."
+  coverUrl: Url
+  "Year of first publication. Null when unknown."
+  publishedYear: Int
+  "Authors in the order the cover lists them."
+  authors: [Author!]!
+  "Mean review rating, 1 to 5, one decimal. Null when nobody has reviewed the book."
+  averageRating: Float!
+  "How many reviews the book has."
+  reviewCount: Int!
+  "Reviews, newest first. The book page shows the last 3."
+  reviews(last: Int = 10): [Review!]!
+  "Clubs whose current book this is."
+  clubsReading: [Club!]!
+}
+
+"A person who wrote a book."
+type Author {
+  "Stable identifier."
+  id: ID!
+  "Name as the cover prints it."
+  name: String!
+}
+
+"A member's rating and opinion of a book."
+type Review {
+  "Stable identifier."
+  id: ID!
+  "1 to 5 stars."
+  rating: Int!
+  "The review text."
+  body: String!
+  "When the review was posted."
+  createdAt: DateTime!
+  "Who wrote it."
+  author: User!
+  "The book reviewed."
+  book: Book!
+}
+
+"A club meeting at a time and place."
+type Meetup {
+  "Stable identifier."
+  id: ID!
+  "When it starts."
+  startsAt: DateTime!
+  "Where, in words: a room, a café, a video link's name."
+  venue: String!
+  "The club meeting."
+  club: Club!
+}

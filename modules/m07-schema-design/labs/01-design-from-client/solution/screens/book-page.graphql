@@ -1,0 +1,20 @@
+# The book page (contract/screens/book-page.json).
+query BookPage($id: ID!) {
+  book(id: $id) {
+    id
+    title
+    coverUrl
+    publishedYear
+    authors { id name }
+    averageRating
+    reviewCount
+    latestReviews: reviews(last: 3) {
+      id
+      rating
+      body
+      createdAt
+      author { id name avatarUrl }
+    }
+    readingClubs: clubsReading { id name }
+  }
+}

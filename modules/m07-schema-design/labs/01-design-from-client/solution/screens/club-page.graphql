@@ -1,0 +1,20 @@
+# The club page (contract/screens/club-page.json). Aliases match the screen's key names.
+query ClubPage($id: ID!) {
+  club(id: $id) {
+    id
+    name
+    description
+    memberCount
+    viewerIsMember
+    owner { id name avatarUrl }
+    currentBook {
+      id
+      title
+      coverUrl
+      authors { id name }
+      averageRating
+    }
+    nextMeetup { id startsAt venue }
+    memberPreview: members(first: 5) { id name avatarUrl }
+  }
+}

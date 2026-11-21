@@ -1,0 +1,182 @@
+# Shelfie API v0, generated from the database and grown by hand for two years.
+# Every anti-pattern in lecture 7.7 is in here at least once. Do not fix this file: write good.graphqls.
+
+scalar JSON
+
+type Query {
+  getClub(club_id: Int!): ClubDTO
+  getClubs(include_private: Boolean, only_mine: Boolean, with_members: Boolean): [ClubDTO]
+  getUser(user_id: Int!): tbl_users
+  getUserByHandle(handle: String): tbl_users
+  allBooks(include_out_of_print: Boolean, only_available: Boolean): [BookEntity]
+  findBooks(q: String, filter: JSON): [BookEntity]
+  getReviewsForBook(book_id: Int!, newest_first: Boolean): [ReviewEntity]
+  selectMeetups(club_id: Int!, include_past: Boolean): [MeetupRow]
+  getNotifications(user_id: Int!, unread_only: Boolean): [JSON]
+  getSettings(user_id: Int!): JSON
+  getStats: JSON
+  getAllNotifications: [tbl_notifications]
+  listGenres: [GenreLookup]
+  rawQuery(sql: String!): JSON
+  getAuditLog(user_id: Int, from_ts: Int, to_ts: Int): [AuditLogRow]
+}
+
+type Mutation {
+  insertReview(book_id: Int!, user_id: Int!, rating: Int!, review_text: String): Response
+  updateReview(review_id: Int!, rating: Int, review_text: String, is_deleted: Boolean): Response
+  deleteRow(table: String!, id: Int!): Response
+  upsertMembership(club_id: Int!, user_id: Int!, role: String, is_active: Boolean): Response
+  updateUser(input: UserUpdateInput!): Response
+  updateClub(input: ClubUpdateInput!): Response
+  saveSettings(user_id: Int!, settings: JSON!): Response
+  putShelfItem(user_id: Int!, book_id: Int!, status: String!): Response
+  patchMeetup(meetup_id: Int!, fields: JSON!): Response
+  insertNotification(user_id: Int!, payload: JSON!): Response
+  markNotifications(user_id: Int!, read: Boolean!, all: Boolean): Response
+  writeAuditLog(entry: JSON!): Response
+}
+
+"Every mutation returns this."
+type Response {
+  success: Boolean
+  message: String
+  error_code: Int
+  data: JSON
+}
+
+type ClubDTO {
+  club_id: Int
+  club_name: String
+  descr: String
+  owner_user_id: Int
+  current_book_id: Int
+  is_private: Boolean
+  member_count: Int
+  member_ids: [Int]
+  created_at: Int
+  updated_at: Int
+  settings_json: JSON
+  members: [tbl_users]
+  meetups: [MeetupRow]
+}
+
+type tbl_users {
+  user_id: Int
+  full_name: String
+  handle: String
+  email_addr: String
+  pwd_hash: String
+  avatar_img: String
+  bio_txt: String
+  created_at: Int
+  last_login_ts: Int
+  club_ids: [Int]
+  notification_prefs: JSON
+  is_admin: Boolean
+  is_deleted: Boolean
+}
+
+type BookEntity {
+  book_id: Int
+  isbn13: String
+  title: String
+  sub_title: String
+  author_names: String
+  publisher_name: String
+  pub_year: Int
+  cover_img_url: String
+  page_count: Int
+  avg_rating: Float
+  rating_count: Int
+  is_out_of_print: Boolean
+  genre_codes: String
+  extra: JSON
+}
+
+type ReviewEntity {
+  review_id: Int
+  book_id: Int
+  user_id: Int
+  rating: Int
+  review_text: String
+  created_at: Int
+  is_deleted: Boolean
+  likes_count: Int
+}
+
+type MeetupRow {
+  meetup_id: Int
+  club_id: Int
+  title: String
+  starts_at: Int
+  location_txt: String
+  is_online: Boolean
+  is_cancelled: Boolean
+  rsvp_user_ids: [Int]
+}
+
+"The kitchen sink: every field anyone ever wanted to change on a user."
+input UserUpdateInput {
+  user_id: Int!
+  full_name: String
+  handle: String
+  email_addr: String
+  password: String
+  avatar_img: String
+  bio_txt: String
+  is_admin: Boolean
+  is_deleted: Boolean
+  email_on_meetup: Boolean
+  email_on_review: Boolean
+  email_digest_weekly: Boolean
+  push_enabled: Boolean
+  theme: String
+  language: String
+  timezone: String
+}
+
+input ClubUpdateInput {
+  club_id: Int!
+  club_name: String
+  descr: String
+  owner_user_id: Int
+  current_book_id: Int
+  is_private: Boolean
+  settings_json: JSON
+  add_member_ids: [Int]
+  remove_member_ids: [Int]
+}
+
+type tbl_notifications {
+  notification_id: Int
+  user_id: Int
+  kind: String
+  payload: JSON
+  is_read: Boolean
+  created_at: Int
+}
+
+type GenreLookup {
+  genre_code: String
+  genre_name: String
+  parent_code: String
+  sort_order: Int
+}
+
+type AuditLogRow {
+  row_id: Int
+  user_id: Int
+  action: String
+  table_name: String
+  old_values: JSON
+  new_values: JSON
+  ts: Int
+}
+
+input MeetupFieldsInput {
+  title: String
+  starts_at: Int
+  location_txt: String
+  is_online: Boolean
+  is_cancelled: Boolean
+}

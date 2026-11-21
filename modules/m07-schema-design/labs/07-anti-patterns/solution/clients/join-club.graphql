@@ -1,0 +1,6 @@
+mutation JoinClub($input: JoinClubInput!) {
+  joinClub(input: $input) {
+    club { id memberCount }
+    userErrors { field message }
+  }
+}

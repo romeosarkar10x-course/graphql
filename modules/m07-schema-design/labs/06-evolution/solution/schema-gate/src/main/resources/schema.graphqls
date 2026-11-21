@@ -1,0 +1,55 @@
+# Shelfie, next release: three changes shipped without breaking a client (lab 7.6).
+type Query {
+  club(id: ID!): Club
+  books(first: Int = 10): [Book!]!
+  search(text: String!): [SearchResult!]!
+}
+
+type Mutation {
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String @deprecated(reason: "Use about: it supports Markdown.")
+  "The club's description as Markdown. Replaces description."
+  about: String
+  currentBook: Book
+  members(first: Int = 10): [User!]!
+  "How many members the club has."
+  memberCount: Int
+}
+
+type User {
+  id: ID!
+  name: String!
+  shelf(status: ShelfStatus): [Book!]!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  coverUrl: String
+  publishedYear: Int
+}
+
+enum ShelfStatus {
+  WANT_TO_READ
+  READING
+  FINISHED
+}
+
+union SearchResult = Book | Club
+
+input CreateReviewInput {
+  bookId: ID!
+  rating: Int!
+  body: String
+  "Hide the body behind a spoiler warning. Optional: old clients do not send it."
+  spoiler: Boolean
+}
+
+type CreateReviewPayload {
+  ok: Boolean!
+}

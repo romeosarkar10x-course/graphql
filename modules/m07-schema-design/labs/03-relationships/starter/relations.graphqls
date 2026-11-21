@@ -1,0 +1,40 @@
+# Shelfie as the database sees it: every relationship is a key the client must look up itself.
+# Redesign it (README): references, not keys; members as a connection with role and joinedAt on the edge.
+schema { query: Query }
+
+type Query {
+  club(id: ID!): Club
+  user(id: ID!): User
+  book(id: ID!): Book
+  review(id: ID!): Review
+}
+
+type Club {
+  id: ID!
+  name: String!
+  ownerId: ID!
+  currentBookId: ID
+  memberIds: [ID!]!
+  memberRoles: [String!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  clubIds: [ID!]!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  authors: [String!]!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  body: String!
+  authorId: ID!
+  bookId: ID!
+}

@@ -1,0 +1,26 @@
+{
+  "user": {
+    "name": "Asha Rao",
+    "handle": "asha",
+    "bio": "Mostly mysteries. Occasionally a brick of a fantasy novel.",
+    "avatarUrl": "https://img.shelfie.dev/u1.png",
+    "joinedAt": "2025-03-14T10:00:00Z",
+    "memberships": [
+      {
+        "role": "MEMBER",
+        "club": {
+          "name": "The Midnight Readers"
+        }
+      }
+    ],
+    "shelf": [
+      {
+        "status": "READING",
+        "book": {
+          "title": "Piranesi",
+          "coverUrl": "https://img.shelfie.dev/b2.jpg"
+        }
+      }
+    ]
+  }
+}

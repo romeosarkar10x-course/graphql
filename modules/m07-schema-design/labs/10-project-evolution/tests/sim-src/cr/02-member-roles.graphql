@@ -1,0 +1,1 @@
+query MemberRoles($id: ID!) { club(id: $id) { id memberships { role joinedAt user { id name } } } }

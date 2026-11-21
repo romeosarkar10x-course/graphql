@@ -1,0 +1,3 @@
+mutation EditProfile {
+  updateUser(input: { user_id: 2, full_name: "Asha Rao", bio_txt: "Mostly mysteries." }) { success message }
+}

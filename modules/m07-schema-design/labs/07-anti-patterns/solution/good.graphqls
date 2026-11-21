@@ -1,0 +1,270 @@
+# Shelfie API, refactored from bad.graphqls (lab 7.7). Grouped by bounded context (contexts.md):
+# Clubs, Catalogue, Reviews, Profiles, Notifications. Identity comes from the request, never an argument.
+
+"An instant, ISO-8601 with a zone."
+scalar DateTime
+
+"An absolute http(s) URL."
+scalar Url
+
+type Query {
+  "The signed-in member, or null when signed out. Everything 'mine' hangs off this."
+  viewer: Viewer
+  "A club by id."
+  club(id: ID!): Club
+  "Clubs anyone can see; private clubs appear under viewer.clubs for their members."
+  clubs(first: Int = 20): [Club!]!
+  "A member by handle."
+  user(handle: String!): User
+  "A book by id."
+  book(id: ID!): Book
+  "Catalogue search. Each filter is typed; leave one out to not filter on it."
+  books(filter: BookFilter, first: Int = 20): [Book!]!
+  "Genres as a tree, for the browse page."
+  genres: [Genre!]!
+}
+
+type Mutation {
+  "Post a review as the viewer."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+  "Change rating or text of the viewer's own review."
+  editReview(input: EditReviewInput!): EditReviewPayload!
+  "Remove the viewer's own review."
+  deleteReview(input: DeleteReviewInput!): DeleteReviewPayload!
+  "Join a public club as a member."
+  joinClub(input: JoinClubInput!): JoinClubPayload!
+  "Leave a club."
+  leaveClub(input: LeaveClubInput!): LeaveClubPayload!
+  "Name, bio and avatar: what other members see."
+  updateProfile(input: UpdateProfileInput!): UpdateProfilePayload!
+  "Which emails and pushes the viewer gets."
+  setNotificationPreferences(input: NotificationPreferencesInput!): NotificationPreferencesPayload!
+  "Mark notifications read: the given ones, or all of them."
+  markNotificationsRead(input: MarkNotificationsReadInput!): MarkNotificationsReadPayload!
+  "Put a book on the viewer's shelf or move it."
+  setShelfStatus(input: SetShelfStatusInput!): SetShelfStatusPayload!
+  "Rename a club or change its description (owner only)."
+  updateClubDetails(input: UpdateClubDetailsInput!): UpdateClubPayload!
+  "Choose the book the club reads next (owner and moderators)."
+  setCurrentBook(input: SetCurrentBookInput!): UpdateClubPayload!
+  "Reschedule or move a meetup."
+  rescheduleMeetup(input: RescheduleMeetupInput!): MeetupPayload!
+  "Call a meetup off."
+  cancelMeetup(input: CancelMeetupInput!): MeetupPayload!
+}
+
+# ---- Profiles ------------------------------------------------------------------------------------
+
+"A member as everyone sees them."
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  avatarUrl: Url
+  bio: String
+  joinedAt: DateTime!
+  clubs: [Club!]!
+}
+
+"The signed-in member: their public profile plus what only they may see."
+type Viewer {
+  user: User!
+  email: String!
+  notificationPreferences: NotificationPreferences!
+  notifications(status: NotificationStatus = UNREAD, first: Int = 20): [Notification!]!
+  shelf(status: ShelfStatus): [ShelfEntry!]!
+}
+
+"Typed settings instead of a JSON blob: clients get autocomplete, the server gets validation."
+type NotificationPreferences {
+  emailOnMeetup: Boolean!
+  emailOnReview: Boolean!
+  weeklyDigest: Boolean!
+  push: Boolean!
+}
+
+# ---- Clubs ---------------------------------------------------------------------------------------
+
+"A reading club."
+type Club {
+  id: ID!
+  name: String!
+  description: String
+  visibility: ClubVisibility!
+  owner: User!
+  currentBook: Book
+  memberCount: Int!
+  members(first: Int = 10): [User!]!
+  meetups(when: MeetupTime = UPCOMING): [Meetup!]!
+  createdAt: DateTime!
+}
+
+"Who can find and join a club."
+enum ClubVisibility { PUBLIC PRIVATE }
+
+"Which meetups to list: an enum, not include_past: Boolean."
+enum MeetupTime { UPCOMING PAST ALL }
+
+"A club meeting."
+type Meetup {
+  id: ID!
+  title: String!
+  startsAt: DateTime!
+  location: MeetupLocation!
+  status: MeetupStatus!
+  club: Club!
+  attendees: [User!]!
+}
+
+"Where a meetup happens."
+type MeetupLocation {
+  "A room, a café, or the name of the video call."
+  name: String!
+  online: Boolean!
+}
+
+"Whether a meetup still happens."
+enum MeetupStatus { SCHEDULED CANCELLED }
+
+# ---- Catalogue -----------------------------------------------------------------------------------
+
+"A book in the catalogue."
+type Book {
+  id: ID!
+  isbn13: String
+  title: String!
+  subtitle: String
+  authors: [Author!]!
+  publisher: String
+  publishedYear: Int
+  coverUrl: Url
+  pageCount: Int
+  availability: BookAvailability!
+  genres: [Genre!]!
+  averageRating: Float
+  ratingCount: Int!
+  reviews(order: ReviewOrder = NEWEST, first: Int = 10): [Review!]!
+}
+
+"A person who wrote a book."
+type Author {
+  id: ID!
+  name: String!
+}
+
+"Can you get a copy?"
+enum BookAvailability { IN_PRINT OUT_OF_PRINT }
+
+"A genre in the browse tree."
+type Genre {
+  id: ID!
+  name: String!
+  parent: Genre
+}
+
+"Catalogue filters, each typed."
+input BookFilter {
+  titleContains: String
+  author: String
+  genreId: ID
+  availability: BookAvailability
+}
+
+# ---- Reviews -------------------------------------------------------------------------------------
+
+"A member's review of a book."
+type Review {
+  id: ID!
+  rating: Int!
+  body: String
+  createdAt: DateTime!
+  likeCount: Int!
+  author: User!
+  book: Book!
+}
+
+"How to order reviews."
+enum ReviewOrder { NEWEST HIGHEST_RATED }
+
+# ---- Shelves -------------------------------------------------------------------------------------
+
+"A book on the viewer's shelf."
+type ShelfEntry {
+  book: Book!
+  status: ShelfStatus!
+}
+
+"Where the viewer is with a book."
+enum ShelfStatus { WANT_TO_READ READING FINISHED }
+
+# ---- Notifications -------------------------------------------------------------------------------
+
+"Something the viewer should know about."
+interface Notification {
+  id: ID!
+  createdAt: DateTime!
+  read: Boolean!
+}
+
+"A meetup in one of the viewer's clubs was scheduled or changed."
+type MeetupNotification implements Notification {
+  id: ID!
+  createdAt: DateTime!
+  read: Boolean!
+  meetup: Meetup!
+}
+
+"Someone reviewed a book on the viewer's shelf."
+type ReviewNotification implements Notification {
+  id: ID!
+  createdAt: DateTime!
+  read: Boolean!
+  review: Review!
+}
+
+"Which notifications to list."
+enum NotificationStatus { UNREAD READ ALL }
+
+# ---- Inputs and payloads -------------------------------------------------------------------------
+
+"A problem with the input, for the client to show next to a form field."
+type UserError {
+  field: [String!]
+  message: String!
+}
+
+input CreateReviewInput { bookId: ID! rating: Int! body: String }
+type CreateReviewPayload { review: Review userErrors: [UserError!]! }
+
+input EditReviewInput { reviewId: ID! rating: Int body: String }
+type EditReviewPayload { review: Review userErrors: [UserError!]! }
+
+input DeleteReviewInput { reviewId: ID! }
+type DeleteReviewPayload { deletedReviewId: ID book: Book userErrors: [UserError!]! }
+
+input JoinClubInput { clubId: ID! }
+type JoinClubPayload { club: Club userErrors: [UserError!]! }
+
+input LeaveClubInput { clubId: ID! }
+type LeaveClubPayload { club: Club userErrors: [UserError!]! }
+
+input UpdateProfileInput { name: String bio: String avatarUrl: Url }
+type UpdateProfilePayload { user: User userErrors: [UserError!]! }
+
+input NotificationPreferencesInput { emailOnMeetup: Boolean emailOnReview: Boolean weeklyDigest: Boolean push: Boolean }
+type NotificationPreferencesPayload { notificationPreferences: NotificationPreferences userErrors: [UserError!]! }
+
+"Either ids or all: true."
+input MarkNotificationsReadInput { ids: [ID!] all: Boolean }
+type MarkNotificationsReadPayload { viewer: Viewer userErrors: [UserError!]! }
+
+input SetShelfStatusInput { bookId: ID! status: ShelfStatus! }
+type SetShelfStatusPayload { entry: ShelfEntry userErrors: [UserError!]! }
+
+input UpdateClubDetailsInput { clubId: ID! name: String description: String visibility: ClubVisibility }
+input SetCurrentBookInput { clubId: ID! bookId: ID! }
+type UpdateClubPayload { club: Club userErrors: [UserError!]! }
+
+input RescheduleMeetupInput { meetupId: ID! startsAt: DateTime locationName: String online: Boolean }
+input CancelMeetupInput { meetupId: ID! reason: String }
+type MeetupPayload { meetup: Meetup userErrors: [UserError!]! }

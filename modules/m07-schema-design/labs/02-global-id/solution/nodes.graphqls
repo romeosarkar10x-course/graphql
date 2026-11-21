@@ -1,0 +1,57 @@
+"""
+Global object identification: every object a client can cache implements Node, and any of them can be
+fetched again from its id alone.
+"""
+schema { query: Query }
+
+type Query {
+  "Refetch any object by its global id. Null when the id is malformed or names nothing."
+  node(id: ID!): Node
+  "Refetch many objects at once. One entry per id, in order; null where `node(id:)` would be null."
+  nodes(ids: [ID!]!): [Node]!
+  "Every club."
+  clubs: [Club!]!
+}
+
+"An object with a global id, opaque to clients and stable across sessions."
+interface Node {
+  "Global id: opaque, pass it back to `node(id:)` as is."
+  id: ID!
+}
+
+"A reading club."
+type Club implements Node {
+  id: ID!
+  name: String!
+  owner: User!
+  currentBook: Book
+  meetups: [Meetup!]!
+}
+
+"A member."
+type User implements Node {
+  id: ID!
+  name: String!
+  handle: String!
+}
+
+"A book in the catalogue."
+type Book implements Node {
+  id: ID!
+  title: String!
+  reviews: [Review!]!
+}
+
+"A review of a book."
+type Review implements Node {
+  id: ID!
+  rating: Int!
+  author: User!
+}
+
+"A club meetup."
+type Meetup implements Node {
+  id: ID!
+  title: String!
+  startsAt: String!
+}

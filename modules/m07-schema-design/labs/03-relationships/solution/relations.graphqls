@@ -1,0 +1,71 @@
+# Shelfie with relationships as fields: the client follows them in one request.
+schema { query: Query }
+
+type Query {
+  club(id: ID!): Club
+  user(id: ID!): User
+  book(id: ID!): Book
+  review(id: ID!): Review
+}
+
+type Club {
+  id: ID!
+  name: String!
+  "The member who created the club."
+  owner: User!
+  "Null between books."
+  currentBook: Book
+  "Members in join order. A connection: a club can grow past one page, and the edge carries the membership."
+  members(first: Int = 10, after: String): ClubMemberConnection!
+}
+
+"A page of a club's members."
+type ClubMemberConnection {
+  edges: [ClubMemberEdge!]!
+  pageInfo: PageInfo!
+  "All members, not only this page."
+  totalCount: Int!
+}
+
+"One member of one club: data about the pair lives here, not on User or Club."
+type ClubMemberEdge {
+  "Pass to `after` to get the members after this one."
+  cursor: String!
+  node: User!
+  role: ClubRole!
+  "ISO-8601 instant."
+  joinedAt: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: String
+}
+
+enum ClubRole {
+  OWNER
+  MODERATOR
+  MEMBER
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  "A plain list: a person belongs to a handful of clubs, never thousands."
+  clubs: [Club!]!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  authors: [String!]!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  body: String!
+  author: User!
+  book: Book!
+}

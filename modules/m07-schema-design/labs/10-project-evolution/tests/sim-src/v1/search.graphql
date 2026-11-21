@@ -1,0 +1,1 @@
+query Search($text: String!) { search(text: $text) { __typename ... on Book { id title authors { name } } ... on Club { id name } } }

@@ -1,0 +1,59 @@
+# The club page's schema after the audit (audit.md). Non-null where the value comes with its parent's
+# row and cannot fail alone; nullable where the data can be absent; nullable plus @semanticNonNull where
+# only an error can make it null.
+
+"Declares a field null only when an error happened: semantically non-null. From the Semantic Nullability RFC (RFC 0)."
+directive @semanticNonNull(levels: [Int!]! = [0]) on FIELD_DEFINITION
+
+type Query {
+  "Null for an unknown id."
+  club(id: ID!): Club
+}
+
+type Club {
+  id: ID!
+  name: String!
+  "Owners may leave it empty."
+  description: String
+  "From the membership service; null only when it is down."
+  memberCount: Int @semanticNonNull
+  "Null when signed out (and when the membership service is down)."
+  viewerIsMember: Boolean
+  "The owner's id is on the club row; the profile behind it may still fail field by field."
+  owner: User!
+  "Null between books."
+  currentBook: Book
+  "Null when none is planned (and when the meetup service is down)."
+  nextMeetup: Meetup
+  "From the membership service; null only when it is down."
+  members(first: Int = 10): [User!] @semanticNonNull
+}
+
+type User {
+  id: ID!
+  "From the profile service; every member has a name, so null means it failed."
+  name: String @semanticNonNull
+  "Members without a picture have none."
+  avatarUrl: String
+}
+
+type Book {
+  id: ID!
+  title: String!
+  "Publishers do not always send one."
+  coverUrl: String
+  authors: [Author!]!
+  "Null when nobody reviewed the book (and when the ratings service is down)."
+  averageRating: Float
+}
+
+type Author {
+  id: ID!
+  name: String!
+}
+
+type Meetup {
+  id: ID!
+  startsAt: String!
+  venue: String!
+}

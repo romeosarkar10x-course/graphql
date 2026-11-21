@@ -1,0 +1,9 @@
+# The review card in one request: the relationships are fields.
+query ReviewCard($id: ID!) {
+  review(id: $id) {
+    rating
+    body
+    author { name handle }
+    book { title }
+  }
+}

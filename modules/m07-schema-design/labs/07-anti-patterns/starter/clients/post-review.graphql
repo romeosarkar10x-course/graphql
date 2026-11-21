@@ -1,0 +1,3 @@
+mutation PostReview {
+  insertReview(book_id: 7, user_id: 2, rating: 4, review_text: "Anarres forever") { success message data }
+}

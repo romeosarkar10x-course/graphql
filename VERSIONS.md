@@ -37,4 +37,5 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | GraalVM CE (native-image) | 25.0.2 (`ghcr.io/graalvm/native-image-community:25`) | — | `bin/course native`, game 6b; `docker/native.Dockerfile` adds the course's Maven |
 | Querydsl | not used | 5 | `com.querydsl` 5.1.0 (2024-01-29) is the last release; fork `io.github.openfeign.querydsl` 7.7 |
 | GraphQL over HTTP | September 2026 edition (2026-11-12) | draft | https://http-spec.graphql.org/September2026/ ; copy in `_workbench/2026-11-21-m05-probe/` |
+| graphql-inspector | CLI 7.0.2 (2026-10-20), core 8.0.1, diff-command 7.0.2, graphql-js 16.12.0 | — | `bin/course inspector`, own image `docker/inspector.Dockerfile` (node 24.22.1-alpine); npm overrides stop caret ranges from pulling 7.0.8 (2026-11-20) |
 | GitHub GraphQL schema snapshot | 2026-11-21 | — | `tools/schemas/github-2026-11-21.graphql`, for offline validation; refresh each term |

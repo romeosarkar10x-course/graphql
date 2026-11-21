@@ -1,0 +1,2 @@
+# Release 1 kept the whole-star strip: rating stays in use.
+query ReviewStrip($id: ID!) { book(id: $id) { id reviews { id rating } } }

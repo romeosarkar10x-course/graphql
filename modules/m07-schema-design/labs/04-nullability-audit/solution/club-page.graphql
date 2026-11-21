@@ -1,0 +1,14 @@
+# The club page's operation. Do not edit: the outage tests run it against your schema.
+query ClubPage {
+  club(id: "c1") {
+    id
+    name
+    description
+    memberCount
+    viewerIsMember
+    owner { id name avatarUrl }
+    currentBook { id title coverUrl authors { id name } averageRating }
+    nextMeetup { id startsAt venue }
+    members(first: 5) { id name avatarUrl }
+  }
+}

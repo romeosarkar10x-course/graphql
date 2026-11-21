@@ -1,0 +1,9 @@
+query ClubPage {
+  getClub(club_id: 1) {
+    club_name
+    descr
+    member_count
+    members { full_name avatar_img }
+    meetups { title starts_at location_txt }
+  }
+}

@@ -1,0 +1,6 @@
+mutation NotificationSettings($input: NotificationPreferencesInput!) {
+  setNotificationPreferences(input: $input) {
+    notificationPreferences { emailOnMeetup push }
+    userErrors { field message }
+  }
+}

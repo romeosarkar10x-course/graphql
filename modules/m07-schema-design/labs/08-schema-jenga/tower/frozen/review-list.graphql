@@ -1,0 +1,4 @@
+# Shelfie web: all reviews of a book.
+query ReviewList($id: ID!) {
+  book(id: $id) { id title reviews { id rating body createdAt author { id handle } } }
+}

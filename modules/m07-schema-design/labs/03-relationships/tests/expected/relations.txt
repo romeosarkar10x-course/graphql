@@ -1,0 +1,8 @@
+club {"club":{"currentBook":{"title":"The Left Hand of Darkness"},"name":"The Midnight Readers","owner":{"handle":"kemia"}}}
+page1 {"club":{"members":{"edges":[{"joinedAt":"2025-02-14T18:00:00Z","node":{"handle":"kemia"},"role":"OWNER"},{"joinedAt":"2025-02-23T18:00:00Z","node":{"handle":"asha"},"role":"MODERATOR"},{"joinedAt":"2025-03-04T18:00:00Z","node":{"handle":"benok"},"role":"MEMBER"}],"pageInfo":{"hasNextPage":true},"totalCount":8}}}
+page2 {"club":{"members":{"edges":[{"joinedAt":"2025-03-13T18:00:00Z","node":{"handle":"chloem"},"role":"MEMBER"},{"joinedAt":"2025-03-22T18:00:00Z","node":{"handle":"devp"},"role":"MEMBER"},{"joinedAt":"2025-03-31T18:00:00Z","node":{"handle":"farid"},"role":"MEMBER"}],"pageInfo":{"hasNextPage":true},"totalCount":8}}}
+page3 {"club":{"members":{"edges":[{"joinedAt":"2025-04-09T18:00:00Z","node":{"handle":"hugos"},"role":"MEMBER"},{"joinedAt":"2025-04-18T18:00:00Z","node":{"handle":"jonasb"},"role":"MEMBER"}],"pageInfo":{"hasNextPage":false},"totalCount":8}}}
+cursors-differ true
+c2-default-page {"club":{"members":{"edges":[{"node":{"name":"Grace Kim"},"role":"OWNER"},{"node":{"name":"Elena Petrova"},"role":"MODERATOR"},{"node":{"name":"Ines Duarte"},"role":"MEMBER"},{"node":{"name":"Liu Wei"},"role":"MEMBER"}],"pageInfo":{"hasNextPage":false},"totalCount":4}}}
+review {"review":{"author":{"handle":"asha"},"book":{"title":"The Left Hand of Darkness"},"rating":5}}
+user-clubs {"user":{"clubs":[{"name":"The Midnight Readers"},{"name":"Booker Shortlist Survivors"}]}}

@@ -1,0 +1,6 @@
+graphql-inspector 7.0.2 on lab 7.5 solution v1 -> v2 (interface, union, enum), 2026-11-21:
+[log] ✔  Type BookFinished was added
+[log] ⚠  Member BookFinished was added to Union type FeedItem
+[log] ✔  Type BookFinished was added
+[log] ⚠  Enum value BOOK_FINISHED was added to enum FeedItemKind
+[log] ✔  Field book was added to object type FeedItem

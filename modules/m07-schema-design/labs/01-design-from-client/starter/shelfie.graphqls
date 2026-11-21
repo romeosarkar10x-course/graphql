@@ -1,0 +1,32 @@
+# A first draft, written from the database tables before anyone looked at a screen.
+# Redesign it from contract/screens/*.json (see the README). Keep nothing you cannot justify.
+
+type Query {
+  getClub(club_id: Int): club_row
+  allBooks: [book]
+  getUserById(user_id: Int): user
+}
+
+type club_row {
+  club_id: Int
+  club_name: String
+  descr: String
+  owner_user_id: Int
+  current_book_id: Int
+  member_ids: [Int]
+}
+
+type book {
+  book_id: Int
+  title: String
+  cover_img: String
+  author_names: String
+  avg_rating: Float
+}
+
+type user {
+  user_id: Int
+  full_name: String
+  handle: String
+  club_ids: [Int]
+}

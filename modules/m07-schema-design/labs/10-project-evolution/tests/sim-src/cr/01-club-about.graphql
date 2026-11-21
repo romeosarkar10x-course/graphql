@@ -1,0 +1,1 @@
+query ClubAbout($id: ID!) { club(id: $id) { id about } }

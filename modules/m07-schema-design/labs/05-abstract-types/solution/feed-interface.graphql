@@ -1,0 +1,11 @@
+query ClubFeed($clubId: ID!) {
+  feed(clubId: $clubId) {
+    __typename
+    id
+    happenedAt
+    actor { name }
+    ... on ReviewPosted { review { rating book { title } } }
+    ... on MemberJoined { welcomeMessage }
+    ... on MeetupScheduled { meetup { title startsAt } }
+  }
+}

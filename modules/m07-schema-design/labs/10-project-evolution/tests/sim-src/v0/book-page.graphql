@@ -1,0 +1,1 @@
+query BookPage($id: ID!) { book(id: $id) { id title author reviews { id rating body author { name } } } }

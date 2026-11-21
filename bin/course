@@ -14,8 +14,10 @@
 #   bin/course jshell [file.jsh]          jshell with Jackson 3 and graphql-java on the class path
 #   bin/course java <File.java> [args]    run a single-file Java program with the same class path
 #   bin/course gql validate|operations|schema-lines|coordinates|stats ...   document and schema helpers (tools/gql/Gql.java)
+#   bin/course design lint|shape|clients|diff|outage ...   schema-design helpers, Module 7 (tools/design/Design.java)
 #   bin/course shell [-c 'cmd']           bash inside the course image, repo at /course
 #   bin/course native <mvn args>          mvn inside a GraalVM CE 25 image, for native builds (game 6b)
+#   bin/course inspector <args>           graphql-inspector 7.0.2 (Node.js, own image), e.g. diff old.graphql new.graphql
 #   bin/course image                      (re)build the course image
 set -euo pipefail
 
@@ -115,5 +117,12 @@ case "$cmd" in
     case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course native from a directory inside the course repo" ;; esac
     docker run --rm -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" \
       graphql-course-native:1 mvn "$@" ;;
+  inspector)   # graphql-inspector (lab 7.6, Module 7 games), in its own Node.js image; paths relative to the current directory
+    [[ $# -ge 1 ]] || die "usage: bin/course inspector <args>   e.g. bin/course inspector diff old.graphql new.graphql"
+    docker image inspect graphql-course-inspector:1 >/dev/null 2>&1 \
+      || docker build -t graphql-course-inspector:1 -f "$ROOT/docker/inspector.Dockerfile" "$ROOT/docker" >&2
+    case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course inspector from a directory inside the course repo" ;; esac
+    docker run --rm -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" \
+      graphql-course-inspector:1 "$@" ;;
   *) in_image /course/tools/course.sh "$cmd" "$@" ;;
 esac

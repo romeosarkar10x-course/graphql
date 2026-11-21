@@ -1,0 +1,1 @@
+query Search { search(text: "dark") { __typename ... on Book { id title } ... on Club { id name } } }

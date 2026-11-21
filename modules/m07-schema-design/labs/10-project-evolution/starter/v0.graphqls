@@ -1,0 +1,39 @@
+# Shelfie, release 0. Six change requests will arrive one at a time (README). Never edit this file:
+# each step is a new file in steps/.
+type Query {
+  club(id: ID!): Club
+  clubs: [Club!]!
+  book(id: ID!): Book
+}
+
+type Club {
+  id: ID!
+  name: String!
+  "Plain text."
+  description: String
+  owner: User!
+  currentBook: Book
+  members: [User!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  "The author, as printed. One name."
+  author: String!
+  reviews: [Review!]!
+}
+
+type Review {
+  id: ID!
+  "1 to 5 stars."
+  rating: Int!
+  body: String
+  author: User!
+}

@@ -1,0 +1,13 @@
+# The review card: rating, text, who wrote it and which book. With keys, it takes three requests
+# (the author and the book are separate lookups). Rewrite it as ONE operation against your schema.
+query ReviewCard($id: ID!) {
+  review(id: $id) { rating body authorId bookId }
+}
+
+query ReviewAuthor($id: ID!) {
+  user(id: $id) { name handle }
+}
+
+query ReviewBook($id: ID!) {
+  book(id: $id) { title }
+}

@@ -1,0 +1,10 @@
+01 tower:1 of 6 clients broken  diff:verdict: BREAKING
+02 tower:all 6 clients ok  diff:verdict: BREAKING
+03 tower:1 of 6 clients broken  diff:verdict: BREAKING
+04 tower:all 6 clients ok  diff:verdict: BREAKING
+05 tower:all 6 clients ok  diff:verdict: SAFE
+06 tower:all 6 clients ok  diff:verdict: BREAKING
+07 tower:all 6 clients ok  diff:verdict: DANGEROUS
+08 tower:2 of 6 clients broken  diff:verdict: BREAKING
+09 tower:4 of 6 clients broken  diff:verdict: BREAKING
+10 tower:1 of 6 clients broken  diff:verdict: BREAKING

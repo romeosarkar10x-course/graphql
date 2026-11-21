@@ -1,0 +1,1 @@
+query ClubDirectory { clubs { id name about } }

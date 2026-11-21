@@ -1,0 +1,1 @@
+query MemberList($id: ID!) { club(id: $id) { id members { id name handle } } }

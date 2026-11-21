@@ -1,0 +1,10 @@
+query ClubPage($id: ID!) {
+  club(id: $id) {
+    id
+    name
+    description
+    memberCount
+    members(first: 5) { id name avatarUrl }
+    meetups { id title startsAt location { name online } }
+  }
+}

@@ -1,0 +1,20 @@
+# Option 1: an interface. The shared fields live on FeedItem; each kind adds its own.
+type Query {
+  "A club's activity, newest first."
+  feed(clubId: ID!): [FeedItem!]!
+}
+
+type User { id: ID! name: String! }
+type Book { id: ID! title: String! }
+type Review { id: ID! rating: Int! book: Book! }
+type Meetup { id: ID! title: String! startsAt: String! }
+
+interface FeedItem {
+  id: ID!
+  happenedAt: String!
+  actor: User!
+}
+
+type ReviewPosted implements FeedItem { id: ID! happenedAt: String! actor: User! review: Review! }
+type MemberJoined implements FeedItem { id: ID! happenedAt: String! actor: User! welcomeMessage: String }
+type MeetupScheduled implements FeedItem { id: ID! happenedAt: String! actor: User! meetup: Meetup! }

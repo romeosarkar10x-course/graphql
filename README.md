@@ -54,7 +54,8 @@ Playing with friends: [docs/GROUP_PLAY.md](docs/GROUP_PLAY.md).
 | | [M4 Mutations and input design](modules/m04-mutations/README.md) | Ready |
 | Building servers | [M5 graphql-java from scratch](modules/m05-graphql-java/README.md) | Ready |
 | | [M6 Spring for GraphQL, plus DGS and Quarkus](modules/m06-spring/README.md) | Ready |
-| | M7 Schema design · M8 Pagination and errors | Planned |
+| | [M7 Schema design principles](modules/m07-schema-design/README.md) | Ready |
+| | M8 Pagination and errors | Planned |
 | Production | M9 Performance · M10 Security · M11 Real-time · M12 Clients · M13 Testing · M14 Advanced patterns | Planned |
 | Platform | M15 Federation · M16 Production · M17 Under the hood · M18 The frontier · Capstone | Planned |
 

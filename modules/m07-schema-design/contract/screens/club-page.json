@@ -1,0 +1,36 @@
+{
+  "club": {
+    "name": "The Midnight Readers",
+    "description": "Speculative fiction, one book a month, arguments optional.",
+    "memberCount": 8,
+    "viewerIsMember": true,
+    "owner": {
+      "name": "Kemi Adeyemi",
+      "avatarUrl": "https://img.shelfie.dev/u11.png"
+    },
+    "currentBook": {
+      "title": "The Left Hand of Darkness",
+      "coverUrl": "https://img.shelfie.dev/b1.jpg",
+      "authors": [
+        {
+          "name": "Ursula K. Le Guin"
+        }
+      ],
+      "averageRating": 4.2
+    },
+    "nextMeetup": {
+      "startsAt": "2026-11-27T19:00:00Z",
+      "venue": "Blossom Book House, Bengaluru"
+    },
+    "memberPreview": [
+      {
+        "name": "Kemi Adeyemi",
+        "avatarUrl": "https://img.shelfie.dev/u11.png"
+      },
+      {
+        "name": "Asha Rao",
+        "avatarUrl": "https://img.shelfie.dev/u1.png"
+      }
+    ]
+  }
+}

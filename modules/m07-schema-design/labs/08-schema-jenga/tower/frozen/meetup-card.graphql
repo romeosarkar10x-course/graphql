@@ -1,0 +1,4 @@
+# Shelfie iOS 4.0: the "next meetup" widget.
+query MeetupCard($id: ID!) {
+  club(id: $id) { id name nextMeetup { id startsAt venue } }
+}

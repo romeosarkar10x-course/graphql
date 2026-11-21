@@ -1,0 +1,40 @@
+# Step 1, after change request 1: about (Markdown) added, description deprecated.
+type Query {
+  club(id: ID!): Club
+  clubs: [Club!]!
+  book(id: ID!): Book
+}
+
+type Club {
+  id: ID!
+  name: String!
+  "Plain text."
+  description: String @deprecated(reason: "Use about (Markdown). Release-0 apps still read this.")
+  "The club's description in Markdown."
+  about: String
+  owner: User!
+  currentBook: Book
+  members: [User!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  "The author, as printed. One name."
+  author: String!
+  reviews: [Review!]!
+}
+
+type Review {
+  id: ID!
+  "1 to 5 stars."
+  rating: Int!
+  body: String
+  author: User!
+}

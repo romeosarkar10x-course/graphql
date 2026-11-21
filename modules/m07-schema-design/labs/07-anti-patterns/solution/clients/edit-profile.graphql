@@ -1,0 +1,6 @@
+mutation EditProfile($input: UpdateProfileInput!) {
+  updateProfile(input: $input) {
+    user { id name bio }
+    userErrors { field message }
+  }
+}

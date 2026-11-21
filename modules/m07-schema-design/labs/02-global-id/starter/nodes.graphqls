@@ -1,0 +1,48 @@
+"""
+Global object identification: every object a client can cache implements Node, and any of them can be
+fetched again from its id alone.
+"""
+schema { query: Query }
+
+type Query {
+  "Every club."
+  clubs: [Club!]!
+  # TODO node(id:) and nodes(ids:), and the Node interface they return
+}
+
+"A reading club."
+type Club {
+  id: ID!
+  name: String!
+  owner: User!
+  currentBook: Book
+  meetups: [Meetup!]!
+}
+
+"A member."
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+}
+
+"A book in the catalogue."
+type Book {
+  id: ID!
+  title: String!
+  reviews: [Review!]!
+}
+
+"A review of a book."
+type Review {
+  id: ID!
+  rating: Int!
+  author: User!
+}
+
+"A club meetup."
+type Meetup {
+  id: ID!
+  title: String!
+  startsAt: String!
+}

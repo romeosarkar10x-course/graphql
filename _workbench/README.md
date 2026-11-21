@@ -23,3 +23,5 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-21-m05-probe/` | Modules 5 and 6: graphql-java phase timings, cancellation, default-handler leak, FastBuilder, StackOverflow on deep schemas, sibling timings; GraphQL-over-HTTP September 2026 copy; Spring audit (11/25), inspection, default errors, directive wiring, Spring Data SQL, virtual-thread load; Quarkus dev mode; bake-off (`bake-off.txt`), tiny starter vs raw (`tiny-vs-raw.txt`) |
 | `2026-11-21-m06-native/` | Game 6b: Spring and Quarkus native build logs (GraalVM CE 25.0.2) and `race.txt` |
 | `2026-11-21-m06-check-starters.log` | `bin/course check --starters` after Module 6 |
+| `2026-11-21-m07-probe/` | Module 7: RFC pages and stages, graphql-java probe (error propagation off, SchemaDiff levels), graphql-inspector runs (`inspector-probe.txt`, `inspector-feed.txt`, `fifteen-changes.txt`, `jenga-deck.txt`), AniList introspection excerpts, Relay object identification spec, inspector `action.yml` |
+| `2026-11-21-m07-check-starters.log` | `bin/course check --starters` after Module 7 |

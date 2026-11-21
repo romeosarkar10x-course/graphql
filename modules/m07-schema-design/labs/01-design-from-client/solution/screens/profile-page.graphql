@@ -1,0 +1,13 @@
+# A member's profile (contract/screens/profile-page.json).
+query ProfilePage($handle: String!) {
+  user(handle: $handle) {
+    id
+    name
+    handle
+    bio
+    avatarUrl
+    joinedAt
+    memberships { role club { id name } }
+    shelf { status book { id title coverUrl } }
+  }
+}

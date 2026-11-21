@@ -1,0 +1,14 @@
+{
+  "book": {
+    "title": "Piranesi",
+    "coverUrl": "https://img.shelfie.dev/b2.jpg",
+    "publishedYear": 2020,
+    "authors": [{ "name": "Susanna Clarke" }],
+    "averageRating": 4.6,
+    "reviewCount": 3,
+    "latestReviews": [
+      { "rating": 5, "body": "The House is kind.", "createdAt": "2026-10-02T08:30:00Z", "author": { "name": "Ben Okafor", "avatarUrl": "https://img.shelfie.dev/u3.png" } }
+    ],
+    "readingClubs": [{ "name": "Slow Burn Mysteries" }]
+  }
+}

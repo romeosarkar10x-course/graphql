@@ -1,0 +1,46 @@
+# The club page's schema, first draft: everything non-null, because "the data is always there".
+# Audit every field (audit.md), then change what the audit says. The README lists the outages.
+
+"Declares a field null only when an error happened: semantically non-null. From the Semantic Nullability RFC (RFC 0)."
+directive @semanticNonNull(levels: [Int!]! = [0]) on FIELD_DEFINITION
+
+type Query {
+  club(id: ID!): Club!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String!
+  memberCount: Int!
+  viewerIsMember: Boolean!
+  owner: User!
+  currentBook: Book!
+  nextMeetup: Meetup!
+  members(first: Int = 10): [User!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  avatarUrl: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  coverUrl: String!
+  authors: [Author!]!
+  averageRating: Float!
+}
+
+type Author {
+  id: ID!
+  name: String!
+}
+
+type Meetup {
+  id: ID!
+  startsAt: String!
+  venue: String!
+}

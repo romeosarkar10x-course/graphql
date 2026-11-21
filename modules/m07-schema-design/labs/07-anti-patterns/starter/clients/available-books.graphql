@@ -1,0 +1,3 @@
+query AvailableBooks {
+  allBooks(include_out_of_print: false, only_available: true) { book_id title author_names avg_rating }
+}

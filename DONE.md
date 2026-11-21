@@ -94,6 +94,25 @@
       fail-fast on unknown fields)
 - [x] `bin/course native` + `docker/native.Dockerfile` (GraalVM CE 25.0.2 with the course's Maven)
 
+## Module 7 (7 lectures, 7 labs, 1 mini-project, 2 games)
+
+- [x] Lectures 7.1–7.7; README (incl. changes from the plan); checkpoint quiz; checkpoint.json (labs + ADR)
+- [x] `bin/course design` (`tools/design/Design.java`): lint (naming, descriptions, references, 6
+      anti-pattern rules), shape, clients, diff, outage (`--no-propagation`)
+- [x] `bin/course inspector` + `docker/inspector.Dockerfile` (graphql-inspector 7.0.2, pinned with overrides)
+- [x] Shared contract: three screen view models, Data.java (Module 5 seed + review/meetup lookups)
+- [x] m07/01 three screens to SDL (shape-checked) · m07/02 GlobalId, registry, node/nodes · m07/03
+      references and a members connection with edge data · m07/04 nullability audit, 4 outages,
+      @semanticNonNull · m07/05 interface vs union vs enum, plus a fourth kind · m07/06 15 changes
+      classified, SchemaDiff JUnit gate + RFC #1231 check, CI workflow · m07/07 180-line bad schema refactor,
+      bounded contexts
+- [x] Games: m07/08 Schema Jenga (10 cards, 6 frozen clients) · m07/09 Hall of shame (rubric; 9 real
+      cards from AniList and GitHub)
+- [x] Mini-project m07/10 evolution simulator (6 change requests revealed one at a time) + ADR
+
+`bin/course check --starters` (2026-11-21, after Module 7): 74 auto-graded labs, 0 problems
+(`_workbench/2026-11-21-m07-check-starters.log`).
+
 `bin/course check --starters` (2026-11-21, after Module 6): 65 auto-graded labs, 0 problems
 (`_workbench/2026-11-21-m06-check-starters.log`).
 

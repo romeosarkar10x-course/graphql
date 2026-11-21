@@ -1,0 +1,31 @@
+# Lab 7.6: the schema gate in CI. Copy to your repository's .github/workflows/ (paths relative to the
+# lab directory). Two independent checks: graphql-java's SchemaDiff in a JUnit test, and graphql-inspector.
+name: schema
+on:
+  pull_request:
+    paths: ["schema-gate/**"]
+
+jobs:
+  schemadiff:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: schema-gate
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+      - run: mvn -B test
+
+  inspector:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      # Exits non-zero on a breaking change; prints dangerous ones.
+      - run: npx --yes @graphql-inspector/cli@7.0.2 diff schema-gate/released/schema.graphqls schema-gate/src/main/resources/schema.graphqls

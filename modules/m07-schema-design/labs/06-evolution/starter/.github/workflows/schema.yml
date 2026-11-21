@@ -1,0 +1,2 @@
+# Lab 7.6: TODO. Two jobs on pull requests: `mvn -B test` in schema-gate, and graphql-inspector 7.0.2
+# comparing schema-gate/released/schema.graphqls with schema-gate/src/main/resources/schema.graphqls.

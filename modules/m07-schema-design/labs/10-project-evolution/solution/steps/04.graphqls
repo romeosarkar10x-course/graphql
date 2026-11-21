@@ -1,0 +1,67 @@
+# Step 4, after change request 4: score with half stars, rating deprecated.
+type Query {
+  club(id: ID!): Club
+  clubs: [Club!]!
+  book(id: ID!): Book
+}
+
+type Club {
+  id: ID!
+  name: String!
+  "Plain text."
+  description: String @deprecated(reason: "Use about (Markdown). Release-0 apps still read this.")
+  "The club's description in Markdown."
+  about: String
+  owner: User!
+  currentBook: Book
+  members: [User!]!
+  "Members with their role in this club, in join order."
+  memberships: [Membership!]!
+}
+
+"One member's place in one club."
+type Membership {
+  user: User!
+  role: ClubRole!
+  "ISO-8601 instant."
+  joinedAt: String!
+}
+
+"What a member may do in a club."
+enum ClubRole {
+  OWNER
+  MODERATOR
+  MEMBER
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  "The author, as printed. One name."
+  author: String! @deprecated(reason: "Use authors: books can have several.")
+  "Authors in cover order."
+  authors: [Author!]!
+  reviews: [Review!]!
+}
+
+"A person who wrote books."
+type Author {
+  id: ID!
+  name: String!
+}
+
+type Review {
+  id: ID!
+  "1 to 5 stars: score rounded half up."
+  rating: Int! @deprecated(reason: "Use score: it has half stars.")
+  "0.5 to 5.0 in steps of 0.5."
+  score: Float!
+  body: String
+  author: User!
+}

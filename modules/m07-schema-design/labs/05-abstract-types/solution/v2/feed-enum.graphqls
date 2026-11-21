@@ -1,0 +1,27 @@
+# Option 3, v2: BOOK_FINISHED added. One type and an enum discriminator. Every kind's fields are on FeedItem, nullable.
+type Query {
+  "A club's activity, newest first."
+  feed(clubId: ID!): [FeedItem!]!
+}
+
+type User { id: ID! name: String! }
+type Book { id: ID! title: String! }
+type Review { id: ID! rating: Int! book: Book! }
+type Meetup { id: ID! title: String! startsAt: String! }
+
+type FeedItem {
+  id: ID!
+  happenedAt: String!
+  actor: User!
+  kind: FeedItemKind!
+  "Set when kind is REVIEW_POSTED."
+  review: Review
+  "Set when kind is MEMBER_JOINED (and may still be null)."
+  welcomeMessage: String
+  "Set when kind is MEETUP_SCHEDULED."
+  meetup: Meetup
+  "Set when kind is BOOK_FINISHED."
+  book: Book
+}
+
+enum FeedItemKind { REVIEW_POSTED MEMBER_JOINED MEETUP_SCHEDULED BOOK_FINISHED }

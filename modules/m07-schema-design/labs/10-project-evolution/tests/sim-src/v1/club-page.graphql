@@ -1,0 +1,1 @@
+query ClubPage($id: ID!) { club(id: $id) { id name about owner { name } currentBook { id title authors { id name } } } }

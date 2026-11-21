@@ -1,0 +1,9 @@
+[log] 
+Detected the following changes (5) between schemas:
+
+[log] ✖  Argument y: Int! added to field Query.b
+[log] ⚠  Enum value Z was added to enum E
+[log] ✔  Field Query.a is deprecated
+[log] ✔  Field c was added to object type Query
+[log] ✔  Field Query.e changed type from E to E!
+[error] Detected 1 breaking change

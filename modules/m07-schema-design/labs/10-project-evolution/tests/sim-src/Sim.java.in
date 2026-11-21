@@ -1,0 +1,139 @@
+import graphql.ExecutionInput;
+import graphql.ParseAndValidate;
+import graphql.language.*;
+import graphql.parser.Parser;
+import graphql.schema.*;
+import graphql.schema.diff.SchemaDiff;
+import graphql.schema.diff.SchemaDiffSet;
+import graphql.schema.diff.reporting.CapturingReporter;
+import graphql.schema.idl.SchemaParser;
+import graphql.schema.idl.UnExecutableSchemaGenerator;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.json.JsonMapper;
+
+/**
+ * Mini-project 7: the evolution simulator. Run from the lab directory:
+ *
+ *   ../../../bin/course java Sim.java          check every step you have shipped; reveal the next change request
+ *   ../../../bin/course java Sim.java check    the same, but reveal nothing (the test uses this)
+ *
+ * Step N is steps/0N.graphqls: the whole schema after change request N. Each step must keep every
+ * deployed client valid, pass graphql-java's SchemaDiff with nothing BREAKING, deprecate what it
+ * replaces, and stay valid with its deprecated elements removed (RFC #1231). The change requests are
+ * encoded below so they arrive one at a time; reading ahead spoils the game, not the tests.
+ */
+public class Sim {
+    static final String DATA = "@@DATA@@";
+    static JsonNode data;
+    static int fails;
+
+    public static void main(String[] args) throws Exception {
+        data = JsonMapper.builder().build().readTree(new String(Base64.getDecoder().decode(DATA), StandardCharsets.UTF_8));
+        boolean reveal = !(args.length > 0 && args[0].equals("check"));
+        String prev = data.get("v0").asString();
+        for (int n = 1; n <= 6; n++) {
+            Path step = Path.of(String.format("steps/%02d.graphqls", n));
+            if (!Files.exists(step)) {
+                if (reveal) revealRequest(n);
+                else System.out.println("missing " + step);
+                System.exit(reveal ? 0 : 1);
+            }
+            String sdl = Files.readString(step);
+            System.out.println("== step " + n);
+            fails = 0;
+            check(n, prev, sdl);
+            if (fails > 0) {
+                System.out.println("step " + n + ": " + fails + " problem(s). Fix steps/" + String.format("%02d", n) + ".graphqls and run again.");
+                System.exit(1);
+            }
+            System.out.println("step " + n + " shipped: no deployed client broke");
+            prev = sdl;
+        }
+        System.out.println("all 6 change requests shipped with zero client breakage");
+    }
+
+    static void ok(boolean good, String what) {
+        System.out.println((good ? "  ok   " : "  fail ") + what);
+        if (!good) fails++;
+    }
+
+    static void check(int n, String prev, String sdl) {
+        GraphQLSchema s;
+        try { s = UnExecutableSchemaGenerator.makeUnExecutableSchema(new SchemaParser().parse(sdl)); }
+        catch (Exception e) { ok(false, "the schema builds: " + String.valueOf(e.getMessage()).lines().findFirst().orElse("")); return; }
+        // Deployed clients
+        String fleet = n < 6 ? "v0" : "v1";
+        data.get(fleet + "Clients").properties().forEach(c -> ok(valid(s, c.getValue().asString()),
+            "deployed " + fleet + " client " + c.getKey() + " still valid"));
+        // Every change request so far is still delivered
+        for (int k = 1; k <= n; k++)
+            for (var c : data.get("cr").get(k - 1).get("clients").properties())
+                ok(valid(s, c.getValue().asString()), "change request " + k + " delivered: " + c.getKey() + " is valid");
+        // SchemaDiff against the previous step
+        var r = new CapturingReporter();
+        new SchemaDiff().diffSchema(SchemaDiffSet.diffSetFromSdl(prev, sdl), r);
+        List<String> breaking = r.getBreakages().stream().map(e -> e.getReasonMsg()).toList();
+        if (n < 6) ok(breaking.isEmpty(), "SchemaDiff against the previous step: nothing BREAKING" + (breaking.isEmpty() ? "" : " " + breaking));
+        else {
+            var unexpected = breaking.stream().filter(m -> !m.contains("'Club.description'") && !m.contains("'Book.author'")).toList();
+            ok(unexpected.isEmpty(), "the only breaking changes are the agreed removals" + (unexpected.isEmpty() ? "" : " " + unexpected));
+            ok(field(s, "Club", "description") == null && field(s, "Book", "author") == null, "Club.description and Book.author are removed");
+        }
+        // Deprecation discipline: what a step replaces is deprecated from that step on
+        if (n >= 1 && n < 6) ok(deprecated(s, "Club", "description"), "Club.description is deprecated (replaced in request 1)");
+        if (n >= 3 && n < 6) ok(deprecated(s, "Book", "author"), "Book.author is deprecated (replaced in request 3)");
+        if (n >= 4) ok(deprecated(s, "Review", "rating"), "Review.rating is deprecated (replaced in request 4)");
+        // RFC #1231
+        ok(validWithoutDeprecated(sdl), "valid with every deprecated element removed (RFC #1231)");
+    }
+
+    static GraphQLFieldDefinition field(GraphQLSchema s, String type, String name) {
+        return s.getType(type) instanceof GraphQLFieldsContainer c ? c.getFieldDefinition(name) : null;
+    }
+
+    static boolean deprecated(GraphQLSchema s, String type, String name) {
+        var f = field(s, type, name);
+        return f != null && f.isDeprecated() && f.getDeprecationReason() != null && !f.getDeprecationReason().isBlank()
+            && !f.getDeprecationReason().equals("No longer supported");
+    }
+
+    static boolean valid(GraphQLSchema s, String doc) {
+        return !ParseAndValidate.parseAndValidate(s, ExecutionInput.newExecutionInput(doc).build()).isFailure();
+    }
+
+    static boolean validWithoutDeprecated(String sdl) {
+        try {
+            Document doc = Parser.parse(sdl);
+            List<Definition> kept = doc.getDefinitions().stream().map(d -> switch (d) {
+                case ObjectTypeDefinition o -> (Definition) o.transform(b -> b.fieldDefinitions(
+                    o.getFieldDefinitions().stream().filter(f -> !f.hasDirective("deprecated")).toList()));
+                case EnumTypeDefinition e -> e.transform(b -> b.enumValueDefinitions(
+                    e.getEnumValueDefinitions().stream().filter(v -> !v.hasDirective("deprecated")).toList()));
+                default -> d;
+            }).toList();
+            UnExecutableSchemaGenerator.makeUnExecutableSchema(new SchemaParser().parse(AstPrinter.printAst(doc.transform(b -> b.definitions(kept)))));
+            return true;
+        } catch (Exception e) { return false; }
+    }
+
+    static void revealRequest(int n) throws Exception {
+        JsonNode cr = data.get("cr").get(n - 1);
+        Files.createDirectories(Path.of("requests"));
+        Files.createDirectories(Path.of("clients"));
+        Files.writeString(Path.of(String.format("requests/%02d.md", n)), cr.get("text").asString());
+        for (var c : cr.get("clients").properties()) Files.writeString(Path.of("clients", c.getKey()), c.getValue().asString());
+        if (n == 6) {
+            Files.createDirectories(Path.of("clients/v1"));
+            for (var c : data.get("v1Clients").properties()) Files.writeString(Path.of("clients/v1", c.getKey()), c.getValue().asString());
+        }
+        System.out.println(n == 1 ? "Release 0 is live. The first change request has arrived:\n" : "The next change request has arrived:\n");
+        System.out.println(cr.get("text").asString());
+        System.out.printf("(saved as requests/%02d.md; its client is in clients/)%n", n);
+        System.out.printf("Ship it as steps/%02d.graphqls (start from %s), then run Sim.java again.%n", n,
+            n == 1 ? "v0.graphqls" : String.format("steps/%02d.graphqls", n - 1));
+    }
+}

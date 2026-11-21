@@ -1,9 +1,9 @@
 # TODO.md — remaining work
 
-## Now: user review of Modules 5 and 6
+## Now: user review of Module 7
 
-The user asked (2026-11-21) for the next two modules, then stop. Modules 5 and 6 are built; wait for
-review before Module 7.
+The user asked (2026-11-21) for the next module, then stop. Module 7 is built; wait for review before
+Module 8.
 
 ## Verification debt
 
@@ -28,9 +28,16 @@ review before Module 7.
 - [ ] Check whether a newer graphql-java fixes the subscription-root `@skip` gap and parses operation
       descriptions; update lectures 2.5 and 2.7 and the module README table if so.
 
+- [ ] Game 7b cards: re-check AniList's `UpdateUser` (19 args), `Media` (75 args), `Json` fields and the
+      GitHub counts (73 `databaseId`, 253 of 298 inputs with `clientMutationId`, 147 `Repository` fields).
+- [ ] graphql-inspector: move off 7.0.2 once a 7.0.x has been stable two weeks; recheck lab 7.6's two
+      tool disagreements (optional argument, deprecation) after any upgrade.
+- [ ] RFC stages in Module 7 (ObjectIdentification, SemanticNullability, #1163, #1231, #997) each term.
+- [ ] Lab 7.1's SDL-only experiment: the reference notes describe a good answer; no measured run.
+
 ## Next modules (in order)
 
-- [ ] M7–M18, capstone, per plan/syllabus.md
+- [ ] M8–M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 

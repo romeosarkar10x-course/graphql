@@ -1,0 +1,4 @@
+# Shelfie Android 3.2: the full member list.
+query ClubMembers($id: ID!) {
+  club(id: $id) { id name members(first: 20) { id name handle avatarUrl } }
+}

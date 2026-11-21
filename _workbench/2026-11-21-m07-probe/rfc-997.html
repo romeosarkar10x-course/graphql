@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Expand @deprecated to Objects | GraphQL RFC Tracker</title><meta name="description" content="Expand @deprecated to Objects. Added to WG agenda on 2025-06-26."/><link rel="canonical" href="https://rfcs.graphql.org/rfcs/997/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="/styles.css"/></head><body><div class="page-shell"><header class="site-header"><a class="brand" href="/"><span class="brand-mark">GraphQL</span> <span class="brand-copy">RFC Tracker</span></a><nav class="site-nav"><a href="/rfcs/">All RFCs</a><a href="/activity/">Activity</a><a href="https://github.com/graphql/graphql-spec">graphql-spec</a><a href="https://github.com/graphql/graphql-wg">graphql-wg</a></nav></header><main><section class="hero hero-compact"><p class="eyebrow">RFC 1 / Proposal</p><h1>Expand @deprecated to Objects</h1><div class="hero-meta"><div><span class="meta-label">Opened on</span><strong>2022-10-01</strong></div><div><span class="meta-label">Updated on</span><strong>2026-07-29</strong></div></div></section><section class="section-grid"><aside class="summary-card"><h2>Summary</h2><dl class="meta-grid"><dt>Identifier</dt><dd>#997</dd><dt>Stage</dt><dd>RFC 1 / Proposal</dd><dt>Champion</dt><dd><a href="https://github.com/fotoetienne">@fotoetienne</a></dd><dt>Updated</dt><dd>2026-07-29</dd></dl><ul class="link-list"><li><a href="https://github.com/graphql/graphql-spec/pull/997">Spec PR</a></li></ul></aside><article class="markdown-body"><h2>At a glance</h2>
+<ul>
+<li>Identifier: #997</li>
+<li>Stage: RFC 1 / Proposal</li>
+<li>Champion: <a href="https://github.com/fotoetienne">@fotoetienne</a></li>
+<li>Latest activity: Added to WG agenda on 2025-06-26</li>
+<li>Spec PR: <a href="https://github.com/graphql/graphql-spec/pull/997">https://github.com/graphql/graphql-spec/pull/997</a></li>
+</ul>
+<h2>Spec PR description</h2>
+<h1>Problem</h1>
+<p>Take as a motivating example:</p>
+<pre><code class="language-graphql">type Query {
+  animals: [Animal]
+}
+
+interface Animal {
+  name: String
+}
+
+type Dog implements Animal {
+  name: String
+}
+
+type Baiji implements Animal {
+  name: String
+}
+</code></pre>
+<p>The Baiji type corresponds to an Animal that is no longer known to exist, and the server will no longer return this type.
+We would like to delete the code for this type and eventually remove from the schema, but first clients must remove all references of this type from their queries. Currently, there is no good way to indicate to clients that they should no longer spread on this type in their queries.</p>
+<h1>Solution</h1>
+<p>Allow @deprecated on objects. Marking as deprecated indicates to clients that this type will no longer be returned from the server. This can indicate to client build tooling that references to this object should be removed from client queries.</p>
+<pre><code class="language-graphql">type Baiji implements Animal @deprecated {
+  name: String
+}
+</code></pre>
+<h2>Alternative Solutions</h2>
+<p>The most compelling use-case for deprecating types is when they are union members or interface implementations. A potential alternative would be to instead deprecate the membership/implementation instead of the type itself. The main challenge with this approach is with syntax, since it unclear how one would unambiguously annotate an interface implementation using the current <code>@deprecated</code> directive. Some possible alternatives:</p>
+<p><em>New directive location - @deprecated on UNION_MEMBER</em></p>
+<pre><code class="language-graphql">union Animal = Dog | Cat | Baiji @deprecated
+</code></pre>
+<p><em>New directive @deprecatedMembers on UNION</em></p>
+<pre><code class="language-graphql">union Animal @deprecatedMembers(members: [&quot;Baiji&quot;]) = Dog | Cat | Baiji
+</code></pre>
+<p><em>New directive @deprecatedImplementations on OBJECT</em></p>
+<pre><code class="language-graphql">type Baiji implements Node &amp; Animal @deprecatedImplementations(implementations: [&quot;Animal&quot;]) {
+  id: ID!
+  name: String
+}
+</code></pre>
+<p><em>New directive @deprecatedImplementations on INTERFACE</em></p>
+<pre><code class="language-graphql">interface Animal @deprecatedImplementations(implementations: [&quot;Baiji&quot;]) {
+  id: ID!
+  name: String
+}
+</code></pre><section class="detail-timeline"><h2>Timeline</h2><div class="activity-groups detail-timeline-groups"><section class="activity-month"><div class="activity-month-divider"><span>June 2025</span></div><ul class="detail-timeline-list"><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2025/06-Jun/26-wg-secondary-eu.md">WG agenda</a> on 2025-06-26</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>November 2024</span></div><ul class="detail-timeline-list"><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2024/11-Nov/07-wg-primary.md">WG agenda</a> on 2024-11-07</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>June 2023</span></div><ul class="detail-timeline-list"><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2023/06-Jun/01-wg-primary.md">WG agenda</a> on 2023-06-01</li><li>Mentioned in <a href="https://github.com/graphql/graphql-wg/blob/main/notes/2023/2023-06.md">WG notes</a> on 2023-06-01</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>November 2022</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/997">Advanced to RFC 1</a> on 2022-11-03 by leebyron</li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2022/11-Nov/wg-primary.md">WG agenda</a> on 2022-11-01</li><li>Mentioned in <a href="https://github.com/graphql/graphql-wg/blob/main/notes/2022/2022-11.md">WG notes</a> on 2022-11-01</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>October 2022</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/997">Top comment</a> edited on 2022-10-21 by fotoetienne</li><li>@fotoetienne committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/34e5723e54a66993747826843a25f8b5ae97d9ac">Add includeDeprecated argument to __type.possibleTypes</a>&quot; on 2022-10-21</li><li><a href="https://github.com/graphql/graphql-spec/pull/997">Spec PR</a> created on 2022-10-20 by fotoetienne</li><li><a href="https://github.com/graphql/graphql-spec/pull/997">Top comment</a> edited on 2022-10-20 by fotoetienne</li><li>@fotoetienne committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/29b2cf5f4699d6d10d24f81b622ce315c669a205">Expand @deprecated to Objects</a>&quot; on 2022-10-20</li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2022/10-Oct/wg-secondary-eu.md">WG agenda</a> on 2022-10-01</li></ul></section></div></section></article></section></main><footer class="site-footer"><p>Copyright © GraphQL Contributors</p></footer></div></body></html>

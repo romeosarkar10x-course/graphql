@@ -1,0 +1,2 @@
+type Query { a: String b(x: Int): Int e: E }
+enum E { X Y }

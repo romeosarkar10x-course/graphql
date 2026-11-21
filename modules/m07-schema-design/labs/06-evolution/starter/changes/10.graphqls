@@ -1,0 +1,50 @@
+# 10: add a required input field CreateReviewInput.language: String!
+type Query {
+  club(id: ID!): Club
+  books(first: Int = 10): [Book!]!
+  search(text: String!): [SearchResult!]!
+}
+
+type Mutation {
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String
+  currentBook: Book
+  members(first: Int = 10): [User!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  shelf(status: ShelfStatus): [Book!]!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  coverUrl: String
+  publishedYear: Int
+}
+
+enum ShelfStatus {
+  WANT_TO_READ
+  READING
+  FINISHED
+}
+
+union SearchResult = Book | Club
+
+input CreateReviewInput {
+  bookId: ID!
+  rating: Int!
+  body: String
+  language: String!
+}
+
+type CreateReviewPayload {
+  ok: Boolean!
+}

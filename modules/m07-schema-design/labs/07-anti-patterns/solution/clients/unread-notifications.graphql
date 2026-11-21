@@ -1,0 +1,11 @@
+query UnreadNotifications {
+  viewer {
+    notifications(status: UNREAD) {
+      __typename
+      id
+      createdAt
+      ... on MeetupNotification { meetup { id title startsAt } }
+      ... on ReviewNotification { review { id rating author { name } book { title } } }
+    }
+  }
+}

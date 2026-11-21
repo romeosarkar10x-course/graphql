@@ -87,3 +87,9 @@ in Docker.
   - Native images need GraalVM, which the course image lacks: `bin/course native` runs Maven in
     `graphql-course-native:1` (GraalVM CE 25.0.2 + Maven), and game 6b is rubric-graded.
   - Spring for GraphQL 2.1 passes 11 of the 25 HTTP audit checks; lectures say so instead of hiding it.
+- Module 7 (2026-11-21):
+  - One shared helper, `tools/design/Design.java` (`bin/course design`): lint rules, screen-shape check on
+    mock data, client validation, SchemaDiff, outage simulation. Labs are SDL plus single-file Java.
+  - graphql-inspector (Node.js) runs on the host via `bin/course inspector`; tests use SchemaDiff only.
+  - `onError` is simulated with graphql-java's `@experimental_disableErrorPropagation`.
+  - The evolution simulator is the mini-project (with a group variant) and holds the checkpoint's ADR.

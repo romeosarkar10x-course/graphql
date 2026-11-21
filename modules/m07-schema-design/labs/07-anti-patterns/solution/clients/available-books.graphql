@@ -1,0 +1,3 @@
+query AvailableBooks {
+  books(filter: { availability: IN_PRINT }) { id title authors { name } averageRating }
+}

@@ -1,0 +1,3 @@
+query UnreadNotifications {
+  getNotifications(user_id: 2, unread_only: true)
+}

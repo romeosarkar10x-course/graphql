@@ -1,0 +1,7 @@
+{
+  "title": "Anti-patterns: refactor a 180-line schema from the database, map bounded contexts",
+  "lecture": "7.7",
+  "kind": "lab",
+  "grading": "both",
+  "needs": []
+}
