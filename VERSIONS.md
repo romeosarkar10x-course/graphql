@@ -22,6 +22,11 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | GraphQL Voyager | 2.1.0 (jsDelivr) | — | `/voyager.html`, game 3c |
 | jspecify | 1.0.0 | — | mini-project 3 |
 | Testcontainers | 2.0.5 | — | |
+| PostgreSQL | 18.7 (`postgres:18.7-alpine`, course service) | — | Module 8 on. 19.0 was released 2026-11-19, two days before; move to it next term. Collation `en_US.utf8` (libc) |
+| PostgreSQL JDBC | 42.7.14 (Boot BOM; also in course-lib) | — | single-file SQL labs (8.2) |
+| jqwik | 1.10.2 | — | lab 8.4; runs on Boot 4.2's JUnit 6.1.3 platform with no extra config |
+| Lanterna | 3.1.5 | — | mini-project 8; 3.2.0-alpha1 skipped. `DefaultVirtualTerminal.readInput` holds the terminal lock while waiting, so the app uses `pollInput` |
+| Hibernate ORM / Spring Data JPA | 7.4.15.Final / 4.2.0 (Boot BOM) | — | Module 8 findings: OR-form keyset SQL, `cb.literal` inlined (`_workbench/2026-11-21-m08-probe/FINDINGS.md`) |
 | grpc-java / protobuf | 1.84.1 / 4.36.2 (Boot BOM) | — | protoc via `io.github.ascopes:protobuf-maven-plugin` 5.1.12 |
 | JUnit | 6.1.3 (Boot BOM) | — | |
 | Hurl | 8.1.0 | — | |

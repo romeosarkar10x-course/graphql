@@ -1,0 +1,9 @@
+{
+  "title": "Spring for GraphQL connections: Window, ScrollSubrange, opaque cursors, a page-size cap",
+  "lecture": "8.2",
+  "kind": "lab",
+  "grading": "auto",
+  "needs": [
+    "postgres"
+  ]
+}

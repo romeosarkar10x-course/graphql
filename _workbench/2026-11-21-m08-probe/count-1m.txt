@@ -1,0 +1,12 @@
+   ->  Gather (actual time=28.602..30.001 rows=3.00 loops=1)
+         ->  Partial Aggregate (actual time=27.099..27.099 rows=1.00 loops=3)
+               ->  Parallel Index Only Scan using book_pkey on book (actual time=0.032..17.728 rows=333333.33 loops=3)
+ Execution Time: 30.052 ms
+   ->  Bitmap Heap Scan on book (actual time=5.476..24.235 rows=20000.00 loops=1)
+         ->  Bitmap Index Scan on book_published_id_idx (actual time=3.711..3.711 rows=80000.00 loops=1)
+ Execution Time: 24.921 ms
+   ->  Bitmap Heap Scan on book (actual time=5.085..8.943 rows=6993.00 loops=1)
+         ->  Bitmap Index Scan on book_fts (actual time=4.524..4.524 rows=6993.00 loops=1)
+ Execution Time: 9.193 ms
+   ->  Index Scan using book_title_id_idx on book (actual time=75.493..75.659 rows=20.00 loops=1)
+ Execution Time: 75.677 ms

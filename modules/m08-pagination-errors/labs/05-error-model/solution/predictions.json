@@ -1,0 +1,124 @@
+{
+  "R1": {
+    "data": "absent",
+    "errorPaths": [
+      []
+    ]
+  },
+  "R2": {
+    "data": "absent",
+    "errorPaths": [
+      []
+    ]
+  },
+  "R3": {
+    "data": "absent",
+    "errorPaths": [
+      []
+    ]
+  },
+  "E1": {
+    "data": null,
+    "errorPaths": [
+      [
+        "hello"
+      ]
+    ]
+  },
+  "E2": {
+    "data": {
+      "club": null
+    },
+    "errorPaths": [
+      [
+        "club",
+        "owner"
+      ]
+    ]
+  },
+  "E3": {
+    "data": {
+      "club": null
+    },
+    "errorPaths": [
+      [
+        "club",
+        "members",
+        2,
+        "name"
+      ]
+    ]
+  },
+  "E4": {
+    "data": {
+      "club": {
+        "name": "Slow Burn Mysteries",
+        "currentBook": null
+      }
+    },
+    "errorPaths": [
+      [
+        "club",
+        "currentBook",
+        "title"
+      ]
+    ]
+  },
+  "E5": {
+    "data": {
+      "club": {
+        "name": "The Midnight Readers",
+        "currentBook": {
+          "title": "Piranesi",
+          "rating": null
+        }
+      }
+    },
+    "errorPaths": [
+      [
+        "club",
+        "currentBook",
+        "rating"
+      ]
+    ]
+  },
+  "E6": {
+    "data": {
+      "a": null,
+      "b": {
+        "name": "Slow Burn Mysteries"
+      }
+    },
+    "errorPaths": [
+      [
+        "a",
+        "owner"
+      ]
+    ]
+  },
+  "E7": {
+    "data": {
+      "club": {
+        "reviews": [
+          {
+            "id": "r1",
+            "body": "Loved it"
+          },
+          null,
+          {
+            "id": "r3",
+            "body": "Again!"
+          }
+        ]
+      }
+    },
+    "errorPaths": [
+      [
+        "club",
+        "reviews",
+        1,
+        "body"
+      ]
+    ]
+  }
+}

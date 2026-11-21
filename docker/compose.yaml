@@ -3,6 +3,8 @@
 #   toxiproxy    adds latency between you and shelfie-ref (Module 1.2): proxy on :8666, API on :8474
 #   storage      S3-compatible object storage for pre-signed cover uploads (Module 4.6): S3 API on :8333.
 #                SeaweedFS, because MinIO (the plan's choice) no longer publishes container images.
+#   postgres     PostgreSQL for Module 8 on (keyset paging, EXPLAIN ANALYZE, full-text search): :5432,
+#                database/user/password shelfie. Inside the image: postgres:5432.
 name: gqlcourse
 
 services:
@@ -31,6 +33,20 @@ services:
       - "8333:8333"
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:9333/cluster/status"]
+      interval: 2s
+      timeout: 2s
+      retries: 60
+
+  postgres:
+    image: postgres:18.7-alpine
+    environment:
+      POSTGRES_DB: shelfie
+      POSTGRES_USER: shelfie
+      POSTGRES_PASSWORD: shelfie
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "shelfie", "-d", "shelfie"]
       interval: 2s
       timeout: 2s
       retries: 60

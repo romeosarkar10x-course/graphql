@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Add Schema Coordinate to GraphQL Errors | GraphQL RFC Tracker</title><meta name="description" content="Add Schema Coordinate to GraphQL Errors. Spec PR created on 2025-10-28."/><link rel="canonical" href="https://rfcs.graphql.org/rfcs/1200/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="/styles.css"/></head><body><div class="page-shell"><header class="site-header"><a class="brand" href="/"><span class="brand-mark">GraphQL</span> <span class="brand-copy">RFC Tracker</span></a><nav class="site-nav"><a href="/rfcs/">All RFCs</a><a href="/activity/">Activity</a><a href="https://github.com/graphql/graphql-spec">graphql-spec</a><a href="https://github.com/graphql/graphql-wg">graphql-wg</a></nav></header><main><section class="hero hero-compact"><p class="eyebrow">RFC 0 / Strawman</p><h1>Add Schema Coordinate to GraphQL Errors</h1><div class="hero-meta"><div><span class="meta-label">Opened on</span><strong>2025-10-28</strong></div><div><span class="meta-label">Updated on</span><strong>2025-11-14</strong></div></div></section><section class="section-grid"><aside class="summary-card"><h2>Summary</h2><dl class="meta-grid"><dt>Identifier</dt><dd>#1200</dd><dt>Stage</dt><dd>RFC 0 / Strawman</dd><dt>Champion</dt><dd><a href="https://github.com/PascalSenn">@PascalSenn</a></dd><dt>Updated</dt><dd>2025-11-14</dd></dl><ul class="link-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1200">Spec PR</a></li></ul></aside><article class="markdown-body"><h2>At a glance</h2>
+<ul>
+<li>Identifier: #1200</li>
+<li>Stage: RFC 0 / Strawman</li>
+<li>Champion: <a href="https://github.com/PascalSenn">@PascalSenn</a></li>
+<li>Latest activity: Spec PR created on 2025-10-28</li>
+<li>Spec PR: <a href="https://github.com/graphql/graphql-spec/pull/1200">https://github.com/graphql/graphql-spec/pull/1200</a></li>
+</ul>
+<h2>Spec PR description</h2>
+<p>Add an optional <code>coordinate</code> field to GraphQL errors that contains the schema coordinate of the object field or field argument associated with the error, enabling direct identification of schema elements that caused runtime errors.</p>
+<h2>📜 Problem Statement</h2>
+<p>When a GraphQL error occurs, developers must perform multiple steps to identify which type system member caused the error:</p>
+<ol>
+<li>Parse the schema</li>
+<li>Parse the operation</li>
+<li>Traverse the operation based on the <code>path</code> field in the error</li>
+</ol>
+<p>This process is cumbersome and requires tooling to correlate runtime errors back to their schema definitions. While the <code>path</code> field identifies where in the response the error occurred, it doesn&#x27;t directly indicate which schema element is responsible for the error.</p>
+<p><strong>Example</strong></p>
+<p>Consider this error response:</p>
+<pre><code class="language-json">{
+  &quot;errors&quot;: [
+    {
+      &quot;message&quot;: &quot;Name for character with ID 1002 could not be fetched.&quot;,
+      &quot;locations&quot;: [{ &quot;line&quot;: 6, &quot;column&quot;: 7 }],
+      &quot;path&quot;: [&quot;hero&quot;, &quot;heroFriends&quot;, 1, &quot;name&quot;]
+    }
+  ]
+}
+</code></pre>
+<p>To determine that this error originated from the <code>Human.name</code> field in the schema, developers must:</p>
+<ul>
+<li>Load and parse the schema</li>
+<li>Parse the GraphQL operation</li>
+<li>Walk through the operation following the path <code>[&quot;hero&quot;, &quot;heroFriends&quot;, 1, &quot;name&quot;]</code></li>
+<li>Determine the types at each step to identify that <code>heroFriends</code> returns <code>[Friend]</code></li>
+<li>Conclude that the error is associated with <code>Human.name</code></li>
+</ul>
+<h2>💡 Proposed Solution</h2>
+<p>Add an optional <code>coordinate</code> field to GraphQL errors that directly references the object fiel or field argument where the error originated.</p>
+<h3>Example</h3>
+<pre><code class="language-json">{
+  &quot;errors&quot;: [
+    {
+      &quot;message&quot;: &quot;Name for character with ID 1002 could not be fetched.&quot;,
+      &quot;locations&quot;: [{ &quot;line&quot;: 6, &quot;column&quot;: 7 }],
+      &quot;path&quot;: [&quot;hero&quot;, &quot;heroFriends&quot;, 1, &quot;name&quot;],
+      &quot;coordinate&quot;: &quot;Human.name&quot;
+    }
+  ]
+}
+</code></pre>
+<p>In this example <code>coordinate</code> directly identifies <code>Human.name</code> in the schema as the source, without requiring any parsing or traversal</p>
+<ol>
+<li>
+<p><strong>Simplified Error Tracking</strong>: Developers can immediately identify which schema element caused an error without complex analysis.</p>
+</li>
+<li>
+<p><strong>Better Tooling Support</strong>: IDEs, monitoring systems, and debugging tools can directly link errors to schema definitions.</p>
+</li>
+</ol>
+<p>The <code>coordinate</code> field should be included when:</p>
+<ul>
+<li>An error originates from resolving a specific object field -&gt; object field coordinate</li>
+<li>An error originates from resolving a specific field argument -&gt; field argument coordinate</li>
+<li>An error originates from coercing a value of a input object -&gt; field argument of the field that the input object is passed to</li>
+</ul>
+<p>The <code>coordinate</code> field may be omitted when:</p>
+<ul>
+<li>The error is not associated with a specific schema element</li>
+<li>The server implementation cannot determine the appropriate coordinate</li>
+</ul><section class="detail-timeline"><h2>Timeline</h2><div class="activity-groups detail-timeline-groups"><section class="activity-month"><div class="activity-month-divider"><span>October 2025</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1200">Spec PR</a> created on 2025-10-28 by PascalSenn</li><li>@PascalSenn committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/04e2431a3efc18e3b50b5d0e158631ba7fe6c0b5">RFC: Adds `&quot;coordinate&quot;` to errors</a>&quot; on 2025-10-28</li><li><a href="https://github.com/graphql/graphql-spec/pull/1200">Advanced to RFC 0</a> on 2025-10-28 by benjie</li></ul></section></div></section></article></section></main><footer class="site-footer"><p>Copyright © GraphQL Contributors</p></footer></div></body></html>

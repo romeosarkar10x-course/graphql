@@ -25,3 +25,5 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-21-m06-check-starters.log` | `bin/course check --starters` after Module 6 |
 | `2026-11-21-m07-probe/` | Module 7: RFC pages and stages, graphql-java probe (error propagation off, SchemaDiff levels), graphql-inspector runs (`inspector-probe.txt`, `inspector-feed.txt`, `fifteen-changes.txt`, `jenga-deck.txt`), AniList introspection excerpts, Relay object identification spec, inspector `action.yml` |
 | `2026-11-21-m07-check-starters.log` | `bin/course check --starters` after Module 7 |
+| `2026-11-21-m08-probe/` | Module 8: `FINDINGS.md` (22 findings), PostgreSQL EXPLAIN runs (`bench.txt`, `deep.txt`, `orform.txt`, `count-1m.txt`, `offset-1m.txt`), Spring scroll probes (`scroll/`, `conn.txt`), Spring for GraphQL 2.1.0 sources excerpts (`sg-src/`), filter runs and the three property-test mutants (`mutants.txt`), error-model, onError and cancel probes, RFC pages and PR status (`rfcs/`), versions |
+| `2026-11-21-m08-check-starters.log` | `bin/course check --starters` after Module 8 |

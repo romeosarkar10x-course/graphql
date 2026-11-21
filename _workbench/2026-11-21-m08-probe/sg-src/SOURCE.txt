@@ -1,0 +1,1 @@
+Spring for GraphQL 2.1.0 sources: https://repo1.maven.org/maven2/org/springframework/graphql/spring-graphql/2.1.0/spring-graphql-2.1.0-sources.jar (excerpts in sg-src/)

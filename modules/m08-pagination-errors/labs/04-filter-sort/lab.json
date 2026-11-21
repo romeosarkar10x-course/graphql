@@ -1,0 +1,9 @@
+{
+  "title": "Filter inputs, sort enums, full-text search, and 1,000 random filters with jqwik",
+  "lecture": "8.3",
+  "kind": "lab",
+  "grading": "both",
+  "needs": [
+    "postgres"
+  ]
+}

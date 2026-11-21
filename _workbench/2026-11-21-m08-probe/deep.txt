@@ -1,0 +1,12 @@
+offset       0 | OFFSET | Execution Time: 0.022 ms | scan rows=20.00 | -
+offset       0 | ROW    | Execution Time: 0.032 ms | scan rows=20.00 | -
+offset       0 | OR     | Execution Time: 0.019 ms | scan rows=20.00 | Rows Removed by Filter: 1
+offset   10000 | OFFSET | Execution Time: 0.612 ms | scan rows=10020.00 | -
+offset   10000 | ROW    | Execution Time: 0.019 ms | scan rows=20.00 | -
+offset   10000 | OR     | Execution Time: 0.309 ms | scan rows=20.00 | Rows Removed by Filter: 10000
+offset  100000 | OFFSET | Execution Time: 5.859 ms | scan rows=100020.00 | -
+offset  100000 | ROW    | Execution Time: 0.040 ms | scan rows=20.00 | -
+offset  100000 | OR     | Execution Time: 2.836 ms | scan rows=20.00 | Rows Removed by Filter: 100000
+offset  900000 | OFFSET | Execution Time: 53.029 ms | scan rows=900020.00 | -
+offset  900000 | ROW    | Execution Time: 0.036 ms | scan rows=20.00 | -
+offset  900000 | OR     | Execution Time: 26.634 ms | scan rows=20.00 | Rows Removed by Filter: 900000

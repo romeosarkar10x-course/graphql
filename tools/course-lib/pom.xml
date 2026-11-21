@@ -35,6 +35,12 @@
       <artifactId>jackson-databind</artifactId>
     </dependency>
     <dependency>
+      <!-- JDBC for Module 8's single-file SQL labs (keyset paging, EXPLAIN ANALYZE) -->
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.7.14</version>
+    </dependency>
+    <dependency>
       <groupId>com.graphql-java</groupId>
       <artifactId>graphql-java</artifactId>
       <version>26.1</version>

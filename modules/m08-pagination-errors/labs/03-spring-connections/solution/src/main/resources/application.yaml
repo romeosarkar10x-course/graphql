@@ -1,0 +1,11 @@
+server.port: 4000
+spring:
+  datasource:
+    # Inside the course image. bin/course catalog m08_03 loads the 10,000 books.
+    url: jdbc:postgresql://postgres:5432/shelfie?currentSchema=m08_03
+    username: shelfie
+    password: shelfie
+  jpa:
+    show-sql: true          # the test reads the SQL from the log
+    open-in-view: false
+    hibernate.ddl-auto: none

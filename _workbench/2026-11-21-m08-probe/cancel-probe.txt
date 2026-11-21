@@ -1,0 +1,1 @@
+[a, cancelled=true] -> {errors=[{message=Execution has been asked to be cancelled, extensions={classification=ExecutionAborted}}]}

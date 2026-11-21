@@ -7,11 +7,13 @@
 #   REF       reference Shelfie, e.g. http://shelfie-ref:8080
 #   SLOW      the same server behind Toxiproxy, http://toxiproxy:8666
 #   TOXI_API  Toxiproxy admin API, http://toxiproxy:8474
+#   PGURL     PostgreSQL (Module 8 on), jdbc:postgresql://postgres:5432/shelfie, user/password shelfie
 #   LIB       jars for single-file Java programs (Jackson 3, graphql-java 26.1, JUnit console)
 
 export REF="${REF:-http://shelfie-ref:8080}"
 export SLOW="${SLOW:-http://toxiproxy:8666}"
 export TOXI_API="${TOXI_API:-http://toxiproxy:8474}"
+export PGURL="${PGURL:-jdbc:postgresql://postgres:5432/shelfie}"
 export LIB="${LIB:-/course/.cache/course-lib}"
 export SHELFIE_URL="${SHELFIE_URL:-$REF}"
 

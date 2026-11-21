@@ -1,0 +1,26 @@
+type Query {
+  "Newest first (addedAt, then id, descending). page counts from 0; size is 1 to 50."
+  books(page: Int = 0, size: Int = 20): BookPage!
+}
+
+type Mutation {
+  "Adds a book now, so it lands at the top of page 0."
+  addBook(title: String!): Book!
+  "true when a book was deleted."
+  deleteBook(id: ID!): Boolean!
+}
+
+type BookPage {
+  items: [Book!]!
+  page: Int!
+  size: Int!
+  totalCount: Int!
+  totalPages: Int!
+  hasNextPage: Boolean!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  addedAt: String!
+}

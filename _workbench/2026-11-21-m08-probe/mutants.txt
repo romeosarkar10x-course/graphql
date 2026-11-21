@@ -1,0 +1,75 @@
+== tiebreak
+tries = 1000                  | # of calls to property
+checks = 1000                 | # of not rejected calls
+tries = 1000                  | # of calls to property
+checks = 320                  | # of not rejected calls
+tries = 2                     | # of calls to property
+checks = 2                    | # of not rejected calls
+Shrunk Sample (4 steps)
+Original Sample
+[ERROR] Tests run: 3, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 3.207 s <<< FAILURE! -- in dev.shelfie.filters.FilterPropertiesTest
+	at dev.shelfie.filters.FilterPropertiesTest.theFirstNAreTheModelsFirstN(FilterPropertiesTest.java:72)
+[ERROR]   FilterPropertiesTest.theFirstNAreTheModelsFirstN:72 
+[ERROR] Tests run: 3, Failures: 1, Errors: 0, Skipped: 0
+== emptygenres
+tries = 3                     | # of calls to property
+checks = 3                    | # of not rejected calls
+Shrunk Sample (7 steps)
+Original Sample
+tries = 1000                  | # of calls to property
+checks = 290                  | # of not rejected calls
+tries = 22                    | # of calls to property
+checks = 22                   | # of not rejected calls
+Shrunk Sample (9 steps)
+Original Sample
+[ERROR] Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 2.536 s <<< FAILURE! -- in dev.shelfie.filters.FilterPropertiesTest
+	at dev.shelfie.filters.FilterPropertiesTest.countIsEveryMatch(FilterPropertiesTest.java:77)
+	at dev.shelfie.filters.FilterPropertiesTest.theFirstNAreTheModelsFirstN(FilterPropertiesTest.java:72)
+[ERROR]   FilterPropertiesTest.countIsEveryMatch:77 
+[ERROR]   FilterPropertiesTest.theFirstNAreTheModelsFirstN:72 
+[ERROR] Tests run: 3, Failures: 2, Errors: 0, Skipped: 0
+== exclusiveto
+tries = 9                     | # of calls to property
+checks = 9                    | # of not rejected calls
+Shrunk Sample (3 steps)
+Original Sample
+tries = 1000                  | # of calls to property
+checks = 311                  | # of not rejected calls
+tries = 13                    | # of calls to property
+checks = 13                   | # of not rejected calls
+Shrunk Sample (6 steps)
+Original Sample
+[ERROR] Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 2.538 s <<< FAILURE! -- in dev.shelfie.filters.FilterPropertiesTest
+	at dev.shelfie.filters.FilterPropertiesTest.countIsEveryMatch(FilterPropertiesTest.java:77)
+	at dev.shelfie.filters.FilterPropertiesTest.theFirstNAreTheModelsFirstN(FilterPropertiesTest.java:72)
+[ERROR]   FilterPropertiesTest.countIsEveryMatch:77 
+[ERROR]   FilterPropertiesTest.theFirstNAreTheModelsFirstN:72 
+[ERROR] Tests run: 3, Failures: 2, Errors: 0, Skipped: 0
+== tiebreak
+Shrunk Sample (4 steps)
+-----------------------
+  f:
+    BookFilter[genres=null, publishedFrom=null, publishedTo=null, minRating=null, author=null, search=null]
+  o: BookOrder[field=TITLE, direction=DESC]
+== emptygenres
+Shrunk Sample (7 steps)
+-----------------------
+  f:
+    BookFilter[genres=[], publishedFrom=null, publishedTo=null, minRating=null, author=null, search=null]
+
+Shrunk Sample (9 steps)
+-----------------------
+  f:
+    BookFilter[genres=[], publishedFrom=null, publishedTo=null, minRating=null, author=null, search=null]
+  o: BookOrder[field=TITLE, direction=ASC]
+== exclusiveto
+Shrunk Sample (3 steps)
+-----------------------
+  f:
+    BookFilter[genres=null, publishedFrom=1890, publishedTo=1900, minRating=null, author=null, search=null]
+
+Shrunk Sample (6 steps)
+-----------------------
+  f:
+    BookFilter[genres=null, publishedFrom=null, publishedTo=1900, minRating=null, author=null, search=null]
+  o: BookOrder[field=TITLE, direction=ASC]

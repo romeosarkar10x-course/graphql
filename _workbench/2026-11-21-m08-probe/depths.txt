@@ -1,0 +1,20 @@
+R1  { club(id: "c1") { name 
+    {"errors":[{"message":"Invalid syntax with offending token '<EOF>' at line 1 column 25","locations":[{"line":1,"column":25}],"extensions":{"classification":"InvalidSyntax"}}]}
+R2  { club(id: "c1") { name founder } }
+    {"errors":[{"message":"Validation error (FieldUndefined@[club/founder]) : Field 'founder' in type 'Club' is undefined","locations":[{"line":1,"column":25}],"extensions":{"classification":"ValidationError"}}]}
+R3  query Club($id: ID!) { club(id: $id) { name } }
+    {"errors":[{"message":"Variable 'id' has an invalid value: Variable 'id' has coerced Null value for NonNull type 'ID!'","locations":[{"line":1,"column":12}],"extensions":{"classification":"ValidationError"}}]}
+E1  { hello club(id: "c1") { name } }
+    {"errors":[{"message":"Exception while fetching data (/hello) : greeting service down","locations":[{"line":1,"column":3}],"path":["hello"],"extensions":{"classification":"DataFetchingException"}}],"data":null}
+E2  { club(id: "c1") { name owner { name } } }
+    {"errors":[{"message":"Exception while fetching data (/club/owner) : users service down","locations":[{"line":1,"column":25}],"path":["club","owner"],"extensions":{"classification":"DataFetchingException"}}],"data":{"club":null}}
+E3  { club(id: "c1") { name members { id name } } }
+    {"errors":[{"message":"Exception while fetching data (/club/members[2]/name) : profile u3 unreadable","locations":[{"line":1,"column":38}],"path":["club","members",2,"name"],"extensions":{"classification":"DataFetchingException"}}],"data":{"club":null}}
+E4  { club(id: "c2") { name currentBook { title rating } } }
+    {"errors":[{"message":"Exception while fetching data (/club/currentBook/title) : title b2 missing","locations":[{"line":1,"column":39}],"path":["club","currentBook","title"],"extensions":{"classification":"DataFetchingException"}}],"data":{"club":{"name":"Slow Burn Mysteries","currentBook":null}}}
+E5  { club(id: "c1") { name currentBook { title rating } } }
+    {"errors":[{"message":"Exception while fetching data (/club/currentBook/rating) : ratings service down","locations":[{"line":1,"column":45}],"path":["club","currentBook","rating"],"extensions":{"classification":"DataFetchingException"}}],"data":{"club":{"name":"The Midnight Readers","currentBook":{"title":"Piranesi","rating":null}}}}
+E6  { a: club(id: "c1") { owner { name } } b: club(id: "c2") { name } }
+    {"errors":[{"message":"Exception while fetching data (/a/owner) : users service down","locations":[{"line":1,"column":23}],"path":["a","owner"],"extensions":{"classification":"DataFetchingException"}}],"data":{"a":null,"b":{"name":"Slow Burn Mysteries"}}}
+E7  { club(id: "c1") { reviews { id body } } }
+    {"errors":[{"message":"Exception while fetching data (/club/reviews[1]/body) : review r2 corrupt","locations":[{"line":1,"column":33}],"path":["club","reviews",1,"body"],"extensions":{"classification":"DataFetchingException"}}],"data":{"club":{"reviews":[{"id":"r1","body":"Loved it"},null,{"id":"r3","body":"Again!"}]}}}

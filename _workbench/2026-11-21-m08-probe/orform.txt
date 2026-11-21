@@ -1,0 +1,48 @@
+== select id from book where published > 2019 or published = 2019 and id > 500000 order by published, id limit 20
+  Limit (actual time=29.365..29.368 rows=20.00 loops=1)
+    Buffers: shared hit=3666
+    ->  Index Only Scan using book_pub_id on book (actual time=29.364..29.365 rows=20.00 loops=1)
+          Filter: ((published > 2019) OR ((published = 2019) AND (id > 500000)))
+          Rows Removed by Filter: 956000
+          Heap Fetches: 0
+          Index Searches: 1
+          Buffers: shared hit=3666
+  Planning:
+    Buffers: shared hit=105
+  Planning Time: 0.352 ms
+  Execution Time: 29.389 ms
+== select id from book where (published, id) > (2019, 500000) order by published, id limit 20
+  Limit (actual time=0.010..0.011 rows=20.00 loops=1)
+    Buffers: shared hit=4
+    ->  Index Only Scan using book_pub_id on book (actual time=0.009..0.009 rows=20.00 loops=1)
+          Index Cond: (ROW(published, id) > ROW(2019, 500000))
+          Heap Fetches: 0
+          Index Searches: 1
+          Buffers: shared hit=4
+  Planning Time: 0.061 ms
+  Execution Time: 0.040 ms
+== select id from book where published > 1950 or published = 1950 and id > 50000 order by published, id limit 20
+  Limit (actual time=11.837..11.840 rows=20.00 loops=1)
+    Buffers: shared hit=1538
+    ->  Index Only Scan using book_pub_id on book (actual time=11.837..11.838 rows=20.00 loops=1)
+          Filter: ((published > 1950) OR ((published = 1950) AND (id > 50000)))
+          Rows Removed by Filter: 400400
+          Heap Fetches: 0
+          Index Searches: 1
+          Buffers: shared hit=1538
+  Planning Time: 0.051 ms
+  Execution Time: 11.858 ms
+== select id from book where published >= 2019 and (published > 2019 or published = 2019 and id > 500000) order by published, id limit 20
+  Limit (actual time=0.164..0.166 rows=20.00 loops=1)
+    Buffers: shared hit=18 read=1
+    ->  Index Only Scan using book_pub_id on book (actual time=0.163..0.164 rows=20.00 loops=1)
+          Index Cond: (published >= 2019)
+          Filter: ((published > 2019) OR ((published = 2019) AND (id > 500000)))
+          Rows Removed by Filter: 4000
+          Heap Fetches: 0
+          Index Searches: 1
+          Buffers: shared hit=18 read=1
+  Planning:
+    Buffers: shared hit=13
+  Planning Time: 0.088 ms
+  Execution Time: 0.177 ms

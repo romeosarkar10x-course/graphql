@@ -1,0 +1,4 @@
+server.port: 4000
+spring:
+  datasource: {url: "jdbc:postgresql://postgres:5432/shelfie?currentSchema=m08_probe", username: shelfie, password: shelfie}
+  jpa: {show-sql: true, hibernate.ddl-auto: none, open-in-view: false}

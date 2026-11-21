@@ -1,0 +1,16 @@
+[125,250,375,500,625,750,875,1000,1125,1250,1375,1500,1625,1750,1875,2000,2125,2250,2375,2500]
+{"hasNextPage":true,"hasPreviousPage":false}
+{"data":{"books":{"edges":[{"cursor":"djE6MTkwMDoxMjU=","node":{"id":"125","published":1900}},{"cursor":"djE6MTkwMDoyNTA=","node":{"id":"250","published":1900}},{"cursor":"djE6MTkwMDozNzU=","node":{"id":"375","published":1900}}],"pageInfo":{"endCursor":"djE6MTkwMDozNzU="}}}}
+{"data":{"books":{"edges":[{"node":{"id":"500","published":1900}},{"node":{"id":"625","published":1900}},{"node":{"id":"750","published":1900}},{"node":{"id":"875","published":1900}}],"pageInfo":{"hasNextPage":true,"hasPreviousPage":false,"startCursor":"djE6MTkwMDo1MDA="}}}}
+{"data":{"books":{"edges":[{"node":{"id":"125"}},{"node":{"id":"250"}}],"pageInfo":{"hasNextPage":false,"hasPreviousPage":false}}}}
+{"data":{"books":{"edges":[{"node":{"id":"9652","published":2024}},{"node":{"id":"9777","published":2024}},{"node":{"id":"9902","published":2024}}],"pageInfo":{"hasNextPage":false,"hasPreviousPage":true}}}}
+{"errors":[{"message":"first/last must be between 0 and 100, got 101","locations":[{"line":1,"column":3}],"path":["books"],"extensions":{"classification":"BAD_REQUEST"}}],"data":{"books":{"pageInfo":{"hasNextPage":false}}}}
+{"data":{"books":{"pageInfo":{"hasNextPage":true}}}}
+{"errors":[{"message":"Not a books cursor","locations":[{"line":1,"column":3}],"path":["books"],"extensions":{"classification":"BAD_REQUEST"}}],"data":{"books":{"pageInfo":{"hasNextPage":false}}}}
+{"errors":[{"message":"Not a books cursor","locations":[{"line":1,"column":3}],"path":["books"],"extensions":{"classification":"BAD_REQUEST"}}],"data":{"books":{"pageInfo":{"hasNextPage":false}}}}
+{"data":{"books":{"edges":[],"pageInfo":{"hasNextPage":false}}}}
+10
+      1 2026-11-21T08:48:20.733Z  INFO 7 --- [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.15.Final
+      1 2026-11-21T08:48:21.247Z  INFO 7 --- [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+      6 Hibernate: select b1_0.id,b1_0.author,b1_0.published,b1_0.title from book b1_0 where (b1_0.published,b1_0.id)>(?,?) order by b1_0.published,b1_0.id fetch first ? rows only
+      2 Hibernate: select b1_0.id,b1_0.author,b1_0.published,b1_0.title from book b1_0 where (b1_0.published,b1_0.id)<(?,?) order by b1_0.published desc,b1_0.id desc fetch first ? rows only

@@ -27,7 +27,7 @@ bin/course ref up
 ```
 
 Open http://localhost:8080/graphiql and run `{ hello }`. Ports used: 8080, 9090 (gRPC), 8474 and 8666
-(Toxiproxy). `bin/course ref down` stops them.
+(Toxiproxy), 8333 (S3 storage, Module 4) and 5432 (PostgreSQL, Module 8). `bin/course ref down` stops them.
 
 ## 4. Optional: a GitHub token
 

@@ -1,0 +1,58 @@
+type Query {
+  """
+  Books matching every field of the filter (null fields are ignored), sorted by orderBy, then id.
+  first is 0 to 100.
+  """
+  books(filter: BookFilter, orderBy: BookOrder = {field: TITLE, direction: ASC}, first: Int = 20): BookList!
+}
+
+"""
+Each field narrows the result. A null field means "don't filter on this"; an empty genres list
+matches nothing.
+"""
+input BookFilter {
+  "Any of these genres."
+  genres: [Genre!]
+  "Published in or after this year."
+  publishedFrom: Int
+  "Published in or before this year. A range with from > to is an error."
+  publishedTo: Int
+  "Rating at least this (1.0 to 5.0)."
+  minRating: Float
+  "This exact author name."
+  author: String
+  "Full-text search over title and blurb, web-search syntax: words, \"quoted phrases\", -excluded, or."
+  search: String
+}
+
+input BookOrder {
+  field: BookOrderField!
+  direction: Direction! = ASC
+}
+
+enum BookOrderField {
+  TITLE
+  PUBLISHED
+  RATING
+  "Only with filter.search; always most relevant first, whatever the direction."
+  RELEVANCE
+}
+
+enum Direction { ASC DESC }
+
+enum Genre { FANTASY MYSTERY SCIENCE_FICTION ROMANCE HISTORY POETRY THRILLER MEMOIR }
+
+type BookList {
+  items: [Book!]!
+  "Every match, not just the first `first`."
+  totalCount: Int!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  author: String!
+  genre: Genre!
+  published: Int!
+  rating: Float!
+}

@@ -1,0 +1,22 @@
+# Lab 8.6: fields whose failures are part of the error contract (see error-contract.md).
+
+extend type Query {
+  "The signed-in user's clubs. UNAUTHENTICATED without X-Shelfie-User."
+  myClubs: [Club!]!
+}
+
+extend type Mutation {
+  """
+  Join a public club as the signed-in user. UNAUTHENTICATED without a viewer; NOT_FOUND when there is
+  no such club, or it is private (the same answer, so ids of private clubs don't leak); CONFLICT when
+  already a member.
+  """
+  joinClub(clubId: ID!): Club!
+  "Delete your own review. UNAUTHENTICATED, NOT_FOUND, or FORBIDDEN when it is someone else's."
+  deleteReview(id: ID!): Boolean!
+}
+
+extend type Book {
+  "Signed URL of the cover image. The object store is down in this lab, so this always fails."
+  coverUrl: String
+}

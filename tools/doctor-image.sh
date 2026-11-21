@@ -22,6 +22,8 @@ if ref_up; then ok "reference server at $REF"
 else warn "reference server not running" "bin/course ref up   (needed from Module 0.1)"; fi
 if curl -fsS -o /dev/null -m 3 "$TOXI_API/proxies/shelfie" 2>/dev/null; then ok "toxiproxy route shelfie -> :8666"
 else warn "toxiproxy route missing" "bin/course ref up   (needed in Module 1.2)"; fi
+if (exec 3<>/dev/tcp/postgres/5432) 2>/dev/null; then ok "PostgreSQL at postgres:5432"
+else warn "PostgreSQL not running" "bin/course ref up   (needed from Module 8)"; fi
 if curl -fsS -o /dev/null -m 6 -X POST -H 'Content-Type: application/json' -d '{"query":"{__typename}"}' \
      https://countries.trevorblades.com/graphql 2>/dev/null; then ok "internet: public GraphQL APIs reachable"
 else warn "public GraphQL APIs unreachable" "Module 0.3 needs internet; everything else works offline"; fi

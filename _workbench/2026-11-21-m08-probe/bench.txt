@@ -1,0 +1,64 @@
+load 2284 ms
+== select id, title from book order by id limit 20 offset 0
+  Limit (actual time=0.009..0.011 rows=20.00 loops=1)
+    Buffers: shared hit=4
+    ->  Index Scan using book_pkey on book (actual time=0.008..0.009 rows=20.00 loops=1)
+          Index Searches: 1
+          Buffers: shared hit=4
+  Planning:
+    Buffers: shared hit=26 read=4
+  Planning Time: 0.131 ms
+  Execution Time: 0.021 ms
+== select id, title from book order by id limit 20 offset 900000
+  Limit (actual time=65.956..65.958 rows=20.00 loops=1)
+    Buffers: shared hit=8195
+    ->  Index Scan using book_pkey on book (actual time=0.008..49.067 rows=900020.00 loops=1)
+          Index Searches: 1
+          Buffers: shared hit=8195
+  Planning Time: 0.039 ms
+  Execution Time: 65.977 ms
+== select id, title from book where id > 900000 order by id limit 20
+  Limit (actual time=0.016..0.018 rows=20.00 loops=1)
+    Buffers: shared hit=7
+    ->  Index Scan using book_pkey on book (actual time=0.015..0.016 rows=20.00 loops=1)
+          Index Cond: (id > 900000)
+          Index Searches: 1
+          Buffers: shared hit=7
+  Planning:
+    Buffers: shared hit=6
+  Planning Time: 0.070 ms
+  Execution Time: 0.027 ms
+== select id from book order by published, id limit 20 offset 900000
+  Limit (actual time=192.564..192.569 rows=20.00 loops=1)
+    Buffers: shared hit=716583 read=3451
+    ->  Index Only Scan using book_pub_id on book (actual time=0.026..174.650 rows=900020.00 loops=1)
+          Heap Fetches: 900020
+          Index Searches: 1
+          Buffers: shared hit=716583 read=3451
+  Planning Time: 0.023 ms
+  Execution Time: 192.583 ms
+== select id from book where (published, id) > (2019, 500000) order by published, id limit 20
+  Limit (actual time=0.014..0.020 rows=20.00 loops=1)
+    Buffers: shared hit=17 read=2
+    ->  Index Only Scan using book_pub_id on book (actual time=0.014..0.018 rows=20.00 loops=1)
+          Index Cond: (ROW(published, id) > ROW(2019, 500000))
+          Heap Fetches: 20
+          Index Searches: 1
+          Buffers: shared hit=17 read=2
+  Planning Time: 0.069 ms
+  Execution Time: 0.045 ms
+== select count(*) from book
+  Finalize Aggregate (actual time=19.549..21.193 rows=1.00 loops=1)
+    Buffers: shared hit=6370
+    ->  Gather (actual time=19.489..21.175 rows=3.00 loops=1)
+          Workers Planned: 2
+          Workers Launched: 2
+          Buffers: shared hit=6370
+          ->  Partial Aggregate (actual time=17.938..17.938 rows=1.00 loops=3)
+                Buffers: shared hit=6370
+                ->  Parallel Seq Scan on book (actual time=0.006..10.301 rows=333333.33 loops=3)
+                      Buffers: shared hit=6370
+  Planning:
+    Buffers: shared hit=4 read=2
+  Planning Time: 0.046 ms
+  Execution Time: 21.216 ms

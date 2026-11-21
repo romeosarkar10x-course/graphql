@@ -1,0 +1,4 @@
+#1163 Error behaviors (including `onError: "NULL"`) | state=open merged=null updated=2026-10-05T20:19:39Z labels=💡 Proposal (RFC 1)
+#1184 Sibling errors should not be added after propagation | state=open merged=null updated=2026-09-17T20:15:28Z labels=📄 Draft (RFC 2),🚀 Next Stage?
+#1073 Be strict about error paths format | state=closed merged=2024-04-04T17:43:44Z updated=2024-04-04T17:43:44Z labels=🏁 Accepted (RFC 3)
+#1200 RFC: Add Schema Coordinate to GraphQL Errors | state=open merged=null updated=2025-11-14T10:20:17Z labels=💭 Strawman (RFC 0),🚀 Next Stage?

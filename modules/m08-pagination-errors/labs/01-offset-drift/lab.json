@@ -1,0 +1,9 @@
+{
+  "title": "Offset paging with Pageable, and what happens when the list moves",
+  "lecture": "8.1",
+  "kind": "lab",
+  "grading": "both",
+  "needs": [
+    "postgres"
+  ]
+}

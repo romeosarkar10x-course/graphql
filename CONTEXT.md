@@ -93,3 +93,13 @@ in Docker.
   - graphql-inspector (Node.js) runs on the host via `bin/course inspector`; tests use SchemaDiff only.
   - `onError` is simulated with graphql-java's `@experimental_disableErrorPropagation`.
   - The evolution simulator is the mini-project (with a group variant) and holds the checkpoint's ADR.
+- Module 8 (2026-11-21), probes in `_workbench/2026-11-21-m08-probe/` (`FINDINGS.md` lists 22 findings):
+  - PostgreSQL 18.7 is a course service (`docker/compose.yaml`, started by `bin/course ref up`), not
+    Testcontainers: the course container has no Docker socket. `needs: ["postgres"]` in lab.json.
+  - `bin/course catalog <schema> [rows]` (`contract/Catalog.java`) loads a deterministic catalogue; each
+    lab owns a schema (`m08_01`...) and its test reloads it, so runs are independent.
+  - 8.2 is two labs (SQL keyset on 1,000,000 rows, then Spring connections); 8.3 uses Specifications, not jOOQ.
+  - 8.7's onError prototype: the experimental directive added to the parsed document (NULL) and
+    `ExecutionInput.cancel()` (HALT); a custom execution strategy was probed and propagates partly.
+  - Spring's 400/200 statuses vs the September 2026 edition's 422/294 SHOULDs are recorded in the
+    error contract, not changed.

@@ -1,9 +1,8 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 7
+## Now: user review of Module 8
 
-The user asked (2026-11-21) for the next module, then stop. Module 7 is built; wait for review before
-Module 8.
+The user said "continue" (2026-11-21) after Module 7; Module 8 is built. Wait for review before Module 9.
 
 ## Verification debt
 
@@ -34,12 +33,19 @@ Module 8.
       tool disagreements (optional argument, deprecation) after any upgrade.
 - [ ] RFC stages in Module 7 (ObjectIdentification, SemanticNullability, #1163, #1231, #997) each term.
 - [ ] Lab 7.1's SDL-only experiment: the reference notes describe a good answer; no measured run.
+- [ ] PostgreSQL 19.0 (released 2026-11-19): move the course service off 18.7 next term; re-run lab 8.2's
+      plans (the OR-form filter vs row-value seek) on it.
+- [ ] Re-check Spring Data JPA's keyset scroll SQL (OR form, 4.2.0) and Spring for GraphQL's cursor
+      strategy bean condition and status codes (400/200) each release; update lectures 8.2 and 8.5.
+- [ ] RFC stages in Module 8 (#1163 RFC 1, #1183 RFC 3, #1184 RFC 2, #1073 RFC 3, #1200 RFC 0) each term.
+- [ ] Mini-project 8 and game 8a time-based checks (bot every 20/30 ms) were green on one machine;
+      watch for flakiness on slow machines.
 
 ## Next modules (in order)
 
-- [ ] M8–M18, capstone, per plan/syllabus.md
+- [ ] M9–M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 
-- [ ] PostgreSQL + Testcontainers in compose from Module 6/9
+- [ ] Testcontainers needs a Docker socket in the course container (PostgreSQL itself is a course service since Module 8)
 - [ ] A per-module Shelfie checkpoint repo layout once learners build their own server (Module 5)

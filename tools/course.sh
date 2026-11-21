@@ -39,6 +39,8 @@ needs_check() {
       ref) ref_up || { echo "  needs the reference server: run bin/course ref up" >&2; return 1; } ;;
       toxiproxy) curl -fsS -o /dev/null "$TOXI_API/proxies/shelfie" 2>/dev/null \
                    || { echo "  needs Toxiproxy: run bin/course ref up" >&2; return 1; } ;;
+      postgres) (exec 3<>/dev/tcp/postgres/5432) 2>/dev/null \
+                  || { echo "  needs PostgreSQL: run bin/course ref up" >&2; return 1; } ;;
       internet) curl -fsS -o /dev/null -m 5 https://countries.trevorblades.com/graphql -X POST \
                   -H 'Content-Type: application/json' -d '{"query":"{__typename}"}' 2>/dev/null \
                   || { echo "  needs internet access to public GraphQL APIs" >&2; return 1; } ;;
@@ -164,6 +166,10 @@ EOF
   design)
     [[ $# -ge 1 ]] || set -- help
     cd "$CALLER"; exec java -cp "$(lib_cp)" /course/tools/design/Design.java "$@" ;;
+
+  catalog)   # Module 8's deterministic book catalogue in PostgreSQL
+    [[ $# -ge 1 ]] || die "usage: bin/course catalog <schema> [rows]   (default 10000 rows)"
+    exec java -cp "$(lib_cp)" /course/modules/m08-pagination-errors/contract/Catalog.java "$@" ;;
 
   doctor) exec tools/doctor-image.sh ;;
   *) usage ;;

@@ -1,0 +1,7 @@
+{
+  "title": "Partial results on purpose: DataFetcherResult with data, errors and localContext",
+  "lecture": "8.6",
+  "kind": "lab",
+  "grading": "auto",
+  "needs": []
+}

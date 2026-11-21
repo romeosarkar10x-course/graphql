@@ -15,6 +15,7 @@
 #   bin/course java <File.java> [args]    run a single-file Java program with the same class path
 #   bin/course gql validate|operations|schema-lines|coordinates|stats ...   document and schema helpers (tools/gql/Gql.java)
 #   bin/course design lint|shape|clients|diff|outage ...   schema-design helpers, Module 7 (tools/design/Design.java)
+#   bin/course catalog <schema> [rows]    Module 8: load the deterministic book catalogue into PostgreSQL
 #   bin/course shell [-c 'cmd']           bash inside the course image, repo at /course
 #   bin/course native <mvn args>          mvn inside a GraalVM CE 25 image, for native builds (game 6b)
 #   bin/course inspector <args>           graphql-inspector 7.0.2 (Node.js, own image), e.g. diff old.graphql new.graphql
