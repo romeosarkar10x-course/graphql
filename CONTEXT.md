@@ -125,3 +125,13 @@ in Docker.
   - Scanners run in their own image (`bin/course seckit`), sharing the network namespace of the newest
     course container; the lab test re-implements graphql-cop's HIGH checks in Hurl. InQL, DVGA and ZAP are
     described, not run.
+- Module 11 (2026-11-21), probes in `_workbench/2026-11-21-m11-probe/` (`FINDINGS.md`, 20 findings):
+  - Kafka 4.4.0 is a course service (one KRaft node); PostgreSQL runs with `wal_level=logical` for Debezium.
+  - Replicas run inside one course container on :4001-4003 behind `contract/Balancer.java` (a TCP
+    round-robin balancer with a drop switch), not nginx; the same tool simulates network drops in lab 11.2.
+  - Lab 11.5 uses Debezium's embedded engine in the server, not Kafka Connect.
+  - Lab 11.6 serves graphql-java 26.1's own (earlier-draft) incremental payloads over a hand-written
+    `multipart/mixed` route: graphql-java cannot produce RFC 1110's initial `pending`, has no `@stream`, and
+    Spring for GraphQL 2.1 has no incremental transport. "First paint" is time to first byte.
+  - The mini-project and the two games are graded by scripted runs; group variants use terminal clients and
+    `COURSE_PUBLISH=<port>` to share a server.

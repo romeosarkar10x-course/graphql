@@ -1,0 +1,85 @@
+== resolver: ticks(n:5, failAt:3) with SubscriptionExceptionResolverAdapter
+  137 ms  {"id":null,"payload":{},"type":"connection_ack"}
+  269 ms  {"id":"1","payload":{"data":{"ticks":1}},"type":"next"}
+  367 ms  {"id":"1","payload":{"data":{"ticks":2}},"type":"next"}
+  474 ms  {"id":"1","payload":[{"message":"source failed: source stream broke at 3","locations":[],"extensions":{"code":"SOURCE_FAILED","classification":"DataFetchingException"}}],"type":"error"}
+== keep-alive: idle subscription, 5 s (WS keep-alive 2s)
+   96 ms  {"id":null,"payload":{},"type":"connection_ack"}
+ 2097 ms  {"id":null,"payload":{},"type":"ping"}
+ 4097 ms  {"id":null,"payload":{},"type":"ping"}
+(timeout)
+== cleanup after client abort
+{"emitted":0,"sinkSubscribers":0,"cancelled":1,"active":0,"heapUsedMb":33}
+== SSE GET with keep-alive 2s, 5 s idle
+:$
+$
+:$
+$
+
+{"emitted":0,"sinkSubscribers":1,"cancelled":1,"active":1,"heapUsedMb":35}
+== flood 10000/s for 8 s, mode=buffer, slow reader 10 frames/s
+t=1s received=10 last={"id":"1","payload":{"data":{"flood":10}},"type":"next"}
+  server t=2s {"emitted":16340,"sinkSubscribers":1,"cancelled":1,"active":2,"heapUsedMb":29} rss=379MB
+t=2s received=20 last={"id":"1","payload":{"data":{"flood":20}},"type":"next"}
+t=3s received=30 last={"id":"1","payload":{"data":{"flood":30}},"type":"next"}
+  server t=4s {"emitted":36410,"sinkSubscribers":0,"cancelled":2,"active":1,"heapUsedMb":40} rss=380MB
+t=4s received=40 last={"id":"1","payload":{"data":{"flood":40}},"type":"next"}
+t=5s received=50 last={"id":"1","payload":{"data":{"flood":50}},"type":"next"}
+  server t=6s {"emitted":44416,"sinkSubscribers":0,"cancelled":2,"active":0,"heapUsedMb":26} rss=380MB
+t=6s received=60 last={"id":"1","payload":{"data":{"flood":60}},"type":"next"}
+t=7s received=70 last={"id":"1","payload":{"data":{"flood":70}},"type":"next"}
+  server t=8s {"emitted":44416,"sinkSubscribers":0,"cancelled":2,"active":0,"heapUsedMb":27} rss=380MB
+t=8s received=80 last={"id":"1","payload":{"data":{"flood":80}},"type":"next"}
+t=9s received=90 last={"id":"1","payload":{"data":{"flood":90}},"type":"next"}
+  server t=10s {"emitted":44416,"sinkSubscribers":0,"cancelled":2,"active":0,"heapUsedMb":27} rss=380MB
+t=10s received=100 last={"id":"1","payload":{"data":{"flood":100}},"type":"next"}
+  server t=12s {"emitted":44416,"sinkSubscribers":0,"cancelled":2,"active":0,"heapUsedMb":27} rss=380MB
+== flood 10000/s for 8 s, mode=latest, slow reader 10 frames/s
+t=1s received=10 last={"id":"1","payload":{"data":{"flood":10}},"type":"next"}
+  server t=2s {"emitted":16380,"sinkSubscribers":0,"cancelled":2,"active":1,"heapUsedMb":24} rss=390MB
+t=2s received=20 last={"id":"1","payload":{"data":{"flood":20}},"type":"next"}
+t=3s received=30 last={"id":"1","payload":{"data":{"flood":30}},"type":"next"}
+  server t=4s {"emitted":36450,"sinkSubscribers":0,"cancelled":2,"active":1,"heapUsedMb":35} rss=390MB
+t=4s received=40 last={"id":"1","payload":{"data":{"flood":40}},"type":"next"}
+t=5s received=50 last={"id":"1","payload":{"data":{"flood":50}},"type":"next"}
+  server t=6s {"emitted":56520,"sinkSubscribers":0,"cancelled":2,"active":1,"heapUsedMb":27} rss=390MB
+t=6s received=60 last={"id":"1","payload":{"data":{"flood":60}},"type":"next"}
+t=7s received=70 last={"id":"1","payload":{"data":{"flood":70}},"type":"next"}
+  server t=8s {"emitted":76580,"sinkSubscribers":0,"cancelled":2,"active":1,"heapUsedMb":28} rss=390MB
+t=8s received=80 last={"id":"1","payload":{"data":{"flood":80}},"type":"next"}
+t=9s received=90 last={"id":"1","payload":{"data":{"flood":90}},"type":"next"}
+  server t=10s {"emitted":80000,"sinkSubscribers":0,"cancelled":2,"active":1,"heapUsedMb":29} rss=390MB
+t=10s received=100 last={"id":"1","payload":{"data":{"flood":100}},"type":"next"}
+  server t=12s {"emitted":80000,"sinkSubscribers":0,"cancelled":3,"active":0,"heapUsedMb":29} rss=390MB
+== flood 10000/s for 8 s, mode=sample, slow reader 10 frames/s
+t=1s received=3 last={"id":"1","payload":{"data":{"flood":7490}},"type":"next"}
+  server t=2s {"emitted":16410,"sinkSubscribers":0,"cancelled":3,"active":1,"heapUsedMb":31} rss=391MB
+t=2s received=8 last={"id":null,"payload":{},"type":"ping"}
+t=3s received=12 last={"id":"1","payload":{"data":{"flood":27490}},"type":"next"}
+  server t=4s {"emitted":36480,"sinkSubscribers":0,"cancelled":3,"active":1,"heapUsedMb":32} rss=391MB
+t=4s received=17 last={"id":null,"payload":{},"type":"ping"}
+t=5s received=21 last={"id":"1","payload":{"data":{"flood":47490}},"type":"next"}
+  server t=6s {"emitted":56550,"sinkSubscribers":0,"cancelled":3,"active":1,"heapUsedMb":33} rss=391MB
+t=6s received=26 last={"id":null,"payload":{},"type":"ping"}
+t=7s received=31 last={"id":"1","payload":{"data":{"flood":69990}},"type":"next"}
+  server t=8s {"emitted":76620,"sinkSubscribers":0,"cancelled":3,"active":1,"heapUsedMb":34} rss=391MB
+t=8s received=35 last={"id":null,"payload":{},"type":"ping"}
+t=9s received=38 last={"id":"1","payload":{},"type":"complete"}
+  server t=10s {"emitted":80000,"sinkSubscribers":0,"cancelled":3,"active":0,"heapUsedMb":34} rss=391MB
+t=10s received=39 last={"id":null,"payload":{},"type":"ping"}
+  server t=12s {"emitted":80000,"sinkSubscribers":0,"cancelled":3,"active":0,"heapUsedMb":34} rss=391MB
+== fast reader, flood 10000/s for 3 s, buffer
+30000
+{"emitted":30000,"sinkSubscribers":0,"cancelled":3,"active":0,"heapUsedMb":39}
+== POST /graphql Accept multipart/mixed: who answers?
+
+== POST /graphql Accept application/json
+{"data":{"hello":"hi"}}
+== log
+      1 2026-11-21T17:27:42.938Z ERROR 7 --- [c1-5b0716521267] o.s.g.s.webmvc.GraphQlWebSocketHandler   : Closing session due to exception for StandardWebSocketSession[id=c4de7ebe-96b6-47be-acc1-5b0716521267, uri=ws://localhost:4000/graphql]
+      1 2026-11-21T17:27:42.940Z ERROR 7 --- [c1-5b0716521267] o.s.g.s.webmvc.GraphQlWebSocketHandler   : Closing session due to exception for StandardWebSocketSession[id=c4de7ebe-96b6-47be-acc1-5b0716521267, uri=ws://localhost:4000/graphql]
+      1 2026-11-21T17:27:54.975Z ERROR 7 --- [e1-32e5dcf5637a] o.s.g.s.webmvc.GraphQlWebSocketHandler   : Closing session due to exception for StandardWebSocketSession[id=ab7d8a24-7182-4681-b0e1-32e5dcf5637a, uri=ws://localhost:4000/graphql]
+      1 2026-11-21T17:27:54.976Z ERROR 7 --- [e1-32e5dcf5637a] o.s.g.s.webmvc.GraphQlWebSocketHandler   : Closing session due to exception for StandardWebSocketSession[id=ab7d8a24-7182-4681-b0e1-32e5dcf5637a, uri=ws://localhost:4000/graphql]
+      2 Caused by: java.io.IOException: Broken pipe
+      2 java.io.IOException: java.io.IOException: Broken pipe
+      2 java.lang.IllegalStateException: The remote endpoint was in state [TEXT_PARTIAL_WRITING] which is an invalid state for called method

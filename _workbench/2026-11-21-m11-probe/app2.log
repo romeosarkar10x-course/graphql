@@ -1,0 +1,147 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.2.0)
+
+2026-11-21T17:27:20.210Z  INFO 7 --- [           main] probe.App                                : Starting App v1 using Java 25.0.5.1 with PID 7 (/course/_workbench/2026-11-21-m11-probe/app/target/probe.jar started by ubuntu in /course/_workbench/2026-11-21-m11-probe)
+2026-11-21T17:27:20.211Z  INFO 7 --- [           main] probe.App                                : No active profile set, falling back to 1 default profile: "default"
+2026-11-21T17:27:20.588Z  INFO 7 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 4000 (http)
+2026-11-21T17:27:20.594Z  INFO 7 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-21T17:27:20.595Z  INFO 7 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-21T17:27:20.610Z  INFO 7 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 376 ms
+2026-11-21T17:27:20.690Z  INFO 7 --- [           main] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-11-21T17:27:20.755Z  INFO 7 --- [           main] o.s.b.g.a.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Field nullness errors: {}
+	Argument nullness errors: {App#ticks[3 args]=[int failAt should be NULLABLE, int throwAt should be NULLABLE]}
+	Skipped types: []
+2026-11-21T17:27:20.824Z  INFO 7 --- [           main] s.b.g.a.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP [POST, GET] /graphql
+2026-11-21T17:27:20.855Z  INFO 7 --- [           main] s.b.g.a.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint WebSocket /graphql
+2026-11-21T17:27:20.869Z  INFO 7 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 4000 (http) with context path '/'
+2026-11-21T17:27:20.878Z  INFO 7 --- [           main] probe.App                                : Started App in 0.832 seconds (process running for 1.013)
+2026-11-21T17:27:20.891Z  INFO 7 --- [nio-4000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-21T17:27:20.891Z  INFO 7 --- [nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-21T17:27:20.891Z  INFO 7 --- [nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-11-21T17:27:42.938Z ERROR 7 --- [c1-5b0716521267] o.s.g.s.webmvc.GraphQlWebSocketHandler   : Closing session due to exception for StandardWebSocketSession[id=c4de7ebe-96b6-47be-acc1-5b0716521267, uri=ws://localhost:4000/graphql]
+
+java.io.IOException: java.io.IOException: Broken pipe
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendMessageBlockInternal(WsRemoteEndpointImplBase.java:414) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendMessageBlock(WsRemoteEndpointImplBase.java:338) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendMessageBlock(WsRemoteEndpointImplBase.java:324) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendPartialString(WsRemoteEndpointImplBase.java:299) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointBasic.sendText(WsRemoteEndpointBasic.java:51) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketSession.sendTextMessage(StandardWebSocketSession.java:206) ~[spring-websocket-7.1.0.jar!/:7.1.0]
+	at org.springframework.web.socket.adapter.AbstractWebSocketSession.sendMessage(AbstractWebSocketSession.java:106) ~[spring-websocket-7.1.0.jar!/:7.1.0]
+	at org.springframework.graphql.server.webmvc.GraphQlWebSocketHandler$SendMessageSubscriber.hookOnNext(GraphQlWebSocketHandler.java:739) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at org.springframework.graphql.server.webmvc.GraphQlWebSocketHandler$SendMessageSubscriber.hookOnNext(GraphQlWebSocketHandler.java:717) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at reactor.core.publisher.BaseSubscriber.onNext(BaseSubscriber.java:163) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxPublishOn$PublishOnSubscriber.runAsync(FluxPublishOn.java:448) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxPublishOn$PublishOnSubscriber.run(FluxPublishOn.java:536) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:90) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.VirtualThread.run(VirtualThread.java:460) ~[na:na]
+Caused by: java.io.IOException: Broken pipe
+	at java.base/sun.nio.ch.SocketDispatcher.writev0(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.SocketDispatcher.writev(SocketDispatcher.java:70) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:227) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:158) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.implWrite(SocketChannelImpl.java:593) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.write(SocketChannelImpl.java:627) ~[na:na]
+	at org.apache.tomcat.util.net.NioChannel.write(NioChannel.java:162) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper$NioOperationState.run(NioEndpoint.java:2092) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:947) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:481) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+
+2026-11-21T17:27:42.940Z ERROR 7 --- [c1-5b0716521267] o.s.g.s.webmvc.GraphQlWebSocketHandler   : Closing session due to exception for StandardWebSocketSession[id=c4de7ebe-96b6-47be-acc1-5b0716521267, uri=ws://localhost:4000/graphql]
+
+java.lang.IllegalStateException: The remote endpoint was in state [TEXT_PARTIAL_WRITING] which is an invalid state for called method
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase$StateMachine.checkState(WsRemoteEndpointImplBase.java:1374) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase$StateMachine.textPartialStart(WsRemoteEndpointImplBase.java:1339) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendPartialString(WsRemoteEndpointImplBase.java:298) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointBasic.sendText(WsRemoteEndpointBasic.java:51) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketSession.sendTextMessage(StandardWebSocketSession.java:206) ~[spring-websocket-7.1.0.jar!/:7.1.0]
+	at org.springframework.web.socket.adapter.AbstractWebSocketSession.sendMessage(AbstractWebSocketSession.java:106) ~[spring-websocket-7.1.0.jar!/:7.1.0]
+	at org.springframework.graphql.server.webmvc.GraphQlWebSocketHandler.lambda$handleInternal$5(GraphQlWebSocketHandler.java:359) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onNext(FluxPeekFuseable.java:197) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxPublishOn$PublishOnSubscriber.runAsync(FluxPublishOn.java:448) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxPublishOn$PublishOnSubscriber.run(FluxPublishOn.java:536) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:90) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.VirtualThread.run(VirtualThread.java:460) ~[na:na]
+
+2026-11-21T17:27:54.975Z ERROR 7 --- [e1-32e5dcf5637a] o.s.g.s.webmvc.GraphQlWebSocketHandler   : Closing session due to exception for StandardWebSocketSession[id=ab7d8a24-7182-4681-b0e1-32e5dcf5637a, uri=ws://localhost:4000/graphql]
+
+java.io.IOException: java.io.IOException: Broken pipe
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendMessageBlockInternal(WsRemoteEndpointImplBase.java:414) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendMessageBlock(WsRemoteEndpointImplBase.java:338) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendMessageBlock(WsRemoteEndpointImplBase.java:324) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendPartialString(WsRemoteEndpointImplBase.java:299) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointBasic.sendText(WsRemoteEndpointBasic.java:51) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketSession.sendTextMessage(StandardWebSocketSession.java:206) ~[spring-websocket-7.1.0.jar!/:7.1.0]
+	at org.springframework.web.socket.adapter.AbstractWebSocketSession.sendMessage(AbstractWebSocketSession.java:106) ~[spring-websocket-7.1.0.jar!/:7.1.0]
+	at org.springframework.graphql.server.webmvc.GraphQlWebSocketHandler$SendMessageSubscriber.hookOnNext(GraphQlWebSocketHandler.java:739) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at org.springframework.graphql.server.webmvc.GraphQlWebSocketHandler$SendMessageSubscriber.hookOnNext(GraphQlWebSocketHandler.java:717) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at reactor.core.publisher.BaseSubscriber.onNext(BaseSubscriber.java:163) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxPublishOn$PublishOnSubscriber.runAsync(FluxPublishOn.java:448) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxPublishOn$PublishOnSubscriber.run(FluxPublishOn.java:536) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:90) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.VirtualThread.run(VirtualThread.java:460) ~[na:na]
+Caused by: java.io.IOException: Broken pipe
+	at java.base/sun.nio.ch.SocketDispatcher.writev0(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.SocketDispatcher.writev(SocketDispatcher.java:70) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:227) ~[na:na]
+	at java.base/sun.nio.ch.IOUtil.write(IOUtil.java:158) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.implWrite(SocketChannelImpl.java:593) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.write(SocketChannelImpl.java:627) ~[na:na]
+	at org.apache.tomcat.util.net.NioChannel.write(NioChannel.java:162) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.util.net.NioEndpoint$NioSocketWrapper$NioOperationState.run(NioEndpoint.java:2092) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:947) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:481) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:74) ~[tomcat-embed-core-11.0.27.jar!/:11.0.27]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+
+2026-11-21T17:27:54.976Z ERROR 7 --- [e1-32e5dcf5637a] o.s.g.s.webmvc.GraphQlWebSocketHandler   : Closing session due to exception for StandardWebSocketSession[id=ab7d8a24-7182-4681-b0e1-32e5dcf5637a, uri=ws://localhost:4000/graphql]
+
+java.lang.IllegalStateException: The remote endpoint was in state [TEXT_PARTIAL_WRITING] which is an invalid state for called method
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase$StateMachine.checkState(WsRemoteEndpointImplBase.java:1374) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase$StateMachine.textPartialStart(WsRemoteEndpointImplBase.java:1339) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointImplBase.sendPartialString(WsRemoteEndpointImplBase.java:298) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.apache.tomcat.websocket.WsRemoteEndpointBasic.sendText(WsRemoteEndpointBasic.java:51) ~[tomcat-embed-websocket-11.0.27.jar!/:11.0.27]
+	at org.springframework.web.socket.adapter.standard.StandardWebSocketSession.sendTextMessage(StandardWebSocketSession.java:206) ~[spring-websocket-7.1.0.jar!/:7.1.0]
+	at org.springframework.web.socket.adapter.AbstractWebSocketSession.sendMessage(AbstractWebSocketSession.java:106) ~[spring-websocket-7.1.0.jar!/:7.1.0]
+	at org.springframework.graphql.server.webmvc.GraphQlWebSocketHandler.lambda$handleInternal$5(GraphQlWebSocketHandler.java:359) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber.onNext(FluxPeekFuseable.java:197) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxPublishOn$PublishOnSubscriber.runAsync(FluxPublishOn.java:448) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxPublishOn$PublishOnSubscriber.run(FluxPublishOn.java:536) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:90) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:309) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.VirtualThread.run(VirtualThread.java:460) ~[na:na]
+
+2026-11-21T17:28:12.381Z  INFO 7 --- [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-21T17:28:12.384Z  INFO 7 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete

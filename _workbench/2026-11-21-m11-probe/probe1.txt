@@ -1,0 +1,77 @@
+== WS: ticks(n:3)
+  145 ms  {"id":null,"payload":{},"type":"connection_ack"}
+  281 ms  {"id":"1","payload":{"data":{"ticks":1}},"type":"next"}
+  378 ms  {"id":"1","payload":{"data":{"ticks":2}},"type":"next"}
+  478 ms  {"id":"1","payload":{"data":{"ticks":3}},"type":"next"}
+  479 ms  {"id":"1","payload":{},"type":"complete"}
+== WS: ticks(n:5, failAt:3) (exception in map)
+   95 ms  {"id":null,"payload":{},"type":"connection_ack"}
+  201 ms  {"id":"1","payload":{"data":{"ticks":1}},"type":"next"}
+  301 ms  {"id":"1","payload":{"data":{"ticks":2}},"type":"next"}
+  407 ms  {"id":"1","payload":[{"message":"Subscription error","locations":[],"extensions":{"classification":"INTERNAL_ERROR"}}],"type":"error"}
+== WS: ticks(n:5, throwAt:3) (Flux.error)
+   95 ms  {"id":null,"payload":{},"type":"connection_ack"}
+  201 ms  {"id":"1","payload":{"data":{"ticks":1}},"type":"next"}
+  300 ms  {"id":"1","payload":{"data":{"ticks":2}},"type":"next"}
+  401 ms  {"id":"1","payload":[{"message":"Subscription error","locations":[],"extensions":{"classification":"INTERNAL_ERROR"}}],"type":"error"}
+== WS: two root fields
+   94 ms  {"id":null,"payload":{},"type":"connection_ack"}
+  101 ms  {"id":"1","payload":{"errors":[{"message":"Validation error (SubscriptionMultipleRootFields) : Subscription operation '' must have exactly one root field","locations":[{"line":1,"column":1}],"extensions":{"classification":"ValidationError"}}]},"type":"next"}
+  101 ms  {"id":"1","payload":{},"type":"complete"}
+== WS: @skip on root
+   97 ms  {"id":null,"payload":{},"type":"connection_ack"}
+  203 ms  {"id":"1","payload":{"data":{"ticks":1}},"type":"next"}
+  204 ms  {"id":"1","payload":{},"type":"complete"}
+== SSE: ticks(n:3)
+HTTP/1.1 200 
+Cache-Control: no-cache
+Content-Type: text/event-stream
+Transfer-Encoding: chunked
+Date: Sat, 21 Nov 2026 17:24:24 GMT
+
+event:next
+data: {"data":{"ticks":1}}
+
+event:next
+data: {"data":{"ticks":2}}
+
+event:next
+data: {"data":{"ticks":3}}
+
+event:complete
+data: 
+
+
+== SSE: ticks(n:5, failAt:3)
+event:next
+data: {"data":{"ticks":1}}
+
+event:next
+data: {"data":{"ticks":2}}
+
+event:next
+data: {"errors":[{"message":"Subscription error","locations":[],"extensions":{"classification":"INTERNAL_ERROR"}}]}
+
+event:complete
+data: 
+
+
+== HTTP POST subscription without event-stream Accept
+{"errors":[{"message":"Operation type 'SUBSCRIPTION' is not allowed for this request","extensions":{"classification":"OperationNotSupported"}}]} [200]
+== raw graphql-java @defer
+initial at 9 ms: IncrementalExecutionResultImpl {data={club={name=Club c1, members=[ada, ben]}}, hasNext=true}
+later at 1013 ms: {hasNext=false, incremental=[{path=[club], label=recs, data={recommendations=[b1, b2]}}]}
+== raw graphql-java @stream?
+initial at 0 ms: ExecutionResultImpl {errors=[{message=Validation error (UnknownDirective@[club/members]) : Unknown directive 'stream', locations=[{line=1, column=28}], extensions={classification=ValidationError}}, {message=Validation error (UnknownArgument@[club/members]) : Unknown field argument 'initialCount', locations=[{line=1, column=36}], extensions={classification=ValidationError}}]}
+
+== Spring /graphql with @defer, Accept multipart/mixed
+{"data":{"club":{"name":"Club c1"}},"hasNext":true} [200 application/json 0.002988s]
+== Spring /graphql with @defer, SSE accept
+event:next
+data: {"errors":[{"message":"Operation type 'QUERY' is not allowed for this request","extensions":{"classification":"OperationNotSupported"}}]}
+
+event:complete
+data: 
+
+
+== server log errors

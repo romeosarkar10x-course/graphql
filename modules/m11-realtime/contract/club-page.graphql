@@ -1,0 +1,12 @@
+# Lab 11.6: the club page. The recommendations panel is slow (1.5 s); everything else is instant.
+query ClubPage($id: ID!) {
+  club(id: $id) {
+    name
+    description
+    members { name }
+    reviews(first: 3) { rating body book { title } }
+    ... @defer(label: "recommendations") {
+      recommendations { id title }
+    }
+  }
+}

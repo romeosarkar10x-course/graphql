@@ -1,12 +1,18 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 10
+## Now: user review of Module 11
 
-The user said "continue..." (2026-11-21) after Module 9; Module 10 is built. Wait for review before Module 11.
+The user said "continue" (2026-11-21) after Module 10; Module 11 is built. Wait for review before Module 12.
 
 ## Verification debt
 
-- [ ] Rerun the full `bin/course check --starters` after Module 10 (the 2026-11-21 run was stopped at m10/01).
+- [ ] Rerun the full `bin/course check --starters` (the 2026-11-21 run after Module 10 was stopped at m10/01;
+      after Module 11 only `bin/course check m11 --starters` ran). It is CPU-heavy: run it when the machine is free.
+- [ ] Module 11: Apollo Client's `Accept: multipart/mixed;deferSpec=20220824` is from Apollo's documentation,
+      not tested; RFC 1110 is a draft (re-read before each term; its PR links graphql-java issue #4497, not read).
+- [ ] Module 11: lab 11.5's load numbers are single runs on one 24-core machine, first runs include the JIT.
+- [ ] Module 11: re-check graphql-java for `@stream` and RFC 1110 payloads, and Spring for GraphQL for an
+      incremental transport; simplify lab 11.6 if either lands.
 - [ ] PayPal "700 ms p99 per round trip" and "3 to 52 products in 2 years": the Medium post blocks
       automated fetches (403). Verify by hand or replace with another source (lecture 1.2, case-studies tab).
 - [ ] Re-verify public API answers in m00/03 and the GitHub schema answers in m00/06 each term.

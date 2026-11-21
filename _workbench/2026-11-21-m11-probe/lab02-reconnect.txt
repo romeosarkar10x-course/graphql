@@ -1,0 +1,34 @@
+== client across a 1.5 s drop (stderr then stdout)
+-- ws stderr
+connected ws
+live m9
+dropped: java.net.SocketException: Connection reset
+reconnecting in 202 ms
+dropped: java.util.concurrent.ExecutionException: java.io.IOException: HTTP/1.1 header parser received no bytes
+reconnecting in 420 ms
+dropped: java.util.concurrent.ExecutionException: java.net.ConnectException: Connection reset by peer (connect failed)
+reconnecting in 818 ms
+dropped: java.util.concurrent.ExecutionException: java.net.ConnectException: Connection reset by peer (connect failed)
+reconnecting in 2332 ms
+connected ws
+filled 2
+-- ws stdout
+m9 Ada: before
+m10 Ben: during
+m11 Cleo: after
+-- sse stderr
+connected sse
+live m12
+dropped: java.io.UncheckedIOException: java.io.IOException: closed
+reconnecting in 241 ms
+dropped: java.io.IOException: HTTP/1.1 header parser received no bytes
+reconnecting in 570 ms
+dropped: java.io.IOException: HTTP/1.1 header parser received no bytes
+reconnecting in 1138 ms
+connected sse
+filled 1
+live m14
+-- sse stdout
+m12 Ada: before
+m13 Ben: during
+m14 Cleo: after

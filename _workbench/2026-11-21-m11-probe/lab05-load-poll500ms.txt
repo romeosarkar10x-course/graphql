@@ -1,0 +1,12 @@
+2026-11-21T17:51:28.129Z  INFO 8 --- [pool-2-thread-1] dev.shelfie.live.ChangeFeed              : change feed: streaming m11.messages
+mode poll: 500 clients, 20 s, 18 messages sent
+  HTTP requests by clients: 4972 (249 a second), failed: 0
+  messages seen: 9000 of 9000 (100.0%)
+  delay sentAt -> seen: median 1008 ms, p95 1912 ms, max 2009 ms
+  server CPU: 8.5 s
+mode subscribe: 500 clients, 20 s, 17 messages sent
+  HTTP requests by clients: 1 (0 a second), failed: 0
+  messages seen: 8500 of 8500 (100.0%)
+  delay sentAt -> seen: median 614 ms, p95 623 ms, max 625 ms
+  server CPU: 7.0 s
+0

@@ -1,0 +1,7 @@
+{
+  "title": "Game: multiplayer tic-tac-toe, moves as mutations, the board as a subscription, spectators welcome",
+  "lecture": "11.3",
+  "kind": "game",
+  "grading": "auto",
+  "needs": []
+}

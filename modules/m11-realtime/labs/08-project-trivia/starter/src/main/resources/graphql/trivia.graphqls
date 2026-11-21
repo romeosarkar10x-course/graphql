@@ -1,0 +1,80 @@
+# Mini-project 11.8: live trivia (Kahoot-style). Questions are pushed by subscription, answers are mutations.
+# Scoring: a correct answer scores 100, and the first correct answer to each question scores 50 more.
+# A question closes when every player has answered or its time is up; then QuestionClosed and
+# LeaderboardChanged are sent, and the next question is asked (or GameOver after the last).
+
+type Query {
+  game(id: ID!): Game
+}
+
+type Game {
+  id: ID!
+  state: GameState!
+  players: [Player!]!
+  "The open question, or null outside QUESTION."
+  question: Question
+  "Highest score first; ties by join order."
+  leaderboard: [Player!]!
+}
+
+enum GameState {
+  LOBBY
+  QUESTION
+  OVER
+}
+
+type Player {
+  name: String!
+  score: Int!
+}
+
+type Question {
+  "0, 1, 2, ..."
+  index: Int!
+  text: String!
+  choices: [String!]!
+}
+
+type Mutation {
+  "A new game in the LOBBY with the first `questions` questions of contract/questions.json."
+  createGame(questions: Int = 5, secondsPerQuestion: Int = 10): Game!
+  "Joining is only possible in the LOBBY. A name already taken in this game is an error (NAME_TAKEN)."
+  joinGame(gameId: ID!, name: String!): Player!
+  "Asks the first question. Needs at least one player (NO_PLAYERS)."
+  startGame(gameId: ID!): Game!
+  answer(gameId: ID!, name: String!, choice: Int!): AnswerResult!
+}
+
+type AnswerResult {
+  accepted: Boolean!
+  "Why not: NO_QUESTION, UNKNOWN_PLAYER, ALREADY_ANSWERED or BAD_CHOICE. Null when accepted."
+  reason: String
+}
+
+type Subscription {
+  "Everything that happens in a game, from now on. Ends after GameOver."
+  gameEvents(gameId: ID!): GameEvent!
+}
+
+union GameEvent = QuestionAsked | QuestionClosed | LeaderboardChanged | GameOver
+
+type QuestionAsked {
+  question: Question!
+  secondsToAnswer: Int!
+}
+
+type QuestionClosed {
+  index: Int!
+  "The index of the right choice."
+  correct: Int!
+  "How many players answered in time."
+  answers: Int!
+}
+
+type LeaderboardChanged {
+  leaderboard: [Player!]!
+}
+
+type GameOver {
+  leaderboard: [Player!]!
+}

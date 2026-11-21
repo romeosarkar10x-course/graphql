@@ -1,0 +1,7 @@
+{
+  "title": "Scaling fan-out: three replicas behind a load balancer, over Redis pub/sub and Kafka",
+  "lecture": "11.4",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["redis", "kafka"]
+}

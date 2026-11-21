@@ -43,6 +43,8 @@ needs_check() {
                   || { echo "  needs PostgreSQL: run bin/course ref up" >&2; return 1; } ;;
       redis) (exec 3<>/dev/tcp/redis/6379) 2>/dev/null \
                || { echo "  needs Redis: run bin/course ref up" >&2; return 1; } ;;
+      kafka) (exec 3<>/dev/tcp/kafka/9092) 2>/dev/null \
+               || { echo "  needs Kafka: run bin/course ref up" >&2; return 1; } ;;
       keycloak) curl -fsS -o /dev/null -m 5 http://keycloak:8180/realms/shelfie/.well-known/openid-configuration 2>/dev/null \
                   || { echo "  needs Keycloak: run bin/course ref up" >&2; return 1; } ;;
       varnish) (exec 3<>/dev/tcp/varnish/6082) 2>/dev/null \

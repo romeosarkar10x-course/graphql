@@ -1,0 +1,78 @@
+# Module 11's Shelfie: live meetup chat for book clubs, plus the club page lab 11.6 defers.
+# Every lab app serves this schema on :4000 (/graphql over HTTP, WebSocket and SSE).
+
+type Query {
+  rooms: [Room!]!
+  room(id: ID!): Room
+  "Messages in a room, oldest first. With `after`, only those sent after that message: a reconnecting client fills its gap with this (lab 11.2)."
+  messages(roomId: ID!, after: ID, last: Int = 50): [Message!]!
+  club(id: ID!): Club
+}
+
+"A club's meetup chat room."
+type Room {
+  id: ID!
+  name: String!
+  messages(last: Int = 20): [Message!]!
+  "Open subscriptions on this room, right now (lab 11.3's cleanup check)."
+  watching: Int!
+  archived: Boolean!
+}
+
+type Message {
+  "m1, m2, ...: ordered by send time within one server."
+  id: ID!
+  roomId: ID!
+  author: String!
+  body: String!
+  sentAt: String!
+}
+
+type Typing {
+  roomId: ID!
+  author: String!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String!
+  members: [Reader!]!
+  reviews(first: Int = 3): [Review!]!
+  "Slow on purpose: the recommender takes 1.5 s (lab 11.6 defers it)."
+  recommendations: [Book!]!
+}
+
+type Reader {
+  id: ID!
+  name: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  body: String!
+  book: Book!
+}
+
+type Mutation {
+  sendMessage(roomId: ID!, author: String!, body: String!): Message!
+  "Someone is typing in a room. Returns true."
+  typing(roomId: ID!, author: String!): Boolean!
+  "Closes a room: its open subscriptions complete (lab 11.3)."
+  archiveRoom(id: ID!): Room!
+}
+
+type Subscription {
+  "New messages in one room."
+  messageSent(roomId: ID!): Message!
+  "Typing events in one room, leaving out the subscriber's own (`me`)."
+  typing(roomId: ID!, me: String): Typing!
+  "Lab 11.1's experiment: counts down from `from` every 100 ms and completes after 1; the source stream fails when it reaches `failAt`."
+  countdown(from: Int!, failAt: Int): Int!
+}

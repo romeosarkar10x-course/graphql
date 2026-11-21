@@ -1,0 +1,7 @@
+{
+  "title": "Game: classroom chat stress test, nine clients, three replicas, and an instructor who kills them",
+  "lecture": "11.4",
+  "kind": "game",
+  "grading": "auto",
+  "needs": ["redis"]
+}

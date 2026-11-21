@@ -1,0 +1,5 @@
+server.port: 4000
+spring.graphql.websocket.path: /graphql
+spring.graphql.websocket.keep-alive: 2s
+spring.graphql.http.sse.keep-alive: 2s
+spring.graphql.http.sse.methods: GET, POST

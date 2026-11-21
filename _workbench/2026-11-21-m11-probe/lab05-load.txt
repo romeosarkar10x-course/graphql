@@ -1,0 +1,17 @@
+2026-11-21T17:52:43.504Z  INFO 130 --- [pool-2-thread-1] dev.shelfie.live.ChangeFeed              : change feed: streaming m11.messages
+2026-11-21T17:52:43.750Z  INFO 130 --- [           main] dev.shelfie.live.LiveApplication         : Started LiveApplication in 1.23 seconds (process running for
+mode idle: 500 clients, 20 s, 18 messages sent
+  HTTP requests by clients: 0 (0 a second), WebSockets: 0, failed: 0
+  messages seen: 0 of 9000 (0.0%)
+  server CPU: 0.8 s
+mode poll: 500 clients, 20 s, 18 messages sent
+  HTTP requests by clients: 4990 (250 a second), WebSockets: 0, failed: 0
+  messages seen: 9000 of 9000 (100.0%)
+  delay sentAt -> seen: median 1006 ms, p95 1903 ms, max 2088 ms
+  server CPU: 8.8 s
+mode subscribe: 500 clients, 20 s, 17 messages sent
+  HTTP requests by clients: 0 (0 a second), WebSockets: 500, failed: 0
+  messages seen: 8500 of 8500 (100.0%)
+  delay sentAt -> seen: median 52 ms, p95 94 ms, max 108 ms
+  server CPU: 7.9 s
+0

@@ -4,13 +4,16 @@
 #   storage      S3-compatible object storage for pre-signed cover uploads (Module 4.6): S3 API on :8333.
 #                SeaweedFS, because MinIO (the plan's choice) no longer publishes container images.
 #   postgres     PostgreSQL for Module 8 on (keyset paging, EXPLAIN ANALYZE, full-text search): :5432,
-#                database/user/password shelfie. Inside the image: postgres:5432.
+#                database/user/password shelfie. Inside the image: postgres:5432. wal_level=logical so
+#                Debezium (Module 11.5) can read the write-ahead log.
 #   redis        Redis for Module 9.5's response cache: :6379. Inside the image: redis:6379.
 #   varnish      HTTP cache for Module 9.6: :6081. No backend until a test runs tools/varnish.py
 #                (admin port 6082 inside the course network only, so -S none is safe here).
 #   keycloak     OpenID Connect provider for Module 10: realm "shelfie" on :8180 (inside the image:
 #                http://keycloak:8180). Dev mode, imported from modules/m10-security/contract/keycloak/,
 #                signing with the course key (that folder's keys/README.md). Admin console: admin/admin.
+#   kafka        Apache Kafka for Module 11.4 (fan-out across replicas): one KRaft node, inside the image
+#                kafka:9092 (also published on localhost:9092 for host tools, advertised as kafka:9092).
 name: gqlcourse
 
 services:
@@ -49,6 +52,7 @@ services:
       POSTGRES_DB: shelfie
       POSTGRES_USER: shelfie
       POSTGRES_PASSWORD: shelfie
+    command: ["postgres", "-c", "wal_level=logical"]
     ports:
       - "5432:5432"
     healthcheck:
@@ -93,6 +97,29 @@ services:
       - "8180:8180"
     healthcheck:
       test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/9000 && printf 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && grep -q UP <&3"]
+      interval: 3s
+      timeout: 3s
+      retries: 60
+
+  kafka:
+    image: apache/kafka:4.4.0
+    environment:
+      KAFKA_NODE_ID: "1"
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "1"
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: "1"
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: "0"
+      KAFKA_HEAP_OPTS: -Xmx384m -Xms384m
+    ports:
+      - "9092:9092"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "9092"]
       interval: 3s
       timeout: 3s
       retries: 60

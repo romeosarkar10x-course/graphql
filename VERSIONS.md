@@ -37,6 +37,10 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | Bucket4j | 8.22.0 (`com.bucket4j:bucket4j_jdk17-core`, 2026-11-03) | — | Module 10.4 and 10.6 cost budgets; refuses to consume 0 tokens |
 | graphql-cop | 1.15 (2025-11-07, git tag) | — | lab 10.8, `bin/course seckit`, own image `docker/seckit.Dockerfile` (python 3.13-slim); its pinned requirements (requests 2.25.1) installed as is |
 | Clairvoyance | 2.5.5 (PyPI) | — | lab 10.8; recovers nothing from graphql-java 26.1 (no suggestions, unparsed messages) |
+| Apache Kafka | 4.4.0 (`apache/kafka:4.4.0`, 2026-10-22, course service, one KRaft node, 384 MB heap) | — | Module 11.4; client 4.4.0 and Spring for Apache Kafka 4.2.0 from the Boot BOM (`spring-boot-starter-kafka`) |
+| Debezium | 3.7.1.Final (`debezium-embedded`, `debezium-connector-postgres`, 2026-11-06) | — | Module 11.5, embedded engine; works with the Boot BOM's Kafka 4.4.0 libraries; PostgreSQL runs with `wal_level=logical` |
+| Reactor | 2026.0.0 BOM (Boot) | — | Module 11 sinks and operators |
+| graphql-java incremental delivery | 26.1, `ExperimentalApi.ENABLE_INCREMENTAL_SUPPORT` | `@defer` and `@stream` | `@defer` only (`@stream` is an unknown directive); payloads in the earlier draft's shape (`path`/`label`, no `pending`/`completed`); Spring for GraphQL 2.1 has no incremental transport |
 | InQL, DVGA, OWASP ZAP | not run | run | lecture 10.8 describes them: InQL needs Burp's GUI, DVGA and ZAP are large images |
 | GitHub Actions | actions/checkout v7, actions/setup-java v6 | — | Module 9 project workflow (Module 7's pins v4) |
 | PostgreSQL JDBC | 42.7.14 (Boot BOM; also in course-lib) | — | single-file SQL labs (8.2) |

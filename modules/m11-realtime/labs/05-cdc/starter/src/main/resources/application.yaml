@@ -1,0 +1,13 @@
+server.port: 4000
+spring:
+  graphql:
+    websocket:
+      path: /graphql
+      keep-alive: 5s
+    http:
+      sse:
+        keep-alive: 5s
+  datasource:
+    url: jdbc:postgresql://postgres:5432/shelfie
+    username: shelfie
+    password: shelfie

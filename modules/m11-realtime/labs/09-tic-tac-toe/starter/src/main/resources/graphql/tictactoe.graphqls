@@ -1,0 +1,42 @@
+# Game 11.9: multiplayer tic-tac-toe. Moves are mutations, board updates a subscription, spectators welcome.
+# Cells are numbered 0 to 8, left to right, top to bottom. X moves first.
+# Refused moves are errors with extensions.code: NO_MATCH, NOT_A_PLAYER, NOT_YOUR_TURN, CELL_TAKEN,
+# BAD_CELL, GAME_OVER, WAITING_FOR_OPPONENT; a third joinMatch is MATCH_FULL.
+
+type Query {
+  match(id: ID!): Match
+}
+
+type Match {
+  id: ID!
+  "Nine cells: \"X\", \"O\" or \"\"."
+  board: [String!]!
+  "Whose move it is; null before two players have joined and after the end."
+  next: Mark
+  winner: Mark
+  "The winning line's cells, e.g. [0, 4, 8]; null without a winner."
+  line: [Int!]
+  draw: Boolean!
+  "X's name first."
+  players: [String!]!
+  "Open matchUpdated subscriptions from people who are not playing."
+  spectators: Int!
+  moves: Int!
+}
+
+enum Mark {
+  X
+  O
+}
+
+type Mutation {
+  newMatch: Match!
+  "The first to join plays X, the second O."
+  joinMatch(id: ID!, name: String!): Mark!
+  move(id: ID!, name: String!, cell: Int!): Match!
+}
+
+type Subscription {
+  "The match now, then after every join and move; completes after the last move. Pass `as` to be counted as a player, not a spectator."
+  matchUpdated(id: ID!, as: String): Match!
+}

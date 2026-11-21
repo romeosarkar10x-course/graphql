@@ -140,6 +140,28 @@
 - [x] Games: m09/09 Performance race (baseline measured in the same run) · m09/10 Guess the query count (10 rounds)
 - [x] Mini-project m09/11 N+1 detector (JUnit 5 extension, 9 harness fixtures, GitHub Actions workflow)
 
+## Module 11 (7 lectures, 7 labs, 1 mini-project, 2 games)
+
+- [x] Infra: Kafka 4.4.0 course service (one KRaft node), PostgreSQL with `wal_level=logical`, `needs: kafka`,
+      doctor check, `COURSE_PUBLISH=<port>` to publish a port for group games
+- [x] Contract: `live.graphqls`, `club-page.graphql`, `Ws.java` (frames, slow reader), `Balancer.java`
+      (round-robin TCP balancer with a drop switch), `Load.java` (500 pollers vs subscribers, server CPU),
+      `Sql.java`, `live-test.sh`; trivia (`trivia.graphqls`, `questions.json`, `Play.java`) and tic-tac-toe
+      (`tictactoe.graphqls`, `Ttt.java`)
+- [x] Lectures 11.1–11.7 (Hook / Concept / Java build / Experiment / Check)
+- [x] Labs: m11/01 messageSent, SubscriptionExceptionResolver · m11/02 keep-alives, reconnect with gap fill over
+      WebSocket and SSE through a dropped connection · m11/03 per-subscriber filter, windowed typing, cleanup,
+      takeUntil, a 10,000/s flood · m11/04 three replicas over Redis pub/sub and Kafka · m11/05 Debezium
+      embedded CDC, polling vs subscriptions measured · m11/06 @defer over multipart/mixed · m11/07 decision
+      matrix and pitch (rubric)
+- [x] Mini-project m11/08 Live trivia (scripted game, 11 checks) · Games: m11/09 Tic-tac-toe (12 checks) ·
+      m11/10 Chat stress test (three replicas, two kill -9s, shared history in Redis)
+- [x] Probes: `_workbench/2026-11-21-m11-probe/FINDINGS.md` (20 findings)
+
+`bin/course check m11 --starters` (2026-11-22, after Module 11): 9 auto-graded labs, 0 problems
+(`_workbench/2026-11-21-m11-check-starters.log`; its last line is a bash read error from editing `bin/course`
+while the check ran, after the result). The full-course check was not rerun (TODO).
+
 ## Module 10 (8 lectures, 8 labs, 1 mini-project, 2 games)
 
 - [x] Infra: Keycloak 26.8.2 course service (realm `shelfie`, course signing key), `bin/course token`

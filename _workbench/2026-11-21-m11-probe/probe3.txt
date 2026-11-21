@@ -1,0 +1,28 @@
+== Accept: multipart/mixed
+ [415 ]
+== Accept: multipart/mixed; deferSpec=20220824
+ [415 ]
+== Accept: multipart/mixed, application/json
+{"data":{"hello":"hi"}} [200 application/json]
+== Accept: application/json, multipart/mixed
+{"data":{"hello":"hi"}} [200 application/json]
+== flood 10000/s for 8 s, buffer, slow reader 10/s, no keep-alive
+t=1s received=10 last={"id":"1","payload":{"data":{"flood":10}},"type":"next"}
+  server t=2s {"cancelled":0,"active":1,"heapUsedMb":28,"emitted":16730,"sinkSubscribers":0}
+t=2s received=20 last={"id":"1","payload":{"data":{"flood":20}},"type":"next"}
+t=3s received=30 last={"id":"1","payload":{"data":{"flood":30}},"type":"next"}
+  server t=4s {"cancelled":0,"active":1,"heapUsedMb":21,"emitted":36800,"sinkSubscribers":0}
+t=4s received=40 last={"id":"1","payload":{"data":{"flood":40}},"type":"next"}
+t=5s received=50 last={"id":"1","payload":{"data":{"flood":50}},"type":"next"}
+  server t=6s {"cancelled":0,"active":0,"heapUsedMb":30,"emitted":44608,"sinkSubscribers":0}
+t=6s received=60 last={"id":"1","payload":{"data":{"flood":60}},"type":"next"}
+t=7s received=70 last={"id":"1","payload":{"data":{"flood":70}},"type":"next"}
+  server t=8s {"cancelled":0,"active":0,"heapUsedMb":31,"emitted":44608,"sinkSubscribers":0}
+t=8s received=80 last={"id":"1","payload":{"data":{"flood":80}},"type":"next"}
+t=9s received=90 last={"id":"1","payload":{"data":{"flood":90}},"type":"next"}
+  server t=10s {"cancelled":0,"active":0,"heapUsedMb":31,"emitted":44608,"sinkSubscribers":0}
+t=10s received=100 last={"id":"1","payload":{"data":{"flood":100}},"type":"next"}
+t=11s received=110 last={"id":"1","payload":{"data":{"flood":110}},"type":"next"}
+  server t=12s {"cancelled":0,"active":0,"heapUsedMb":31,"emitted":44608,"sinkSubscribers":0}
+t=12s received=120 last={"id":"1","payload":{"data":{"flood":120}},"type":"next"}
+== log

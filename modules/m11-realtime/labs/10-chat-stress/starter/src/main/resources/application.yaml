@@ -1,0 +1,25 @@
+server.port: 4000
+shelfie:
+  # local: one JVM only. redis: Redis pub/sub. kafka: a Kafka topic. (Lab 11.4.)
+  bus: redis
+  # This instance's name: a, b, c... Kafka uses it for the consumer group.
+  instance: a
+spring:
+  graphql:
+    websocket:
+      path: /graphql
+      keep-alive: 5s
+    http:
+      sse:
+        keep-alive: 5s
+  data:
+    redis:
+      host: redis
+      port: 6379
+      # Game 11.10's own database, so its test can empty it without touching other labs' keys.
+      database: 11
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      # A new instance starts at the newest event: live fan-out, not history.
+      auto-offset-reset: latest

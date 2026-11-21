@@ -1,0 +1,14 @@
+  server CPU to open 500 subscriptions: 2.8 s
+mode subscribe: 500 clients, 30 s, 3 messages sent
+  HTTP requests by clients: 0 (0 a second), WebSockets: 500, failed: 0
+  messages seen: 1500 of 1500 (100.0%)
+  delay sentAt -> seen: median 76 ms, p95 103 ms, max 104 ms
+  server CPU: 6.0 s
+  server CPU to open 500 subscriptions: 1.7 s
+mode subscribe: 500 clients, 30 s, 3 messages sent
+  HTTP requests by clients: 0 (0 a second), WebSockets: 500, failed: 0
+  messages seen: 1500 of 1500 (100.0%)
+  delay sentAt -> seen: median 62 ms, p95 82 ms, max 83 ms
+  server CPU: 4.2 s
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+      8 ubuntu    20   0   14.2g 695552  27576 S   0.0   2.2   0:16.63 java

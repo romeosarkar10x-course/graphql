@@ -1,0 +1,74 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.2.0)
+
+2026-11-21T17:33:17.063Z  INFO 119 --- [           main] probe.App                                : Starting App v1 using Java 25.0.5.1 with PID 119 (/course/_workbench/2026-11-21-m11-probe/app/target/probe.jar started by ubuntu in /course/_workbench/2026-11-21-m11-probe)
+2026-11-21T17:33:17.064Z  INFO 119 --- [           main] probe.App                                : No active profile set, falling back to 1 default profile: "default"
+2026-11-21T17:33:17.437Z  INFO 119 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 4000 (http)
+2026-11-21T17:33:17.443Z  INFO 119 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-21T17:33:17.443Z  INFO 119 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-21T17:33:17.452Z  INFO 119 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 365 ms
+2026-11-21T17:33:17.533Z  INFO 119 --- [           main] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-11-21T17:33:17.605Z  INFO 119 --- [           main] o.s.b.g.a.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Field nullness errors: {}
+	Argument nullness errors: {App#ticks[3 args]=[int failAt should be NULLABLE, int throwAt should be NULLABLE]}
+	Skipped types: []
+2026-11-21T17:33:17.672Z  INFO 119 --- [           main] s.b.g.a.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP [POST, GET] /graphql
+2026-11-21T17:33:17.700Z  INFO 119 --- [           main] s.b.g.a.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint WebSocket /graphql
+2026-11-21T17:33:17.713Z  INFO 119 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 4000 (http) with context path '/'
+2026-11-21T17:33:17.719Z  INFO 119 --- [           main] probe.App                                : Started App in 0.817 seconds (process running for 0.971)
+2026-11-21T17:33:17.773Z  INFO 119 --- [nio-4000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-21T17:33:17.773Z  INFO 119 --- [nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-21T17:33:17.774Z  INFO 119 --- [nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-21T17:33:18.399Z ERROR 119 --- [     parallel-3] s.g.e.ExceptionResolversExceptionHandler : Unresolved IllegalStateException for executionId 1
+
+java.lang.IllegalStateException: risky failed at 2
+	at probe.Ticked.risky(Ticked.java:19) ~[!/:1]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.graphql.data.method.InvocableHandlerMethodSupport.doInvoke(InvocableHandlerMethodSupport.java:108) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at org.springframework.graphql.data.method.annotation.support.DataFetcherHandlerMethod.validateAndInvoke(DataFetcherHandlerMethod.java:126) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at org.springframework.graphql.data.method.annotation.support.DataFetcherHandlerMethod.invoke(DataFetcherHandlerMethod.java:110) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at org.springframework.graphql.data.method.annotation.support.DataFetcherHandlerMethod.invoke(DataFetcherHandlerMethod.java:89) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at org.springframework.graphql.data.method.annotation.support.AnnotatedControllerConfigurer$SchemaMappingDataFetcher.get(AnnotatedControllerConfigurer.java:522) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at org.springframework.graphql.execution.ContextDataFetcherDecorator.lambda$get$0(ContextDataFetcherDecorator.java:92) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at io.micrometer.context.ContextSnapshot.lambda$wrap$1(ContextSnapshot.java:106) ~[context-propagation-1.2.1.jar!/:1.2.1]
+	at org.springframework.graphql.execution.ContextDataFetcherDecorator.get(ContextDataFetcherDecorator.java:92) ~[spring-graphql-2.1.0.jar!/:2.1.0]
+	at graphql.execution.ExecutionStrategy.invokeDataFetcher(ExecutionStrategy.java:528) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.ExecutionStrategy.fetchField(ExecutionStrategy.java:477) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.ExecutionStrategy.fetchField(ExecutionStrategy.java:415) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.ExecutionStrategy.resolveFieldWithInfo(ExecutionStrategy.java:371) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.ExecutionStrategy.getAsyncFieldValueInfo(ExecutionStrategy.java:327) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.ExecutionStrategy.executeObject(ExecutionStrategy.java:214) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.ExecutionStrategy.completeValueForObject(ExecutionStrategy.java:968) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.ExecutionStrategy.completeValue(ExecutionStrategy.java:712) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.ExecutionStrategy.completeField(ExecutionStrategy.java:661) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.ExecutionStrategy.completeField(ExecutionStrategy.java:642) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.SubscriptionExecutionStrategy.executeSubscriptionEvent(SubscriptionExecutionStrategy.java:188) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.SubscriptionExecutionStrategy.lambda$execute$1(SubscriptionExecutionStrategy.java:83) ~[graphql-java-26.1.jar!/:na]
+	at graphql.execution.reactive.CompletionStageSubscriber.onNext(CompletionStageSubscriber.java:64) ~[graphql-java-26.1.jar!/:na]
+	at reactor.core.publisher.StrictSubscriber.onNext(StrictSubscriber.java:91) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxContextWrite$ContextWriteSubscriber.onNext(FluxContextWrite.java:109) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:80) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxOnErrorResume$ResumeSubscriber.onNext(FluxOnErrorResume.java:80) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxMap$MapSubscriber.onNext(FluxMap.java:122) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxLimitRequest$FluxLimitRequestSubscriber.onNext(FluxLimitRequest.java:99) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.publisher.FluxInterval$IntervalRunnable.run(FluxInterval.java:123) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.PeriodicWorkerTask.call(PeriodicWorkerTask.java:63) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at reactor.core.scheduler.PeriodicWorkerTask.run(PeriodicWorkerTask.java:77) ~[reactor-core-3.9.0.jar!/:3.9.0]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:369) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:310) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+

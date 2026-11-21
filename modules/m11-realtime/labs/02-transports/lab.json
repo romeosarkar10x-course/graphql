@@ -1,0 +1,7 @@
+{
+  "title": "Transports: one subscription over WebSocket and SSE, keep-alives, and a client that reconnects",
+  "lecture": "11.2",
+  "kind": "lab",
+  "grading": "both",
+  "needs": []
+}

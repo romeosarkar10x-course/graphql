@@ -1,0 +1,6 @@
+type Query { club(id: ID!): Club, hello: String }
+type Club { id: ID!, name: String!, recommendations: [String!]!, members: [String!]! }
+type Subscription { ticks(n: Int!, failAt: Int = -1, throwAt: Int = -1): Int! }
+extend type Subscription { flood(perSecond: Int!, seconds: Int!, mode: String = "buffer"): Int!, idle: Int! }
+type Tick { n: Int!, risky: Int }
+extend type Subscription { ticked(n: Int!, badAt: Int!): Tick! }

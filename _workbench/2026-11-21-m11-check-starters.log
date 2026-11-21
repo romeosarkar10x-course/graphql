@@ -1,0 +1,20 @@
+ok    m11/01 solution passes
+ok    m11/01 starter fails, as it should
+ok    m11/02 solution passes
+ok    m11/02 starter fails, as it should
+ok    m11/03 solution passes
+ok    m11/03 starter fails, as it should
+ok    m11/04 solution passes
+ok    m11/04 starter fails, as it should
+ok    m11/05 solution passes
+ok    m11/05 starter fails, as it should
+ok    m11/06 solution passes
+ok    m11/06 starter fails, as it should
+ok    m11/08 solution passes
+ok    m11/08 starter fails, as it should
+ok    m11/09 solution passes
+ok    m11/09 starter fails, as it should
+ok    m11/10 solution passes
+ok    m11/10 starter fails, as it should
+9 auto-graded labs checked, 0 problem(s)
+bin/course: line 147: unexpected EOF while looking for matching `"'

@@ -30,6 +30,8 @@ if (exec 3<>/dev/tcp/varnish/6082) 2>/dev/null; then ok "Varnish at varnish:6081
 else warn "Varnish not running" "bin/course ref up   (needed from Module 9)"; fi
 if curl -fsS -o /dev/null -m 5 http://keycloak:8180/realms/shelfie/.well-known/openid-configuration 2>/dev/null; then ok "Keycloak at keycloak:8180 (realm shelfie)"
 else warn "Keycloak not running" "bin/course ref up   (needed for lab 10.1)"; fi
+if (exec 3<>/dev/tcp/kafka/9092) 2>/dev/null; then ok "Kafka at kafka:9092"
+else warn "Kafka not running" "bin/course ref up   (needed for lab 11.4)"; fi
 if curl -fsS -o /dev/null -m 6 -X POST -H 'Content-Type: application/json' -d '{"query":"{__typename}"}' \
      https://countries.trevorblades.com/graphql 2>/dev/null; then ok "internet: public GraphQL APIs reachable"
 else warn "public GraphQL APIs unreachable" "Module 0.3 needs internet; everything else works offline"; fi

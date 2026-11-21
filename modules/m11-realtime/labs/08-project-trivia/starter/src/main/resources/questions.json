@@ -1,0 +1,82 @@
+[
+  {
+    "text": "Who wrote Dune?",
+    "choices": [
+      "Isaac Asimov",
+      "Frank Herbert",
+      "Ursula K. Le Guin",
+      "Arthur C. Clarke"
+    ],
+    "correct": 1
+  },
+  {
+    "text": "Which novel opens with \"Last night I dreamt I went to Manderley again\"?",
+    "choices": [
+      "Jane Eyre",
+      "Rebecca",
+      "Wuthering Heights",
+      "The Woman in White"
+    ],
+    "correct": 1
+  },
+  {
+    "text": "Who wrote Kindred?",
+    "choices": [
+      "Octavia E. Butler",
+      "Toni Morrison",
+      "N. K. Jemisin",
+      "Zadie Smith"
+    ],
+    "correct": 0
+  },
+  {
+    "text": "Where is The Name of the Rose set?",
+    "choices": [
+      "Rome",
+      "Paris",
+      "A remote abbey in northern Italy",
+      "Avignon"
+    ],
+    "correct": 2
+  },
+  {
+    "text": "Which detective does The Big Sleep introduce?",
+    "choices": [
+      "Sam Spade",
+      "Lew Archer",
+      "Philip Marlowe",
+      "Mike Hammer"
+    ],
+    "correct": 2
+  },
+  {
+    "text": "Who wrote Piranesi?",
+    "choices": [
+      "Susanna Clarke",
+      "Kazuo Ishiguro",
+      "Emily St. John Mandel",
+      "Madeline Miller"
+    ],
+    "correct": 0
+  },
+  {
+    "text": "Which word did Neuromancer make famous?",
+    "choices": [
+      "Metaverse",
+      "Cyberspace",
+      "Avatar",
+      "Hacker"
+    ],
+    "correct": 1
+  },
+  {
+    "text": "What is the anarchist moon in The Dispossessed called?",
+    "choices": [
+      "Urras",
+      "Anarres",
+      "Gethen",
+      "Hain"
+    ],
+    "correct": 1
+  }
+]

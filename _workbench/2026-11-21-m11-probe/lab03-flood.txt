@@ -1,0 +1,22 @@
+{"events":30000,"roomId":"r2"}
+starter t=1s fast=10060 slow=20 rss=423MB cpu=748ticks
+starter t=2s fast=20100 slow=40 rss=423MB cpu=771ticks
+starter t=3s fast=30000 slow=60 rss=423MB cpu=790ticks
+starter t=4s fast=30000 slow=80 rss=423MB cpu=790ticks
+starter t=6s fast=30000 slow=120 rss=423MB cpu=790ticks
+starter t=8s fast=30000 slow=160 rss=423MB cpu=790ticks
+starter t=10s fast=30000 slow=200 rss=423MB cpu=791ticks
+starter t=12s fast=30000 slow=236 rss=424MB cpu=793ticks
+starter fast first/last:    432 next {"data":{"typing":{"author":"bot1"}}} /   3425 next {"data":{"typing":{"author":"bot3"}}}
+starter slow last:  11975 next {"data":{"typing":{"author":"bot2"}}}
+{"roomId":"r2","events":30000}
+solution t=1s fast=15 slow=14 rss=289MB cpu=445ticks
+solution t=2s fast=27 slow=26 rss=289MB cpu=449ticks
+solution t=3s fast=39 slow=38 rss=289MB cpu=452ticks
+solution t=4s fast=39 slow=39 rss=289MB cpu=452ticks
+solution t=6s fast=39 slow=39 rss=289MB cpu=453ticks
+solution t=8s fast=39 slow=39 rss=289MB cpu=453ticks
+solution t=10s fast=39 slow=39 rss=289MB cpu=454ticks
+solution t=12s fast=39 slow=39 rss=290MB cpu=456ticks
+solution fast first/last:    439 next {"data":{"typing":{"author":"bot1"}}} /   3285 next {"data":{"typing":{"author":"bot3"}}}
+solution slow last:   3103 next {"data":{"typing":{"author":"bot2"}}}

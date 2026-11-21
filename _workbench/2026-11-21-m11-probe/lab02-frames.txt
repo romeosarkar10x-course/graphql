@@ -1,0 +1,50 @@
+== WebSocket (Ws.java prints the payload of each frame)
+== SSE (raw bytes, cat -A)
+     0 ready
+   520 next {"data":{"messageSent":{"id":"m7","author":"Ada","body":"one"}}}
+   832 next {"data":{"messageSent":{"id":"m8","author":"Ben","body":"two"}}}
+  5003 ping
+  7003 end
+-- SSE headers
+HTTP/1.1 200 
+Cache-Control: no-cache
+Content-Type: text/event-stream
+Transfer-Encoding: chunked
+Date: Sat, 21 Nov 2026 17:37:52 GMT
+
+-- SSE body
+event:next$
+data: {"data":{"messageSent":{"id":"m7","author":"Ada","body":"one"}}}$
+$
+event:next$
+data: {"data":{"messageSent":{"id":"m8","author":"Ben","body":"two"}}}$
+$
+== client across a 1.5 s drop (stderr then stdout)
+-- ws stderr
+connected ws
+dropped: java.net.SocketException: Connection reset
+reconnecting in 287 ms
+dropped: no connection
+reconnecting in 458 ms
+connected ws
+filled 2
+dropped: no connection
+reconnecting in 215 ms
+-- ws stdout
+m9 Ada: before
+m10 Ben: during
+m11 Cleo: after
+-- sse stderr
+connected sse
+dropped: java.io.UncheckedIOException: java.io.IOException: closed
+reconnecting in 237 ms
+dropped: no connection
+reconnecting in 428 ms
+connected sse
+filled 2
+dropped: no connection
+reconnecting in 244 ms
+-- sse stdout
+m12 Ada: before
+m13 Ben: during
+m14 Cleo: after

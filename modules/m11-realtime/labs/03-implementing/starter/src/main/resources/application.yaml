@@ -1,0 +1,12 @@
+server.port: 4000
+spring:
+  graphql:
+    websocket:
+      path: /graphql
+      # graphql-transport-ws "ping" after 5 s of silence, so proxies keep the socket open and a dead
+      # connection is noticed (lab 11.2).
+      keep-alive: 5s
+    http:
+      sse:
+        # An SSE comment line (":") after 5 s of silence, for the same reasons.
+        keep-alive: 5s
