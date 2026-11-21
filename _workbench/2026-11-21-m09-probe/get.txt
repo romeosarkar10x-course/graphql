@@ -1,0 +1,11 @@
+== GET with query
+HTTP/1.1 405 
+
+== GET mutation
+HTTP/1.1 405 
+Allow: POST
+
+== APQ hash only, POST
+{"errors":[{"message":"Invalid syntax with offending token 'PersistedQueryMarker' at line 1 column 1","locations":[{"line":1,"column":1}],"extensions":{"classification":"InvalidSyntax"}}],"extensions":{"sql":{"statements":0}}}
+== APQ hash only, GET
+HTTP/1.1 405 

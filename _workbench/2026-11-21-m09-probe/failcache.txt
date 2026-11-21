@@ -1,0 +1,4 @@
+first: failed down
+second load done=true failed=true batch calls=[[1], [1]]
+after clear: batch calls=[[1], [1], [1]]
+try: key1=v1 key2 failed=true

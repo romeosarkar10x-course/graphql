@@ -1,0 +1,9 @@
+{
+  "title": "Guess the query count",
+  "lecture": "9.1",
+  "kind": "game",
+  "grading": "auto",
+  "needs": [
+    "postgres"
+  ]
+}

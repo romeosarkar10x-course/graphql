@@ -1,0 +1,30 @@
+> request count                                                                      |       400 |       400 |         -
+> mean response time (ms)                                                            |        52 |        52 |         -
+> response time 50th percentile (ms)                                                 |        51 |        51 |         -
+> response time 75th percentile (ms)                                                 |        54 |        54 |         -
+> response time 95th percentile (ms)                                                 |        60 |        60 |         -
+> response time 99th percentile (ms)                                                 |        64 |        64 |         -
+p0.5 0.048234496
+p0.95 0.350224384
+p0.99 0.903872512
+> request count                                                                      |       400 |       400 |         -
+> mean response time (ms)                                                            |        15 |        15 |         -
+> response time 50th percentile (ms)                                                 |        14 |        14 |         -
+> response time 75th percentile (ms)                                                 |        15 |        15 |         -
+> response time 95th percentile (ms)                                                 |        17 |        17 |         -
+> response time 99th percentile (ms)                                                 |        18 |        18 |         -
+p0.5 0.012058624
+p0.95 0.019398656
+p0.99 0.519569408
+
+                                           Java Methods that Execute the Most
+
+Method                                                                                                  Samples Percent
+------------------------------------------------------------------------------------------------------- ------- -------
+java.util.HashMap.hash(Object)                                                                               23   1.65%
+java.util.HashMap.getNode(Object)                                                                            20   1.44%
+graphql.execution.instrumentation.dataloader.PerLevelDataLoaderDispatchStrategy$CallStack.get(int)           19   1.37%
+java.util.concurrent.ConcurrentHashMap.get(Object)                                                           18   1.29%
+org.springframework.aop.framework.ReflectiveMethodInvocation.proceed()                                       14   1.01%
+java.lang.reflect.Method.invoke(Object, Object[])                                                            14   1.01%
+java.util.HashMap.putVal(int, Object, Object, boolean, boolean)                                              13   0.93%

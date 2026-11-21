@@ -1,0 +1,25 @@
+net.ttddyy:datasource-proxy 1.11.1
+com.graphql-java:java-dataloader 2022-03-21T23-44-16-7bf46ea
+org.openjdk.jmh:jmh-core 1.37
+io.gatling.highcharts:gatling-charts-highcharts 3.16.1
+io.gatling:gatling-maven-plugin 4.22.3
+com.github.ben-manes.caffeine:caffeine 3.3.1
+org.jooq:jooq 3.21.10
+io.lettuce:lettuce-core 8.0.0.BETA1
+tools.profiler:async-profiler 4.6
+com.graphql-java:graphql-java 230521-nf-execution
+org.junit.platform:junit-platform-testkit 6.2.0-M1
+library/redis: 8.8.4-alpine@2026-11-12 8.8-alpine@2026-11-12 8.6.8-alpine@2026-11-12 8.6-alpine@2026-11-12 8.4.8-alpine@2026-11-12 8.4-alpine@2026-11-12 8.2.11-alpine@2026-11-12 8.2-alpine@2026-11-12 
+library/varnish: 9.1.0@2026-11-06 9.1@2026-11-06 9.0.4@2026-11-05 9.0@2026-11-05 6.0.18@2026-11-05 6.0@2026-11-05 8.0.2@2026-09-19 8.0@2026-09-19 
+valkey/valkey: 9.2-alpine@2026-11-19 9.2.0-alpine@2026-11-19 9.2@2026-11-19 9.2.0@2026-11-19 9.0-alpine@2026-11-19 9.0.8-alpine@2026-11-19 9.0@2026-11-19 9.0.8@2026-11-19 
+v4.6
+2026-10-19T23:51:47Z
+async-profiler-4.6-linux-arm64-debug.tar.gz
+async-profiler-4.6-linux-arm64.tar.gz
+async-profiler-4.6-linux-x64-debug.tar.gz
+async-profiler-4.6-linux-x64.tar.gz
+async-profiler-4.6-macos.zip
+async-profiler.jar
+jfr-converter.jar
+actions/checkout v7.0.1 2026-07-20
+actions/setup-java v6.3.0 2026-11-14

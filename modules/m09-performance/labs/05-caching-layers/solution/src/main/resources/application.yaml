@@ -1,0 +1,15 @@
+server.port: 4000
+spring:
+  datasource:
+    # Inside the course image. bin/course clubs m09_05 loads the data.
+    url: jdbc:postgresql://postgres:5432/shelfie?currentSchema=m09_05
+    username: shelfie
+    password: shelfie
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate.ddl-auto: none
+  data.redis:
+    host: redis             # the course service; the response cache lives here
+    port: 6379
+  graphql.http.methods: GET,POST   # GET makes responses cacheable by HTTP caches (lecture 9.5)

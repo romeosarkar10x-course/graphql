@@ -1,0 +1,3 @@
+# name: JVM options. Same heap (-Xmx from HEAP) for all; only these options differ.
+# Add the other three configurations (lecture 9.8): virtual threads, and ZGC, and both.
+platform-g1: -XX:+UseG1GC

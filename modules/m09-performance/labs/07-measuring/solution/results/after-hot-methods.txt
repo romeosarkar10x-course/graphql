@@ -1,0 +1,12 @@
+
+                                           Java Methods that Execute the Most
+
+Method                                                                                                  Samples Percent
+------------------------------------------------------------------------------------------------------- ------- -------
+java.lang.invoke.VarHandleReferences$FieldInstanceReadWrite.compareAndSet(...)                               42   4.66%
+java.util.stream.ReferencePipeline$2$1.accept(Object)                                                        17   1.89%
+java.lang.invoke.DirectMethodHandle.allocateInstance(Object)                                                 15   1.66%
+graphql.execution.instrumentation.dataloader.PerLevelDataLoaderDispatchStrategy$CallStack.get(int)           14   1.55%
+java.util.ArrayList$ArrayListSpliterator.forEachRemaining(Consumer)                                          12   1.33%
+dev.shelfie.perf.BatchController$$Lambda.0x0000000009e576b8.test(Object)                                     12   1.33%
+java.util.HashMap.resize()                                                                                   11   1.22%

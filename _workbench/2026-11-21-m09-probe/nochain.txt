@@ -1,0 +1,4 @@
+
+exit 000 10.001460s
+curl=28
+{"data":{"clubs":[{"name":"Last Mirror Club"},{"name":"Paper Lantern Club"}]},"extensions":{"sql":{"statements":1}}}

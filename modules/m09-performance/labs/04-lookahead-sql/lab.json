@@ -1,0 +1,9 @@
+{
+  "title": "Lookahead: the whole club page in one SQL statement",
+  "lecture": "9.4",
+  "kind": "lab",
+  "grading": "both",
+  "needs": [
+    "postgres"
+  ]
+}

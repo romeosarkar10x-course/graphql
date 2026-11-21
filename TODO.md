@@ -1,8 +1,8 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 8
+## Now: user review of Module 9
 
-The user said "continue" (2026-11-21) after Module 7; Module 8 is built. Wait for review before Module 9.
+The user said "continue" (2026-11-21) after Module 8; Module 9 is built. Wait for review before Module 10.
 
 ## Verification debt
 
@@ -38,12 +38,18 @@ The user said "continue" (2026-11-21) after Module 7; Module 8 is built. Wait fo
 - [ ] Re-check Spring Data JPA's keyset scroll SQL (OR form, 4.2.0) and Spring for GraphQL's cursor
       strategy bean condition and status codes (400/200) each release; update lectures 8.2 and 8.5.
 - [ ] RFC stages in Module 8 (#1163 RFC 1, #1183 RFC 3, #1184 RFC 2, #1073 RFC 3, #1200 RFC 0) each term.
+- [ ] Module 9 timing checks (game 9a's p95 at half the baseline, lab 9.6's 90% hit rate, lab 9.7's JMH 2x,
+      lab 9.8's winner re-run) were green on one machine; watch them on slow or busy machines.
+- [ ] Lab 9.8's reference report has one run per configuration; repeat 5x and report medians.
+- [ ] Re-check each release: Spring for GraphQL enabling DataLoader chaining (2.1.0: never), sending
+      Cache-Control on GET (2.1.0: none), the GET-mutation `Allow` header; graphql-java's APQ hash check on hits.
+- [ ] Module 7's CI workflow pins actions/checkout@v4 and setup-java@v4; current majors are v7 and v6.
 - [ ] Mini-project 8 and game 8a time-based checks (bot every 20/30 ms) were green on one machine;
       watch for flakiness on slow machines.
 
 ## Next modules (in order)
 
-- [ ] M9–M18, capstone, per plan/syllabus.md
+- [ ] M10–M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 

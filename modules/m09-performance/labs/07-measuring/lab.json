@@ -1,0 +1,9 @@
+{
+  "title": "Measuring properly: JMH, Gatling, JFR, async-profiler, Micrometer",
+  "lecture": "9.7",
+  "kind": "lab",
+  "grading": "both",
+  "needs": [
+    "postgres"
+  ]
+}

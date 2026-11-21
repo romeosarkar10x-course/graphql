@@ -1,0 +1,4 @@
+c2b9944cecec09516421c4e2ccaa971b4d6d8cdfac70dfeaf8ce6c19e53bf06f  { club(id: 1) { name owner { name } } }
+c9b6aa2e07262ba2c49b5020c907fef85dd6b18afc73be47f5bef1f630592632  { club(id: 3) { name memberCount } }
+d6649267477e2a7f309461a0ef8e406d16897f5cb1e86bfa09dbe1a86d8708cf  { club(id: 4) { name } }
+190ae0789d35fc71f10323c94a3d494070518fef85567e33dff598f68096d9fa  { clubs(first: 2) { name } }

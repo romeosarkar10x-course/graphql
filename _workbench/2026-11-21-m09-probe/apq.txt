@@ -1,0 +1,36 @@
+varnish -> 172.17.0.8:4000 (lab1795264918943)
+== 1 GET hash only, unknown
+HTTP/1.1 200 
+{"errors":[{"message":"PersistedQueryNotFound","locations":[],"extensions":{"persistedQueryId":"c2b9944cecec09516421c4e2ccaa971b4d6d8cdfac70dfeaf8ce6c19e53bf06f","generatedBy":"graphql-java","classification":"PersistedQueryNotFound"}}],"extensions":{"sql":{"statements":0}}}
+
+== 2 GET query + hash (registers)
+HTTP/1.1 200 
+{"data":{"club":{"name":"Last Mirror Club","owner":{"name":"Asha Haddad"}}},"extensions":{"sql":{"statements":2}}}
+
+== 3 GET hash only, known
+HTTP/1.1 200 
+Content-Type: application/json
+{"data":{"club":{"name":"Last Mirror Club","owner":{"name":"Asha Haddad"}}},"extensions":{"sql":{"statements":2}}}
+
+== 4 known hash, other query text
+{"data":{"club":{"name":"Last Mirror Club","owner":{"name":"Asha Haddad"}}},"extensions":{"sql":{"statements":2}}}
+== 4b new hash that does not match its text
+{"errors":[{"message":"PersistedQueryIdInvalid","locations":[],"extensions":{"persistedQueryId":"0000000000000000000000000000000000000000000000000000000000000000","classification":"PersistedQueryIdInvalid"}}],"extensions":{"sql":{"statements":0}}}
+== 5 GET mutation
+HTTP/1.1 405 
+Allow: POST,GET
+{"errors":[{"message":"Operation type 'MUTATION' is not allowed for this request","extensions":{"classification":"OperationNotSupported"}}],"extensions":{"sql":{"statements":0}}}
+
+== 6 via varnish x3
+HTTP/1.1 200 OK X-Varnish: 8 Age: 0 X-Cache: MISS 
+HTTP/1.1 200 OK X-Varnish: 32773 9 Age: 0 X-Cache: HIT 
+HTTP/1.1 200 OK X-Varnish: 11 9 Age: 0 X-Cache: HIT 
+== 6b via varnish, POST x2
+HTTP/1.1 200 OK X-Cache: MISS 
+HTTP/1.1 200 OK X-Cache: MISS 
+== 6c via varnish, personal: X-Shelfie-User
+X-Cache: HIT
+X-Cache: HIT
+== 7 bytes
+POST body full: 271
+GET url hash: 164

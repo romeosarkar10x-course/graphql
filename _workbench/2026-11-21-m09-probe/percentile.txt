@@ -1,0 +1,3 @@
+["graphql.datafetcher","graphql.request","graphql.request.percentile"]
+{"availableTags":[{"tag":"phi","values":["0.95","0.99","0.5"]},{"tag":"graphql.outcome","values":["SUCCESS"]},{"tag":"graphql.operation.type","values":["query"]},{"tag":"error","values":["none"]}],"baseUnit":"seconds","measurements":[{"statistic":"VALUE","value":0.180617216}],"name":"graphql.request.percentile"}
+[{"statistic":"VALUE","value":0.00294912}]

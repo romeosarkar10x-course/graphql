@@ -1,0 +1,10 @@
+{
+  "title": "Automatic persisted queries over GET, behind Varnish",
+  "lecture": "9.6",
+  "kind": "lab",
+  "grading": "both",
+  "needs": [
+    "postgres",
+    "varnish"
+  ]
+}

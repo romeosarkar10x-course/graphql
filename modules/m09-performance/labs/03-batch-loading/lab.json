@@ -1,0 +1,9 @@
+{
+  "title": "Batch loading with java-dataloader and Spring",
+  "lecture": "9.3",
+  "kind": "lab",
+  "grading": "both",
+  "needs": [
+    "postgres"
+  ]
+}

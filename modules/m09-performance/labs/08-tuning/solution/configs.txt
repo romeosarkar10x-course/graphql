@@ -1,0 +1,5 @@
+# name: JVM options. Same heap (-Xmx from HEAP) for all; only these options differ.
+platform-g1: -XX:+UseG1GC
+virtual-g1: -XX:+UseG1GC -Dspring.threads.virtual.enabled=true
+platform-zgc: -XX:+UseZGC
+virtual-zgc: -XX:+UseZGC -Dspring.threads.virtual.enabled=true

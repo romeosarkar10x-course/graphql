@@ -1,0 +1,46 @@
+> min response time (ms)                                                             |        11 |        11 |         -
+> max response time (ms)                                                             |        38 |        38 |         -
+> mean response time (ms)                                                            |        15 |        15 |         -
+> response time std deviation (ms)                                                   |         2 |         2 |         -
+> response time 50th percentile (ms)                                                 |        14 |        14 |         -
+> response time 75th percentile (ms)                                                 |        15 |        15 |         -
+> response time 95th percentile (ms)                                                 |        19 |        19 |         -
+> response time 99th percentile (ms)                                                 |        24 |        24 |         -
+> mean throughput (rps)                                                              |        20 |        20 |         -
+---- Response Time Distribution ----------------------------------------------------------------------------------------
+> OK: t < 800 ms                                                                                            400   (100%)
+> OK: 800 ms <= t < 1200 ms                                                                                   0     (0%)
+> OK: t >= 1200 ms                                                                                            0     (0%)
+> KO                                                                                                          0     (0%)
+========================================================================================================================
+results in results/after-*
+
+real	0m42.806s
+user	1m6.061s
+sys	0m2.158s
+total 6724
+drwxr-xr-x 2 ubuntu ubuntu    4096 Nov 21 12:58 .
+drwxr-xr-x 6 ubuntu ubuntu    4096 Nov 21 12:58 ..
+-rw-r--r-- 1 ubuntu ubuntu    6438 Nov 21 12:58 after-app.log
+-rw-r--r-- 1 ubuntu ubuntu 1059656 Nov 21 12:58 after-flame.html
+-rw-r--r-- 1 ubuntu ubuntu    2057 Nov 21 12:58 after-gatling.txt
+-rw-r--r-- 1 ubuntu ubuntu 5796218 Nov 21 12:58 after.jfr
+-rw-r--r-- 1 ubuntu ubuntu     338 Nov 21 12:58 after-metrics.json
+{"availableTags":[{"tag":"graphql.outcome","values":["SUCCESS"]},{"tag":"graphql.operation.type","values":["query"]},{"tag":"error","values":["none"]}],"baseUnit":"seconds","measurements":[{"statistic":"COUNT","value":600.0},{"statistic":"TOTAL_TIME","value":14.84035514},{"statistic":"MAX","value":0.732383362}],"name":"graphql.request"}
+
+                                           Java Methods that Execute the Most
+
+Method                                                                                                  Samples Percent
+------------------------------------------------------------------------------------------------------- ------- -------
+java.lang.invoke.VarHandleReferences$FieldInstanceReadWrite.compareAndSet(...)                               49   5.33%
+graphql.execution.instrumentation.dataloader.PerLevelDataLoaderDispatchStrategy$CallStack.get(int)           16   1.74%
+java.util.LinkedHashMap$LinkedHashIterator.nextNode()                                                        14   1.52%
+java.util.stream.ReferencePipeline$2$1.accept(Object)                                                        14   1.52%
+java.util.HashMap.getNode(Object)                                                                            12   1.31%
+java.lang.invoke.DirectMethodHandle.allocateInstance(Object)                                                 12   1.31%
+graphql.execution.instrumentation.ChainedInstrumentation.chainedMapAndDropNulls(...)                         12   1.31%
+java.lang.Class.cast(Object)                                                                                 12   1.31%
+graphql.execution.instrumentation.dataloader.PerLevelDataLoaderDispatchStrategy.fieldFetched(...)            11   1.20%
+dev.shelfie.perf.BatchController$$Lambda.0x0000000079e5f278.test(Object)                                     10   1.09%
+tools.jackson.core.json.UTF8JsonGenerator._writeStringSegment(String, int, int)                               9   0.98%
+2

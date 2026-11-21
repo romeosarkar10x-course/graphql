@@ -1,0 +1,9 @@
+{
+  "title": "Mini-project: an N+1 detector for JUnit 5",
+  "lecture": "9.3",
+  "kind": "project",
+  "grading": "auto",
+  "needs": [
+    "postgres"
+  ]
+}

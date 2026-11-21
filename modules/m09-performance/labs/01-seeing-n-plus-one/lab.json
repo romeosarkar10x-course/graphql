@@ -1,0 +1,9 @@
+{
+  "title": "Seeing N+1: count every statement",
+  "lecture": "9.1",
+  "kind": "lab",
+  "grading": "both",
+  "needs": [
+    "postgres"
+  ]
+}

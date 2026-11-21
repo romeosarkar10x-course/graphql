@@ -1,0 +1,15 @@
+server.port: 4000
+spring:
+  datasource:
+    # Inside the course image. bin/course clubs m09_08 loads the data.
+    url: jdbc:postgresql://postgres:5432/shelfie?currentSchema=m09_08
+    username: shelfie
+    password: shelfie
+  jpa:
+    show-sql: false         # logging 8 statements per request at 20 requests/s would be measured too
+    open-in-view: false
+    hibernate.ddl-auto: none
+management:
+  endpoints.web.exposure.include: health,metrics
+  # Percentiles computed in the app (a histogram per timer), so /actuator/metrics reports p50/p95/p99
+  metrics.distribution.percentiles.graphql.request: 0.5, 0.95, 0.99

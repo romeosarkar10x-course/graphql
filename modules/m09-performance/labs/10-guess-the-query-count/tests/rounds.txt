@@ -1,0 +1,10 @@
+naive|{ club(id: 1) { name } }
+naive|{ club(id: 1) { owner { name } currentBook { title } } }
+naive|{ clubs(first: 5) { owner { name } } }
+naive|{ clubs(first: 10) { currentBook { title } } }
+naive|{ clubs(first: 4) { members(first: 3) { reviews(first: 2) { book { title } } } } }
+naive|{ a: club(id: 1) { name } b: club(id: 1) { name } }
+naive|{ clubs(first: 3) { memberCount members(first: 30) { handle } } }
+batched|DASHBOARD
+batched|{ clubs(first: 5) { owner { reviews(first: 3) { book { title } } } } }
+batched|{ c1: club(id: 1) { members(first: 2) { handle } } c2: club(id: 2) { members(first: 2) { handle } } }

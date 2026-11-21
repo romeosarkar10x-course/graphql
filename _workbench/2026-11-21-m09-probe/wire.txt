@@ -1,0 +1,5 @@
+Wire.java on the lab 9.6 solution, 2026-11-21
+mode        request bytes  hit rate   median ms
+POST                  281        0%        17.3
+GET                   357       98%         0.4
+APQ GET               187       98%         0.3

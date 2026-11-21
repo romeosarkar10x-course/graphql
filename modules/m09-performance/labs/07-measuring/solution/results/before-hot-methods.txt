@@ -1,0 +1,12 @@
+
+                                           Java Methods that Execute the Most
+
+Method                                                                                                  Samples Percent
+------------------------------------------------------------------------------------------------------- ------- -------
+java.util.HashMap.hash(Object)                                                                               23   1.65%
+java.util.HashMap.getNode(Object)                                                                            20   1.44%
+graphql.execution.instrumentation.dataloader.PerLevelDataLoaderDispatchStrategy$CallStack.get(int)           19   1.37%
+java.util.concurrent.ConcurrentHashMap.get(Object)                                                           18   1.29%
+org.springframework.aop.framework.ReflectiveMethodInvocation.proceed()                                       14   1.01%
+java.lang.reflect.Method.invoke(Object, Object[])                                                            14   1.01%
+java.util.HashMap.putVal(int, Object, Object, boolean, boolean)                                              13   0.93%

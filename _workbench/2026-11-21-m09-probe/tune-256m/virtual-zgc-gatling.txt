@@ -1,0 +1,25 @@
+---- Global Information -------------------------------------------------------------|---Total---|-----OK----|----KO----
+> request count                                                                      |     3,000 |        34 |     2,966
+> min response time (ms)                                                             |        24 |        24 |     5,266
+> max response time (ms)                                                             |    60,001 |       909 |    60,001
+> mean response time (ms)                                                            |    22,500 |       237 |    22,755
+> response time std deviation (ms)                                                   |     9,440 |       259 |     9,186
+> response time 50th percentile (ms)                                                 |    20,001 |       123 |    20,001
+> response time 75th percentile (ms)                                                 |    20,001 |       406 |    20,001
+> response time 95th percentile (ms)                                                 |    45,301 |       802 |    45,315
+> response time 99th percentile (ms)                                                 |    60,000 |       909 |    60,000
+> mean throughput (rps)                                                              |     47.62 |      0.54 |     47.08
+---- Response Time Distribution ----------------------------------------------------------------------------------------
+> OK: t < 800 ms                                                                                             32  (1.07%)
+> OK: 800 ms <= t < 1200 ms                                                                                   2  (0.07%)
+> OK: t >= 1200 ms                                                                                            0     (0%)
+> KO                                                                                                      2,966 (98.87%)
+---- Errors ------------------------------------------------------------------------------------------------------------
+> i.n.c.ConnectTimeoutException: connection timed out after 10000 ms: localhost/[0:0:0:0:0:0:0:1]:400     2,673 (90.12%)
+0
+> Request timeout to localhost/127.0.0.1:4000 after 60000 ms                                                110  (3.71%)
+> status.find.is(200), found 503                                                                            109  (3.67%)
+> jsonPath($.data.clubs[9].name).find.exists, found nothing                                                  49  (1.65%)
+> i.g.h.c.i.PrematureCloseException: Premature close                                                         18  (0.61%)
+> status.find.is(200), found 500                                                                              7  (0.24%)
+========================================================================================================================

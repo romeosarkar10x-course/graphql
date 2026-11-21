@@ -1,0 +1,7 @@
+dashboard: {"sql":{"statements":1240}} 642 ms bytes 58163
+dashboard: {"sql":{"statements":1240}} 243 ms bytes 58163
+dashboard: {"sql":{"statements":1240}} 185 ms bytes 58163
+288b698e61e086a43bf8a66fb49e53b3  /tmp/dashboard.json
+club 1: {"data":{"club":{"name":"Last Mirror Club","owner":{"name":"Asha Haddad"},"members":[{"handle":"reader54"},{"handle":"reader133"},{"handle":"reader212"}]}},"extensions":{"sql":{"statements":3}}}
+club 10 currentBook: {"data":{"club":{"currentBook":null,"memberCount":25}},"extensions":{"sql":{"statements":2}}}
+4965

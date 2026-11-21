@@ -1,0 +1,16 @@
+dashboard: {"sql":{"statements":1250}} 671 ms bytes 59196
+dashboard: {"sql":{"statements":1250}} 246 ms bytes 59196
+dashboard: {"sql":{"statements":1250}} 202 ms bytes 59196
+b752a20666bb25ad41601192581eb818  /tmp/dashboard.json
+club 1: {"data":{"club":{"name":"Last Mirror Club","owner":{"name":"Asha Haddad"},"members":[{"handle":"reader54"},{"handle":"reader133"},{"handle":"reader212"}]}},"extensions":{"sql":{"statements":3}}}
+club 10 currentBook: {"data":{"club":{"currentBook":null,"memberCount":25}},"extensions":{"sql":{"statements":2}}}
+5005
+dashboard: {"sql":{"statements":8}} 371 ms bytes 59193
+dashboard: {"sql":{"statements":8}} 57 ms bytes 59193
+dashboard: {"sql":{"statements":8}} 44 ms bytes 59193
+b752a20666bb25ad41601192581eb818  /tmp/dashboard.json
+club 1: {"data":{"club":{"name":"Last Mirror Club","owner":{"name":"Asha Haddad"},"members":[{"handle":"reader54"},{"handle":"reader133"},{"handle":"reader212"}]}},"extensions":{"sql":{"statements":3}}}
+club 10 currentBook: {"data":{"club":{"currentBook":null,"memberCount":25}},"extensions":{"sql":{"statements":2}}}
+23
+7da3e44ac2c74ef50f5e7301fcfa1b7c  -
+7da3e44ac2c74ef50f5e7301fcfa1b7c  modules/m09-performance/contract/dashboard.expected.json

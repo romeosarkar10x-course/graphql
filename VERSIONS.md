@@ -23,6 +23,16 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | jspecify | 1.0.0 | — | mini-project 3 |
 | Testcontainers | 2.0.5 | — | |
 | PostgreSQL | 18.7 (`postgres:18.7-alpine`, course service) | — | Module 8 on. 19.0 was released 2026-11-19, two days before; move to it next term. Collation `en_US.utf8` (libc) |
+| Redis | 8.8.4 (`redis:8.8.4-alpine`, course service) | — | Module 9.5's response cache, via spring-boot-starter-data-redis (Lettuce 7.8.0, Boot BOM) |
+| Varnish | 9.1.0 (`varnish:9.1.0`, course service) | — | Module 9.6; started with `-S none`, admin port inside the course network only; `tools/varnish.py` loads the backend. No `if()` expression in its VCL |
+| datasource-proxy | 1.11.1 | — | Module 9 statement counter |
+| java-dataloader | 6.0.0 (from graphql-java 26.1) | — | chaining is off by default and Spring never enables it (Module 9.3) |
+| Caffeine | 3.3.1 (Boot BOM) | — | Module 9.5, 9.6, 9.8 |
+| jOOQ | 3.21.9 (Boot BOM; 3.21.10 on Central) | — | Module 9.4 MULTISET; spring-boot-starter-jooq, no code generation |
+| JMH | 1.37 | — | Module 9.7 |
+| Gatling | 3.16.1, gatling-maven-plugin 4.22.3 | k6 | Module 9.7, Java DSL; Maven, no Node in the image |
+| async-profiler | 4.6 (Maven Central jar, which carries the native libraries) | — | `event=itimer` in containers |
+| GitHub Actions | actions/checkout v7, actions/setup-java v6 | — | Module 9 project workflow (Module 7's pins v4) |
 | PostgreSQL JDBC | 42.7.14 (Boot BOM; also in course-lib) | — | single-file SQL labs (8.2) |
 | jqwik | 1.10.2 | — | lab 8.4; runs on Boot 4.2's JUnit 6.1.3 platform with no extra config |
 | Lanterna | 3.1.5 | — | mini-project 8; 3.2.0-alpha1 skipped. `DefaultVirtualTerminal.readInput` holds the terminal lock while waiting, so the app uses `pollInput` |

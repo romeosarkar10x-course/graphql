@@ -1,0 +1,21 @@
+---- Global Information -------------------------------------------------------------|---Total---|-----OK----|----KO----
+> request count                                                                      |     3,000 |        16 |     2,984
+> min response time (ms)                                                             |        34 |        34 |    20,000
+> max response time (ms)                                                             |    60,002 |       402 |    60,002
+> mean response time (ms)                                                            |    23,481 |       138 |    23,606
+> response time std deviation (ms)                                                   |    11,552 |       119 |    11,456
+> response time 50th percentile (ms)                                                 |    20,001 |        87 |    20,001
+> response time 75th percentile (ms)                                                 |    20,001 |       201 |    20,001
+> response time 95th percentile (ms)                                                 |    60,000 |       381 |    60,000
+> response time 99th percentile (ms)                                                 |    60,001 |       402 |    60,001
+> mean throughput (rps)                                                              |     48.39 |      0.26 |     48.13
+---- Response Time Distribution ----------------------------------------------------------------------------------------
+> OK: t < 800 ms                                                                                             16  (0.53%)
+> OK: 800 ms <= t < 1200 ms                                                                                   0     (0%)
+> OK: t >= 1200 ms                                                                                            0     (0%)
+> KO                                                                                                      2,984 (99.47%)
+---- Errors ------------------------------------------------------------------------------------------------------------
+> i.n.c.ConnectTimeoutException: connection timed out after 10000 ms: localhost/[0:0:0:0:0:0:0:1]:400     2,715 (90.99%)
+0
+> Request timeout to localhost/127.0.0.1:4000 after 60000 ms                                                269  (9.01%)
+========================================================================================================================

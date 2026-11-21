@@ -1,0 +1,15 @@
+# The club dashboard: 10 clubs, 20 members each, 5 reviews per member, each review's book.
+query Dashboard {
+  clubs(first: 10) {
+    id
+    name
+    owner { name }
+    currentBook { title }
+    ownerPicks { title }
+    memberCount
+    members(first: 20) {
+      handle
+      reviews(first: 5) { rating book { title } }
+    }
+  }
+}

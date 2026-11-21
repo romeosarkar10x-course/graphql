@@ -41,6 +41,10 @@ needs_check() {
                    || { echo "  needs Toxiproxy: run bin/course ref up" >&2; return 1; } ;;
       postgres) (exec 3<>/dev/tcp/postgres/5432) 2>/dev/null \
                   || { echo "  needs PostgreSQL: run bin/course ref up" >&2; return 1; } ;;
+      redis) (exec 3<>/dev/tcp/redis/6379) 2>/dev/null \
+               || { echo "  needs Redis: run bin/course ref up" >&2; return 1; } ;;
+      varnish) (exec 3<>/dev/tcp/varnish/6082) 2>/dev/null \
+                 || { echo "  needs Varnish: run bin/course ref up" >&2; return 1; } ;;
       internet) curl -fsS -o /dev/null -m 5 https://countries.trevorblades.com/graphql -X POST \
                   -H 'Content-Type: application/json' -d '{"query":"{__typename}"}' 2>/dev/null \
                   || { echo "  needs internet access to public GraphQL APIs" >&2; return 1; } ;;
@@ -170,6 +174,10 @@ EOF
   catalog)   # Module 8's deterministic book catalogue in PostgreSQL
     [[ $# -ge 1 ]] || die "usage: bin/course catalog <schema> [rows]   (default 10000 rows)"
     exec java -cp "$(lib_cp)" /course/modules/m08-pagination-errors/contract/Catalog.java "$@" ;;
+
+  clubs)     # Module 9's deterministic club dataset in PostgreSQL
+    [[ $# -ge 1 ]] || die "usage: bin/course clubs <schema> [scale]   (scale 1: 100 clubs, 20,000 reviews)"
+    exec java -cp "$(lib_cp)" /course/modules/m09-performance/contract/ClubData.java "$@" ;;
 
   doctor) exec tools/doctor-image.sh ;;
   *) usage ;;

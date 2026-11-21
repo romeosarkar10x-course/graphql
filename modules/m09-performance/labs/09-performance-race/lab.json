@@ -1,0 +1,9 @@
+{
+  "title": "Performance race",
+  "lecture": "9.7",
+  "kind": "game",
+  "grading": "auto",
+  "needs": [
+    "postgres"
+  ]
+}

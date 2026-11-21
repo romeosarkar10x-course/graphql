@@ -24,6 +24,10 @@ if curl -fsS -o /dev/null -m 3 "$TOXI_API/proxies/shelfie" 2>/dev/null; then ok 
 else warn "toxiproxy route missing" "bin/course ref up   (needed in Module 1.2)"; fi
 if (exec 3<>/dev/tcp/postgres/5432) 2>/dev/null; then ok "PostgreSQL at postgres:5432"
 else warn "PostgreSQL not running" "bin/course ref up   (needed from Module 8)"; fi
+if (exec 3<>/dev/tcp/redis/6379) 2>/dev/null; then ok "Redis at redis:6379"
+else warn "Redis not running" "bin/course ref up   (needed from Module 9)"; fi
+if (exec 3<>/dev/tcp/varnish/6082) 2>/dev/null; then ok "Varnish at varnish:6081 (admin 6082)"
+else warn "Varnish not running" "bin/course ref up   (needed from Module 9)"; fi
 if curl -fsS -o /dev/null -m 6 -X POST -H 'Content-Type: application/json' -d '{"query":"{__typename}"}' \
      https://countries.trevorblades.com/graphql 2>/dev/null; then ok "internet: public GraphQL APIs reachable"
 else warn "public GraphQL APIs unreachable" "Module 0.3 needs internet; everything else works offline"; fi

@@ -1,0 +1,10 @@
+# test name | pass or fail | regex the failure message must match (fail only)
+withinBudget|pass|
+overBudget|fail|ran 8 .*budget 5
+nPlusOne|fail|ran 10 .*budget 3(.|\n)*10x
+unlimited|pass|
+ownFailure|fail|the test's own failure
+withinClassBudget|pass|
+methodOverridesClass|pass|
+overClassBudget|fail|ran 10 .*budget 2
+inheritsOuterBudget|fail|ran 10 .*budget 2

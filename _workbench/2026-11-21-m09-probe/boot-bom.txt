@@ -1,0 +1,10 @@
+<caffeine.version>3.3.1
+<flyway.version>12.11.0
+<hibernate.version>7.4.15.Final
+<jedis.version>8.0.2
+<jooq.version>3.21.9
+<junit.version>4.13.2
+<junit-jupiter.version>6.1.3
+<lettuce.version>7.8.0.RELEASE
+<micrometer.version>1.18.0
+<testcontainers.version>2.0.5

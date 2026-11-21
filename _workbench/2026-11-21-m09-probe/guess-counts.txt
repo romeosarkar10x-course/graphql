@@ -1,0 +1,12 @@
+REVEAL 1 1
+REVEAL 2 3
+REVEAL 3 6
+REVEAL 4 10
+REVEAL 5 41
+REVEAL 6 2
+REVEAL 7 7
+REVEAL 8 8
+REVEAL 9 4
+REVEAL 10 3
+        score 0 of 20 (0 exact)
+  [31mfail[0m  score 0 of 20 (14 to pass)

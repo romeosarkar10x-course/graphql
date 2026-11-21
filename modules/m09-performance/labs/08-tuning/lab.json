@@ -1,0 +1,9 @@
+{
+  "title": "Engine and JVM tuning: four configurations, one winner",
+  "lecture": "9.8",
+  "kind": "lab",
+  "grading": "both",
+  "needs": [
+    "postgres"
+  ]
+}

@@ -103,3 +103,12 @@ in Docker.
     `ExecutionInput.cancel()` (HALT); a custom execution strategy was probed and propagates partly.
   - Spring's 400/200 statuses vs the September 2026 edition's 422/294 SHOULDs are recorded in the
     error contract, not changed.
+- Module 9 (2026-11-21), probes in `_workbench/2026-11-21-m09-probe/` (`FINDINGS.md`, 19 findings):
+  - Redis and Varnish are course services. Varnish has no backend until `tools/varnish.py` loads one
+    over its CLI (`-S none`, admin port not published), because the app's address is per container.
+  - `bin/course clubs` (`contract/ClubData.java`) is the dataset; `contract/dashboard.graphql` and its
+    expected response are the yardstick every lab keeps byte for byte.
+  - The contract gained `Club.ownerPicks` (a chained loader) and `Query.viewer` (per-user caching).
+  - 9.5's starter is an app with five deliberate cache bugs; the experiment is the diagnosis.
+  - Gatling, not k6; async-profiler from Maven Central in itimer mode; no image change for Module 9.
+  - Lab 9.8's reference report uses one run per configuration and says so.

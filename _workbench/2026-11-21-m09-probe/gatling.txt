@@ -1,0 +1,46 @@
+Parsing log file(s) done in 0s.
+Generating reports...
+
+========================================================================================================================
+---- Global Information -------------------------------------------------------------|---Total---|-----OK----|----KO----
+> request count                                                                      |       200 |       200 |         -
+> min response time (ms)                                                             |        11 |        11 |         -
+> max response time (ms)                                                             |       886 |       886 |         -
+> mean response time (ms)                                                            |        59 |        59 |         -
+> response time std deviation (ms)                                                   |       153 |       153 |         -
+> response time 50th percentile (ms)                                                 |        15 |        15 |         -
+> response time 75th percentile (ms)                                                 |        18 |        18 |         -
+> response time 95th percentile (ms)                                                 |       422 |       422 |         -
+> response time 99th percentile (ms)                                                 |       837 |       837 |         -
+> mean throughput (rps)                                                              |        20 |        20 |         -
+---- Response Time Distribution ----------------------------------------------------------------------------------------
+> OK: t < 800 ms                                                                                            197  (98.5%)
+> OK: 800 ms <= t < 1200 ms                                                                                   3   (1.5%)
+> OK: t >= 1200 ms                                                                                            0     (0%)
+> KO                                                                                                          0     (0%)
+========================================================================================================================
+
+Reports generated, please open the following file: file:///course/modules/m09-performance/labs/07-measuring/solution/load/target/gatling/dashboardsimulation-20261121125724264/index.html
+Global: count of failed events is 0.0 : true (actual : 0.0)
+Global: 99th percentile of response time is less than 2000.0 : true (actual : 837.0)
+
+real	0m16.429s
+user	0m11.821s
+sys	0m0.493s
+target/gatling/dashboardsimulation-20261121125724264/:
+index.html
+js
+req_dashboard--1047860588.html
+simulation.log
+style
+
+target/gatling/dashboardsimulation-20261121125724264/js:
+bootstrap.min.js
+ellipsis.js
+gatling.js
+highcharts-more.js
+highstock.js
+jquery-3.7.1.slim.min.js
+menu.js
+stats.js
+theme.js

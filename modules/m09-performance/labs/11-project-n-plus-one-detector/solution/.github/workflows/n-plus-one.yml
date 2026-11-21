@@ -1,0 +1,36 @@
+# Statement budgets in CI: every push and pull request runs the @MaxStatements tests against a real
+# PostgreSQL with the course data. Paths assume this project sits at the root of its repository; in the
+# course workspace, set working-directory to m09-performance/11-project-n-plus-one-detector.
+name: n-plus-one
+on: [push, pull_request]
+
+jobs:
+  statement-budgets:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18.7-alpine
+        env:
+          POSTGRES_DB: shelfie
+          POSTGRES_USER: shelfie
+          POSTGRES_PASSWORD: shelfie
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U shelfie -d shelfie" --health-interval 2s --health-timeout 2s --health-retries 30
+    env:
+      PGURL: jdbc:postgresql://localhost:5432/shelfie
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: maven
+      - name: Load the club data
+        run: |
+          mvn -B -q dependency:copy -Dartifact=org.postgresql:postgresql:42.7.14 -DoutputDirectory=ci
+          java -cp ci/postgresql-42.7.14.jar ci/ClubData.java m09_11
+      - name: Statement budgets
+        run: >-
+          mvn -B test
+          -Dspring.datasource.url="jdbc:postgresql://localhost:5432/shelfie?currentSchema=m09_11"

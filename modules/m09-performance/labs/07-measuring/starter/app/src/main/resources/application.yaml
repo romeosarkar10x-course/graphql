@@ -1,0 +1,11 @@
+server.port: 4000
+spring:
+  datasource:
+    # Inside the course image. bin/course clubs m09_07 loads the data.
+    url: jdbc:postgresql://postgres:5432/shelfie?currentSchema=m09_07
+    username: shelfie
+    password: shelfie
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate.ddl-auto: none

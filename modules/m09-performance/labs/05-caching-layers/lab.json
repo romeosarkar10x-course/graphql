@@ -1,0 +1,7 @@
+{
+  "title": "Four caching layers, five stale-data bugs",
+  "lecture": "9.5",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["postgres", "redis", "varnish"]
+}
