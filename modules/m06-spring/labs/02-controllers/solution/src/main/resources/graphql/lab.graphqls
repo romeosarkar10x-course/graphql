@@ -1,0 +1,21 @@
+# Lab 6.2 additions.
+extend type User {
+  "OWNER or MEMBER of the club this user was reached through (Club.owner, Club.members); null anywhere else."
+  roleInClub: String
+}
+
+extend type Query {
+  "Same result as books; the controller binds both arguments to one record."
+  bookSearch(titleContains: String, first: Int = 20): [Book!]!
+}
+
+extend type Mutation {
+  "Patch: a field left out keeps its value; description: null clears it."
+  updateClub(input: UpdateClubInput!): Club
+}
+
+input UpdateClubInput {
+  id: ID!
+  name: String
+  description: String
+}

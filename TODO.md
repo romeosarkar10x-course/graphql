@@ -1,9 +1,9 @@
 # TODO.md — remaining work
 
-## Now: user review of Modules 3 and 4
+## Now: user review of Modules 5 and 6
 
-The user asked (2026-11-21) for two modules, then stop. Modules 3 and 4 are built; wait for review
-before Module 5. Earlier answers still hold: single-file Java for small clients, a generous rubric share.
+The user asked (2026-11-21) for the next two modules, then stop. Modules 5 and 6 are built; wait for
+review before Module 7.
 
 ## Verification debt
 
@@ -20,14 +20,17 @@ before Module 5. Earlier answers still hold: single-file Java for small clients,
       Validator 9; lift the HV 8 pin if so.
 - [ ] Re-check MinIO image availability; the course uses SeaweedFS 4.54 meanwhile.
 - [ ] Game 4b signatures: refresh from the GitHub snapshot and AniList introspection each term.
+- [ ] Re-check DGS for a release built on graphql-java 26; lift lab 6.7's 25.0 pin if so.
+- [ ] Re-check the Quarkus 4.0 platform BOM (4.0.0.CR1 on 2026-11-21); move lab 6.8 when it is final.
+- [ ] Game 6b numbers came from one 24-core machine; JVM build times for 6b were not timed.
+- [ ] m05/11 bug B1 (common pool) is only detectable with parallelism > 1; fine on any multi-core machine.
+- [ ] Re-run lab 5.4's audit against Spring for GraphQL each release (11/25 on 2.1.0).
 - [ ] Check whether a newer graphql-java fixes the subscription-root `@skip` gap and parses operation
       descriptions; update lectures 2.5 and 2.7 and the module README table if so.
 
 ## Next modules (in order)
 
-- [ ] M5 graphql-java from scratch (the Shelfie Maven project starts here: `./mvnw verify`; 40 Hurl tests)
-- [ ] M6–M18, capstone, per plan/syllabus.md
-- [ ] Update Module 6.7 text for DGS 12 and the Maven codegen plugin (VERSIONS.md)
+- [ ] M7–M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 

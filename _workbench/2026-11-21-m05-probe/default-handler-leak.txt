@@ -1,0 +1,2 @@
+{"message":"Exception while fetching data (/e) : Cannot invoke \"String.length()\" because \"<local3>\" is null","locations":[{"line":6,"column":3}],"path":["e"],"extensions":{"classification":"DataFetchingException"}}
+"Exception while fetching data (/d) : ratings-service did not answer in 2000 ms"

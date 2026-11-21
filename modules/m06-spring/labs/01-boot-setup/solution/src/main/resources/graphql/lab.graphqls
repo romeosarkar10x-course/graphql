@@ -1,0 +1,7 @@
+# Lab 6.1 additions.
+extend type Query {
+  "Sleeps 100 ms on the request thread, like a blocking JDBC call. The load test uses it."
+  slowHello: String!
+  "\"virtual\" or \"platform\": the kind of thread that ran this fetcher."
+  servedBy: String!
+}

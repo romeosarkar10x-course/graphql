@@ -1,0 +1,6 @@
+slow Query.clubs 808 ms
+slow Club.currentBook 127 ms
+slow Book.averageRating 121 ms
+slow Club.meetups 77 ms
+slowest Query.clubs
+fetches 68

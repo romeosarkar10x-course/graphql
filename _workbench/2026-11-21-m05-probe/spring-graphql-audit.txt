@@ -1,0 +1,16 @@
+2026-11-20T23:03:57.888Z  INFO 8 --- [           main] dev.shelfie.boot.ShelfieApplication      : Started ShelfieApplication in 0.784 seconds (process running for 0.959)
+Succeeded files:   1 (100.0%)
+# A03 "SHOULD indicate the encoding" in the response Content-Type
+# A07 Nothing acceptable, and no application/json: 406 SHOULD be used
+# A09 "If the JSON body of the request could not be parsed, status code 400 SHOULD be used"
+# A10 Not a well-formed request (typo in "query"): 422
+# A11 query of the wrong type: 422
+# A12 variables of the wrong shape (an array): 422
+# A13 The body is JSON but not an object: 422
+# A15 "If the request does not pass GraphQL validation, status code 422 SHOULD be used"
+# A16 Validation failure for a legacy client: still 422 (only 2xx swap the media type)
+# A17 Two operations and no operationName: the operation cannot be determined, 422
+# A19 "If the variable values cannot be coerced", 422
+# A20 Data and errors (a field error): partial success, 294 SHOULD be used
+# A23 GET with the parameters in the URL, variables as a JSON string
+# A25 An unsupported method: 405, and RFC 9110 requires the Allow header

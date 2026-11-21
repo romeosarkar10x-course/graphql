@@ -1,0 +1,6 @@
+200 requests (200 ok) in 124 ms: 1610 req/s, served by virtual threads
+1000 requests (1000 ok) in 169 ms: 5907 req/s, served by virtual threads
+2000 requests (2000 ok) in 253 ms: 7904 req/s, served by virtual threads
+200 requests (200 ok) in 125 ms: 1598 req/s, served by platform threads
+1000 requests (1000 ok) in 519 ms: 1928 req/s, served by platform threads
+2000 requests (2000 ok) in 1059 ms: 1888 req/s, served by platform threads

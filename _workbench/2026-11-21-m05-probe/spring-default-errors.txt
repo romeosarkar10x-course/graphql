@@ -1,0 +1,3 @@
+{"message":"INTERNAL_ERROR for bba88465-c583-dc85-c2c5-fdef757e60c5","locations":[{"line":1,"column":3}],"path":["a"],"extensions":{"classification":"INTERNAL_ERROR"}}
+{"message":"INTERNAL_ERROR for bba88465-c583-dc85-c2c5-fdef757e60c5","locations":[{"line":1,"column":33}],"path":["e"],"extensions":{"classification":"INTERNAL_ERROR"}}
+{"message":"INTERNAL_ERROR for bba88465-c583-dc85-c2c5-fdef757e60c5","locations":[{"line":1,"column":61}],"path":["f"],"extensions":{"classification":"INTERNAL_ERROR"}}

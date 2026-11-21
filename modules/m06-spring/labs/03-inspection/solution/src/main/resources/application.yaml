@@ -1,0 +1,9 @@
+spring:
+  graphql:
+    graphiql:
+      enabled: true
+  threads:
+    virtual:
+      enabled: true
+server:
+  port: 4000

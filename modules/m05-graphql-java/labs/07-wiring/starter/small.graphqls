@@ -1,0 +1,27 @@
+"Marks a field that only internal tools may see; the public schema drops it (SchemaTransformer)."
+directive @internal on FIELD_DEFINITION
+
+type Query {
+  club(id: ID!): Club
+  clubs: [Club!]!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  memberCount: Int!
+  owner: User!
+  visibility: Visibility!
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  email: String @internal
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}

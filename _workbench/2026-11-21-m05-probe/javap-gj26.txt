@@ -1,0 +1,98 @@
+Compiled from "GraphQLSchema.java"
+public final class graphql.schema.GraphQLSchema$FastBuilder {
+  public graphql.schema.GraphQLSchema$FastBuilder(graphql.schema.GraphQLCodeRegistry$Builder, graphql.schema.GraphQLObjectType, graphql.schema.GraphQLObjectType, graphql.schema.GraphQLObjectType);
+  public graphql.schema.GraphQLSchema$FastBuilder addType(graphql.schema.GraphQLNamedType);
+  public graphql.schema.GraphQLSchema$FastBuilder addTypes(java.util.Collection<? extends graphql.schema.GraphQLNamedType>);
+  public graphql.schema.GraphQLSchema$FastBuilder additionalDirective(graphql.schema.GraphQLDirective);
+  public graphql.schema.GraphQLSchema$FastBuilder additionalDirectives(java.util.Collection<? extends graphql.schema.GraphQLDirective>);
+  public graphql.schema.GraphQLSchema$FastBuilder withSchemaDirective(graphql.schema.GraphQLDirective);
+  public graphql.schema.GraphQLSchema$FastBuilder withSchemaDirectives(java.util.Collection<? extends graphql.schema.GraphQLDirective>);
+  public graphql.schema.GraphQLSchema$FastBuilder withSchemaAppliedDirective(graphql.schema.GraphQLAppliedDirective);
+  public graphql.schema.GraphQLSchema$FastBuilder withSchemaAppliedDirectives(java.util.Collection<? extends graphql.schema.GraphQLAppliedDirective>);
+  public graphql.schema.GraphQLSchema$FastBuilder definition(graphql.language.SchemaDefinition);
+  public graphql.schema.GraphQLSchema$FastBuilder extensionDefinitions(java.util.List<graphql.language.SchemaExtensionDefinition>);
+  public graphql.schema.GraphQLSchema$FastBuilder description(java.lang.String);
+  public graphql.schema.GraphQLSchema$FastBuilder introspectionSchemaType(graphql.schema.GraphQLObjectType);
+  public graphql.schema.GraphQLSchema$FastBuilder withValidation(boolean);
+  public graphql.schema.GraphQLSchema build();
+}
+Compiled from "PreparsedDocumentProvider.java"
+public interface graphql.execution.preparsed.PreparsedDocumentProvider {
+  public abstract java.util.concurrent.CompletableFuture<graphql.execution.preparsed.PreparsedDocumentEntry> getDocumentAsync(graphql.ExecutionInput, java.util.function.Function<graphql.ExecutionInput, graphql.execution.preparsed.PreparsedDocumentEntry>);
+}
+Compiled from "ExecutionInput.java"
+public class graphql.ExecutionInput {
+  public static final java.lang.String PERSISTED_QUERY_MARKER;
+  public java.lang.String getQuery();
+  public java.lang.String getOperationName();
+  public java.lang.Object getContext();
+  public graphql.GraphQLContext getGraphQLContext();
+  public java.lang.Object getLocalContext();
+  public java.lang.Object getRoot();
+  public java.util.Map<java.lang.String, java.lang.Object> getVariables();
+  public graphql.execution.RawVariables getRawVariables();
+  public org.dataloader.DataLoaderRegistry getDataLoaderRegistry();
+  public graphql.execution.ExecutionId getExecutionId();
+  public graphql.execution.ExecutionId getExecutionIdNonNull();
+  public java.util.Locale getLocale();
+  public java.util.Map<java.lang.String, java.lang.Object> getExtensions();
+  public boolean isCancelled();
+  public void cancel();
+  public boolean isProfileExecution();
+  public graphql.ExecutionInput transform(java.util.function.Consumer<graphql.ExecutionInput$Builder>);
+  public java.lang.String toString();
+  public static graphql.ExecutionInput$Builder newExecutionInput();
+  public static graphql.ExecutionInput$Builder newExecutionInput(java.lang.String);
+}
+Compiled from "SimplePerformantInstrumentation.java"
+public class graphql.execution.instrumentation.SimplePerformantInstrumentation implements graphql.execution.instrumentation.Instrumentation {
+  public static final graphql.execution.instrumentation.SimplePerformantInstrumentation INSTANCE;
+  public graphql.execution.instrumentation.SimplePerformantInstrumentation();
+  public java.util.concurrent.CompletableFuture<graphql.execution.instrumentation.InstrumentationState> createStateAsync(graphql.execution.instrumentation.parameters.InstrumentationCreateStateParameters);
+  public graphql.execution.instrumentation.InstrumentationState createState(graphql.execution.instrumentation.parameters.InstrumentationCreateStateParameters);
+  public graphql.execution.instrumentation.InstrumentationContext<graphql.ExecutionResult> beginExecution(graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.InstrumentationContext<graphql.language.Document> beginParse(graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.InstrumentationContext<java.util.List<graphql.validation.ValidationError>> beginValidation(graphql.execution.instrumentation.parameters.InstrumentationValidationParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.InstrumentationContext<graphql.ExecutionResult> beginExecuteOperation(graphql.execution.instrumentation.parameters.InstrumentationExecuteOperationParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.ExecutionStrategyInstrumentationContext beginExecutionStrategy(graphql.execution.instrumentation.parameters.InstrumentationExecutionStrategyParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.ExecuteObjectInstrumentationContext beginExecuteObject(graphql.execution.instrumentation.parameters.InstrumentationExecutionStrategyParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.InstrumentationContext<graphql.ExecutionResult> beginSubscribedFieldEvent(graphql.execution.instrumentation.parameters.InstrumentationFieldParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.InstrumentationContext<java.lang.Object> beginFieldExecution(graphql.execution.instrumentation.parameters.InstrumentationFieldParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.InstrumentationContext<java.lang.Object> beginFieldFetch(graphql.execution.instrumentation.parameters.InstrumentationFieldFetchParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.InstrumentationContext<java.lang.Object> beginFieldCompletion(graphql.execution.instrumentation.parameters.InstrumentationFieldCompleteParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.InstrumentationContext<java.lang.Object> beginFieldListCompletion(graphql.execution.instrumentation.parameters.InstrumentationFieldCompleteParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.ExecutionInput instrumentExecutionInput(graphql.ExecutionInput, graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.instrumentation.DocumentAndVariables instrumentDocumentAndVariables(graphql.execution.instrumentation.DocumentAndVariables, graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.schema.GraphQLSchema instrumentSchema(graphql.schema.GraphQLSchema, graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.execution.ExecutionContext instrumentExecutionContext(graphql.execution.ExecutionContext, graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters, graphql.execution.instrumentation.InstrumentationState);
+  public graphql.schema.DataFetcher<?> instrumentDataFetcher(graphql.schema.DataFetcher<?>, graphql.execution.instrumentation.parameters.InstrumentationFieldFetchParameters, graphql.execution.instrumentation.InstrumentationState);
+  public java.util.concurrent.CompletableFuture<graphql.ExecutionResult> instrumentExecutionResult(graphql.ExecutionResult, graphql.execution.instrumentation.parameters.InstrumentationExecutionParameters, graphql.execution.instrumentation.InstrumentationState);
+  static {};
+}
+public class graphql.validation.Validator {
+  public graphql.validation.Validator();
+  public static void setMaxValidationErrors(int);
+  public static int getMaxValidationErrors();
+  public java.util.List<graphql.validation.ValidationError> validateDocument(graphql.schema.GraphQLSchema, graphql.language.Document, java.util.Locale);
+  public java.util.List<graphql.validation.ValidationError> validateDocument(graphql.schema.GraphQLSchema, graphql.language.Document, java.util.function.Predicate<graphql.validation.OperationValidationRule>, java.util.Locale);
+  public java.util.List<graphql.validation.ValidationError> validateDocument(graphql.schema.GraphQLSchema, graphql.language.Document, java.util.function.Predicate<graphql.validation.OperationValidationRule>, java.util.Locale, graphql.validation.QueryComplexityLimits);
+public class graphql.parser.Parser {
+  public static final int CHANNEL_COMMENTS;
+  public static final int CHANNEL_WHITESPACE;
+  public graphql.parser.Parser();
+  public static graphql.language.Document parse(graphql.parser.ParserEnvironment) throws graphql.parser.InvalidSyntaxException;
+  public static graphql.language.Document parse(java.lang.String) throws graphql.parser.InvalidSyntaxException;
+  public static graphql.language.Value<?> parseValue(java.lang.String) throws graphql.parser.InvalidSyntaxException;
+  public static graphql.language.FieldDefinition parseFieldDefinition(java.lang.String) throws graphql.parser.InvalidSyntaxException;
+  public static graphql.language.Type<?> parseType(java.lang.String) throws graphql.parser.InvalidSyntaxException;
+  public graphql.language.Document parseDocument(graphql.parser.ParserEnvironment) throws graphql.parser.InvalidSyntaxException;
+  public graphql.language.Document parseDocument(java.lang.String) throws graphql.parser.InvalidSyntaxException;
+  public graphql.language.Document parseDocument(java.io.Reader) throws graphql.parser.InvalidSyntaxException;
+public class graphql.execution.preparsed.PreparsedDocumentEntry implements java.io.Serializable {
+  public graphql.execution.preparsed.PreparsedDocumentEntry(graphql.language.Document, java.util.List<? extends graphql.GraphQLError>);
+  public graphql.execution.preparsed.PreparsedDocumentEntry(graphql.language.Document);
+  public graphql.execution.preparsed.PreparsedDocumentEntry(java.util.List<? extends graphql.GraphQLError>);
+  public graphql.execution.preparsed.PreparsedDocumentEntry(graphql.GraphQLError);
+  public graphql.language.Document getDocument();
+  public java.util.List<? extends graphql.GraphQLError> getErrors();
+  public boolean hasErrors();

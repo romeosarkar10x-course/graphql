@@ -1,0 +1,9 @@
+server:
+  port: 4000
+spring:
+  threads:
+    virtual:
+      enabled: true
+  jpa:
+    show-sql: false   # TODO: notes.md compares the SQL
+    open-in-view: false

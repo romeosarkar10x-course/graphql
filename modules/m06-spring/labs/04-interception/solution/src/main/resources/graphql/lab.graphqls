@@ -1,0 +1,10 @@
+# Lab 6.4 additions.
+"Upper-cases a String field's value. Wired in code (RuntimeWiringConfigurer), not by a controller."
+directive @uppercase on FIELD_DEFINITION
+
+extend type Meetup {
+  "startsAt in the tenant's time zone (X-Shelfie-Tenant: eu = Europe/Paris, in = Asia/Kolkata, us = America/New_York; none = UTC), as 2026-11-27T20:00+01:00[Europe/Paris]."
+  startsAtLocal: String!
+  "The title, shouted."
+  headline: String! @uppercase
+}

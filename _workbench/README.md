@@ -20,3 +20,6 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-21-m04-probe/` | Module 4: end-to-end mutation probe of the reference server (`probe.sh`, `probe.txt`), idempotency before/after counts, upload timings and JFR heap peaks, validation error shapes |
 | `2026-11-21-m04-critique/` | The 8 mutation signatures of game 4b as extracted (GitHub schema snapshot, AniList introspection) |
 | `2026-11-21-m04-check-starters.log` | `bin/course check --starters` after Module 4: 44 labs, 0 problems |
+| `2026-11-21-m05-probe/` | Modules 5 and 6: graphql-java phase timings, cancellation, default-handler leak, FastBuilder, StackOverflow on deep schemas, sibling timings; GraphQL-over-HTTP September 2026 copy; Spring audit (11/25), inspection, default errors, directive wiring, Spring Data SQL, virtual-thread load; Quarkus dev mode; bake-off (`bake-off.txt`), tiny starter vs raw (`tiny-vs-raw.txt`) |
+| `2026-11-21-m06-native/` | Game 6b: Spring and Quarkus native build logs (GraalVM CE 25.0.2) and `race.txt` |
+| `2026-11-21-m06-check-starters.log` | `bin/course check --starters` after Module 6 |

@@ -1,0 +1,10 @@
+# Lab 5.2 additions, merged with shelfie.graphqls at startup.
+extend type Query {
+  "One entry per id, in order; null (plus an error with its path) for an unknown id."
+  booksById(ids: [ID!]!): [Book]!
+}
+
+extend type User {
+  "OWNER or MEMBER of the club this user was reached through (Club.members, Club.owner); null anywhere else."
+  roleInClub: String
+}

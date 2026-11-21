@@ -72,3 +72,18 @@ in Docker.
     would add a second framework in Module 4).
   - The chaos button (game 4a) runs in-process against the learner's service (a harness drops responses,
     duplicates requests and races 16 clients), not through a network proxy, so runs are reproducible by seed.
+- Module 5 (2026-11-21), probes in `_workbench/2026-11-21-m05-probe/`:
+  - Learners' servers follow the GraphQL-over-HTTP **September 2026 edition** (422 for request errors,
+    294 for partial success with `application/graphql-response+json`); lab 5.4's 25-check `audit.hurl` is
+    reused by mini-projects 5 and 6. Hurl instead of the Node graphql-http audit (no Node in the image).
+  - Labs 5.1–5.7 are single-file (`bin/course java`); 5.8 and the mini-project are Maven projects.
+  - Every lab server is started with `exec` and killed and waited for: the runner runs all labs in one
+    container, and a leaked server on :4000 broke later labs.
+- Module 6 (2026-11-21):
+  - Every app listens on :4000 inside the course container and is tested with Hurl through
+    `modules/m06-spring/contract/app-test.sh` and the 14 shared checks in `contract/shelfie.hurl`.
+  - DGS 12.1.1 is pinned to graphql-java 25.0 (VERSIONS.md). Querydsl and projected interfaces are
+    explained, not built; the SmallRye typesafe client waits for Module 12.
+  - Native images need GraalVM, which the course image lacks: `bin/course native` runs Maven in
+    `graphql-course-native:1` (GraalVM CE 25.0.2 + Maven), and game 6b is rubric-graded.
+  - Spring for GraphQL 2.1 passes 11 of the 25 HTTP audit checks; lectures say so instead of hiding it.

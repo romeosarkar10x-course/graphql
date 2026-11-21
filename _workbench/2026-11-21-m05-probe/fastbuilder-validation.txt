@@ -1,0 +1,1 @@
+FastBuilder(...) constructor sets validationEnabled = false (javap -c, graphql-java 26.1); withValidation(true) runs SchemaValidator in build(). It uses a ShallowTypeRefCollector instead of a full traversal.

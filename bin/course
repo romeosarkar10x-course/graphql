@@ -15,6 +15,7 @@
 #   bin/course java <File.java> [args]    run a single-file Java program with the same class path
 #   bin/course gql validate|operations|schema-lines|coordinates|stats ...   document and schema helpers (tools/gql/Gql.java)
 #   bin/course shell [-c 'cmd']           bash inside the course image, repo at /course
+#   bin/course native <mvn args>          mvn inside a GraalVM CE 25 image, for native builds (game 6b)
 #   bin/course image                      (re)build the course image
 set -euo pipefail
 
@@ -107,5 +108,12 @@ case "$cmd" in
     "$ROOT/tools/doctor-host.sh" "$ROOT" "$IMAGE" || true
     in_image /course/tools/course.sh doctor ;;
   shell) in_image bash "$@" ;;   # bin/course shell -c "cmd" runs one command
+  native)   # GraalVM native-image builds (game 6b), in their own image; runs mvn in the current directory
+    [[ $# -ge 1 ]] || die "usage: bin/course native <mvn args>   (from a project directory inside the repo)"
+    docker image inspect graphql-course-native:1 >/dev/null 2>&1 \
+      || docker build -t graphql-course-native:1 -f "$ROOT/docker/native.Dockerfile" "$ROOT/docker" >&2
+    case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course native from a directory inside the course repo" ;; esac
+    docker run --rm -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" \
+      graphql-course-native:1 mvn "$@" ;;
   *) in_image /course/tools/course.sh "$cmd" "$@" ;;
 esac

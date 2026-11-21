@@ -1,0 +1,6 @@
+Exception in thread "main" java.lang.StackOverflowError
+	at java.base/java.util.ArrayDeque.forEach(ArrayDeque.java:886)
+	at java.base/java.util.ArrayDeque.copyElements(ArrayDeque.java:327)
+chain 500: sdl 500 types 43.4 ms
+chain 1000: Exception in thread "main" java.lang.StackOverflowError
+chain 1500: Exception in thread "main" java.lang.StackOverflowError

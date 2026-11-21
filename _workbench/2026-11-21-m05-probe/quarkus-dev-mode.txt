@@ -1,0 +1,5 @@
+  clubs: [Club!]!
+schema updated after 2453 ms
+  clubs(first: Int): [Club!]!
+2026-11-21 06:05:51,235 INFO  [io.quarkus.deployment.dev.RuntimeUpdatesProcessor] (vert.x-worker-thread-1) Restarting quarkus due to changes in ShelfieApi.class.
+2026-11-21 06:05:51,424 INFO  [io.quarkus.deployment.dev.RuntimeUpdatesProcessor] (vert.x-worker-thread-1) Live reload total time: 0.423s 

@@ -1,0 +1,81 @@
+Warning: The option '-H:IncludeResourceBundles=yasson-messages' is experimental and must be enabled via '-H:+UnlockExperimentalVMOptions' in the future.
+Warning: Please re-evaluate whether any experimental option is required, and either remove or unlock it. The build output lists all active experimental options, including where they come from and possible alternatives. If you think an experimental option should be considered as stable, please file an issue.
+Warning: Option 'DynamicProxyConfigurationResources' is deprecated and might be removed in a future release: This can be caused by a proxy-config.json file in your META-INF directory. Consider including proxy configuration in the reflection section of reachability-metadata.md instead.. Please refer to the GraalVM release notes.
+========================================================================================================================
+GraalVM Native Image: Generating 'shelfie-quarkus-1-runner' (executable)...
+========================================================================================================================
+For detailed information and explanations on the build output, visit:
+https://github.com/oracle/graal/blob/master/docs/reference-manual/native-image/BuildOutput.md
+------------------------------------------------------------------------------------------------------------------------
+[1/8] Initializing...                                                                                    (2.2s @ 0.25GB)
+ Java version: 25.0.2+10, vendor version: GraalVM CE 25.0.2+10.1
+ Graal compiler: optimization level: 2, target machine: x86-64-v3
+ C compiler: gcc (redhat, x86_64, 14.3.1)
+ Garbage collector: Serial GC (max heap size: 80% of RAM)
+ 6 user-specific feature(s):
+ - com.oracle.svm.thirdparty.gson.GsonFeature
+ - io.quarkus.hibernate.validator.runtime.DisableLoggingFeature: Disables INFO logging during the analysis phase for the [org.hibernate.validator.internal.util.Version] categories
+ - io.quarkus.runner.Feature: Auto-generated class by Quarkus from the existing extensions
+ - io.quarkus.runtime.graal.DisableLoggingFeature: Adapts logging during the analysis phase
+ - io.quarkus.runtime.graal.JVMChecksFeature
+ - io.quarkus.runtime.graal.SkipConsoleServiceProvidersFeature: Skip unsupported console service providers when quarkus.native.auto-service-loader-registration is false
+------------------------------------------------------------------------------------------------------------------------
+ 6 experimental option(s) unlocked:
+ - '-H:+AllowFoldMethods' (origin(s): command line)
+ - '-H:BuildOutputJSONFile' (origin(s): command line)
+ - '-H:-UseServiceLoaderFeature' (origin(s): command line)
+ - '-H:IncludeResourceBundles' (origin(s): 'META-INF/native-image/org.eclipse/yasson/native-image.properties' in 'file:///course/_workbench/2026-11-21-m06-native/quarkus/target/shelfie-quarkus-1-native-image-source-jar/lib/org.eclipse.yasson.yasson-3.0.5.jar')
+ - '-H:+GenerateBuildArtifactsFile' (origin(s): command line)
+ - '-H:AddOpens' (alternative API option(s): --add-opens java.base/java.lang=ALL-UNNAMED, --add-opens java.base/java.nio=ALL-UNNAMED, --add-opens java.base/jdk.internal.misc=ALL-UNNAMED; origin(s): command line)
+------------------------------------------------------------------------------------------------------------------------
+Build resources:
+ - 24.71GB of memory (75.6% of system memory, in container)
+ - 24 thread(s) (100.0% of 24 available processor(s), determined at start)
+Warning: RecomputeFieldValue.FieldOffset automatic field value transformation failed. The automatic registration was attempted because a call to sun.misc.Unsafe.objectFieldOffset(Field) was detected in the class initializer of com.google.protobuf.UnsafeUtil. Detailed failure reason(s): The argument of sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field) is not a constant value or a field load that can be constant-folded., Could not determine the field where the value produced by the call to sun.misc.Unsafe.objectFieldOffset(Field) for the field offset computation is stored. The call is not directly followed by a field store or by a sign extend node followed directly by a field store. 
+[2/8] Performing analysis...  [*****]                                                                    (8.5s @ 2.15GB)
+   15,383 types,  21,207 fields, and  75,840 methods found reachable
+    4,817 types,     256 fields, and   5,137 methods registered for reflection
+       63 types,      69 fields, and      55 methods registered for JNI access
+        0 downcalls and 0 upcalls registered for foreign access
+        4 native libraries: dl, pthread, rt, z
+[3/8] Building universe...                                                                               (2.1s @ 2.14GB)
+[4/8] Parsing methods...      [*]                                                                        (0.9s @ 2.06GB)
+[5/8] Inlining methods...     [***]                                                                      (0.5s @ 2.66GB)
+[6/8] Compiling methods...    [***]                                                                      (8.1s @ 1.53GB)
+[7/8] Laying out methods...   [**]                                                                       (3.2s @ 1.77GB)
+[8/8] Creating image...       [**]                                                                       (2.5s @ 1.55GB)
+  29.33MB (44.20%) for code area:    49,487 compilation units
+  32.31MB (48.68%) for image heap:  355,338 objects and 86 resources
+   4.72MB ( 7.12%) for other data
+  66.37MB in total image size, 62.13MB in total file size
+------------------------------------------------------------------------------------------------------------------------
+Top 10 origins of code area:                                Top 10 object types in image heap:
+  14.14MB java.base                                            8.39MB byte[] for code metadata
+   2.05MB com.graphql-java.graphql-java-25.0.jar               4.69MB byte[] for java.lang.String
+   1.88MB svm.jar (Native Image)                               3.12MB java.lang.String
+   1.06MB shelfie-quarkus-1-runner.jar                         3.08MB com.oracle.svm.core.hub.DynamicHubCompanion
+ 894.25kB com.google.protobuf.protobuf-java-4.35.0.jar         2.25MB java.lang.Class
+ 866.47kB modified-io.vertx.vertx-core-4.5.35.jar              1.92MB byte[] for general heap data
+ 648.01kB io.netty.netty-buffer-4.1.139.Final.jar            709.34kB java.util.HashMap$Node
+ 458.67kB modified-io.netty.netty-common-4.1.139.Final.jar   578.57kB java.lang.Object[]
+ 421.81kB io.netty.netty-codec-http-4.1.139.Final.jar        560.16kB c.o.svm.core.hub.DynamicHub$ReflectionMetadata
+ 417.75kB io.quarkus.quarkus-vertx-http-3.40.1.2.jar         551.01kB java.lang.String[]
+   5.73MB for 100 more packages                                6.46MB for 4002 more object types
+------------------------------------------------------------------------------------------------------------------------
+Recommendations:
+ FUTR: Use '--future-defaults=all' to prepare for future releases.
+ HEAP: Set max heap for improved and more predictable memory usage.
+ CPU:  Enable more CPU features with '-march=native' for improved performance.
+------------------------------------------------------------------------------------------------------------------------
+                       2.9s (9.8% of total time) in 190 GCs | Peak RSS: 4.39GB | CPU load: 14.93
+------------------------------------------------------------------------------------------------------------------------
+Build artifacts:
+ /course/_workbench/2026-11-21-m06-native/quarkus/target/shelfie-quarkus-1-native-image-source-jar/build-artifacts.json (build_info)
+ /course/_workbench/2026-11-21-m06-native/quarkus/target/shelfie-quarkus-1-native-image-source-jar/shelfie-quarkus-1-runner (executable)
+ /course/_workbench/2026-11-21-m06-native/quarkus/target/shelfie-quarkus-1-native-image-source-jar/shelfie-quarkus-1-runner-build-output-stats.json (build_info)
+========================================================================================================================
+Finished generating 'shelfie-quarkus-1-runner' in 28.9s.
+
+real	0m33.018s
+user	0m0.014s
+sys	0m0.006s

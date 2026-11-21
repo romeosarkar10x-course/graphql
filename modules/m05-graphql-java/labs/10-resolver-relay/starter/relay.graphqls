@@ -1,0 +1,41 @@
+# Written by player A. Player B implements it from this file alone.
+type Query {
+  club(id: ID!): Club
+  user(id: ID!): User
+  book(id: ID!): Book
+  recent(n: Int = 3): [Review!]!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  size: Int!
+  active: Boolean!
+  nextMeetup: Meetup
+}
+
+type User {
+  id: ID!
+  name: String!
+  latestReview: Review
+  since: String
+}
+
+type Book {
+  id: ID!
+  title: String!
+  rating: Float
+  popular: Boolean!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  createdAt: String!
+}
+
+type Meetup {
+  id: ID!
+  title: String!
+  startsAt: String!
+}

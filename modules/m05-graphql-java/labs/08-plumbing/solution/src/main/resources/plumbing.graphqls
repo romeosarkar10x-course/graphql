@@ -1,0 +1,18 @@
+type Query {
+  clubs: [Club!]!
+  books: [Book!]!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  "Whether the user in GraphQLContext key \"viewer\" is a member; null when nobody is signed in."
+  viewerIsMember: Boolean
+}
+
+type Book {
+  id: ID!
+  title: String!
+  "Like title, but the fetcher takes 100 ms (blocking): the cancellation experiment needs a slow query."
+  slowTitle: String!
+}

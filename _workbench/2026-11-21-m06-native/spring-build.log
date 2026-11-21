@@ -1,0 +1,85 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.2.0)
+
+2026-11-21T06:10:21.159Z  INFO 99 --- [           main] dev.shelfie.boot.ShelfieApplication      : Starting ShelfieApplication using Java 25.0.2 with PID 99 (/course/_workbench/2026-11-21-m06-native/spring/target/classes started by ? in /course/_workbench/2026-11-21-m06-native/spring)
+2026-11-21T06:10:21.160Z  INFO 99 --- [           main] dev.shelfie.boot.ShelfieApplication      : No active profile set, falling back to 1 default profile: "default"
+========================================================================================================================
+GraalVM Native Image: Generating 'shelfie-boot' (executable)...
+========================================================================================================================
+For detailed information and explanations on the build output, visit:
+https://github.com/oracle/graal/blob/master/docs/reference-manual/native-image/BuildOutput.md
+------------------------------------------------------------------------------------------------------------------------
+[1/8] Initializing...                                                                                    (2.2s @ 0.17GB)
+ Java version: 25.0.2+10, vendor version: GraalVM CE 25.0.2+10.1
+ Graal compiler: optimization level: 2, target machine: x86-64-v3
+ C compiler: gcc (redhat, x86_64, 14.3.1)
+ Garbage collector: Serial GC (max heap size: 80% of RAM)
+ 2 user-specific feature(s):
+ - com.oracle.svm.thirdparty.gson.GsonFeature
+ - org.springframework.aot.nativex.feature.PreComputeFieldFeature
+------------------------------------------------------------------------------------------------------------------------
+Build resources:
+ - 24.71GB of memory (75.6% of system memory, in container)
+ - 24 thread(s) (100.0% of 24 available processor(s), determined at start)
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[2/8] Performing analysis...  [*****]                                                                   (11.1s @ 2.40GB)
+   22,283 types,  33,140 fields, and 102,694 methods found reachable
+    7,947 types,   4,401 fields, and  18,301 methods registered for reflection
+       68 types,      71 fields, and      58 methods registered for JNI access
+        0 downcalls and 0 upcalls registered for foreign access
+        4 native libraries: dl, pthread, rt, z
+[3/8] Building universe...                                                                               (2.4s @ 4.52GB)
+[4/8] Parsing methods...      [*]                                                                        (1.1s @ 3.80GB)
+[5/8] Inlining methods...     [***]                                                                      (0.7s @ 4.47GB)
+[6/8] Compiling methods...    [****]                                                                    (12.2s @ 3.06GB)
+[7/8] Laying out methods...   [**]                                                                       (4.8s @ 3.33GB)
+[8/8] Creating image...       [**]                                                                       (2.9s @ 3.92GB)
+  51.55MB (48.44%) for code area:    67,224 compilation units
+  48.69MB (45.75%) for image heap:  445,355 objects and 852 resources
+   6.18MB ( 5.81%) for other data
+ 106.42MB in total image size, 100.73MB in total file size
+------------------------------------------------------------------------------------------------------------------------
+Top 10 origins of code area:                                Top 10 object types in image heap:
+  16.17MB java.base                                           13.69MB byte[] for code metadata
+   6.17MB tomcat-embed-core-11.0.27.jar                        6.63MB byte[] for java.lang.String
+   3.70MB java.xml                                             4.46MB com.oracle.svm.core.hub.DynamicHubCompanion
+   2.90MB graphql-java-26.1.jar                                4.26MB byte[] for embedded resources
+   2.17MB svm.jar (Native Image)                               4.17MB java.lang.String
+   2.06MB jackson-databind-3.1.8.jar                           3.28MB java.lang.Class
+   2.03MB spring-core-7.1.0.jar                                1.63MB byte[] for reflection metadata
+   1.64MB spring-boot-4.2.0.jar                              899.41kB byte[] for general heap data
+   1.26MB spring-beans-7.1.0.jar                             817.00kB c.o.svm.core.hub.DynamicHub$ReflectionMetadata
+   1.11MB spring-web-7.1.0.jar                               782.15kB java.lang.String[]
+  11.32MB for 95 more packages                                 8.08MB for 4591 more object types
+------------------------------------------------------------------------------------------------------------------------
+Recommendations:
+ FUTR: Use '--future-defaults=all' to prepare for future releases.
+ AWT:  Use the tracing agent to collect metadata for AWT.
+ HEAP: Set max heap for improved and more predictable memory usage.
+ CPU:  Enable more CPU features with '-march=native' for improved performance.
+------------------------------------------------------------------------------------------------------------------------
+                       3.9s (10.0% of total time) in 141 GCs | Peak RSS: 6.71GB | CPU load: 15.30
+------------------------------------------------------------------------------------------------------------------------
+Build artifacts:
+ /course/_workbench/2026-11-21-m06-native/spring/target/libawt.so (jdk_library)
+ /course/_workbench/2026-11-21-m06-native/spring/target/libawt_headless.so (jdk_library)
+ /course/_workbench/2026-11-21-m06-native/spring/target/libawt_xawt.so (jdk_library)
+ /course/_workbench/2026-11-21-m06-native/spring/target/libjava.so (jdk_library_shim)
+ /course/_workbench/2026-11-21-m06-native/spring/target/libjvm.so (jdk_library_shim)
+ /course/_workbench/2026-11-21-m06-native/spring/target/libmanagement_ext.so (jdk_library)
+ /course/_workbench/2026-11-21-m06-native/spring/target/shelfie-boot (executable)
+========================================================================================================================
+Finished generating 'shelfie-boot' in 38.6s.
+
+real	0m43.309s
+user	0m0.010s
+sys	0m0.009s

@@ -1,0 +1,8 @@
+{
+  a: trouble(kind: "NOT_FOUND")
+  b: trouble(kind: "FORBIDDEN")
+  c: trouble(kind: "INVALID")
+  d: trouble(kind: "TIMEOUT")
+  e: trouble(kind: "BUG")
+  hello
+}

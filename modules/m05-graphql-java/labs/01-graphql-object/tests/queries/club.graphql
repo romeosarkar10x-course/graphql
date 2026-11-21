@@ -1,0 +1,3 @@
+query ClubCard($id: ID!) {
+  club(id: $id) { name memberCount owner { name } currentBook { title averageRating } }
+}

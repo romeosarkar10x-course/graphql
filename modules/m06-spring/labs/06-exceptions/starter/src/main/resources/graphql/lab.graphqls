@@ -1,0 +1,9 @@
+# Lab 6.6: trouble(kind) throws the exception kind names (Problems.java):
+# NOT_FOUND, FORBIDDEN, INVALID, CONFLICT, TIMEOUT, BUG.
+extend type Query {
+  trouble(kind: String!): String
+}
+
+extend type Club {
+  trouble(kind: String!): String
+}

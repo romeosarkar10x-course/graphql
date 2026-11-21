@@ -68,6 +68,35 @@
 - [x] `notes_check` in testlib: written work must add 60+ words beyond the starter
 - [x] Simulated learner run of `bin/course checkpoint 04` tagged correctly
 
+## Module 5 (8 lectures, 9 labs, 1 mini-project, 2 games)
+
+- [x] Lectures 5.1–5.8; README (incl. changes from the plan); checkpoint quiz; checkpoint.json
+- [x] m05/01 the GraphQL object (phase timings, 15,000-token parser limit) · m05/02 fetchers, call tree,
+      local context, DataFetcherResult · m05/03 async siblings (sync / pool / virtual threads) ·
+      m05/04 GraphQL over HTTP, September 2026 edition (JDK HttpServer, 25-check audit.hurl; Javalin bonus) ·
+      m05/05 instrumentation (per-field timing in extensions) · m05/06 error handling and masking ·
+      m05/07 SDL vs code wiring, FastBuilder · m05/08 plumbing (Caffeine document cache, context, cancellation)
+- [x] Mini-project m05/09 tiny server ≤150 lines: 25 audit + 15 Shelfie checks (checkpoint-05's 40)
+- [x] Games: m05/10 resolver relay · m05/11 spot the bug (8 concurrency/fetcher bugs)
+
+## Module 6 (9 lectures, 9 labs, 1 mini-project, 2 games)
+
+- [x] Lectures 6.1–6.9; README (incl. changes from the plan); checkpoint quiz; checkpoint.json
+- [x] Shared contract: Boot 4.2 base app, 14 Shelfie Hurl checks, `app-test.sh` (build, start on :4000, Hurl, stop)
+- [x] m06/01 Boot setup, virtual-thread load test · m06/02 controllers (local context, @Arguments,
+      ArgumentValue) · m06/03 inspection enforced at startup (JSpecify) · m06/04 tenant interceptor,
+      @uppercase via type visitor · m06/05 Spring Data QBE vs hand-written (SQL logged) · m06/06 six
+      exceptions, one advice · m06/07 DGS 12 + Maven codegen (graphql-java 25.0 pin) · m06/08 Quarkus
+      code-first, batched @Source · m06/09 bake-off (`Bench.java`, four stacks)
+- [x] Games: m06/09 bake-off leaderboard · m06/10 native image race (rubric; Quarkus native 32 ms,
+      Spring native 49 ms to first answer)
+- [x] Mini-project m06/11 tiny Javalin GraphQL starter (annotation scanner; audit 25/25, Shelfie 14/14,
+      fail-fast on unknown fields)
+- [x] `bin/course native` + `docker/native.Dockerfile` (GraalVM CE 25.0.2 with the course's Maven)
+
+`bin/course check --starters` (2026-11-21, after Module 6): 65 auto-graded labs, 0 problems
+(`_workbench/2026-11-21-m06-check-starters.log`).
+
 `bin/course check --starters` (2026-11-21, after Module 4): 44 auto-graded labs, 0 problems
 (`_workbench/2026-11-21-m04-check-starters.log`). After Module 3 alone: 35, 0 problems.
 

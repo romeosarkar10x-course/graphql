@@ -1,0 +1,8 @@
+{
+  club(id: "c1") {
+    name
+    trouble(kind: "FORBIDDEN")
+    mustWork(kind: "TIMEOUT")
+  }
+  hello
+}

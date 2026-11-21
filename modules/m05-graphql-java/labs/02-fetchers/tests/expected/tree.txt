@@ -1,0 +1,18 @@
+club(id: "c1")  <- root  selects [name, owner, members]
+  name  <- Club
+  owner  <- Club
+    handle  <- User
+  members(first: 2)  <- Club
+    [0] handle  <- User
+    [0] reviews  <- User
+    [1] handle  <- User
+    [1] reviews  <- User
+      [0] rating  <- Review
+      [0] book  <- Review
+        title  <- Book
+      [1] rating  <- Review
+      [1] book  <- Review
+        title  <- Book
+      [2] rating  <- Review
+      [2] book  <- Review
+        title  <- Book

@@ -1,0 +1,28 @@
+public interface org.springframework.graphql.execution.SchemaReport {
+  public abstract graphql.schema.GraphQLSchema schema();
+  public abstract java.util.List<graphql.schema.FieldCoordinates> unmappedFields();
+  public abstract java.util.Map<graphql.schema.FieldCoordinates, graphql.schema.DataFetcher<?>> unmappedRegistrations();
+  public abstract org.springframework.util.MultiValueMap<graphql.schema.DataFetcher<?>, java.lang.String> unmappedArguments();
+  public abstract java.util.Map<graphql.schema.FieldCoordinates, org.springframework.graphql.execution.SchemaReport$NullnessError> fieldNullnessErrors();
+  public abstract org.springframework.util.MultiValueMap<graphql.schema.DataFetcher<?>, org.springframework.graphql.execution.SchemaReport$NullnessError> argumentNullnessErrors();
+  public abstract java.util.List<org.springframework.graphql.execution.SchemaReport$SkippedType> skippedTypes();
+  public abstract graphql.schema.DataFetcher<?> dataFetcher(graphql.schema.FieldCoordinates);
+public interface org.springframework.graphql.execution.GraphQlSource$SchemaResourceBuilder extends org.springframework.graphql.execution.GraphQlSource$Builder<org.springframework.graphql.execution.GraphQlSource$SchemaResourceBuilder> {
+  public abstract org.springframework.graphql.execution.GraphQlSource$SchemaResourceBuilder schemaResources(org.springframework.core.io.Resource...);
+  public abstract org.springframework.graphql.execution.GraphQlSource$SchemaResourceBuilder configureTypeDefinitions(org.springframework.graphql.execution.TypeDefinitionConfigurer);
+  public abstract org.springframework.graphql.execution.GraphQlSource$SchemaResourceBuilder configureRuntimeWiring(org.springframework.graphql.execution.RuntimeWiringConfigurer);
+  public abstract org.springframework.graphql.execution.GraphQlSource$SchemaResourceBuilder defaultTypeResolver(graphql.schema.TypeResolver);
+  public abstract org.springframework.graphql.execution.GraphQlSource$SchemaResourceBuilder inspectSchemaMappings(java.util.function.Consumer<org.springframework.graphql.execution.SchemaReport>);
+  public abstract org.springframework.graphql.execution.GraphQlSource$SchemaResourceBuilder inspectSchemaMappings(java.util.function.Consumer<org.springframework.graphql.execution.SchemaMappingInspector$Initializer>, java.util.function.Consumer<org.springframework.graphql.execution.SchemaReport>);
+  public abstract org.springframework.graphql.execution.GraphQlSource$SchemaResourceBuilder schemaFactory(java.util.function.BiFunction<graphql.schema.idl.TypeDefinitionRegistry, graphql.schema.idl.RuntimeWiring, graphql.schema.GraphQLSchema>);
+public final class org.springframework.graphql.data.ArgumentValue<T> {
+  public boolean isPresent();
+  public boolean isEmpty();
+  public boolean isOmitted();
+  public T value();
+  public java.util.Optional<T> asOptional();
+  public void ifPresent(java.util.function.Consumer<? super T>);
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+Error: class not found: org.springframework.graphql.execution.SchemaReport$NullnessMismatch

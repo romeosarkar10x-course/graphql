@@ -1,0 +1,4 @@
+{
+  club(id: "c2") { owner { handle roleInClub } members(first: 3) { handle roleInClub } }
+  user(id: "u7") { handle roleInClub }
+}

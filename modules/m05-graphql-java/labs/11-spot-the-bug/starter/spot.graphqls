@@ -1,0 +1,30 @@
+type Query {
+  clubs: [Club!]!
+  club(id: ID!): Club
+  books(first: Int = 10): [Book!]!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  "B2: \"<name> (<memberCount>)\""
+  label: String!
+  owner: User!
+  members: [User!]!
+  "The same members, sorted by name."
+  membersByName: [User!]!
+  currentBook: Book
+  viewerIsMember: Boolean
+}
+
+type User { id: ID! name: String! }
+
+type Book {
+  id: ID!
+  title: String!
+  averageRating: Float
+}
+
+type Review { id: ID! rating: Int! book: Book! }
+
+extend type Book { reviews: [Review!]! }

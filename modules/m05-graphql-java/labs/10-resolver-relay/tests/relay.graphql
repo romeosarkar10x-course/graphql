@@ -1,0 +1,12 @@
+{
+  c1: club(id: "c1") { name size active nextMeetup { id startsAt } }
+  c3: club(id: "c3") { size active nextMeetup { id } }
+  u1: user(id: "u1") { latestReview { id } since }
+  u2: user(id: "u2") { latestReview { id createdAt } since }
+  u11: user(id: "u11") { latestReview { id } since }
+  b1: book(id: "b1") { title rating popular }
+  b2: book(id: "b2") { rating popular }
+  b4: book(id: "b4") { rating popular }
+  recent { id createdAt }
+  two: recent(n: 2) { id }
+}

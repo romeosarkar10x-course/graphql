@@ -1,0 +1,30 @@
+package dev.shelfie.boot;
+
+import graphql.schema.DataFetcher;
+import graphql.schema.DataFetcherFactories;
+import graphql.schema.FieldCoordinates;
+import graphql.schema.GraphQLFieldDefinition;
+import graphql.schema.idl.SchemaDirectiveWiring;
+import graphql.schema.idl.SchemaDirectiveWiringEnvironment;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.graphql.execution.RuntimeWiringConfigurer;
+
+/** Plain graphql-java wiring (Module 5.7), plugged into Spring: a directive that wraps the field's fetcher. */
+@Configuration
+public class UppercaseConfig {
+    @Bean
+    RuntimeWiringConfigurer uppercaseDirective() {
+        return wiring -> wiring.directive("uppercase", new SchemaDirectiveWiring() {
+            @Override
+            public GraphQLFieldDefinition onField(SchemaDirectiveWiringEnvironment<GraphQLFieldDefinition> env) {
+                var coordinates = FieldCoordinates.coordinates(env.getFieldsContainer(), env.getElement());
+                DataFetcher<?> original = env.getCodeRegistry().getDataFetcher(coordinates, env.getElement());
+                DataFetcher<?> upper = DataFetcherFactories.wrapDataFetcher(original,
+                    (e, value) -> value instanceof String s ? s.toUpperCase() : value);
+                env.getCodeRegistry().dataFetcher(coordinates, upper);
+                return env.getElement();
+            }
+        });
+    }
+}

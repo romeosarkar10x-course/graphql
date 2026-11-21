@@ -1,0 +1,6 @@
+graphql-java 26.1 cancellation (javap):
+- ExecutionInput.cancel() sets a flag; ExecutionInput.isCancelled() reads it.
+- EngineRunningState.throwIfCancelled() throws AbortExecutionException("Execution has been asked to be cancelled");
+  callers: ExecutionStrategy, Execution, GraphQL, ExecutionContext(Builder). A running fetcher is never interrupted.
+Lab 5.8 Main: "cancelled after 303 ms, 3 of 10 slowTitle fetchers started, errors [Execution has been asked to be cancelled]"
+Throughput (20,000 x clubs query, course image): cache=false 55,621 req/s (20,000 parses); cache=true 266,598 req/s (0 parses after warm-up)

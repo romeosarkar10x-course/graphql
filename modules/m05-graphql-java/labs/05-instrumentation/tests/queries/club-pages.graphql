@@ -1,0 +1,8 @@
+{
+  clubs {
+    name
+    meetups { title startsAt }
+    currentBook { title averageRating reviews(last: 2) { rating author { handle } } }
+    members(first: 2) { handle reviews { rating } }
+  }
+}

@@ -52,7 +52,9 @@ Playing with friends: [docs/GROUP_PLAY.md](docs/GROUP_PLAY.md).
 | | [M2 The query language, driven from Java](modules/m02-query-language/README.md) | Ready |
 | | [M3 The type system and SDL with graphql-java](modules/m03-type-system/README.md) | Ready |
 | | [M4 Mutations and input design](modules/m04-mutations/README.md) | Ready |
-| Building servers | M5 graphql-java from scratch · M6 Spring for GraphQL, DGS, Quarkus · M7 Schema design · M8 Pagination and errors | Planned |
+| Building servers | [M5 graphql-java from scratch](modules/m05-graphql-java/README.md) | Ready |
+| | [M6 Spring for GraphQL, plus DGS and Quarkus](modules/m06-spring/README.md) | Ready |
+| | M7 Schema design · M8 Pagination and errors | Planned |
 | Production | M9 Performance · M10 Security · M11 Real-time · M12 Clients · M13 Testing · M14 Advanced patterns | Planned |
 | Platform | M15 Federation · M16 Production · M17 Under the hood · M18 The frontier · Capstone | Planned |
 

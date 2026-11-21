@@ -1,0 +1,91 @@
+"""
+Shelfie for Module 5: the reference server's read schema (Modules 0 to 3) plus one mutation, served by
+graphql-java alone. Data comes from Data.java (same seed as the reference server).
+"""
+type Query {
+  hello: String!
+  club(id: ID!): Club
+  clubs: [Club!]!
+  user(id: ID!): User
+  book(id: ID!): Book
+  "All books in catalogue order. `titleContains` filters, ignoring case; `first` caps the list."
+  books(titleContains: String, first: Int = 20): [Book!]!
+  "The user named in the request context (header X-Shelfie-User over HTTP), or null."
+  viewer: User
+  "Always fails with a field error: the HTTP status-code tests (5.4) need a partial success."
+  boom: String
+}
+
+type Mutation {
+  "Rating 1 to 5. Rule violations come back in `userErrors`."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String
+  owner: User!
+  "Members in join order. `first` caps the list."
+  members(first: Int = 10): [User!]!
+  memberCount: Int!
+  currentBook: Book
+  meetups(upcomingOnly: Boolean = true): [Meetup!]!
+  visibility: Visibility!
+  createdAt: String!
+}
+
+enum Visibility { PUBLIC PRIVATE }
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  clubs: [Club!]!
+  reviews: [Review!]!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  authors: [String!]!
+  isbn: String
+  publishedYear: Int
+  "Mean rating rounded to 2 decimals, null when there are no reviews."
+  averageRating: Float
+  "Newest first. `last` caps the list."
+  reviews(last: Int = 5): [Review!]!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  body: String!
+  createdAt: String!
+  author: User!
+  book: Book!
+}
+
+type Meetup {
+  id: ID!
+  title: String!
+  startsAt: String!
+  location: String!
+  club: Club!
+}
+
+input CreateReviewInput {
+  bookId: ID!
+  rating: Int!
+  body: String!
+}
+
+type CreateReviewPayload {
+  review: Review
+  userErrors: [UserError!]!
+}
+
+type UserError {
+  field: [String!]
+  message: String!
+}

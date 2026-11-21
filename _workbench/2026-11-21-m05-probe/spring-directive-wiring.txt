@@ -1,0 +1,1 @@
+{"data":{"club":{"meetups":[{"headline":"Shortlist debrief"}]}},"extensions":{"tenant":"global"}}

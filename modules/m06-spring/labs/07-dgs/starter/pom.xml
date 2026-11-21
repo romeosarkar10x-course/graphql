@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.2.0</version>
+    <relativePath/>
+  </parent>
+  <groupId>dev.shelfie</groupId>
+  <artifactId>shelfie-dgs</artifactId>
+  <version>1</version>
+
+  <properties>
+    <java.version>25</java.version>
+    <!-- DGS 12.1.1 is built against graphql-java 25.0; Boot 4.2 manages 26.1, which removed
+         graphql.schema.idl.DirectiveInfo, and DGS then fails at startup (NoClassDefFoundError). -->
+    <graphql-java.version>25.0</graphql-java.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.netflix.graphql.dgs</groupId>
+        <artifactId>graphql-dgs-platform-dependencies</artifactId>
+        <version>12.1.1</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc</artifactId>
+    </dependency>
+    <!-- DGS 12 runs on Spring for GraphQL: this starter brings both -->
+    <dependency>
+      <groupId>com.netflix.graphql.dgs</groupId>
+      <artifactId>graphql-dgs-spring-graphql-starter</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>shelfie-dgs</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <!-- TODO: generate Java types and DgsConstants from src/main/resources/schema with
+           io.github.deweyjose:graphqlcodegen-maven-plugin 3.11.0 (package dev.shelfie.dgs.generated),
+           and add target/generated-sources to the compile (build-helper-maven-plugin). -->
+    </plugins>
+  </build>
+</project>

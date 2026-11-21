@@ -1,0 +1,6 @@
+== { book(id: \"b2\") { title } }
+Hibernate: select b1_0.id,b1_0.author,b1_0.isbn,b1_0.published_year,b1_0.title from book b1_0 where b1_0.id=? fetch first ? rows only
+== { books(author: \"Kazuo Ishiguro\", publishedYear: 2021) { id } }
+Hibernate: select b1_0.id,b1_0.author,b1_0.isbn,b1_0.published_year,b1_0.title from book b1_0 where b1_0.published_year=? and b1_0.author=?
+== { searchBooks(titleContains: \"THE\") { id } }
+Hibernate: select b1_0.id,b1_0.author,b1_0.isbn,b1_0.published_year,b1_0.title from book b1_0 where upper(b1_0.title) like upper(?) escape '\' order by b1_0.published_year

@@ -1,0 +1,11 @@
+# Lab 5.6 additions. Each field throws the exception that `kind` names (see Problems.java):
+# NOT_FOUND, FORBIDDEN, INVALID, TIMEOUT, BUG.
+extend type Query {
+  trouble(kind: String!): String
+}
+
+extend type Club {
+  trouble(kind: String!): String
+  "Non-null: when it fails, the null travels up to the nearest nullable parent."
+  mustWork(kind: String!): String!
+}

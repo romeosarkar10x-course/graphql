@@ -1,0 +1,1 @@
+{ booksById(ids: ["b2", "zz", "b6", "b404"]) { title } }

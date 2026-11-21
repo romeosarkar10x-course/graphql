@@ -1,0 +1,10 @@
+{
+  club(id: "c1") {
+    name
+    owner { handle }
+    members(first: 2) {
+      handle
+      reviews { rating book { title } }
+    }
+  }
+}
