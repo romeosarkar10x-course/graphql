@@ -1,0 +1,7 @@
+query Home     0.158047s 430
+query Club     0.011672s 245
+query Book     0.308347s 108
+query Me       0.009280s 223
+query Readers  0.008933s 160
+query Catalogue 0.005618s 150
+               0.004850s 20

@@ -1,0 +1,4 @@
+[{"kid":"fPw-NL_CmaX4CjJ28Iw3BB7yUsNVcKeQ7CUvnDFpk-A","alg":"RS256","use":"sig"}]
+{"alg":"RS256","typ" : "JWT","kid" : "fPw-NL_CmaX4CjJ28Iw3BB7yUsNVcKeQ7CUvnDFpk-A"}
+{"exp":1795276547,"iat":1795276247,"jti":"onrtro:8438c247-289a-8b49-9348-c911d4b80f1c","iss":"http://keycloak:8180/realms/shelfie","aud":"shelfie-api","sub":"124f58d1-7d18-45d6-8616-d6a31b6fa50e","typ":"Bearer","azp":"shelfie-cli","sid":"9yAqXCSvzAF3KWoodqqAc6AG","acr":"1","allowed-origins":["http://localhost:*"],"realm_access":{"roles":["moderator","member"]},"scope":"profile email","email_verified":true,"roles":["moderator","member"],"name":"max Reader","preferred_username":"max","given_name":"max","family_name":"Reader","email":"max@shelfie.test"}
+{"issuer":"http://keycloak:8180/realms/shelfie","jwks_uri":"http://keycloak:8180/realms/shelfie/protocol/openid-connect/certs"}

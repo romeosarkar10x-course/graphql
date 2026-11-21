@@ -140,6 +140,26 @@
 - [x] Games: m09/09 Performance race (baseline measured in the same run) · m09/10 Guess the query count (10 rounds)
 - [x] Mini-project m09/11 N+1 detector (JUnit 5 extension, 9 harness fixtures, GitHub Actions workflow)
 
+## Module 10 (8 lectures, 8 labs, 1 mini-project, 2 games)
+
+- [x] Infra: Keycloak 26.8.2 course service (realm `shelfie`, course signing key), `bin/course token`
+      (`contract/Token.java`, JDK only), `bin/course seckit` (graphql-cop 1.15, Clairvoyance 2.5.5,
+      `docker/seckit.Dockerfile`), doctor check for Keycloak, `needs: keycloak`
+- [x] Contract: `secure.graphqls`, the vulnerable fork (`contract/vulnerable-shelfie/`, 12 flags, CSRF chain),
+      `vulnerable.sh`, `attack.sh` (CPU and memory from /proc), `Shape.java`
+- [x] Lectures 10.1–10.8 (Hook / Concept / Java build / Experiment / Check)
+- [x] Labs: m10/01 resource server, 11 token cases · m10/02 29 forbidden paths, @PreAuthorize, @auth wiring,
+      learner suite · m10/03 nine attacks measured, crash a node · m10/04 five limits, 8 real screens, 7 attacks,
+      per-caller budget · m10/05 manifest build, trusted-documents provider, introspection off · m10/06 keys,
+      scopes, Shopify-style budgets, Spender · m10/07 connection_init auth, CORS-governed origins, log
+      redaction, masked errors · m10/08 graphql-cop before/after, ShapeLimits, 13 regression tests
+- [x] Games: m10/09 Capture the flag (12 hashed flags) · m10/10 Red team / blue team (13 exploits, 8 functional checks)
+- [x] Mini-project m10/11 Cost meter (proxy, per-minute spend, dashboard)
+
+Partial `bin/course check --starters` (2026-11-21, after Module 10): stopped at the user's request (CPU) after
+m00 to m09 and m10/01, 0 problems (`_workbench/2026-11-21-m10-check-starters.log`). Every M10 lab was tested
+one by one on its solution and starter.
+
 `bin/course check --starters` (2026-11-21, after Module 9): 96 auto-graded labs, 0 problems
 (`_workbench/2026-11-21-m09-check-starters.log`).
 

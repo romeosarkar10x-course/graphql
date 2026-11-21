@@ -1,0 +1,33 @@
+# The vulnerable fork's extra surface. Labs 10.3, 10.9 (capture the flag) and 10.10 (blue team).
+
+extend type Query {
+  "Book search by title, straight to SQL."
+  searchBooks(titleContains: String!): [Book!]!
+  "One review by id."
+  review(id: ID!): Review
+  "Admins only."
+  adminSecret: String @auth(role: ADMIN)
+  "Staff only."
+  staffNotes: String
+  "The global audit log. Admins only."
+  auditLog: [String!]! @auth(role: ADMIN)
+}
+
+extend type Club {
+  "Shown to members only."
+  welcomeNote: String
+  "The club's own audit log. Its owner and admins only."
+  auditLog: [String!]
+}
+
+input ProfileInput {
+  name: String
+}
+
+extend type Mutation {
+  "Sign in. Returns a bearer token, also set as the shelfie_token cookie for the web app."
+  login(username: String!, password: String!): String
+  updateProfile(input: ProfileInput!): Reader!
+  "Admins only."
+  grantBadge(readerId: ID!): String
+}

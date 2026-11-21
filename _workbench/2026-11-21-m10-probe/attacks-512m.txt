@@ -1,0 +1,16 @@
+vulnerable Shelfie on :4000 (pid 17)
+fanout-7.graphql             status 200     622 ms    5019454 bytes  server CPU   5070 ms  RSS  353 ->  649 MB  errors: none
+awk: cannot open "/proc/17/stat" (No such file or directory)
+awk: cannot open "/proc/17/stat" (No such file or directory)
+awk: cannot open "/proc/17/stat" (No such file or directory)
+bash: line 1: kill: (17) - No such process
+server exited
+2026-11-21T16:10:45.593Z  INFO 17 --- [nio-4000-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-21T16:10:45.593Z  INFO 17 --- [nio-4000-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+Terminating due to java.lang.OutOfMemoryError: Java heap space
+vulnerable Shelfie on :4000 (pid 17)
+fanout-7.graphql             status 200     653 ms    5019454 bytes  server CPU   5440 ms  RSS  333 ->  702 MB  errors: none
+fanout-7-wide2.graphql       status 200     699 ms   73616342 bytes  server CPU   2310 ms  RSS  714 ->  790 MB  errors: none
+fanout-7-wide3.graphql       status 200     911 ms  110718582 bytes  server CPU   2740 ms  RSS  790 ->  903 MB  errors: none
+fanout-7-wide4.graphql       status 200    1074 ms  147820822 bytes  server CPU   3440 ms  RSS  903 ->  961 MB  errors: none
+fanout-7.graphql             status 200     231 ms    5019454 bytes  server CPU    800 ms  RSS  962 ->  651 MB  errors: none

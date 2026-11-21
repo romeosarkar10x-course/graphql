@@ -1,0 +1,1 @@
+query Book($id: ID!) { book(id: $id) { title reviews(first: 10) { rating body author { name } club { name } } recommendations { id title } } }

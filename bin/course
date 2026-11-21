@@ -17,9 +17,12 @@
 #   bin/course design lint|shape|clients|diff|outage ...   schema-design helpers, Module 7 (tools/design/Design.java)
 #   bin/course catalog <schema> [rows]    Module 8: load the deterministic book catalogue into PostgreSQL
 #   bin/course clubs <schema> [scale]     Module 9: load the deterministic club dataset into PostgreSQL
+#   bin/course token <user> [--expired|--forged|--none|--aud a]   Module 10: mint a JWT signed with the course key
 #   bin/course shell [-c 'cmd']           bash inside the course image, repo at /course
 #   bin/course native <mvn args>          mvn inside a GraalVM CE 25 image, for native builds (game 6b)
 #   bin/course inspector <args>           graphql-inspector 7.0.2 (Node.js, own image), e.g. diff old.graphql new.graphql
+#   bin/course seckit <tool> <args>       Module 10 scanners (graphql-cop, clairvoyance), own image; shares the
+#                                         network of your running course container, so target localhost:4000
 #   bin/course image                      (re)build the course image
 set -euo pipefail
 
@@ -86,6 +89,7 @@ case "$cmd" in
         echo "  REST       http://localhost:8080/api/clubs/c1"
         echo "  gRPC       localhost:9090                     (grpcurl -plaintext shelfie-ref:9090 list)"
         echo "  slow path  http://localhost:8666              (bin/course toxi latency 700)"
+        echo "  Keycloak   http://localhost:8180              (realm shelfie; inside the image: http://keycloak:8180)"
         echo "  storage    http://localhost:8333              (S3 API, inside the image: http://storage:8333)"
         echo "  Voyager    http://localhost:8080/voyager.html (needs internet in your browser)" ;;
       reset) curl -fsS -X POST localhost:8080/_course/reset-data && echo "Reference data back to the seed." ;;
@@ -126,5 +130,14 @@ case "$cmd" in
     case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course inspector from a directory inside the course repo" ;; esac
     docker run --rm -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" \
       graphql-course-inspector:1 "$@" ;;
+  seckit)   # graphql-cop and Clairvoyance (lab 10.8), in their own Python image
+    [[ $# -ge 1 ]] || die "usage: bin/course seckit graphql-cop -t http://localhost:4000/graphql | clairvoyance <url> -o schema.json"
+    docker image inspect graphql-course-seckit:1 >/dev/null 2>&1 \
+      || docker build -t graphql-course-seckit:1 -f "$ROOT/docker/seckit.Dockerfile" "$ROOT/docker" >&2
+    # Join the network namespace of the newest running course container, where your app listens.
+    cid=$(docker ps --filter ancestor="$IMAGE" --format '{{.ID}} {{.Label "com.docker.compose.project"}}' | awk '$2 == "" {print $1; exit}')
+    net=(--network "$NETWORK"); [[ -n "$cid" ]] && net=(--network "container:$cid")
+    case "$PWD/" in "$ROOT"/*) wd="/course${PWD#"$ROOT"}" ;; *) wd=/course ;; esac
+    docker run --rm "${net[@]}" -u "$COURSE_UID:$COURSE_GID" -v "$ROOT":/course -w "$wd" graphql-course-seckit:1 "$@" ;;
   *) in_image /course/tools/course.sh "$cmd" "$@" ;;
 esac

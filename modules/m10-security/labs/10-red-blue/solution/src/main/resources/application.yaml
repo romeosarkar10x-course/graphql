@@ -1,0 +1,9 @@
+server.port: 4000
+spring:
+  graphql:
+    schema.introspection.enabled: false
+    websocket.path: /graphql
+  datasource:
+    url: jdbc:h2:mem:shelfie
+    username: sa
+    password: FLAG-in-the-error-message-not-here

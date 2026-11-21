@@ -32,6 +32,12 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | JMH | 1.37 | — | Module 9.7 |
 | Gatling | 3.16.1, gatling-maven-plugin 4.22.3 | k6 | Module 9.7, Java DSL; Maven, no Node in the image |
 | async-profiler | 4.6 (Maven Central jar, which carries the native libraries) | — | `event=itimer` in containers |
+| Keycloak | 26.8.2 (`quay.io/keycloak/keycloak:26.8.2`, course service, dev mode) | Testcontainers | Module 10; realm import with the course signing key (`modules/m10-security/contract/keys/`); `kid` = base64url(SHA-256(DER public key)) |
+| Spring Security | 7.2.0 (Boot BOM) | 7 | Module 10; `resource_metadata` (RFC 9728) in the Bearer challenge |
+| Bucket4j | 8.22.0 (`com.bucket4j:bucket4j_jdk17-core`, 2026-11-03) | — | Module 10.4 and 10.6 cost budgets; refuses to consume 0 tokens |
+| graphql-cop | 1.15 (2025-11-07, git tag) | — | lab 10.8, `bin/course seckit`, own image `docker/seckit.Dockerfile` (python 3.13-slim); its pinned requirements (requests 2.25.1) installed as is |
+| Clairvoyance | 2.5.5 (PyPI) | — | lab 10.8; recovers nothing from graphql-java 26.1 (no suggestions, unparsed messages) |
+| InQL, DVGA, OWASP ZAP | not run | run | lecture 10.8 describes them: InQL needs Burp's GUI, DVGA and ZAP are large images |
 | GitHub Actions | actions/checkout v7, actions/setup-java v6 | — | Module 9 project workflow (Module 7's pins v4) |
 | PostgreSQL JDBC | 42.7.14 (Boot BOM; also in course-lib) | — | single-file SQL labs (8.2) |
 | jqwik | 1.10.2 | — | lab 8.4; runs on Boot 4.2's JUnit 6.1.3 platform with no extra config |

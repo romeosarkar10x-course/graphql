@@ -1,0 +1,8 @@
+vulnerable Shelfie on :4000 (pid 17)
+aliases-1000.graphql         status 200     241 ms    1780900 bytes  server CPU   1690 ms  RSS  367 ->  509 MB  errors: none
+depth-99.graphql             status 200      12 ms       1151 bytes  server CPU    150 ms  RSS  517 ->  528 MB  errors: none
+fanout-11.graphql            status 500   95374 ms        103 bytes  server CPU 1064140 ms  RSS  530 -> 8345 MB  errors: none
+fanout-7.graphql             status 500     109 ms        103 bytes  server CPU    840 ms  RSS 8345 -> 8345 MB  errors: none
+fanout-7x2.graphql           status 200   11936 ms  301105411 bytes  server CPU  36380 ms  RSS 8345 -> 4917 MB  errors: none
+fanout-7x3.graphql           status 500   94116 ms        103 bytes  server CPU 1038040 ms  RSS 4917 -> 8402 MB  errors: none
+fanout-9.graphql             status 500      82 ms        103 bytes  server CPU    610 ms  RSS 8402 -> 8403 MB  errors: none

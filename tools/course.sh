@@ -43,6 +43,8 @@ needs_check() {
                   || { echo "  needs PostgreSQL: run bin/course ref up" >&2; return 1; } ;;
       redis) (exec 3<>/dev/tcp/redis/6379) 2>/dev/null \
                || { echo "  needs Redis: run bin/course ref up" >&2; return 1; } ;;
+      keycloak) curl -fsS -o /dev/null -m 5 http://keycloak:8180/realms/shelfie/.well-known/openid-configuration 2>/dev/null \
+                  || { echo "  needs Keycloak: run bin/course ref up" >&2; return 1; } ;;
       varnish) (exec 3<>/dev/tcp/varnish/6082) 2>/dev/null \
                  || { echo "  needs Varnish: run bin/course ref up" >&2; return 1; } ;;
       internet) curl -fsS -o /dev/null -m 5 https://countries.trevorblades.com/graphql -X POST \
@@ -178,6 +180,9 @@ EOF
   clubs)     # Module 9's deterministic club dataset in PostgreSQL
     [[ $# -ge 1 ]] || die "usage: bin/course clubs <schema> [scale]   (scale 1: 100 clubs, 20,000 reviews)"
     exec java -cp "$(lib_cp)" /course/modules/m09-performance/contract/ClubData.java "$@" ;;
+
+  token)     # Module 10: a JWT signed with the course key
+    exec java /course/modules/m10-security/contract/Token.java "$@" ;;
 
   doctor) exec tools/doctor-image.sh ;;
   *) usage ;;

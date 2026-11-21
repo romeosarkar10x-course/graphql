@@ -1,0 +1,1 @@
+mutation AddReview($clubId: ID!, $bookId: ID!, $rating: Int!, $body: String!) { addReview(clubId: $clubId, bookId: $bookId, rating: $rating, body: $body) { id author { name } } }

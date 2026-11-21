@@ -1,0 +1,7 @@
+{
+  "title": "Authorization: row and field rules, @PreAuthorize and an @auth directive",
+  "lecture": "10.2",
+  "kind": "lab",
+  "grading": "auto",
+  "needs": []
+}

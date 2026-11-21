@@ -1,0 +1,28 @@
+== m10/07 Transport and WebSocket security  [modules/m10-security/labs/07-transport-websocket/starter]
+  [32mpass[0m  mvn package builds target/shelfie-secure.jar
+  [31mfail[0m  W01 a handshake from http://evil.test is refused (403)
+        got: error not a member of c1
+  [31mfail[0m  W02 ada authenticates in connection_init and gets c1's new review live
+        got: error not a member of c1
+  [32mpass[0m  W03 no token: the subscription to private c1 is refused
+  [31mfail[0m  W04 a forged token in connection_init closes the socket
+        got: error not a member of c1
+  [32mpass[0m  W05 ben (not a member) cannot subscribe to c1
+  [31mfail[0m  CORS and error messages (transport.hurl): 3 of 3 fail
+        # H01 A preflight from a hostile origin gets no CORS permission
+        # H02 Shelfie's own web app may call, without cookies
+        # H03 A failing resolver: the client learns that it failed, not the internals
+  [31mfail[0m  the log holds no credentials
+        a bearer token or API key was written to the log
+  [31mfail[0m  the failing resolver's detail reaches the server log
+        mask it for the client, not for yourself
+  [31mfail[0m  notes.md: answer the questions (rubric-graded: bin/course grade m10/07)
+  7 check(s) failed
+FAIL m10/07   (stuck? modules/m10-security/labs/07-transport-websocket/HINTS.md has three escalating hints)
+{"errors":[{"message":"recommender http://recs.internal:9000/v2 refused first=11 for api key sk_live_7f3a9c2e1b (limit 10)","locations":[{"line":1,"column":20}],"path":["book","recommendations"],"extensions":{"classification":"DataFetchingException"}}],"data":{"book":null}}
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Access-Control-Allow-Origin: http://evil.test
+Access-Control-Allow-Methods: POST
+Access-Control-Allow-Credentials: true
+Access-Control-Max-Age: 1800

@@ -1,0 +1,12 @@
+starter CORS (allowed-origin-patterns *):
+  http://evil.test       silent
+  https://shelfie.test   silent
+  http://localhost:4000  silent
+CORS allowed-origins https://shelfie.test only:
+  http://evil.test       handshake-refused 403
+  https://shelfie.test   silent
+  http://localhost:4000  silent
+no CORS config at all:
+  http://evil.test       handshake-refused 403
+  https://shelfie.test   handshake-refused 403
+  http://localhost:4000  silent

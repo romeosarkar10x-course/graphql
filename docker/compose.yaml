@@ -8,6 +8,9 @@
 #   redis        Redis for Module 9.5's response cache: :6379. Inside the image: redis:6379.
 #   varnish      HTTP cache for Module 9.6: :6081. No backend until a test runs tools/varnish.py
 #                (admin port 6082 inside the course network only, so -S none is safe here).
+#   keycloak     OpenID Connect provider for Module 10: realm "shelfie" on :8180 (inside the image:
+#                http://keycloak:8180). Dev mode, imported from modules/m10-security/contract/keycloak/,
+#                signing with the course key (that folder's keys/README.md). Admin console: admin/admin.
 name: gqlcourse
 
 services:
@@ -73,6 +76,26 @@ services:
       - ./varnish:/etc/varnish:ro
     ports:
       - "6081:6081"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.8.2
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_HTTP_PORT: "8180"
+      # Tokens say iss=http://keycloak:8180/realms/shelfie wherever they are fetched from.
+      KC_HOSTNAME: http://keycloak:8180
+      KC_HEALTH_ENABLED: "true"
+    volumes:
+      - ../modules/m10-security/contract/keycloak:/opt/keycloak/data/import:ro
+    ports:
+      - "8180:8180"
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/9000 && printf 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && grep -q UP <&3"]
+      interval: 3s
+      timeout: 3s
+      retries: 60
 
   toxiproxy:
     image: ghcr.io/shopify/toxiproxy:2.13.0

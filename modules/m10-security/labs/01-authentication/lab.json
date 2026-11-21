@@ -1,0 +1,9 @@
+{
+  "title": "Authentication: Spring Security, Keycloak and the viewer field",
+  "lecture": "10.1",
+  "kind": "lab",
+  "grading": "both",
+  "needs": [
+    "keycloak"
+  ]
+}

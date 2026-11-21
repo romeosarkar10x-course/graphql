@@ -1,0 +1,16 @@
+club
+clubs
+viewer
+book
+books
+readers
+node
+name
+email
+inviteCode
+reviews
+members
+owner
+secret
+admin
+users

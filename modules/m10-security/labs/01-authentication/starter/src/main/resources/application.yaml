@@ -1,0 +1,4 @@
+server.port: 4000
+# TODO lab 10.1: make this app an OAuth 2 resource server for Keycloak's shelfie realm
+# (issuer http://keycloak:8180/realms/shelfie, audience shelfie-api). Usernames are in the
+# preferred_username claim, roles in the roles claim.

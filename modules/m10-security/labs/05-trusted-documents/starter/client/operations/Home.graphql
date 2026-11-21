@@ -1,0 +1,1 @@
+query Home { clubs(first: 10) { id name members(first: 10) { name } reviews(first: 5) { rating book { title } } } }

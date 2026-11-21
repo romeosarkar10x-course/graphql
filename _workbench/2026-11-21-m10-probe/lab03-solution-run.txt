@@ -1,0 +1,20 @@
+== m10/03 The attack surface: nine attacks on a vulnerable Shelfie  [modules/m10-security/labs/03-attack-surface/solution]
+  [32mpass[0m  brute-force.sh finds c1's invite code in 6 HTTP requests
+        depth.graphql                status 200      12 ms       1151 bytes  server CPU     50 ms  RSS  491 ->  493 MB  errors: none
+  [32mpass[0m  depth.graphql: depth 98, answered
+        aliases.graphql              status 200     405 ms    8138990 bytes  server CPU   3610 ms  RSS  494 ->  615 MB  errors: none
+  [32mpass[0m  aliases.graphql: 500 aliases of one field, answered
+        fanout.graphql               status 200     297 ms    5102781 bytes  server CPU    880 ms  RSS  637 ->  686 MB  errors: none
+  [32mpass[0m  fanout.graphql: 241230 field fetches from one request, server still up
+        cycle.graphql                status 200       8 ms        348 bytes  server CPU     10 ms  RSS  688 ->  688 MB  errors: Validation error (FragmentCycle@[A]) : Fragment cycles not allowed
+  [32mpass[0m  cycle.graphql: a fragment cycle, refused at validation
+        suggestions.graphql          status 200       2 ms        214 bytes  server CPU      0 ms  RSS  688 ->  688 MB  errors: Validation error (FieldUndefined@[club/invitecode]) : Field 'invitecode' in type
+  [32mpass[0m  suggestions.graphql: a near miss of a real field (record what the error says)
+        introspection.graphql        status 200       5 ms       6847 bytes  server CPU     20 ms  RSS  688 ->  688 MB  errors: none
+  [32mpass[0m  introspection.graphql: finds the field the docs leave out
+        injection.graphql            status 200       9 ms         85 bytes  server CPU     50 ms  RSS  688 ->  689 MB  errors: none
+  [32mpass[0m  injection.graphql: rows from another table came back as books
+  [32mpass[0m  csrf.hurl: 3 entries, a text/plain mutation rides on the cookie
+  [31mfail[0m  notes.md: answer the questions (rubric-graded: bin/course grade m10/03)
+  1 check(s) failed
+FAIL m10/03   (stuck? modules/m10-security/labs/03-attack-surface/HINTS.md has three escalating hints)

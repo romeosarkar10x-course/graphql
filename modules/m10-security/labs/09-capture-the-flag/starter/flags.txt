@@ -1,0 +1,2 @@
+# One flag per line, exactly as the server gave it: FLAG{...}
+# Lines starting with # are ignored. 8 of 12 to pass; your score goes on games/leaderboards/capture-the-flag.md.

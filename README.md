@@ -29,11 +29,13 @@ bin/course test m00/01 --solution  # see the reference pass (spoiler-free: it pr
 | Command | What it does |
 |---|---|
 | `bin/course doctor` | Host + image + services check, with a fix for each failure |
-| `bin/course ref up [--rebuild]\|down\|status\|logs\|reset` | Reference server (REST, GraphQL, gRPC), Toxiproxy, object storage, PostgreSQL, Redis and Varnish; `--rebuild` after a course update; `reset` puts the data back to the seed |
+| `bin/course ref up [--rebuild]\|down\|status\|logs\|reset` | Reference server (REST, GraphQL, gRPC), Toxiproxy, object storage, PostgreSQL, Redis, Varnish and Keycloak; `--rebuild` after a course update; `reset` puts the data back to the seed |
 | `bin/course toxi latency 700` / `toxi reset` | Add or remove latency on `localhost:8666` |
 | `bin/course hurl file.hurl` | Hurl inside the course network, `{{ref}}` preset |
 | `bin/course java File.java` / `jshell` | Single-file Java or jshell with Jackson 3, graphql-java 26.1, extended-scalars and extended-validation on the class path |
 | `bin/course gql validate\|operations\|schema-lines\|coordinates\|stats` | Validate a document, list its operations, diff schemas, resolve schema coordinates, count types and deprecations (a schema may be a directory of `.graphqls` files) |
+| `bin/course token <user> [--expired\|--forged\|--none]` | Module 10: a JWT signed with the course key |
+| `bin/course seckit graphql-cop\|clairvoyance ...` | Module 10: GraphQL scanners in their own image, in the network of your running course container |
 | `bin/course shell [-c 'cmd']` | bash in the course image, or one command |
 | `bin/course checkpoint NN` | Verify a module's checkpoint and tag `checkpoint-NN` in `workspace/` |
 | `bin/course check --starters` | Course self-test |
@@ -57,7 +59,8 @@ Playing with friends: [docs/GROUP_PLAY.md](docs/GROUP_PLAY.md).
 | | [M7 Schema design principles](modules/m07-schema-design/README.md) | Ready |
 | | [M8 Pagination, filtering, sorting and errors](modules/m08-pagination-errors/README.md) | Ready |
 | Production | [M9 Performance and data loading](modules/m09-performance/README.md) | Ready |
-| | M10 Security · M11 Real-time · M12 Clients · M13 Testing · M14 Advanced patterns | Planned |
+| | [M10 Security](modules/m10-security/README.md) | Ready |
+| | M11 Real-time · M12 Clients · M13 Testing · M14 Advanced patterns | Planned |
 | Platform | M15 Federation · M16 Production · M17 Under the hood · M18 The frontier · Capstone | Planned |
 
 ## Layout

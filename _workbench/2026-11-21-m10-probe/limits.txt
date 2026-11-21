@@ -1,0 +1,12 @@
+defaults: QueryComplexityLimits{maxDepth=100, maxFieldsCount=100000}
+1 depth 60                                                      28 ms  data=true  no errors
+2 depth 120                                                      7 ms  data=false  Query depth 101 exceeds maximum allowed depth 100
+3 typo (suggestions?)                                            0 ms  data=false  Validation error (FieldUndefined@[book/titel]) : Field 'titel' in type 'Book' is undefined
+4 fragment cycle                                                 1 ms  data=false  Validation error (FragmentCycle@[A]) : Fragment cycles not allowed
+5 10,000 aliases                                                14 ms  data=false  More than 15,000 'grammar' tokens have been presented. To prevent Denial Of Service attacks, parsing has been cancelled.
+6 110,000 aliases                                                7 ms  data=false  More than 1,048,576 characters have been presented. To prevent Denial Of Service attacks, parsing has been cancelled.
+7 per-request limits depth 5, fragment-hidden depth 8            0 ms  data=false  Query depth 6 exceeds maximum allowed depth 5
+8 per-request limits 300 aliases                                 2 ms  data=false  Query has 201 fields which exceeds maximum allowed 200
+9 MaxQueryDepthInstrumentation(5), fragment depth 8              3 ms  data=false  maximum query depth exceeded 7 > 5
+10 complexity 1000: books(first:10){reviews(first:10){body}}     5 ms  data=true  no errors
+11 complexity 1000: books(first:50){reviews(first:50){body}}     0 ms  data=false  maximum query complexity exceeded 5050 > 1000

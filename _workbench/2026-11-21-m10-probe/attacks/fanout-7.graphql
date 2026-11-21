@@ -1,0 +1,1 @@
+{ clubs(first: 12) { members(first: 10) { clubs(first: 12) { members(first: 10) { clubs(first: 12) { members(first: 10) { clubs(first: 12) { name } } } } } } } }

@@ -1,0 +1,7 @@
+naive loop: 278 ms
+{"spender":{"served":8,"throttled":32}}
+request 38: cost 140, 6 left
+request 39: cost 140, 5 left
+request 40: cost 140, 5 left
+spender: 5401 ms
+{"spender":{"served":48,"throttled":32}}

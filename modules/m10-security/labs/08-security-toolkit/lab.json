@@ -1,0 +1,7 @@
+{
+  "title": "Security testing toolkit: scan, fix, regression-test",
+  "lecture": "10.8",
+  "kind": "lab",
+  "grading": "both",
+  "needs": []
+}

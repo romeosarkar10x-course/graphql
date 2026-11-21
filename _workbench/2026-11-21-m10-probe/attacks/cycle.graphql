@@ -1,0 +1,1 @@
+{ book(id: "b1") { ...A } } fragment A on Book { reviews { book { ...B } } } fragment B on Book { ...A }

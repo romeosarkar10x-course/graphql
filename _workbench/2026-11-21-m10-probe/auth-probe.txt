@@ -1,0 +1,36 @@
+== no token
+{"data":{"viewer":null}}
+HTTP/1.1 200 
+== keycloak token (max)
+{"data":{"viewer":{"id":"r3","name":"Max","roles":["MEMBER","MODERATOR"]}}}
+HTTP/1.1 200 
+== minted (ada)
+{"data":{"viewer":{"id":"r1","name":"Ada","roles":["MEMBER"]}}}
+HTTP/1.1 200 
+== expired
+
+HTTP/1.1 401 
+WWW-Authenticate: Bearer error="invalid_token", error_description="An error occurred while attempting to decode the Jwt: Jwt expired at 2026-11-21T14:58:10Z", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1", resource_metadata="http://localhost:4000/.well-known/oauth-protected-resource"
+== forged
+
+HTTP/1.1 401 
+WWW-Authenticate: Bearer error="invalid_token", error_description="An error occurred while attempting to decode the Jwt: Signed JWT rejected: Invalid signature", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1", resource_metadata="http://localhost:4000/.well-known/oauth-protected-resource"
+== alg none
+
+HTTP/1.1 401 
+WWW-Authenticate: Bearer error="invalid_token", error_description="Unsupported algorithm of none", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1", resource_metadata="http://localhost:4000/.well-known/oauth-protected-resource"
+== wrong audience
+
+HTTP/1.1 401 
+WWW-Authenticate: Bearer error="invalid_token", error_description="An error occurred while attempting to decode the Jwt: The aud claim is not valid", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1", resource_metadata="http://localhost:4000/.well-known/oauth-protected-resource"
+== wrong issuer
+
+HTTP/1.1 401 
+WWW-Authenticate: Bearer error="invalid_token", error_description="An error occurred while attempting to decode the Jwt: The iss claim is not valid", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1", resource_metadata="http://localhost:4000/.well-known/oauth-protected-resource"
+== garbage
+
+HTTP/1.1 401 
+WWW-Authenticate: Bearer error="invalid_token", error_description="An error occurred while attempting to decode the Jwt: Malformed token", error_uri="https://tools.ietf.org/html/rfc6750#section-3.1", resource_metadata="http://localhost:4000/.well-known/oauth-protected-resource"
+== Basic scheme
+{"data":{"viewer":null}}
+HTTP/1.1 200 

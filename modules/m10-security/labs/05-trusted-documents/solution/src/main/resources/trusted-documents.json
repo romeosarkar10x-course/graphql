@@ -1,0 +1,45 @@
+{
+  "format" : "apollo-persisted-query-manifest",
+  "version" : 1,
+  "operations" : [ {
+    "type" : "mutation",
+    "id" : "b149b16e3c03682d8532277135168b8530436bd0fa82ca56ec6aaf2673a3d106",
+    "name" : "AddReview",
+    "body" : "mutation AddReview($clubId: ID!, $bookId: ID!, $rating: Int!, $body: String!) { addReview(clubId: $clubId, bookId: $bookId, rating: $rating, body: $body) { id author { name } } }"
+  }, {
+    "type" : "query",
+    "id" : "313978e4f19e2e155cf9432edac6778027507048c4d44ab7ac441a784f3a1944",
+    "name" : "Book",
+    "body" : "query Book($id: ID!) { book(id: $id) { title reviews(first: 10) { rating body author { name } club { name } } recommendations { id title } } }"
+  }, {
+    "type" : "query",
+    "id" : "a101a3d161d0fe42bf76b4ae5845ce39ebab7a79f95c4da9b4a553b9a2f629a7",
+    "name" : "Catalogue",
+    "body" : "query Catalogue($first: Int = 50) { books(first: $first) { id title } }"
+  }, {
+    "type" : "query",
+    "id" : "6931fc4d43c4310b24e3932ed6743bfae643ad5cdb536ca20f3e1bbf3719dbb2",
+    "name" : "Club",
+    "body" : "query Club($id: ID!) { club(id: $id) { name private owner { name } members(first: 20) { id name } reviews(first: 20) { id rating body author { name } book { id title } } } }"
+  }, {
+    "type" : "query",
+    "id" : "2fb0153638ab51b6d37dc3e81f0c417266aa68beb85a409bf01298574ca52a85",
+    "name" : "Home",
+    "body" : "query Home { clubs(first: 10) { id name members(first: 10) { name } reviews(first: 5) { rating book { title } } } }"
+  }, {
+    "type" : "mutation",
+    "id" : "732effcf7fed62e6d3df909885873b025e749b2f588f24f8013d0235f3c4c181",
+    "name" : "JoinClub",
+    "body" : "mutation JoinClub($id: ID!, $code: String!) { joinClub(id: $id, inviteCode: $code) { id name } }"
+  }, {
+    "type" : "query",
+    "id" : "68c0fd6990846f612f6c93bcc006c6421cf1e6c161bcc6ef9a839ed1bd1f7417",
+    "name" : "Me",
+    "body" : "query Me { viewer { name email clubs(first: 10) { name reviews(first: 5) { body book { title } } } } }"
+  }, {
+    "type" : "query",
+    "id" : "bf4da57551efbc1505fc8739085956ca325f4170b3f258af2f33d97d88befc8d",
+    "name" : "Readers",
+    "body" : "query Readers { readers(first: 40) { id name roles } }"
+  } ]
+}

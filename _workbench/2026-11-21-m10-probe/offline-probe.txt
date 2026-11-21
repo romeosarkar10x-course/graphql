@@ -1,0 +1,5 @@
+ada                                  200
+ada --iss http://evil/realms/x       401
+ada --expired                        401
+ada --aud x                          401
+0

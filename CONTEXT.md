@@ -112,3 +112,16 @@ in Docker.
   - 9.5's starter is an app with five deliberate cache bugs; the experiment is the diagnosis.
   - Gatling, not k6; async-profiler from Maven Central in itimer mode; no image change for Module 9.
   - Lab 9.8's reference report uses one run per configuration and says so.
+- Module 10 (2026-11-21), probes in `_workbench/2026-11-21-m10-probe/` (`FINDINGS.md`, 22 findings):
+  - Keycloak 26.8.2 is a course service (no Docker socket for Testcontainers). Its realm imports a course
+    signing key kept in the repository on purpose, so `bin/course token` mints expired, forged, unsigned
+    and wrong-audience tokens offline; labs 10.2 on verify with the public key and need no Keycloak.
+  - One shared vulnerable fork (`contract/vulnerable-shelfie/`) serves labs 10.3, 10.8, the capture the
+    flag and the blue team. Its flags are computed in its source: the CTF is black box on the learner's
+    honour. Its heap is capped at 512 MB and its "expensive query" flag counts field fetches, not time.
+  - Labs chain: 10.1 → 10.2 → 10.4 → 10.5 / 10.6, and 10.2 → 10.7 → 10.8 (with 10.4's limits).
+  - Field suggestions are a non-finding (graphql-java never suggests); Clairvoyance recovers nothing.
+  - 10.7's origin check is CORS: Spring refuses cross-origin handshakes unless CORS allows the origin.
+  - Scanners run in their own image (`bin/course seckit`), sharing the network namespace of the newest
+    course container; the lab test re-implements graphql-cop's HIGH checks in Hurl. InQL, DVGA and ZAP are
+    described, not run.

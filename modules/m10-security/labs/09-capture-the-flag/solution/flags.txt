@@ -1,0 +1,12 @@
+FLAG{introspection-3ed06bdb}
+FLAG{node-leak-2431f1c9}
+FLAG{enumeration-9e6ea6e1}
+FLAG{slow-query-53b5de1f}
+FLAG{role-bypass-6ef5496b}
+FLAG{brute-force-ec3c3eef}
+FLAG{sql-injection-768f76b6}
+FLAG{alg-none-4058a0b3}
+FLAG{error-leak-2323944b}
+FLAG{mass-assignment-211a5b09}
+FLAG{websocket-5b9fb25c}
+FLAG{apq-trust-9ae3ea0d}

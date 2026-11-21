@@ -1,0 +1,10 @@
+server.port: 4000
+spring:
+  graphql:
+    graphiql.enabled: true
+    http.methods: [GET, POST]       # "so the CDN can cache queries"
+    websocket.path: /graphql
+  datasource:
+    url: jdbc:h2:mem:shelfie
+    username: sa
+    password: FLAG-in-the-error-message-not-here

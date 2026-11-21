@@ -1,0 +1,1 @@
+query Readers { readers(first: 40) { id name roles } }

@@ -1,0 +1,21 @@
+server.port: 4000
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # From lab 10.2 on, tokens are verified offline with the course public key: no Keycloak needed.
+          # issuer-uri is still checked against "iss" (Spring does not fetch it when a key is given).
+          public-key-location: classpath:course-public.pem
+          issuer-uri: http://keycloak:8180/realms/shelfie
+          audiences: shelfie-api
+          principal-claim-name: preferred_username
+          authorities-claim-name: roles
+          authority-prefix: ROLE_
+  graphql:
+    schema:
+      # Lecture 10.5: no introspection in production. Clients were built against the schema file.
+      introspection.enabled: false
+shelfie:
+  trusted-documents:
+    enforce: true     # false lets ad-hoc queries through, for local development only

@@ -1,0 +1,11 @@
+# Every type and field, deprecated ones included. Asking for __Type.fields once (inside types) matters:
+# graphql-java 26.1's good-faith check refuses a document that asks for it twice.
+{
+  __schema {
+    types {
+      name
+      fields(includeDeprecated: true) { name isDeprecated deprecationReason }
+      inputFields { name description }
+    }
+  }
+}

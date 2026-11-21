@@ -1,0 +1,1 @@
+query Club($id: ID!) { club(id: $id) { name private owner { name } members(first: 20) { id name } reviews(first: 20) { id rating body author { name } book { id title } } } }

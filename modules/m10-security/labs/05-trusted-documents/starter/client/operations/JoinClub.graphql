@@ -1,0 +1,1 @@
+mutation JoinClub($id: ID!, $code: String!) { joinClub(id: $id, inviteCode: $code) { id name } }

@@ -1,0 +1,15 @@
+2026-11-21 16:29:41 	INFO	| Starting blind introspection on http://scanme:4000/graphql...
+2026-11-21 16:29:41 	INFO	| Iteration 1
+2026-11-21 16:29:41 	DEBUG	| Root typenames are: {'queryType': 'Query', 'mutationType': 'Mutation', 'subscriptionType': None}
+2026-11-21 16:29:41 	DEBUG	| Unkwon error in `probe_typename`: "[{'message': "Validation error (FieldUndefined@[IAmWrongField]) : Field 'IAmWrongField' in type 'Query' is undefined", 'locations': [{'line': 1, 'column': 9}], 'extensions': {'classification': 'ValidationError'}}]" does not match any known regexes.
+                    Field Suggestion might not be enabled on this endpoint. Using default "Query
+2026-11-21 16:29:41 	DEBUG	| __typename = Query
+2026-11-21 16:29:41 	DEBUG	| Sent 16 fields, received 19 errors in 0.0 seconds
+2026-11-21 16:29:41 	DEBUG	| Unknown error message for `valid_field`: 'Validation error (FieldUndefined@[reviews]) : Field 'reviews' in type 'Query' is undefined'
+2026-11-21 16:29:41 	DEBUG	| Unknown error message for `valid_field`: 'Validation error (FieldUndefined@[users]) : Field 'users' in type 'Query' is undefined'
+2026-11-21 16:29:41 	DEBUG	| Unknown error message for `valid_field`: 'Validation error (SubselectionRequired@[books]) : Subselection required for type '[Book!]!' of field 'books''
+2026-11-21 16:29:41 	DEBUG	| Unknown error message for `valid_field`: 'Validation error (SubselectionRequired@[book]) : Subselection required for type 'Book' of field 'book''
+2026-11-21 16:29:41 	DEBUG	| Unknown error message for `valid_field`: 'Validation error (MissingFieldArgument@[book]) : Missing field argument 'id''
+2026-11-21 16:29:41 	DEBUG	| Unknown error message for `valid_field`: 'Validation error (SubselectionRequired@[readers]) : Subselection required for type '[Reader!]!' of field 'readers''
+2026-11-21 16:29:41 	DEBUG	| Unknown error message for `valid_field`: 'Validation error (FieldUndefined@[name]) : Field 'name' in type 'Query' is undefined'
+---

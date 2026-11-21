@@ -1,0 +1,42 @@
+F01
+{"data":{"__type":{"fields":[{"name":"viewer","isDeprecated":false},{"name":"node","isDeprecated":false},{"name":"club","isDeprecated":false},{"name":"clubs","isDeprecated":false},{"name":"book","isDeprecated":false},{"name":"books","isDeprecated":false},{"name":"readers","isDeprecated":false},{"nam
+{"data":{"debugInfo":"build 2026.11.21, FLAG{introspection-3ed06bdb}"}}
+ben token eyJhbGciOiJSUzI1NiJ9...
+F02
+FLAG{node-leak-2431f1c9}
+F03
+{"data":{"node":{"email":"FLAG{enumeration-9e6ea6e1}@shelfie.test"}}}
+F05
+{"data":{"club":{"auditLog":["created c2 for r1","root: rotated the admin recovery code to FLAG{role-bypass-6ef5496b}"]}}}
+F07
+{"data":{"searchBooks":[{"id":"backup-key","title":"FLAG{sql-injection-768f76b6}"}]}}
+F08
+{"data":{"adminSecret":"FLAG{alg-none-4058a0b3}"}}
+F09
+{"errors":[{"message":"java.lang.IllegalStateException: review lookup failed for 'vx' on jdbc:h2:mem:shelfie;USER=sa;PASSWORD=FLAG{error-leak-2323944b}","locations":[{"line":1,"column":3}],"path":["review"],"extensions":{"classification":"DataFetchingException"}}],"data":{"review":null}}
+F10
+{"data":{"updateProfile":{"roles":["MEMBER","ADMIN"]}}}
+{"data":{"staffNotes":"Staff notes: FLAG{mass-assignment-211a5b09}"}}
+F12 ad hoc
+{"errors":[{"message":"grantBadge is only allowed from persisted queries","locations":[{"line":1,"column":12}],"path":["grantBadge"],"extensions":{"classification":"FORBIDDEN"}}],"data":{"grantBadge":null}}
+F12 apq
+{"data":{"grantBadge":"badge granted to r2: FLAG{apq-trust-9ae3ea0d}"}}
+CSRF text/plain + cookie
+{"data":{"addReview":{"author":{"name":"Ben"}}}}
+GET mutation
+405
+F06 brute force
+  0: none 
+  1000: none 
+  2000: none 
+  3000: none 
+  4000: a4821 
+{"data":{"club":{"welcomeNote":"Welcome, night owl. Tonight's password is FLAG{brute-force-ec3c3eef}"}}}
+stats
+{"graphqlRequests":21}
+F04 slow
+{"data":{"clubs":[{"members":[{"clubs":[{"members":[{"clubs":[{"members":[{"clubs":[{"name":"Night Owls"}]},{"clubs":[{"name":"Night Owls"},{"name":"Open Shelf"}]},{"clubs":[{"name":"Night Owls"}]},{"
+real	0m0.500s
+user	0m0.002s
+sys	0m0.003s
+

@@ -1,0 +1,16 @@
+server.port: 4000
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Keycloak inside the course network (bin/course ref up). Spring reads
+          # /.well-known/openid-configuration on the first request and checks "iss" on every token.
+          issuer-uri: http://keycloak:8180/realms/shelfie
+          # Tokens minted for another API are refused.
+          audiences: shelfie-api
+          # The principal's name is the Keycloak username, not the random "sub".
+          principal-claim-name: preferred_username
+          # "roles": ["member", "moderator"] becomes ROLE_member, ROLE_moderator.
+          authorities-claim-name: roles
+          authority-prefix: ROLE_

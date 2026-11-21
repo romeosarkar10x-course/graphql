@@ -1,11 +1,12 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 9
+## Now: user review of Module 10
 
-The user said "continue" (2026-11-21) after Module 8; Module 9 is built. Wait for review before Module 10.
+The user said "continue..." (2026-11-21) after Module 9; Module 10 is built. Wait for review before Module 11.
 
 ## Verification debt
 
+- [ ] Rerun the full `bin/course check --starters` after Module 10 (the 2026-11-21 run was stopped at m10/01).
 - [ ] PayPal "700 ms p99 per round trip" and "3 to 52 products in 2 years": the Medium post blocks
       automated fetches (403). Verify by hand or replace with another source (lecture 1.2, case-studies tab).
 - [ ] Re-verify public API answers in m00/03 and the GitHub schema answers in m00/06 each term.
@@ -43,6 +44,15 @@ The user said "continue" (2026-11-21) after Module 8; Module 9 is built. Wait fo
 - [ ] Lab 9.8's reference report has one run per configuration; repeat 5x and report medians.
 - [ ] Re-check each release: Spring for GraphQL enabling DataLoader chaining (2.1.0: never), sending
       Cache-Control on GET (2.1.0: none), the GET-mutation `Allow` header; graphql-java's APQ hash check on hits.
+- [ ] Keycloak: move off 26.8.2 each term; re-check that a realm import with an `rsa` key provider still
+      creates no other keys and that `kid` is still the SHA-256 of the DER public key.
+- [ ] Re-check each release: Spring Boot passing `spring.graphql.cors` to the GraphQL WebSocket handler
+      (lab 10.7's origin rule depends on it), `AuthenticationWebSocketInterceptor`'s 4401 close, graphql-java
+      never suggesting field names and its good-faith introspection default, the 15,000-token parser limit.
+- [ ] graphql-cop: 1.15 pins requests 2.25.1; re-check for a release, and that its 13 checks still decide as
+      `tests/cop.hurl` re-implements them. Try Clairvoyance releases against graphql-java's messages.
+- [ ] GitHub's and Shopify's rate-limit models in lecture 10.6 are from their documentation, not measured.
+- [ ] Lab 10.6's Spender (15 s ceiling) and lab 10.4's 1 s timeout (2.5 s ceiling) are time-based; green on one machine.
 - [ ] Module 7's CI workflow pins actions/checkout@v4 and setup-java@v4; current majors are v7 and v6.
 - [ ] Mini-project 8 and game 8a time-based checks (bot every 20/30 ms) were green on one machine;
       watch for flakiness on slow machines.

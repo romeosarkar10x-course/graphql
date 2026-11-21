@@ -1,0 +1,7 @@
+vulnerable Shelfie on :4000 (pid 142)
+depth-99.graphql             status 200      92 ms       1151 bytes  server CPU    250 ms  RSS  386 ->  392 MB  errors: none
+aliases-1000.graphql         status 200     170 ms    1780900 bytes  server CPU   1460 ms  RSS  392 ->  493 MB  errors: none
+fanout-7.graphql             status 200     434 ms    5019544 bytes  server CPU   3940 ms  RSS  505 ->  616 MB  errors: none
+{"debug":{"fieldFetches":237326,"slowQueryLog":"FLAG{slow-query-53b5de1f}"}}
+fanout-7-wide2.graphql       status 200     907 ms   73616433 bytes  server CPU   2810 ms  RSS  616 ->  830 MB  errors: none
+{"debug":{"fieldFetches":3514598,"slowQueryLog":"FLAG{slow-query-53b5de1f}"}}
