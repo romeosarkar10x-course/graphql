@@ -1,0 +1,9 @@
+server:
+  port: 4000
+spring:
+  main:
+    banner-mode: off
+shelfie:
+  # The zoo's clock. Empty: the real time. The tests pin it (--shelfie.clock=2026-11-27T10:00:00Z, a Friday).
+  clock: ""
+  zone: Europe/London

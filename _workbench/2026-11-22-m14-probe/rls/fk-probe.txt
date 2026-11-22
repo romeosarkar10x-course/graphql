@@ -1,0 +1,4 @@
+as acme, visible rows for c-g1: 0
+single-column FK: INSERT of acme membership into globex club c-g1 SUCCEEDED (FK check ignores RLS)
+as shelfie (superuser), no app.tenant, rows visible: 2
+shelfie is superuser: true

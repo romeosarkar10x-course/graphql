@@ -140,6 +140,25 @@
 - [x] Games: m09/09 Performance race (baseline measured in the same run) · m09/10 Guess the query count (10 rounds)
 - [x] Mini-project m09/11 N+1 detector (JUnit 5 extension, 9 harness fixtures, GitHub Actions workflow)
 
+## Module 14 (7 lectures, 7 labs, 2 mini-projects, 1 game)
+
+- [x] Contract: `openlibrary/` (a fake Open Library from responses recorded 2026-11-22, with slow/down/garbage/
+      ratelimit switches and a call counter), `KafkaTool.java` + `kafka.sh`; `bin/course token --claim k=v`
+- [x] Lectures 14.1–14.7 (Hook / Concept / Java build / Experiment / Check)
+- [x] Labs: m14/01 three directive wirings, a moved-directive schema, start-up refusals · m14/02 Accept-Language
+      negotiation, zones and DST, decimal Money, 19 checks · m14/03 tenant from the token, RLS (forced, role per
+      transaction, composite FK), per-plan schema, six attack paths and direct DB checks · m14/04 BFF over REST, gRPC
+      and the fake Open Library, timeouts and a breaker · m14/05 outbox, relay, idempotent projection, redelivery and
+      foreign events · m14/06 audit Instrumentation, soft delete and retention, a GDPR erase checked in API, tables,
+      audit and logs · m14/07 schema from metadata, hot reload, admin endpoint, traffic during swaps
+- [x] Mini-projects and game: m14/08 headless CMS (types, inputs, patches, queries, mutations generated; restart) ·
+      m14/09 directive zoo (three exact directives, Friday in London, your exhibit) · m14/10 Open Library gateway
+      (one call per page, cache, stale, back-off)
+- [x] Probes: `_workbench/2026-11-22-m14-probe/FINDINGS.md` (18 findings)
+
+`bin/course check m14 --starters` (2026-11-22): 10 auto-graded labs, 0 problems (`_workbench/2026-11-22-m14-check-starters.log`).
+Full-course check still TODO.
+
 ## Module 13 (7 lectures, 7 labs, 1 mini-project, 2 games)
 
 - [x] Infra: labs whose `lab.json` needs `"docker"` get the host's Docker socket (Testcontainers, 13.3);

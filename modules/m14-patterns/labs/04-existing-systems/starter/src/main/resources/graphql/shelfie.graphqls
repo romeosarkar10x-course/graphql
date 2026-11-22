@@ -1,0 +1,64 @@
+# Lab 14.4: a GraphQL backend-for-frontend over systems that already exist. The book page needs one query; behind
+# it are a REST catalogue, a gRPC reviews service and Open Library's public REST API. When Open Library is down,
+# slow or answering nonsense, the page still works: `openLibrary` is null with an error that says so.
+
+"Every read starts here."
+type Query {
+  "A book from the catalogue (REST), or null when the catalogue has none."
+  book(id: ID!): Book
+}
+
+"A book: the catalogue's fields, reviews from gRPC, extra facts from Open Library."
+type Book {
+  "Stable identifier, e.g. b1."
+  id: ID!
+  "Title as printed."
+  title: String!
+  "Authors in credit order."
+  authors: [String!]!
+  "ISBN-13."
+  isbn: String
+  "Year of first publication."
+  publishedYear: Int
+  "The latest reviews, newest first (gRPC ListBookReviews)."
+  reviews(last: Int = 3): [Review!]!
+  """
+  What Open Library knows about this ISBN. Null without an error when it knows nothing; null with an error whose
+  extensions.code is UPSTREAM_UNAVAILABLE when Open Library failed, timed out, or is switched off by the breaker.
+  """
+  openLibrary: OpenLibraryInfo
+}
+
+"One reader's review."
+type Review {
+  "Stable identifier."
+  id: ID!
+  "1 to 5."
+  rating: Int!
+  "What they wrote."
+  body: String!
+  "Who wrote it (gRPC GetUser)."
+  author: User!
+}
+
+"A Shelfie member."
+type User {
+  "Stable identifier."
+  id: ID!
+  "Full name."
+  name: String!
+}
+
+"Facts from Open Library's edition record, as it has them: any of them may be missing."
+type OpenLibraryInfo {
+  "The edition's page on openlibrary.org."
+  url: String!
+  "Page count of this edition."
+  pages: Int
+  "Publisher names."
+  publishers: [String!]!
+  "Subject headings, in Open Library's order."
+  subjects(first: Int = 3): [String!]!
+  "Medium-size cover image, when there is one."
+  coverUrl: String
+}

@@ -20,7 +20,7 @@
 #   bin/course design lint|shape|clients|diff|outage ...   schema-design helpers, Module 7 (tools/design/Design.java)
 #   bin/course catalog <schema> [rows]    Module 8: load the deterministic book catalogue into PostgreSQL
 #   bin/course clubs <schema> [scale]     Module 9: load the deterministic club dataset into PostgreSQL
-#   bin/course token <user> [--expired|--forged|--none|--aud a]   Module 10: mint a JWT signed with the course key
+#   bin/course token <user> [--expired|--forged|--none|--aud a|--claim k=v]   Module 10: mint a JWT signed with the course key
 #   bin/course shell [-c 'cmd']           bash inside the course image, repo at /course
 #   bin/course native <mvn args>          mvn inside a GraalVM CE 25 image, for native builds (game 6b)
 #   bin/course inspector <args>           graphql-inspector 7.0.2 (Node.js, own image), e.g. diff old.graphql new.graphql

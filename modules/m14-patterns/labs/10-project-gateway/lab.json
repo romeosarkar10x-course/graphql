@@ -1,0 +1,7 @@
+{
+  "title": "Mini-project: an Open Library gateway, one GraphQL API over a third-party REST API with batching, caching, stale answers and back-off",
+  "lecture": "14.4",
+  "kind": "project",
+  "grading": "both",
+  "needs": []
+}

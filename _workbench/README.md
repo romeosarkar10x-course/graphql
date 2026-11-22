@@ -37,3 +37,5 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-22-m12-check-starters.log` | `bin/course check m12 --starters` after Module 12 |
 | `2026-11-22-m13-probe/` | Module 13: `FINDINGS.md` (22 findings), Testcontainers probe (`tc/`), MockedWiringFactory, MockSpec RFC text, graphql-inspector action docs, SchemaDiff events and inspector comparisons (`schemadiff/`), graphql-eslint on the clean schema, SpectaQL build, PIT run (`pit/`), a rename without codegen |
 | `2026-11-22-m13-check-starters.log` | `bin/course check m13 --starters` after Module 13 |
+| `2026-11-22-m14-probe/` | Module 14: `FINDINGS.md` (18 findings), Spring probe (directive order, Locale, per-tenant schema), Open Library recordings, spec and RFC text, RLS/foreign-key probe, lab probe outputs (locales, BFF, zoo), good-faith introspection |
+| `2026-11-22-m14-check-starters.log` | `bin/course check m14 --starters` after Module 14 |

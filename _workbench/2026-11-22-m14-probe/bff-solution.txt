@@ -1,0 +1,8 @@
+{"data":{"book":{"title":"The Left Hand of Darkness","isbn":"9780441478125","reviews":[{"rating":4,"author":{"name":"Hugo Silva"}},{"rating":3,"author":{"name":"Jonas Berg"}},{"rating":5,"author":{"name":"Chloe Martin"}}],"openLibrary":{"url":"http://openlibrary.org/books/OL20525469M/The_Left_Hand_of_Darkness","pages":304,"publishers":["Ace Books"],"subjects":["Ciencia-ficción","Hugo Award Winner"],"coverUrl":"https://covers.openlibrary.org/b/id/6989406-M.jpg"}}}} 0.229283s
+{"data":{"book":{"openLibrary":{"pages":245,"coverUrl":null}},"nope":null}} 0.011317s
+{"errors":[{"message":"Open Library is unavailable: ResourceAccessException","locations":[{"line":1,"column":26}],"path":["book","openLibrary"],"extensions":{"upstream":"openlibrary","code":"UPSTREAM_UNAVAILABLE","classification":"INTERNAL_ERROR"}}],"data":{"book":{"title":"The Left Hand of Darkness","openLibrary":null}}} 0.815007s
+{"errors":[{"message":"Open Library is unavailable: UnknownContentTypeException","locations":[{"line":1,"column":26}],"path":["book","openLibrary"],"extensions":{"upstream":"openlibrary","code":"UPSTREAM_UNAVAILABLE","classification":"INTERNAL_ERROR"}}],"data":{"book":{"title":"The Left Hand of Darkness","openLibrary":null}}} 0.009928s
+{"requests":0,"ua":null}
+{"errors":[{"message":"Open Library is unavailable: circuit open, not calling","locations":[{"line":1,"column":26}],"path":["book","openLibrary"],"extensions":{"upstream":"openlibrary","code":"UPSTREAM_UNAVAILABLE","classification":"INTERNAL_ERROR"}}],"data":{"book":{"title":"The Left Hand of Darkness","openLibrary":null}}} 0.005222s
+{"data":{"book":{"openLibrary":{"pages":304}}}} 0.009631s
+{"data":{"book":{"openLibrary":{"pages":304}}}} 0.006067s

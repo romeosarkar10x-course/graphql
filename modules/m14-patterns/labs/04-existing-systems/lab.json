@@ -1,0 +1,7 @@
+{
+  "title": "GraphQL over existing systems: a backend-for-frontend over a REST catalogue, a gRPC service and Open Library, with timeouts and a circuit breaker",
+  "lecture": "14.4",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["ref"]
+}

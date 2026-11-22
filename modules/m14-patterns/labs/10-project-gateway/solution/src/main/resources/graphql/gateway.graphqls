@@ -1,0 +1,62 @@
+# Mini-project 14.10: one GraphQL API over Open Library's REST API, polite and resilient.
+#  - One page is one Open Library call: every edition a request needs is fetched in one /api/books call.
+#  - Answers are cached for gateway.ttl, "no such ISBN" too; while Open Library fails, a cached answer up to
+#    gateway.stale-for old is served with stale: true instead of an error.
+#  - A failing or rate-limiting Open Library is left alone for a while (gateway.cooldown, or its Retry-After).
+#  - Errors from Open Library are field errors with extensions.code UPSTREAM_UNAVAILABLE; the rest of the page works.
+
+"Every read starts here."
+type Query {
+  "An edition by ISBN-13, or null when Open Library has none."
+  book(isbn: String!): Edition
+  "Several editions, in the order asked, null where Open Library has none."
+  books(isbns: [String!]!): [Edition]!
+  "Open Library's work search."
+  search(text: String!, first: Int = 5): SearchResult!
+}
+
+"An edition record from Open Library. Any fact may be missing: Open Library is edited by volunteers."
+type Edition {
+  "The ISBN asked for."
+  isbn: String!
+  "Title as Open Library has it."
+  title: String!
+  "Author names, in Open Library's order."
+  authors: [String!]!
+  "Publisher names."
+  publishers: [String!]!
+  "Publication date as Open Library writes it: '1994', 'May 04, 2021'."
+  publishDate: String
+  "Page count of this edition."
+  pages: Int
+  "Subject headings, in Open Library's order."
+  subjects(first: Int = 5): [String!]!
+  "Medium-size cover, when there is one."
+  coverUrl: String
+  "When the gateway fetched it from Open Library, ISO 8601 UTC."
+  fetchedAt: String!
+  "True when this answer is older than gateway.ttl and served because Open Library is failing."
+  stale: Boolean!
+}
+
+"Search results."
+type SearchResult {
+  "How many works match, as Open Library counts them."
+  total: Int!
+  "The first matches."
+  hits: [Work!]!
+}
+
+"A work (all editions of one book)."
+type Work {
+  "Open Library's key, e.g. /works/OL27448W."
+  key: String!
+  "Title."
+  title: String!
+  "Author names."
+  authors: [String!]!
+  "First publication year, when known."
+  firstPublishYear: Int
+  "How many editions Open Library has."
+  editionCount: Int
+}

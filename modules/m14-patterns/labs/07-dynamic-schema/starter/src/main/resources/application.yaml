@@ -1,0 +1,11 @@
+server.port: 4000
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:postgresql://postgres:5432/shelfie
+    username: shelfie
+    password: shelfie
+shelfie:
+  # The admin endpoint (/admin/graphql) wants this in X-Admin-Key. A real one comes from a secret store.
+  admin-key: course-admin-key

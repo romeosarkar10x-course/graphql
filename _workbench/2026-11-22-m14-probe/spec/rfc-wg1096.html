@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>&quot;Metadata Directives&quot; Proposal | GraphQL RFC Tracker</title><meta name="description" content="&quot;Metadata Directives&quot; Proposal. WG discussion created on 2022-08-04."/><link rel="canonical" href="https://rfcs.graphql.org/rfcs/wg1096/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="/styles.css"/></head><body><div class="page-shell"><header class="site-header"><a class="brand" href="/"><span class="brand-mark">GraphQL</span> <span class="brand-copy">RFC Tracker</span></a><nav class="site-nav"><a href="/rfcs/">All RFCs</a><a href="/activity/">Activity</a><a href="https://github.com/graphql/graphql-spec">graphql-spec</a><a href="https://github.com/graphql/graphql-wg">graphql-wg</a></nav></header><main><section class="hero hero-compact"><p class="eyebrow">RFC 0 / Strawman</p><h1>&quot;Metadata Directives&quot; Proposal</h1><div class="hero-meta"><div><span class="meta-label">Opened on</span><strong>2022-08-04</strong></div><div><span class="meta-label">Updated on</span><strong>2024-11-27</strong></div></div></section><section class="section-grid"><aside class="summary-card"><h2>Summary</h2><dl class="meta-grid"><dt>Identifier</dt><dd>wg#1096</dd><dt>Stage</dt><dd>RFC 0 / Strawman</dd><dt>Champion</dt><dd><a href="https://github.com/leebyron">@leebyron</a></dd><dt>Updated</dt><dd>2024-11-27</dd></dl><ul class="link-list"><li><a href="https://github.com/graphql/graphql-wg/discussions/1096">WG discussion</a></li></ul></aside><article class="markdown-body"><h2>At a glance</h2>
+<ul>
+<li>Identifier: wg#1096</li>
+<li>Stage: RFC 0 / Strawman</li>
+<li>Champion: <a href="https://github.com/leebyron">@leebyron</a></li>
+<li>Latest activity: WG discussion created on 2022-08-04</li>
+<li>WG discussion: <a href="https://github.com/graphql/graphql-wg/discussions/1096">https://github.com/graphql/graphql-wg/discussions/1096</a></li>
+</ul>
+<h2>WG discussion</h2>
+<p>Given the revived discussion around schema metadata and their relationship with SDL directives, I&#x27;d like to propose a high level direction for this. My goal here is to introduce something with as few additional moving parts as possible. It&#x27;s intended to be simple rather than robust.</p>
+<p>The primary new mechanism is being able to mark an SDL Directive definition as <code>metadata</code> and exposing such directive usages via introspection. Given an introspection result you should be able to re-create the SDL with directive usages in the right places.</p>
+<p>The main downside is that the introspection encoding is simple to the point of requiring post-processing. There is no explicit sub-selection; all metadata gets exposed in introspection. The metadata is not in a structured JSON form, but in arrays of named groups - however this more clearly maps to the way directives are being used. It&#x27;s up to tools consuming metadata to interpret these as intended.</p>
+<p>I&#x27;d love feedback on this!</p>
+<pre><code class="language-graphql"># An SDL directive can now be marked as `metadata`, mirroring how it can be 
+# marked as `repeatable`. Doing so causes usages of it within a schema to be 
+# visible via introspection.
+
+directive @myCustomMetadata(myValue: String) metadata repeatable on FIELD
+
+# This appears in introspection as well. `__Directive` gains an `isMetadata` 
+# field, again mirroring the existing `isRepeatable` field.
+
+type __Directive {
+  # ...
+  isMetadata: Boolean
+}
+
+# Once a directive is marked as a &quot;metadata&quot; directive, then usages of it appear
+# as metadata at that location in the schema.
+#
+# Schema introspection types all get a `metadata` field, of type `[__Metadata]`.
+# This allows multiple pieces of metadata per location in an introspected schema.
+#
+# As `metadata` is a list, this allows for retaining their order (which spec 
+# preserves as potentially meaningful) as well as repeated directives.
+#
+# No changes are needed to SDL, since we&#x27;re using existing directive syntax.
+
+type __Field {
+  # ...
+  metadata: [__Metadata!] # Example of this being added to all things.
+}
+
+# The `__Metadata` type models a single metadata directive usage at a location.
+# Therefore it both refers to the directive definition being used, as well as
+# the values being used.
+#
+# Note that `values` could be null in the case of a directive usage without args
+# ex: `{ myField @myDirective }`. Also note that since `values` is a list, that
+# the order of the directive arguments can be preserved.
+
+type __Metadata {
+  &quot;&quot;&quot;
+  Additional information provided for an item in a GraphQL schema.
+  &quot;&quot;&quot;
+
+  directive: __Directive!
+  values: [__MetadataValue!]
+}
+
+# A `__MetadataValue` is very similar to the existing `__InputValue`. However,
+# as it represents a provided value instead of a definition of a value, only the 
+# `name` and `value` fields are relevant.
+#
+# Similar to `defaultValue` in `__InputValue`, the `value` argument is a String 
+# encoding using the GraphQL language. This allows all varities of values which
+# can be modeled as a GraphQL value. Tools may prefer to convert this to JSON 
+# after fetching.
+
+type __MetadataValue {
+  name: String!
+  value: String!
+}
+</code></pre>
+<p>That&#x27;s it! Let&#x27;s take a look at an example:</p>
+<pre><code class="language-graphql"># For this type&#x27;s `myField` field, a metadata directive is used with a value provided.
+
+type MyType {
+  myField: Int @myCustomMetadata(myValue: &quot;some value&quot;)
+}
+
+# Given a typical introspection query, here&#x27;s some additional fields queried on 
+# field during introspection:
+
+fragment FieldMetadata on __Field {
+  metadata {
+    directive { name }
+    values {
+      name
+      value
+    }
+  }
+}
+</code></pre>
+<p>And here&#x27;s the resulting introspection response (in JSON5) for this particular fragment applying to the <code>myField</code></p>
+<pre><code class="language-json5">{
+  name: &quot;myField&quot;,
+  // ....
+  metadata: [
+    {
+      directive: { name: &quot;myCustomMetadata&quot; },
+      values: [
+        { 
+          name: &quot;myValue&quot;,
+          value: &quot;\&quot;some value\&quot;&quot; // Note GraphQL encoding.
+        }
+      ]
+    }
+  ]
+}
+
+</code></pre><section class="detail-timeline"><h2>Timeline</h2><div class="activity-groups detail-timeline-groups"><section class="activity-month"><div class="activity-month-divider"><span>August 2022</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-wg/discussions/1096">WG discussion</a> created on 2022-08-04 by leebyron</li></ul></section></div></section></article></section></main><footer class="site-footer"><p>Copyright © GraphQL Contributors</p></footer></div></body></html>

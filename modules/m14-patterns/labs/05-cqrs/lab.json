@@ -1,0 +1,7 @@
+{
+  "title": "Events and CQRS: mutations as commands, an outbox and a relay to Kafka, a projection that applies each event once, PENDING in the schema",
+  "lecture": "14.5",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["postgres", "kafka"]
+}

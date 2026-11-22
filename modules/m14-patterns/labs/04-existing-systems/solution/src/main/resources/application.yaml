@@ -1,0 +1,9 @@
+server.port: 4000
+spring:
+  main:
+    banner-mode: off
+shelfie:
+  # Three systems Shelfie did not write in GraphQL. Inside the course image:
+  catalog-url: http://shelfie-ref:8080        # the catalogue's REST API: GET /api/books/{id}
+  reviews-target: shelfie-ref:9090            # the reviews gRPC service (shelfie.v1.ShelfieService)
+  openlibrary-url: https://openlibrary.org    # someone else's API; the tests point this at a fake

@@ -1,0 +1,7 @@
+{
+  "title": "Mini-project: a headless CMS in a weekend, content types defined in tables become GraphQL types, queries and mutations at run time",
+  "lecture": "14.7",
+  "kind": "project",
+  "grading": "auto",
+  "needs": ["postgres"]
+}

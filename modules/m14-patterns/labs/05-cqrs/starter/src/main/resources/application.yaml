@@ -1,0 +1,15 @@
+server.port: 4000
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:postgresql://postgres:5432/shelfie
+    username: shelfie
+    password: shelfie
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      auto-offset-reset: earliest
+shelfie:
+  # The tests use a fresh topic per run (--shelfie.topic=...), so old events never reach a fresh database.
+  topic: m14.reviews

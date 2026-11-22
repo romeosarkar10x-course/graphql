@@ -1,0 +1,72 @@
+# Lab 14.1: behaviour declared in the schema. The three directives below are the contract; the code that makes
+# them true lives in one place (a SchemaDirectiveWiring per directive), not in every resolver.
+
+"Upper-cases a String field, or every item of a [String] field (Locale.ROOT). Only on String fields."
+directive @uppercase on FIELD_DEFINITION
+
+"""
+Replaces every character except the last `keep` with '*'. Applies to the field's value as a String; null stays
+null, and a value no longer than `keep` is all stars. `keep` may not be negative.
+"""
+directive @mask(keep: Int = 4) on FIELD_DEFINITION
+
+"""
+The field's resolver returns an amount in EUR (a number). The client sees it converted to `code` at Shelfie's
+fixed rates (1 EUR = 1.08 USD = 0.85 GBP = 162 JPY = 1 EUR) and written as "<code> <amount>", rounded half even to
+the currency's own number of decimals: "USD 13.50", "JPY 2025". Only on String fields, only for those codes.
+"""
+directive @currency(code: String!) on FIELD_DEFINITION
+
+"Every read starts here."
+type Query {
+  "A book by id, or null."
+  book(id: ID!): Book
+  "Every book in catalogue order."
+  books: [Book!]!
+  "A user by id, or null."
+  user(id: ID!): User
+  "Two fields with the same two directives, written in opposite orders."
+  experiment: Experiment!
+}
+
+"A book in the catalogue."
+type Book {
+  "Stable identifier, e.g. b1."
+  id: ID!
+  "Title as printed."
+  title: String!
+  "The shelf it is on, shouted on the shop's signs."
+  genre: String! @uppercase
+  "Authors in credit order, for the spine label."
+  spineAuthors: [String!]! @uppercase
+  "Shelfie's price in EUR."
+  priceEur: Float!
+  "The price for American readers."
+  priceUsd: String! @currency(code: "USD")
+  "The price for British readers."
+  priceGbp: String! @currency(code: "GBP")
+  "The price for Japanese readers."
+  priceJpy: String! @currency(code: "JPY")
+}
+
+"A Shelfie member."
+type User {
+  "Stable identifier, e.g. u1."
+  id: ID!
+  "Public handle."
+  handle: String!
+  "Email address: support staff see the end only."
+  email: String! @mask
+  "Phone number, when given."
+  phone: String @mask(keep: 2)
+  "Library card number, never shown whole."
+  libraryCard: String! @mask(keep: 0)
+}
+
+"Directive order: both fields resolve to book b2's EUR price."
+type Experiment {
+  "Converted first, then masked."
+  currencyThenMask: String @currency(code: "GBP") @mask(keep: 2)
+  "Masked first, then converted."
+  maskThenCurrency: String @mask(keep: 2) @currency(code: "GBP")
+}

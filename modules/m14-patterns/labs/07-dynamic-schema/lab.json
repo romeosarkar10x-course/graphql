@@ -1,0 +1,7 @@
+{
+  "title": "Dynamic and multiple schemas: a GraphQLSchema built from a metadata table, swapped without a restart, and a second admin endpoint in the same JVM",
+  "lecture": "14.7",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["postgres"]
+}

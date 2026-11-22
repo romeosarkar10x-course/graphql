@@ -63,7 +63,7 @@ Playing with friends: [docs/GROUP_PLAY.md](docs/GROUP_PLAY.md).
 | | [M11 Real-time](modules/m11-realtime/README.md) | Ready |
 | | [M12 Clients](modules/m12-clients/README.md) | Ready |
 | | [M13 Testing, tooling and code generation](modules/m13-testing/README.md) | Ready |
-| | M14 Advanced patterns | Planned |
+| | [M14 Advanced schema patterns and integrations](modules/m14-patterns/README.md) | Ready |
 | Platform | M15 Federation · M16 Production · M17 Under the hood · M18 The frontier · Capstone | Planned |
 
 ## Layout

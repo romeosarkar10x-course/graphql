@@ -8,6 +8,7 @@
 //     --aud <audience>   default shelfie-api
 //     --iss <issuer>     default http://keycloak:8180/realms/shelfie
 //     --roles a,b        override the user's roles
+//     --claim k=v        add a string claim (repeatable), e.g. --claim tenant=acme (Module 14)
 //     --header           print "Authorization: Bearer <token>" instead of the bare token
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
@@ -27,6 +28,7 @@ public class Token {
     long ttl = 300, now = System.currentTimeMillis() / 1000;
     boolean expired = false, forged = false, none = false, header = false;
     List<String> roles = ROLES.getOrDefault(user, List.of("member"));
+    StringBuilder extra = new StringBuilder();
     for (int i = 1; i < args.length; i++) {
       switch (args[i]) {
         case "--expired" -> expired = true;
@@ -37,6 +39,7 @@ public class Token {
         case "--aud" -> aud = args[++i];
         case "--iss" -> iss = args[++i];
         case "--roles" -> roles = List.of(args[++i].split(","));
+        case "--claim" -> { String[] kv = args[++i].split("=", 2); extra.append(",").append(q(kv[0])).append(":").append(q(kv[1])); }
         default -> { System.err.println("unknown option " + args[i]); System.exit(2); }
       }
     }
@@ -49,7 +52,7 @@ public class Token {
     String body = "{\"iss\":" + q(iss) + ",\"aud\":" + q(aud) + ",\"sub\":" + q("sub-" + user)
         + ",\"azp\":\"shelfie-cli\",\"typ\":\"Bearer\",\"preferred_username\":" + q(user)
         + ",\"roles\":[" + String.join(",", roles.stream().map(Token::q).toList()) + "]"
-        + ",\"iat\":" + iat + ",\"exp\":" + exp + "}";
+        + extra + ",\"iat\":" + iat + ",\"exp\":" + exp + "}";
     String signingInput = b64(head.getBytes(StandardCharsets.UTF_8)) + "." + b64(body.getBytes(StandardCharsets.UTF_8));
 
     String sig = "";

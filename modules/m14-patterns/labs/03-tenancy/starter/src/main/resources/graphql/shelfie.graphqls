@@ -1,0 +1,85 @@
+# Lab 14.3: Shelfie as a service for bookshop chains. Every club belongs to one tenant; the catalogue of books is
+# shared. The tenant comes from the token's "tenant" claim, nothing else. A request without a valid token and
+# tenant is UNAUTHORIZED. Tenants on the premium plan see Club.analytics; for the others it does not exist.
+
+"Every read starts here."
+type Query {
+  "Who is asking, for which tenant."
+  viewer: Viewer!
+  "A club of the viewer's tenant by id, or null: another tenant's club does not exist for you."
+  club(id: ID!): Club
+  "The viewer's tenant's clubs, in id order."
+  clubs: [Club!]!
+  "Any object by id (clubs c-..., books b...), or null."
+  node(id: ID!): Node
+  "Clubs of the viewer's tenant whose name contains `text`, ignoring case."
+  search(text: String!): [Club!]!
+  "A book from the shared catalogue."
+  book(id: ID!): Book
+}
+
+"Writes."
+type Mutation {
+  "The viewer joins a club of their tenant. Any club they cannot see is 'not found', exactly like one that does not exist."
+  joinClub(clubId: ID!): JoinClubPayload!
+}
+
+"An object with a globally unique id."
+interface Node {
+  "Globally unique id."
+  id: ID!
+}
+
+"The signed-in user and their tenant."
+type Viewer {
+  "The token's preferred_username."
+  handle: String!
+  "The token's tenant claim."
+  tenant: String!
+  "The tenant's plan: basic or premium."
+  plan: String!
+}
+
+"A reading group, owned by one tenant."
+type Club implements Node {
+  "Globally unique id, e.g. c-a1."
+  id: ID!
+  "Display name."
+  name: String!
+  "Members' handles, in join order."
+  members: [String!]!
+  "The book the club is reading now."
+  currentBook: Book
+  "Premium plan only."
+  analytics: ClubAnalytics
+}
+
+"Numbers for premium tenants."
+type ClubAnalytics {
+  "How many members the club has."
+  memberCount: Int!
+}
+
+"A book in the shared catalogue."
+type Book implements Node {
+  "Globally unique id, e.g. b1."
+  id: ID!
+  "Title as printed."
+  title: String!
+  "The viewer's tenant's clubs reading it now."
+  clubsReading: [Club!]!
+}
+
+"The result of joinClub."
+type JoinClubPayload {
+  "The club, with the viewer in it."
+  club: Club
+  "Why the viewer could not join."
+  userErrors: [UserError!]!
+}
+
+"A problem with the input."
+type UserError {
+  "What went wrong."
+  message: String!
+}

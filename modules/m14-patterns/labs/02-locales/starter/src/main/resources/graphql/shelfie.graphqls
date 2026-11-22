@@ -1,0 +1,93 @@
+# Lab 14.2: one book and its meetups, for readers in any language and any time zone.
+#  - Language: the request's Accept-Language header (RFC 9110), every range in preference order. No header: English.
+#  - Time zone: an IANA zone id argument ("Europe/Berlin"), default UTC. Instants are stored in UTC and never lose it.
+#  - Money: an exact decimal amount as a String plus an ISO 4217 code. Never a Float.
+
+scalar DateTime @specifiedBy(url: "https://scalars.graphql.org/chillicream/date-time.html")
+scalar Date @specifiedBy(url: "https://tools.ietf.org/html/rfc3339")
+
+"Every read starts here."
+type Query {
+  "A book by id, or null."
+  book(id: ID!): Book
+  "A meetup by id, or null."
+  meetup(id: ID!): Meetup
+  "Every meetup, soonest first."
+  meetups: [Meetup!]!
+}
+
+"Writes."
+type Mutation {
+  "Set a book's price. Wrong amounts come back as userErrors, the price unchanged."
+  setPrice(bookId: ID!, price: MoneyInput!): SetPricePayload!
+}
+
+"A book in the catalogue."
+type Book {
+  "Stable identifier, e.g. b1."
+  id: ID!
+  "Title as printed."
+  title: String!
+  "The publisher's blurb in the best language Shelfie has for the request (English when none matches)."
+  blurb: String!
+  "The language `blurb` is in: a BCP 47 language tag such as en, de, fr."
+  blurbLanguage: String!
+  "Shelfie's price."
+  price: Money!
+  "Page count written for the request's locale: 1,234 / 1.234 / 1 234."
+  pagesText: String!
+}
+
+"An amount of money. `amount` is exact: a decimal string with the currency's number of decimals."
+type Money {
+  "Decimal string, e.g. 12.50 or 1500 (yen has no decimals)."
+  amount: String!
+  "ISO 4217 code, e.g. EUR."
+  currency: String!
+  "The amount written for the request's locale, by the JDK's CLDR data: €12.50, 12,50 €."
+  formatted: String!
+}
+
+"A price to set."
+input MoneyInput {
+  "Decimal string, at most the currency's number of decimals, more than zero."
+  amount: String!
+  "ISO 4217 code."
+  currency: String!
+}
+
+"The result of setPrice."
+type SetPricePayload {
+  "The book, with its new price when it changed."
+  book: Book
+  "What was wrong with the input, if anything."
+  userErrors: [UserError!]!
+}
+
+"A problem with the input."
+type UserError {
+  "Path to the input field, e.g. [\"price\", \"amount\"]."
+  field: [String!]!
+  "What to fix."
+  message: String!
+}
+
+"A club meeting about a book."
+type Meetup {
+  "Stable identifier, e.g. m1."
+  id: ID!
+  "What the meetup is called."
+  title: String!
+  "The book discussed."
+  book: Book!
+  "Start, at the offset `timeZone` has at that instant (default UTC). An unknown zone is a BAD_REQUEST error."
+  startsAt(timeZone: String = "UTC"): DateTime!
+  "End, the same way. The meetup lasts `durationMinutes` of real time, whatever the wall clocks do."
+  endsAt(timeZone: String = "UTC"): DateTime!
+  "How long it lasts."
+  durationMinutes: Int!
+  "The calendar day it starts on in `timeZone`."
+  localDate(timeZone: String = "UTC"): Date!
+  "Start written for the request's locale in `timeZone`: FormatStyle.FULL date, SHORT time."
+  startsAtText(timeZone: String = "UTC"): String!
+}

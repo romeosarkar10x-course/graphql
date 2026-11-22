@@ -1,0 +1,48 @@
+# Game 14.9: the directive zoo. Three playful directives with exact rules (the grader checks them), and one of
+# your own invention below them.
+
+"""
+Talk like a pirate. Whole words from this table are replaced, ignoring case: hello -> ahoy, hi -> ahoy,
+my -> me, friend -> matey, friends -> mateys, is -> be, are -> be, yes -> aye, you -> ye, the -> th'.
+A replaced word that started with a capital letter starts with one too. Then " Arr!" is added at the end.
+Only on String fields; null stays null.
+"""
+directive @pirate on FIELD_DEFINITION
+
+"""
+Whole words from this table become emoji, ignoring case: book -> 📚, books -> 📚📚, love -> ❤️, star -> ⭐,
+stars -> ⭐⭐, sun -> ☀️, night -> 🌙, winter -> ❄️, sea -> 🌊. Nothing else changes. Only on String fields.
+"""
+directive @emojify on FIELD_DEFINITION
+
+"""
+On Fridays the field's value is `replacement`; on other days it is untouched. "Friday" is the server clock's
+day in the zone shelfie.zone (Europe/London). Only on String fields; null stays null even on Fridays.
+"""
+directive @redactOnFridays(replacement: String = "[redacted]") on FIELD_DEFINITION
+
+"Every read starts here."
+type Query {
+  "Quotes from the club's favourite books."
+  quotes: [Quote!]!
+}
+
+"A line from a book."
+type Quote {
+  "Stable identifier."
+  id: ID!
+  "The line as printed."
+  text: String!
+  "The line, as a pirate would read it aloud."
+  pirate: String! @pirate
+  "The line for the club's group chat."
+  chat: String! @emojify
+  "How the book ends. Not on Fridays: Friday is spoiler-free."
+  ending: String @redactOnFridays
+  "Who to blame for the ending, also hidden on Fridays."
+  blame: String @redactOnFridays(replacement: "nobody you know")
+  "Both: a pirate's version of the chat line."
+  shanty: String! @emojify @pirate
+}
+
+# ---- Your exhibit: one directive of your own, declared, described exactly, and used on a field. ----

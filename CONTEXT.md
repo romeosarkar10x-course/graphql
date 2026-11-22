@@ -164,3 +164,14 @@ in Docker.
   - IntelliJ's plugin is described; `graphql.config.yml` is checked with graphql-config. SpectaQL, not Magidoc.
   - MockSpec (RFC 0) is read server-side in mini-project 13.10; game 13.9's answer key follows the spec, and
     round 06 is a known SchemaDiff false positive.
+- Module 14 (2026-11-22), probes in `_workbench/2026-11-22-m14-probe/` (`FINDINGS.md`, 18 findings):
+  - Open Library is faked in tests from responses recorded on 2026-11-22 (`contract/openlibrary/`), with switches
+    for slow, down, garbage and rate-limited; code points at the real API by default. Re-record each term.
+  - 14.4 wraps the reference server's REST and gRPC APIs; SOAP is lecture-only.
+  - 14.3's tenant is a JWT claim from Module 10's offline token tool (`--claim tenant=...`); RLS is checked by the
+    grader directly in PostgreSQL. The course user is a superuser, so labs switch role per transaction.
+  - 14.5's "within 10 ms" read is the mutation payload (deterministic); each test run uses its own Kafka topic.
+  - 14.6's erase is verified in the API, every table, the audit log and the app's output; backups and topics are
+    lecture-only.
+  - Game 14.9 fixes three directives to an exact spec (auto) plus a rubric-graded exhibit; mini-project 14.10 has
+    no group variant (one gateway per grader run).

@@ -1,0 +1,97 @@
+# Lab 14.6: who changed what, deletes that can be undone for a while, and an erase that leaves nothing personal.
+# The viewer is the token's preferred_username (bin/course token <handle>); "root" has the admin role.
+
+"Replaces every character except the last `keep` with '*', unless the viewer is the user the field belongs to."
+directive @mask(keep: Int = 4) on FIELD_DEFINITION
+
+"Every read starts here."
+type Query {
+  "The signed-in user, or null."
+  me: User
+  "A user by id, or null (also null once erased)."
+  user(id: ID!): User
+  "A book with its reviews."
+  book(id: ID!): Book
+  "A review, or null when it is deleted."
+  review(id: ID!): Review
+  "Admins only (FORBIDDEN otherwise): the newest audit entries first."
+  auditLog(last: Int = 20): [AuditEntry!]!
+}
+
+"Writes. Every top-level mutation field is audited, whatever its outcome."
+type Mutation {
+  "The viewer reviews a book."
+  createReview(bookId: ID!, rating: Int!, body: String!): Review!
+  "Soft delete: hidden at once, restorable by its author for 30 days, then purged. Author only (FORBIDDEN)."
+  deleteReview(id: ID!): ID!
+  "Undo a soft delete. Author only."
+  restoreReview(id: ID!): Review
+  "Admins only: hard-delete reviews soft-deleted more than `olderThanDays` days ago. Returns how many."
+  purgeDeletedReviews(olderThanDays: Int = 30): Int!
+  "GDPR erase of the viewer: the account, their reviews, and every trace that names them."
+  deleteMyAccount: DeleteMyAccountPayload!
+}
+
+"A Shelfie member."
+type User {
+  "Stable identifier, e.g. u5."
+  id: ID!
+  "Public handle."
+  handle: String!
+  "Full name."
+  name: String!
+  "Email address: whole for its owner, masked for everyone else."
+  email: String! @mask
+  "Phone number, when given: whole for its owner only."
+  phone: String @mask(keep: 2)
+  "Their reviews that are not deleted, newest first."
+  reviews: [Review!]!
+}
+
+"A book."
+type Book {
+  "Stable identifier, e.g. b1."
+  id: ID!
+  "Title as printed."
+  title: String!
+  "Reviews that are not deleted, newest first."
+  reviews: [Review!]!
+}
+
+"One reader's review."
+type Review {
+  "Stable identifier."
+  id: ID!
+  "1 to 5."
+  rating: Int!
+  "What they wrote."
+  body: String!
+  "Who wrote it."
+  author: User!
+  "The book."
+  book: Book!
+}
+
+"One audited mutation field. Never argument values: they may hold personal data."
+type AuditEntry {
+  "When, ISO 8601 UTC."
+  at: String!
+  "The actor's user id; 'erased' once that user is erased; 'anonymous' without a token."
+  actor: String!
+  "The operation name, or null for an anonymous operation."
+  operation: String
+  "The mutation field, e.g. deleteReview."
+  field: String!
+  "Names of the arguments passed, in order, without values."
+  arguments: [String!]!
+  "ok, or error when the field returned an error."
+  outcome: String!
+}
+
+"The result of deleteMyAccount."
+type DeleteMyAccountPayload {
+  "The erased user's id, so the client can drop what it cached."
+  erasedUserId: ID!
+  "How many reviews went with the account."
+  reviewsDeleted: Int!
+}

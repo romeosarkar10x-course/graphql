@@ -1,0 +1,83 @@
+# Lab 14.5: a mutation is a command. createReview stores the review and a ReviewCreated event in one transaction
+# (an outbox); a relay publishes the event to Kafka; a projection reads Kafka and updates the read model that
+# queries use. Until the projection has run, the review exists but is PENDING, and the schema says so.
+
+"Every read starts here."
+type Query {
+  "A book, with figures from the read model."
+  book(id: ID!): Book
+  "A review: PUBLISHED once the read model has it, PENDING while only the write side does; null if neither."
+  review(id: ID!): Review
+}
+
+"Commands."
+type Mutation {
+  "Accepted reviews are PENDING in the payload: the read model has not seen them yet."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+}
+
+"A new review."
+input CreateReviewInput {
+  "The book."
+  bookId: ID!
+  "Who writes it."
+  author: String!
+  "1 to 5."
+  rating: Int!
+  "What they thought."
+  body: String!
+}
+
+"The result of createReview."
+type CreateReviewPayload {
+  "The review, PENDING."
+  review: Review
+  "The book as the read model has it now: before this review."
+  book: Book
+  "Why the command was refused."
+  userErrors: [UserError!]!
+}
+
+"A problem with the input."
+type UserError {
+  "Path to the input field."
+  field: [String!]!
+  "What to fix."
+  message: String!
+}
+
+"Where a review is on its way to readers."
+enum ReviewStatus {
+  "Stored, not yet in the read model: not counted, not listed."
+  PENDING
+  "In the read model: counted and listed."
+  PUBLISHED
+}
+
+"A book, as the read model has it."
+type Book {
+  "Stable identifier, e.g. b1."
+  id: ID!
+  "Title as printed."
+  title: String!
+  "Published reviews only."
+  reviewCount: Int!
+  "Mean of published ratings, 2 decimals, null when there are none."
+  averageRating: Float
+  "Published reviews, newest first."
+  reviews: [Review!]!
+}
+
+"One reader's review."
+type Review {
+  "Stable identifier."
+  id: ID!
+  "PENDING or PUBLISHED."
+  status: ReviewStatus!
+  "1 to 5."
+  rating: Int!
+  "What they thought."
+  body: String!
+  "Who wrote it."
+  author: String!
+}

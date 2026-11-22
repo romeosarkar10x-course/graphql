@@ -81,3 +81,6 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | PIT | `pitest-maven` 1.30.2 (2026-11-05), `pitest-junit5-plugin` 1.2.3 | — | game 13.8; the JUnit 5 plugin runs on Boot's JUnit 6.1.3 |
 | SpectaQL | 3.0.9 (2026-03-18), graphql-config 5.1.8 | SpectaQL or Magidoc | lab 13.7; Magidoc 9.0.0 was 12 days old; graphql-config 5 matches graphql-eslint's |
 | maven-shade-plugin | 3.6.2 | — | mini-project 13.10's standalone jar |
+| Open Library (recorded) | responses of 2026-11-22, served by `modules/m14-patterns/contract/openlibrary/FakeOpenLibrary.java` | — | labs 14.4, 14.10; re-record each term (data changes, the API may too) |
+| graphql-java-extended-scalars | 24.0 (`DateTime`, `Date`) | — | lab 14.2; no release newer than 24.0 on Central (2026-11-22) |
+| Resilience4j circuit breaker | 2.4.0 | — | lab 14.4 (as Module 12) |

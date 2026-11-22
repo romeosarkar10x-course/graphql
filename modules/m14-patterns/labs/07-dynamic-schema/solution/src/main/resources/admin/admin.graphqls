@@ -1,0 +1,46 @@
+# The admin endpoint, /admin/graphql: its own schema in the same JVM. Requests need the X-Admin-Key header.
+
+"Reads."
+type Query {
+  "Every metadata field, in order."
+  fields(typeName: String = "Book"): [FieldDef!]!
+}
+
+"Changes to the public schema. Each takes effect at once, without a restart."
+type Mutation {
+  "Adds a column to the type's table and a field to the public schema."
+  addField(typeName: String = "Book", name: String!, type: FieldType!, description: String): FieldPayload!
+  "Removes the field from the public schema (the column stays, with its data)."
+  removeField(typeName: String = "Book", name: String!): FieldPayload!
+}
+
+"Scalar types a metadata field may have."
+enum FieldType { STRING INT FLOAT BOOLEAN }
+
+"One field of the public schema, as the metadata has it."
+type FieldDef {
+  "Type it belongs to."
+  typeName: String!
+  "GraphQL field name."
+  name: String!
+  "Its type."
+  type: FieldType!
+  "Column in the table."
+  column: String!
+  "Its description in the public schema."
+  description: String
+}
+
+"The result of addField or removeField."
+type FieldPayload {
+  "The field, when the change was made."
+  field: FieldDef
+  "Why it was not."
+  userErrors: [UserError!]!
+}
+
+"A problem with the input."
+type UserError {
+  "What to fix."
+  message: String!
+}

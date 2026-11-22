@@ -1,0 +1,31 @@
+# Mini-project 14.8 starter: the fixed part of the API. Content types are stored, but they do not become
+# GraphQL types yet: that is the project.
+
+"Every read starts here. Each content type adds a query for one entry and one for a list."
+type Query {
+  "Every content type, in the order they were defined."
+  contentTypes: [ContentType!]!
+}
+"Each content type adds create, update and delete mutations."
+type Mutation {
+  "Create a content type, or redefine one (same name): its API changes at once."
+  defineContentType(input: ContentTypeInput!): DefinePayload!
+  "Remove a content type and its entries. Refused while another type references it."
+  removeContentType(name: String!): RemovePayload!
+}
+"A content type: becomes a GraphQL type with its own queries and mutations."
+type ContentType { name: String! plural: String! description: String fields: [ContentField!]! entryCount: Int! }
+"A field of a content type."
+type ContentField { name: String! kind: FieldKind! ref: String required: Boolean! description: String }
+"What a field holds."
+enum FieldKind { STRING INT FLOAT BOOLEAN REFERENCE }
+"A content type to define."
+input ContentTypeInput { name: String! plural: String! description: String fields: [ContentFieldInput!]! }
+"A field to define. REFERENCE needs ref, the name of a content type (this one, or one already defined)."
+input ContentFieldInput { name: String! kind: FieldKind! ref: String required: Boolean = false description: String }
+"A problem with the input."
+type UserError { field: [String!]! message: String! }
+"The result of defineContentType."
+type DefinePayload { contentType: ContentType userErrors: [UserError!]! }
+"The result of removeContentType."
+type RemovePayload { removed: String userErrors: [UserError!]! }

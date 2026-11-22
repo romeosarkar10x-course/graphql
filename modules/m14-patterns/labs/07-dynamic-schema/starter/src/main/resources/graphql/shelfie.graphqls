@@ -1,0 +1,22 @@
+# Lab 14.7 starter: the public schema as a file, fixed when the jar was built. The metadata table
+# (db/schema.sql: m14_07.fields) already describes it; nothing reads the table yet.
+
+"Every read starts here."
+type Query {
+  "Every book, in id order."
+  books: [Book!]!
+  "A book by id, or null."
+  book(id: ID!): Book
+}
+
+"A book in the catalogue."
+type Book {
+  "Stable identifier, e.g. b1."
+  id: ID!
+  "Title as printed."
+  title: String!
+  "Main author, as credited."
+  author: String
+  "Year of first publication."
+  publishedYear: Int
+}

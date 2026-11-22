@@ -1,14 +1,20 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 13
+## Now: user review of Module 14
 
-The user said "let's proceed with the next module!" (2026-11-22) after Module 12; Module 13 is built. Wait for
-review before Module 14.
+The user said "continue..." (2026-11-22) after Module 13; Module 14 is built. Wait for review before Module 15.
 
 ## Verification debt
 
 - [ ] Rerun the full `bin/course check --starters` (the 2026-11-21 run after Module 10 was stopped at m10/01;
-      after Modules 11, 12 and 13 only their own module checks ran). It is CPU-heavy: run it when the machine is free.
+      after Modules 11 to 14 only their own module checks ran). It is CPU-heavy: run it when the machine is free.
+- [ ] Module 14: re-record Open Library each term (`contract/openlibrary/data/`; FINDINGS 8) and re-check its API
+      shape; lab 14.4's and 14.10's expected values come from the recording.
+- [ ] Module 14: lab 14.5 creates one Kafka topic per test run (`m14-reviews-<time>-<n>`); they pile up in the
+      course Kafka. Add a cleanup (admin client delete) or a retention setting.
+- [ ] Module 14: lab 14.2's expected strings are CLDR output of the course image's JDK 25; a JDK update may change
+      them (re-run the solution and diff).
+- [ ] Module 14: SOAP (14.4) and backups/topics/exports in erasure (14.6) are lecture-only.
 - [ ] Module 13: lab 13.3 mounts the Docker socket; verified on Linux (Docker 29.10) only. Check Docker Desktop
       (macOS, Windows): socket path, group id (`stat -f %g` fallback), and whether Testcontainers finds the host.
 - [ ] Module 13: the MockMvc `HttpGraphQlTester` + bearer token `UNAUTHORIZED` (FINDINGS 7) is observed, not
@@ -86,7 +92,7 @@ review before Module 14.
 
 ## Next modules (in order)
 
-- [ ] M14–M18, capstone, per plan/syllabus.md
+- [ ] M15–M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 

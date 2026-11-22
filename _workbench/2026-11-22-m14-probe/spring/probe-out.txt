@@ -1,0 +1,26 @@
+{"data":{"a":"PI******","b":"PI******"}}
+{"data":{"locale":"de_DE"}}
+{"data":{"locale":"pt_BR"}}
+{"data":{"locale":"en_US","now":"2026-11-22T12:00:00.000Z"}}
+{"errors":[{"message":"Validation error (FieldUndefined@[secret]) : Field 'secret' in type 'Query' is undefined","locations":[{"line":1,"column":3}],"extensions":{"classification":"ValidationError"}}]}
+{"data":{"secret":"s3cret","book":{"internalNotes":"staff only"}}}
+{"data":{"__type":{"fields":[{"name":"title"}]}}}
+{"data":{"__type":{"fields":[{"name":"title"},{"name":"internalNotes"}]}}}
+{"errors":[{"message":"Validation error (FieldUndefined@[book/internalNotes]) : Field 'internalNotes' in type 'Book' is undefined","locations":[{"line":1,"column":16}],"extensions":{"classification":"ValidationError"}}]}
+WIRING uppercase on a
+WIRING mask on a
+WIRING mask on b
+WIRING uppercase on b
+instrumentSchema tenant=public
+RUN uppercase on a: piranesi -> PIRANESI
+RUN mask on a: PIRANESI -> PI******
+RUN mask on b: piranesi -> pi******
+RUN uppercase on b: pi****** -> PI******
+instrumentSchema tenant=public
+instrumentSchema tenant=public
+instrumentSchema tenant=public
+instrumentSchema tenant=public
+instrumentSchema tenant=staff
+instrumentSchema tenant=public
+instrumentSchema tenant=staff
+instrumentSchema tenant=public

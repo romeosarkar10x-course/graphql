@@ -1,0 +1,9 @@
+server.port: 4000
+spring:
+  main:
+    banner-mode: off
+gateway:
+  openlibrary-url: https://openlibrary.org
+  ttl: PT10M          # an answer is fresh this long
+  stale-for: P1D      # and may stand in for this long while Open Library fails
+  cooldown: PT2S      # after a failure, no call for this long (a 429's Retry-After wins when longer)

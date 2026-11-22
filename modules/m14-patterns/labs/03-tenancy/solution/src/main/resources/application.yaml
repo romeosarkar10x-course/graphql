@@ -1,0 +1,19 @@
+server.port: 4000
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    # The course PostgreSQL. The app connects as the owner (shelfie) and switches to the tenant role per
+    # transaction (TenantDb): row-level security never applies to a superuser or, without FORCE, to the owner.
+    url: jdbc:postgresql://postgres:5432/shelfie
+    username: shelfie
+    password: shelfie
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Tokens from bin/course token <user> --claim tenant=<t>, verified offline with the course key (Module 10).
+          public-key-location: classpath:course-public.pem
+          issuer-uri: http://keycloak:8180/realms/shelfie
+          audiences: shelfie-api
+          principal-claim-name: preferred_username
