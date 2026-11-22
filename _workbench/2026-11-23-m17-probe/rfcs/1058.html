@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>List coercion algorithm | GraphQL RFC Tracker</title><meta name="description" content="List coercion algorithm. Advanced to RFC 2 on 2025-07-03."/><link rel="canonical" href="https://rfcs.graphql.org/rfcs/1058/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="/styles.css"/></head><body><div class="page-shell"><header class="site-header"><a class="brand" href="/"><span class="brand-mark">GraphQL</span> <span class="brand-copy">RFC Tracker</span></a><nav class="site-nav"><a href="/rfcs/">All RFCs</a><a href="/activity/">Activity</a><a href="https://github.com/graphql/graphql-spec">graphql-spec</a><a href="https://github.com/graphql/graphql-wg">graphql-wg</a></nav></header><main><section class="hero hero-compact"><p class="eyebrow">RFC 2 / Draft</p><h1>List coercion algorithm</h1><div class="hero-meta"><div><span class="meta-label">Opened on</span><strong>2023-11-09</strong></div><div><span class="meta-label">Updated on</span><strong>2025-07-04</strong></div></div></section><section class="section-grid"><aside class="summary-card"><h2>Summary</h2><dl class="meta-grid"><dt>Identifier</dt><dd>#1058</dd><dt>Stage</dt><dd>RFC 2 / Draft</dd><dt>Champion</dt><dd><a href="https://github.com/benjie">@benjie</a></dd><dt>Updated</dt><dd>2025-07-04</dd></dl><ul class="link-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1058">Spec PR</a></li></ul><h3>Related</h3><ul class="link-list"><li><a href="/rfcs/1002/">#1002</a></li></ul></aside><article class="markdown-body"><h2>At a glance</h2>
+<ul>
+<li>Identifier: #1058</li>
+<li>Stage: RFC 2 / Draft</li>
+<li>Champion: <a href="https://github.com/benjie">@benjie</a></li>
+<li>Latest activity: Advanced to RFC 2 on 2025-07-03</li>
+<li>Spec PR: <a href="https://github.com/graphql/graphql-spec/pull/1058">https://github.com/graphql/graphql-spec/pull/1058</a></li>
+<li>Related:
+<ul>
+<li><a href="/rfcs/1002/">#1002</a></li>
+</ul>
+</li>
+</ul>
+<h2>Spec PR description</h2>
+<p>Fixes #1002.</p>
+<p>Previously, list coercion does not detail what to do with variables at all, and that could lead to either a null pointer exception, or to double-coercion of the variable value if you&#x27;re only following the spec.</p>
+<p>Consider the following valid schema:</p>
+<pre><code class="language-graphql">type Query {
+  sum(numbers:[Int!]!): Int
+}
+</code></pre>
+<p>and the query that is valid against this schema:</p>
+<pre><code class="language-graphql">query Q ($number: Int = 3) {
+  sum(numbers: [1, $number, 3])
+}
+</code></pre>
+<p><strong>NOTE</strong>: We&#x27;re using the variable in a list item position!</p>
+<p>If you issue this to the GraphQL server with variables <code>{&quot;number&quot;: null}</code> then <code>CoerceVariableValues</code> will give you <code>{&quot;number&quot;: null}</code> and when you fast-forward to <code>CoerceArgumentValues</code> you&#x27;ll go in to 5.j.iii.1:</p>
+<p><a href="https://spec.graphql.org/draft/#sel-NANTHHCJFTDFBBCAACGB0yS">https://spec.graphql.org/draft/#sel-NANTHHCJFTDFBBCAACGB0yS</a></p>
+<ul>
+<li>Let {coercedValues} be an empty unordered Map. <code>coercedValues = {}</code></li>
+<li>Let {argumentValues} be the argument values provided in {field}. <code>argumentValues = { numbers: [1, $number, 3] }</code></li>
+<li>Let {fieldName} be the name of {field}. <code>fieldName = &#x27;sum&#x27;</code></li>
+<li>Let {argumentDefinitions} be the arguments defined by {objectType} for the
+field named {fieldName}. <code>argumentDefinitions = { numbers: ... }</code></li>
+<li>For each {argumentDefinition} in {argumentDefinitions}:
+<ul>
+<li>Let {argumentName} be the name of {argumentDefinition}. <code>argumentName = &#x27;numbers&#x27;</code></li>
+<li>Let {argumentType} be the expected type of {argumentDefinition}. <code>argumentType = [Int!]!</code></li>
+<li>Let {defaultValue} be the default value for {argumentDefinition}. <code>defaultValue = undefined</code></li>
+<li>Let {hasValue} be {true} if {argumentValues} provides a value for the name
+{argumentName}. <code>hasValue = true</code></li>
+<li>Let {argumentValue} be the value provided in {argumentValues} for the name
+{argumentName}. <code>argumentValue = [1, $number, 3]</code></li>
+<li>If {argumentValue} is a {Variable}: <code>NOPE</code>
+<ul>
+<li>Let {variableName} be the name of {argumentValue}.</li>
+<li>Let {hasValue} be {true} if {variableValues} provides a value for the name
+{variableName}.</li>
+<li>Let {value} be the value provided in {variableValues} for the name
+{variableName}.</li>
+</ul>
+</li>
+<li>Otherwise, let {value} be {argumentValue}. <code>value = [1, $number, 3]</code></li>
+<li>If {hasValue} is not {true} and {defaultValue} exists (including {null}):  <code>NOT TRIGGERED</code>
+<ul>
+<li>Add an entry to {coercedValues} named {argumentName} with the value
+{defaultValue}.</li>
+</ul>
+</li>
+<li>Otherwise if {argumentType} is a Non-Nullable type, and either {hasValue} is
+not {true} or {value} is {null}, raise a <em>field error</em>.  <code>NOT TRIGGERED</code></li>
+<li>Otherwise if {hasValue} is true: <code>Yes, it is</code>
+<ul>
+<li>If {value} is {null}: <code>It is not, it is a list</code>
+<ul>
+<li>Add an entry to {coercedValues} named {argumentName} with the value
+{null}.</li>
+</ul>
+</li>
+<li>Otherwise, if {argumentValue} is a {Variable}: <code>It is not, it is a list</code>
+<ul>
+<li>Add an entry to {coercedValues} named {argumentName} with the value
+{value}.</li>
+</ul>
+</li>
+<li>Otherwise: <code>YES</code>
+<ul>
+<li>If {value} cannot be coerced according to the input coercion rules of
+{argumentType}, raise a <em>field error</em>. <strong>TIME TO VISIT LIST COERCION</strong></li>
+<li>Let {coercedValue} be the result of coercing {value} according to the
+input coercion rules of {argumentType}.</li>
+<li>Add an entry to {coercedValues} named {argumentName} with the value
+{coercedValue}.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Return {coercedValues}.</li>
+</ul>
+<h2>Time to visit <a href="https://spec.graphql.org/draft/#sec-List">list coercion</a></h2>
+<p>We need to coerce the value <code>[1, $number, 3]</code> to the non-nullable type <code>[Int!]!</code>.</p>
+<p>Step 1: handle the non-null. It&#x27;s not null. Great!</p>
+<p>Now we need to coerce the value <code>[1, $number, 3]</code> to the list type <code>[Int!]</code>.</p>
+<p>Here&#x27;s what the spec says about input coercion for lists:</p>
+<blockquote>
+<p><strong>When expected as an input, list values are accepted only when each item in the list can be accepted by the list’s item type.</strong></p>
+<p>If the value passed as an input to a list type is not a list and not the null value, then the result of input coercion is a list of size one, where the single item value is the result of input coercion for the list’s item type on the provided value (note this may apply recursively for nested lists).</p>
+<p>This allows inputs which accept one or many arguments (sometimes referred to as “var args”) to declare their input type as a list while for the common case of a single value, a client can just pass that value directly rather than constructing the list.</p>
+</blockquote>
+<p>We have a list, so we only care about the bold line.</p>
+<p>This line seems to miss a bunch of situations.</p>
+<p>For example: if we were coercing to <code>[Int]</code> the value <code>[1, $number, 3]</code> with variables <code>{}</code> then <em>is</em> $number (which is undefined, since it wasn&#x27;t provided in the variables) &quot;accepted by the list&#x27;s item type&quot;? Really we must coerce this to <code>null</code>, but that doesn&#x27;t seem to be detailed. In fact this entire section doesn&#x27;t mention variables at all.</p>
+<p>We&#x27;re actually coercing to <code>[Int!]</code>, so the question is: is <code>$number</code> accepted by the list&#x27;s item type? <code>$number</code> itself is a variable, so...</p>
+<hr/>
+<p>I&#x27;ve attempted to solve this problem by being much more explicit about the input coercion for lists, inspired by the input coercion for input objects. I&#x27;ve also added a non-normative note highlighting the risk of a null variable being fed through into a non-nullable position, why that can occur (validation) and what we do about it (field error). I&#x27;ve also expanded the table with both variables and many more examples to cover many more edge cases.</p><section class="detail-timeline"><h2>Timeline</h2><div class="activity-groups detail-timeline-groups"><section class="activity-month"><div class="activity-month-divider"><span>July 2025</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1058">Advanced to RFC 2</a> on 2025-07-03 by leebyron</li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2025/07-Jul/03-wg-primary.md">WG agenda</a> on 2025-07-03</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>June 2025</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1058">Marked as Ready for Next Stage</a> on 2025-06-26 by benjie</li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2025/06-Jun/26-wg-secondary-eu.md">WG agenda</a> on 2025-06-26</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>January 2025</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/commit/a045f1493352f05570d39b8aa372ef0c5723961d">2 commits pushed</a> on 2025-01-23<ul class="activity-event-commits"><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/8eaa45ba7bff01359afc2e3b038a1842a0c110e7">Reflect that variable values should already be coerced, and thus appl…</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/a045f1493352f05570d39b8aa372ef0c5723961d">&#x27;Including null&#x27; (copied from section 6)</a>&quot;</li></ul></li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2025/01-Jan/09-wg-primary.md">WG agenda</a> on 2025-01-09</li><li>Mentioned in <a href="https://github.com/graphql/graphql-wg/blob/main/notes/2025/2025-01.md">WG notes</a> on 2025-01-01</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>December 2024</span></div><ul class="detail-timeline-list"><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2024/12-Dec/05-wg-primary.md">WG agenda</a> on 2024-12-05</li><li>Mentioned in <a href="https://github.com/graphql/graphql-wg/blob/main/notes/2024/2024-12.md">WG notes</a> on 2024-12-01</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>November 2024</span></div><ul class="detail-timeline-list"><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/fba35d54523692c5b112c8fc3c773f50ef402b43">Fix bug in null handling</a>&quot; on 2024-11-28</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>December 2023</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1058">Advanced to RFC 1</a> on 2023-12-07 by michaelstaib</li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2023/12-Dec/07-wg-primary.md">WG agenda</a> on 2023-12-07</li><li>Mentioned in <a href="https://github.com/graphql/graphql-wg/blob/main/notes/2023/2023-12.md">WG notes</a> on 2023-12-01</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>November 2023</span></div><ul class="detail-timeline-list"><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/6aed5a9653a92ada8849fdf6e289623997977436">Add another example</a>&quot; on 2023-11-13</li><li><a href="https://github.com/graphql/graphql-spec/pull/1058">Spec PR</a> created on 2023-11-09 by benjie</li><li><a href="https://github.com/graphql/graphql-spec/commit/ec3d50a664f02a3218c81bb8c3202c91765fa952">4 commits pushed</a> on 2023-11-09<ul class="activity-event-commits"><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/b21bb996796b487d7f369f7e162a0d3096ffaae4">Add note about nullable variables with default values</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/a91cdba0dfedd0c13655f03cc3ac3910da388686">Add variables to table</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/4ca2023992ed5bb2aef2c58d4f532859fb580acd">Algorithm for coercing list values</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/ec3d50a664f02a3218c81bb8c3202c91765fa952">Move note and clarify algorithm</a>&quot;</li></ul></li><li><a href="https://github.com/graphql/graphql-spec/pull/1058">Advanced to RFC 0</a> on 2023-11-09 by benjie</li></ul></section></div></section></article></section></main><footer class="site-footer"><p>Copyright © GraphQL Contributors</p></footer></div></body></html>

@@ -200,4 +200,16 @@ in Docker.
   - Usage reports use Hive's v2 format and headers but go to `UsageCollector.java`; no Hive account was used.
   - The knee is measured with the app pinned to one CPU (`taskset`), as a pod limit would hold it.
   - Game day faults live in `GameDay.java` (only with `--gameday.seed`); answers are derived from the seed.
+- Module 17 (2026-11-23), probes in `_workbench/2026-11-23-m17-probe/` (`FINDINGS.md`, 22 findings):
+  - Spec baseline: the September 2025 edition (copy and section map in `spec/`). graphql-java 26.1 predates it
+    (no descriptions on operations) and departs from it in a few lexer and grammar details, each listed in
+    `contract/harness/.../Known.java` and held to the spec by the fixed cases.
+  - One reference engine (`contract/engine`, Maven, no runtime dependencies); each engine lab's starter is it with
+    one part stubbed (`_workbench/2026-11-23-m17-build/assemble.py`, stubs in `stubs/`). Tests compile the
+    course harness against the learner's jar (`contract/harness.sh`).
+  - Expected values come from graphql-java, except where the spec disagrees (block strings computed by the spec's
+    algorithm; six conformance tests' locations set by hand). Validation counts compared exactly for four rules,
+    "fires" for cycles and overlaps.
+  - Hashed answers (17.1, 17.10): `contract/answers/answers.sh`, keys from `_workbench/2026-11-23-m17-build/gen-keys.sh`.
+  - Lab 17.7's Gradle build was not run (blocked in the authoring session); the lab is rubric-graded.
 

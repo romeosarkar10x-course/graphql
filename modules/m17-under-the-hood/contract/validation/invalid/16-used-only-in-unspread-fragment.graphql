@@ -1,0 +1,1 @@
+query Q($id: ID!) { hello } fragment F on Query { club(id: $id) { name } }

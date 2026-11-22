@@ -1,0 +1,1 @@
+{ club(id: "c1") { __typename __schema { types { name } } } }

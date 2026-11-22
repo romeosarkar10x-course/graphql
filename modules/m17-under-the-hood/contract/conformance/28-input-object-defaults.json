@@ -1,0 +1,15 @@
+{
+  "name" : "input-object-defaults",
+  "schema" : "fixture",
+  "query" : "query Q($t: [String]) { echo(input: {tags: $t}) }",
+  "data" : { },
+  "variables" : {
+    "t" : "solo"
+  },
+  "spec" : "3.10 Input Objects: field defaults; list coercion of a variable's value",
+  "expected" : {
+    "data" : {
+      "echo" : "{\"input\":{\"limit\":10,\"tags\":[\"solo\"],\"text\":\"any\"}}"
+    }
+  }
+}

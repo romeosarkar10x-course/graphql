@@ -1,0 +1,4 @@
+{ f(s: """one\r\ntwo""") }  ->  one\r\ntwo
+{ f(s: """one\rtwo""") }  ->  one\rtwo
+{ f(s: """\r\n  one\r\n  two\r\n""") }  ->  \r\none\r\ntwo\r
+"""desc\r\nline""" type Q { a: Int }  ->  desc\r\nline

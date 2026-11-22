@@ -1,0 +1,13 @@
+{
+  "name" : "skip-wins",
+  "schema" : "shelfie",
+  "query" : "{ club(id: \"c1\") { name @skip(if: false) @include(if: false) id } }",
+  "spec" : "3.13.2: neither @skip nor @include has precedence; the field needs @skip false and @include true",
+  "expected" : {
+    "data" : {
+      "club" : {
+        "id" : "c1"
+      }
+    }
+  }
+}

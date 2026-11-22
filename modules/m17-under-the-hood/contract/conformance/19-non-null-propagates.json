@@ -1,0 +1,32 @@
+{
+  "name" : "non-null-propagates",
+  "schema" : "fixture",
+  "query" : "{ ok child { name required } }",
+  "data" : {
+    "ok" : "fine",
+    "child" : {
+      "name" : "c",
+      "required" : {
+        "$throw" : "lost"
+      }
+    }
+  },
+  "spec" : "6.4.4: the error propagates to the nearest nullable parent",
+  "expected" : {
+    "errors" : [ {
+      "message" : "Exception while fetching data (/child/required) : lost",
+      "locations" : [ {
+        "line" : 1,
+        "column" : 19
+      } ],
+      "path" : [ "child", "required" ],
+      "extensions" : {
+        "classification" : "DataFetchingException"
+      }
+    } ],
+    "data" : {
+      "ok" : "fine",
+      "child" : null
+    }
+  }
+}

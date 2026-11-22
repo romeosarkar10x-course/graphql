@@ -1,0 +1,58 @@
+{
+  "name" : "deep-nesting",
+  "schema" : "shelfie",
+  "query" : "{ club(id: \"c1\") { members(first: 3) { handle reviews { book { title reviews(last: 1) { author { handle } } } } } } }",
+  "spec" : "6.4.3 merged subfields, all the way down",
+  "expected" : {
+    "data" : {
+      "club" : {
+        "members" : [ {
+          "handle" : "kemia",
+          "reviews" : [ ]
+        }, {
+          "handle" : "asha",
+          "reviews" : [ {
+            "book" : {
+              "title" : "The Left Hand of Darkness",
+              "reviews" : [ {
+                "author" : {
+                  "handle" : "hugos"
+                }
+              } ]
+            }
+          }, {
+            "book" : {
+              "title" : "Piranesi",
+              "reviews" : [ {
+                "author" : {
+                  "handle" : "farid"
+                }
+              } ]
+            }
+          }, {
+            "book" : {
+              "title" : "Station Eleven",
+              "reviews" : [ {
+                "author" : {
+                  "handle" : "asha"
+                }
+              } ]
+            }
+          } ]
+        }, {
+          "handle" : "benok",
+          "reviews" : [ {
+            "book" : {
+              "title" : "The Left Hand of Darkness",
+              "reviews" : [ {
+                "author" : {
+                  "handle" : "hugos"
+                }
+              } ]
+            }
+          } ]
+        } ]
+      }
+    }
+  }
+}

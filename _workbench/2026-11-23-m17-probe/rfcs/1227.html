@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Allow empty selection sets | GraphQL RFC Tracker</title><meta name="description" content="Allow empty selection sets. Spec PR merged on 2026-09-17."/><link rel="canonical" href="https://rfcs.graphql.org/rfcs/1227/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="/styles.css"/></head><body><div class="page-shell"><header class="site-header"><a class="brand" href="/"><span class="brand-mark">GraphQL</span> <span class="brand-copy">RFC Tracker</span></a><nav class="site-nav"><a href="/rfcs/">All RFCs</a><a href="/activity/">Activity</a><a href="https://github.com/graphql/graphql-spec">graphql-spec</a><a href="https://github.com/graphql/graphql-wg">graphql-wg</a></nav></header><main><section class="hero hero-compact"><p class="eyebrow">RFC 3 / Accepted</p><h1>Allow empty selection sets</h1><div class="hero-meta"><div><span class="meta-label">Opened on</span><strong>2026-05-23</strong></div><div><span class="meta-label">Merged on</span><strong>2026-09-17</strong></div></div></section><section class="section-grid"><aside class="summary-card"><h2>Summary</h2><dl class="meta-grid"><dt>Identifier</dt><dd>#1227</dd><dt>Stage</dt><dd>RFC 3 / Accepted</dd><dt>Champion</dt><dd><a href="https://github.com/benjie">@benjie</a></dd><dt>Updated</dt><dd>2026-09-17</dd></dl><ul class="link-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1227">Spec PR</a></li></ul><h3>Related</h3><ul class="link-list"><li><a href="/rfcs/674/">#674</a></li></ul></aside><article class="markdown-body"><h2>At a glance</h2>
+<ul>
+<li>Identifier: #1227</li>
+<li>Stage: RFC 3 / Accepted</li>
+<li>Champion: <a href="https://github.com/benjie">@benjie</a></li>
+<li>Latest activity: Spec PR merged on 2026-09-17</li>
+<li>Spec PR: <a href="https://github.com/graphql/graphql-spec/pull/1227">https://github.com/graphql/graphql-spec/pull/1227</a></li>
+<li>Related:
+<ul>
+<li><a href="/rfcs/674/">#674</a></li>
+</ul>
+</li>
+</ul>
+<h2>Spec PR description</h2>
+<p>Since 2015 we&#x27;ve required selection sets to contain at least one field; however it&#x27;s always been possible to have an empty object returned:</p>
+<pre><code class="language-graphql">type A { a: Int }
+type B { b: Int }
+union U = A | B
+type Query { u: U }
+
+query {
+  u {
+    ... on A { __typename }
+  }
+}
+</code></pre>
+<p>Here, if <code>u</code> returns type <code>B</code> the result will be <code>{&quot;data&quot;:{&quot;u&quot;:{}}}</code> - i.e. an empty object.</p>
+<p>GraphQL clients are getting smarter and smarter, and it&#x27;s common to have client-side extensions such as <a href="https://www.apollographql.com/docs/react/local-state/local-resolvers">Apollo&#x27;s @client</a>, <a href="https://relay.dev/docs/v15.0.0/guides/relay-resolvers/">Relay Resolvers</a> or <a href="https://gaps.graphql.org/GAP-10/draft/"><code>@mock</code>&#x27;d fields</a>. In all of these cases, any selections of these fields need to be removed before the document is sent to the server. But what happens when all the fields in the selection set are to be removed?</p>
+<pre><code class="language-graphql">  query LaunchDetails($launchId: ID!) {
+    launch(id: $launchId) {
+      isInCart @client
+      site @client
+    }
+  }
+</code></pre>
+<p>There are many options (add <code>__typename</code>, remove <code>launch</code>, throw error, ...), but the safest solution is to allow the selection set to be empty. Hence, this PR.</p>
+<ul>
+<li>Fixes #674</li>
+</ul><section class="detail-timeline"><h2>Timeline</h2><div class="activity-groups detail-timeline-groups"><section class="activity-month"><div class="activity-month-divider"><span>September 2026</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1227">Spec PR</a> merged on 2026-09-17 by leebyron</li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2026/09-Sep/17-wg-secondary-eu.md">WG agenda</a> on 2026-09-17</li><li><a href="https://github.com/graphql/graphql-spec/pull/1227">Marked as Ready for Next Stage</a> on 2026-09-10 by benjie</li><li><a href="https://github.com/graphql/graphql-spec/commit/e10dca193db77346596cb327065d904cb74f3a65">2 commits pushed</a> on 2026-09-04<ul class="activity-event-commits"><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/27145940ed63e2fbb5de331c15de96949eb78225">Add examples to make empty selections more obvious</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/e10dca193db77346596cb327065d904cb74f3a65">Minus a word</a>&quot;</li></ul></li><li><a href="https://github.com/graphql/graphql-spec/pull/1227">Top comment</a> edited on 2026-09-03 by benjie</li><li><a href="https://github.com/graphql/graphql-spec/pull/1227">Advanced to RFC 3</a> on 2026-09-03 by benjie</li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2026/09-Sep/03-wg-primary.md">WG agenda</a> on 2026-09-03</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>July 2026</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1227">Advanced to RFC 2</a> on 2026-07-02 by leebyron</li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2026/07-Jul/02-wg-primary.md">WG agenda</a> on 2026-07-02</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>May 2026</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1227">Top comment</a> edited on 2026-05-23 by benjie</li><li><a href="https://github.com/graphql/graphql-spec/pull/1227">Spec PR</a> created on 2026-05-23 by benjie</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/220e8d4c7574dd65121b8db623e63a3b0d975590">Allow empty selection sets</a>&quot; on 2026-05-23</li><li><a href="https://github.com/graphql/graphql-spec/pull/1227">Advanced to RFC 0</a> on 2026-05-23 by benjie</li></ul></section></div></section></article></section></main><footer class="site-footer"><p>Copyright © GraphQL Contributors</p></footer></div></body></html>

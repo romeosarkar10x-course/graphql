@@ -66,7 +66,8 @@ Playing with friends: [docs/GROUP_PLAY.md](docs/GROUP_PLAY.md).
 | | [M14 Advanced schema patterns and integrations](modules/m14-patterns/README.md) | Ready |
 | Platform | [M15 Federation and distributed graphs on the JVM](modules/m15-federation/README.md) | Ready |
 | | [M16 Running GraphQL in production](modules/m16-production/README.md) | Ready |
-| | M17 Under the hood · M18 The frontier · Capstone | Planned |
+| | [M17 Under the hood: spec, parser and executor in Java](modules/m17-under-the-hood/README.md) | Ready |
+| | M18 The frontier · Capstone | Planned |
 
 ## Layout
 

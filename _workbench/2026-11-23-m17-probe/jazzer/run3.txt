@@ -1,0 +1,56 @@
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/tmp/byteBuddyAgent18407393384181499882.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.code_intelligence.jazzer.sanitizers.utils.ReflectionUtils
+WARNING: Please consider reporting this to the maintainers of class com.code_intelligence.jazzer.sanitizers.utils.ReflectionUtils
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by com.code_intelligence.jazzer.bootstrap.com.github.fmeum.rules_jni.RulesJni in an unnamed module
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+INFO: Loaded 848 hooks from com.code_intelligence.jazzer.runtime.TraceCmpHooks
+INFO: Loaded 5 hooks from com.code_intelligence.jazzer.runtime.TraceDivHooks
+INFO: Loaded 2 hooks from com.code_intelligence.jazzer.runtime.TraceIndirHooks
+INFO: Loaded 4 hooks from com.code_intelligence.jazzer.runtime.NativeLibHooks
+INFO: Loaded 5 hooks from com.code_intelligence.jazzer.runtime.JazzerApiHooks
+INFO: Loaded 1 hooks from com.code_intelligence.jazzer.sanitizers.BigDecimal
+INFO: Loaded 2 hooks from com.code_intelligence.jazzer.sanitizers.ClojureLangHooks
+INFO: Loaded 5 hooks from com.code_intelligence.jazzer.sanitizers.Deserialization
+INFO: Loaded 24 hooks from com.code_intelligence.jazzer.sanitizers.ExpressionLanguageInjection
+INFO: Loaded 31 hooks from com.code_intelligence.jazzer.sanitizers.FilePathTraversal
+INFO: Loaded 70 hooks from com.code_intelligence.jazzer.sanitizers.LdapInjection
+INFO: Loaded 46 hooks from com.code_intelligence.jazzer.sanitizers.NamingContextLookup
+INFO: Loaded 1 hooks from com.code_intelligence.jazzer.sanitizers.OsCommandInjection
+INFO: Loaded 40 hooks from com.code_intelligence.jazzer.sanitizers.ReflectiveCall
+INFO: Loaded 8 hooks from com.code_intelligence.jazzer.sanitizers.RegexInjection
+INFO: Loaded 16 hooks from com.code_intelligence.jazzer.sanitizers.RegexRoadblocks
+INFO: Loaded 12 hooks from com.code_intelligence.jazzer.sanitizers.ScriptEngineInjection
+INFO: Loaded 3 hooks from com.code_intelligence.jazzer.sanitizers.ServerSideRequestForgery
+INFO: Loaded 19 hooks from com.code_intelligence.jazzer.sanitizers.SqlInjection
+INFO: Loaded 1 hooks from com.code_intelligence.jazzer.sanitizers.TemplateInjection
+INFO: Loaded 63 hooks from com.code_intelligence.jazzer.sanitizers.UnsafeSanitizer
+INFO: Loaded 6 hooks from com.code_intelligence.jazzer.sanitizers.XPathInjection
+INFO: Loaded 20 hooks from com.code_intelligence.jazzer.sanitizers.XmlParserSsrfGuidance
+INFO: Instrumented dev.shelfie.fuzz.ProbeFuzzTest (took 16 ms, size +11%)
+WARN: JUnit arguments of type(s) com.code_intelligence.jazzer.driver.FuzzedDataProviderImpl with value(s) com.code_intelligence.jazzer.driver.FuzzedDataProviderImpl@4a951911 can not be serialized as fuzzing inputs. Skipped.
+INFO: found LLVMFuzzerCustomMutator (0x7f48eacf7490). Disabling -len_control by default.
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 2844437520
+INFO: Loaded 1 modules   (512 inline 8-bit counters): 512 [0x7f49f49ddce0, 0x7f49f49ddee0), 
+INFO: Loaded 1 PC tables (512 PCs): 512 [0x7f49f495f7f0,0x7f49f49617f0), 
+INFO:        0 files found in /course/_workbench/2026-11-23-m17-probe/jazzer/.cifuzz-corpus/dev.shelfie.fuzz.ProbeFuzzTest/graphqlJavaParserDoesNotCrash
+INFO:        0 files found in /tmp/jazzer-java-seeds1048792955012481698
+INFO: -max_len is not provided; libFuzzer will not generate inputs larger than 4096 bytes
+INFO: A corpus is not provided, starting from an empty corpus
+#2	INITED cov: 2 ft: 2 corp: 1/1b exec/s: 0 rss: 1143Mb
+INFO: using inputs from: /course/_workbench/2026-11-23-m17-probe/jazzer/.cifuzz-corpus/dev.shelfie.fuzz.ProbeFuzzTest/graphqlJavaParserDoesNotCrash
+INFO: using inputs from: /tmp/jazzer-java-seeds1048792955012481698
+#262144	pulse  cov: 2 ft: 2 corp: 1/1b lim: 2611 exec/s: 87381 rss: 2145Mb
+#524288	pulse  cov: 2 ft: 2 corp: 1/1b lim: 4096 exec/s: 87381 rss: 2145Mb
+#1048576	pulse  cov: 2 ft: 2 corp: 1/1b lim: 4096 exec/s: 80659 rss: 2145Mb
+#1637887	DONE   cov: 2 ft: 2 corp: 1/1b lim: 4096 exec/s: 77994 rss: 2145Mb
+Done 1637887 runs in 21 second(s)

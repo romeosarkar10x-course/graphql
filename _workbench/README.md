@@ -44,3 +44,6 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-22-m16-probe/` | Module 16: `FINDINGS.md` (14 findings), release dates and sums, Hive and Kubernetes and Shopify docs, observability probes (Spring defaults, conventions, Java agent), rollout and reliability runs, usage replay, knee and HPA simulations, game day seeds |
 | `2026-11-22-m16-build/` | Module 16 build notes and `assemble.py` (labs from the reference app), stubs, plain variants, comparison apps (naive, resume-only, fragile, parse-once) |
 | `2026-11-22-m16-check-starters.log` | `bin/course check m16 --starters` after Module 16 |
+| `2026-11-23-m17-probe/` | Module 17: `FINDINGS.md` (22 findings), the September 2025 spec (HTML, text, section map, `sectext.py`), RFC pages, graphql-java parser probes, Jazzer setup runs, differential fuzz runs (counts and samples; the full outputs and the graphql-java clone were pruned), graphql-http audits of Module 5's servers, introspection diff |
+| `2026-11-23-m17-build/` | Module 17 build: `assemble.py` (engine labs from the reference engine), `stubs/`, `gen-keys.sh` (hashed answer keys) |
+| `2026-11-23-m17-check-starters.log` | `bin/course check m17 --starters` after Module 17 |

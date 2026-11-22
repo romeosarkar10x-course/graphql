@@ -1,0 +1,43 @@
+{
+  "name": "list-non-null-items",
+  "schema": "fixture",
+  "query": "{ strictChildren { name required } }",
+  "data": {
+    "strictChildren": [
+      {
+        "name": "a",
+        "required": "x"
+      },
+      {
+        "name": "b",
+        "required": null
+      }
+    ]
+  },
+  "spec": "6.4.3: a null item of [Child!] makes the whole list null",
+  "expected": {
+    "errors": [
+      {
+        "message": "The field at path '/strictChildren[1]/required' was declared as a non null type, but the code involved in retrieving data has wrongly returned a null value.  The graphql specification requires that the parent field be set to null, or if that is non nullable that it bubble up null to its parent and so on. The non-nullable type is 'String' within parent type 'Child'",
+        "path": [
+          "strictChildren",
+          1,
+          "required"
+        ],
+        "extensions": {
+          "classification": "NullValueInNonNullableField"
+        },
+        "locations": [
+          {
+            "line": 1,
+            "column": 25
+          }
+        ]
+      }
+    ],
+    "data": {
+      "strictChildren": null
+    }
+  },
+  "graphqlJava": "graphql-java 26.1 leaves locations off the error for a null in a non-null position; the spec says an error that can be associated with a point in the document should have them (7.1.6), so the expected error has them"
+}

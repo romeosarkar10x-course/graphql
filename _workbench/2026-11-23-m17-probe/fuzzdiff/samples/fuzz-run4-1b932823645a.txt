@@ -1,0 +1,2 @@
+yours:        REJECT
+graphql-java: Document[definitions=[ObjectDef[description=null, name=zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz, interfaces=[], directives=[Directive[loc=Loc[line=1, column=91], name=zzzzzzzzzzs, arguments=[]]], fields=[]]]]

@@ -1,0 +1,17 @@
+{
+  "name" : "explicit-null-argument",
+  "schema" : "shelfie",
+  "query" : "{ books(titleContains: null, first: 3) { id } }",
+  "spec" : "6.4.1: an explicit null is a value",
+  "expected" : {
+    "data" : {
+      "books" : [ {
+        "id" : "b1"
+      }, {
+        "id" : "b2"
+      }, {
+        "id" : "b3"
+      } ]
+    }
+  }
+}

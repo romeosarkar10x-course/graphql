@@ -1,0 +1,1 @@
+{ books(titleContains: "a", sort: TITLE, order: ASC) { title } }

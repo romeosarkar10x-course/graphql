@@ -1,0 +1,62 @@
+ok    22EB SHOULD accept application/graphql-response+json and match the content-type
+ok    4655 MUST accept application/json and match the content-type
+warn  47DE SHOULD accept */* and use application/json for the content-type  -- Response header content-type does not contain application/json
+warn  80D8 SHOULD assume application/json content-type when accept is missing  -- Response header content-type does not contain application/json
+ok    82A3 MUST use utf-8 encoding when responding
+ok    BF61 MUST accept utf-8 encoded request
+ok    78D5 MUST assume utf-8 in request if encoding is unspecified
+ok    2C94 MUST accept POST requests
+ok    5A70 MAY accept application/x-www-form-urlencoded formatted GET requests
+ok    9C48 MAY NOT allow executing mutations on GET requests
+ok    9ABE SHOULD respond with 4xx status code if content-type is not supplied on POST requests
+ok    03D4 MUST accept application/json POST requests
+ok    A5BF MAY use 400 status code when request body is missing on POST
+notice 423L MAY use 400 status code on missing {query} parameter  -- Response status code is not 400
+notice LKJ0 MAY use 400 status code on object {query} parameter  -- Response status code is not 400
+notice LKJ1 MAY use 400 status code on number {query} parameter  -- Response status code is not 400
+notice LKJ2 MAY use 400 status code on boolean {query} parameter  -- Response status code is not 400
+notice LKJ3 MAY use 400 status code on array {query} parameter  -- Response status code is not 400
+ok    34A2 SHOULD allow string {query} parameter when accepting application/graphql-response+json
+ok    13EE MUST allow string {query} parameter when accepting application/json
+notice 6C00 MAY use 400 status code on object {operationName} parameter  -- Response status code is not 400
+notice 6C01 MAY use 400 status code on number {operationName} parameter  -- Response status code is not 400
+notice 6C02 MAY use 400 status code on boolean {operationName} parameter  -- Response status code is not 400
+notice 6C03 MAY use 400 status code on array {operationName} parameter  -- Response status code is not 400
+ok    8161 SHOULD allow string {operationName} parameter when accepting application/graphql-response+json
+ok    B8B3 MUST allow string {operationName} parameter when accepting application/json
+warn  94B0 SHOULD allow null {variables} parameter when accepting application/graphql-response+json  -- Response status code is not 200
+error 0220 MUST allow null {variables} parameter when accepting application/json  -- Response status code is not 200
+warn  94B1 SHOULD allow null {operationName} parameter when accepting application/graphql-response+json  -- Response status code is not 200
+error 0221 MUST allow null {operationName} parameter when accepting application/json  -- Response status code is not 200
+warn  94B2 SHOULD allow null {extensions} parameter when accepting application/graphql-response+json  -- Response status code is not 200
+error 0222 MUST allow null {extensions} parameter when accepting application/json  -- Response status code is not 200
+notice 4760 MAY use 400 status code on string {variables} parameter  -- Response status code is not 400
+notice 4761 MAY use 400 status code on number {variables} parameter  -- Response status code is not 400
+notice 4762 MAY use 400 status code on boolean {variables} parameter  -- Response status code is not 400
+notice 4763 MAY use 400 status code on array {variables} parameter  -- Response status code is not 400
+ok    2EA1 SHOULD allow map {variables} parameter when accepting application/graphql-response+json
+ok    28B9 MUST allow map {variables} parameter when accepting application/json
+ok    D6D5 MAY allow URL-encoded JSON string {variables} parameter in GETs when accepting application/graphql-response+json
+ok    6A70 MAY allow URL-encoded JSON string {variables} parameter in GETs when accepting application/json
+notice 58B0 MAY use 400 status code on string {extensions} parameter  -- Response status code is not 400
+notice 58B1 MAY use 400 status code on number {extensions} parameter  -- Response status code is not 400
+notice 58B2 MAY use 400 status code on boolean {extensions} parameter  -- Response status code is not 400
+notice 58B3 MAY use 400 status code on array {extensions} parameter  -- Response status code is not 400
+ok    428F SHOULD allow map {extensions} parameter when accepting application/graphql-response+json
+ok    1B7A MUST allow map {extensions} parameter when accepting application/json
+ok    B6DC MAY use 2xx, 4xx, or 5xx status codes on JSON parsing failure when accepting application/json
+ok    BCF8 SHOULD use 400 status code on JSON parsing failure when accepting application/json
+ok    B7N8 SHOULD use 400 status code on JSON parsing failure when accepting application/graphql-response+json
+ok    8764 MAY use 4xx or 5xx status codes if parameters are invalid
+notice 3E3A MAY use 400 status code if parameters are invalid  -- Response status code is not 400
+warn  572B SHOULD use 200 status code on document parsing failure when accepting application/json  -- Response status code is not 200
+warn  FDE2 SHOULD use 200 status code on document validation failure when accepting application/json  -- Response status code is not 200
+warn  7B9B SHOULD use a status code of 200 on variable coercion failure when accepting application/json  -- Response status code is not 200
+ok    865D SHOULD use 4xx or 5xx status codes on document parsing failure when accepting application/graphql-response+json
+ok    556A SHOULD use 400 status code on document parsing failure when accepting application/graphql-response+json
+ok    D586 SHOULD not contain the data entry on document parsing failure when accepting application/graphql-response+json
+ok    51FE SHOULD use 4xx or 5xx status codes on document validation failure when accepting application/graphql-response+json
+ok    74FF SHOULD use 400 status code on document validation failure when accepting application/graphql-response+json
+ok    5E5B SHOULD not contain the data entry on document validation failure when accepting application/graphql-response+json
+warn  86EE SHOULD use a status code of 400 on variable coercion failure when accepting application/graphql-response+json  -- Response status code is not 400
+{"total":61,"ok":31,"warn":9,"error":21}

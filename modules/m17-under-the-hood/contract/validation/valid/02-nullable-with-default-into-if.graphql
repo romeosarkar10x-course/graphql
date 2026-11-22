@@ -1,0 +1,1 @@
+query Q($b: Boolean = false) { hello @include(if: $b) }

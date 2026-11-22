@@ -1,0 +1,16 @@
+{
+  "name" : "merged-subselections",
+  "schema" : "shelfie",
+  "query" : "{ club(id: \"c1\") { owner { name } owner { handle } } }",
+  "spec" : "6.4.3 CollectSubfields over every field with the key",
+  "expected" : {
+    "data" : {
+      "club" : {
+        "owner" : {
+          "name" : "Kemi Adeyemi",
+          "handle" : "kemia"
+        }
+      }
+    }
+  }
+}

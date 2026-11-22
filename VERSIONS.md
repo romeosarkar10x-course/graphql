@@ -99,3 +99,7 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | Resilience4j bulkhead | 2.4.0 | — | lab 16.5, with the circuit breaker |
 | Jackson YAML | `tools.jackson.dataformat:jackson-dataformat-yaml` 3.1.8 (snakeyaml-engine 3.0.1) | — | course-lib, Module 16 manifests |
 | Jackson / slf4j-nop in standalone Module 15 jars | `tools.jackson.core:jackson-databind` 3.1.8 (2026-10-18); slf4j-nop 1.7.36 (Nadel's slf4j 1.x) / 2.0.17 (Kotlin) | — | lab 15.2 and mini-project 15.10, outside Spring Boot |
+| GraphQL spec | September 2025 edition | — | Module 17 baseline; https://spec.graphql.org/September2025/ ; copy in `_workbench/2026-11-23-m17-probe/spec/` |
+| Jazzer | `com.code-intelligence:jazzer-junit` 0.30.0 (2026-02-24), Apache-2.0 | — | lab 17.3 fuzz test; needs the JUnit BOM 6.1.3 import and `jazzer.instrument` |
+| graphql-http | 1.23.1 (2026-09-28), MIT, graphql 16.15.0 | — | lab 17.8 audit, npm lockfile in `modules/m17-under-the-hood/contract/http-audit/`, course Node 24 |
+| maven-surefire-plugin (Module 17) | 3.5.4 | — | the engine's test pom (fuzz test), outside Spring Boot |

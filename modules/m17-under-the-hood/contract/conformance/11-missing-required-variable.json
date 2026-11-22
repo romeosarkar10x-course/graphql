@@ -1,0 +1,18 @@
+{
+  "name" : "missing-required-variable",
+  "schema" : "shelfie",
+  "query" : "query Q($id: ID!) { club(id: $id) { name } }",
+  "spec" : "6.1.2: a request error, no data",
+  "expected" : {
+    "errors" : [ {
+      "message" : "Variable 'id' has an invalid value: Variable 'id' has coerced Null value for NonNull type 'ID!'",
+      "locations" : [ {
+        "line" : 1,
+        "column" : 9
+      } ],
+      "extensions" : {
+        "classification" : "ValidationError"
+      }
+    } ]
+  }
+}

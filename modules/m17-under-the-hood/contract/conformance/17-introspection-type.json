@@ -1,0 +1,19 @@
+{
+  "name" : "introspection-type",
+  "schema" : "shelfie",
+  "query" : "{ __type(name: \"Visibility\") { kind name enumValues { name } } }",
+  "spec" : "4.2",
+  "expected" : {
+    "data" : {
+      "__type" : {
+        "kind" : "ENUM",
+        "name" : "Visibility",
+        "enumValues" : [ {
+          "name" : "PUBLIC"
+        }, {
+          "name" : "PRIVATE"
+        } ]
+      }
+    }
+  }
+}

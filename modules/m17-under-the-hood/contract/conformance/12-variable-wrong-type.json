@@ -1,0 +1,21 @@
+{
+  "name" : "variable-wrong-type",
+  "schema" : "shelfie",
+  "query" : "query Q($n: Int) { books(first: $n) { id } }",
+  "variables" : {
+    "n" : "3"
+  },
+  "spec" : "3.5.1 Int input coercion: a string is not an Int",
+  "expected" : {
+    "errors" : [ {
+      "message" : "Variable 'n' has an invalid value: Expected a value that can be converted to type 'Int' but it was a 'String'",
+      "locations" : [ {
+        "line" : 1,
+        "column" : 9
+      } ],
+      "extensions" : {
+        "classification" : "ValidationError"
+      }
+    } ]
+  }
+}

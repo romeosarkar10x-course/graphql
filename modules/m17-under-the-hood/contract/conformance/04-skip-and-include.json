@@ -1,0 +1,19 @@
+{
+  "name" : "skip-and-include",
+  "schema" : "shelfie",
+  "query" : "query Q($brief: Boolean!) { club(id: \"c1\") { name description @skip(if: $brief) owner @include(if: $brief) { name } } }",
+  "variables" : {
+    "brief" : true
+  },
+  "spec" : "3.13.1 @skip, 3.13.2 @include",
+  "expected" : {
+    "data" : {
+      "club" : {
+        "name" : "The Midnight Readers",
+        "owner" : {
+          "name" : "Kemi Adeyemi"
+        }
+      }
+    }
+  }
+}

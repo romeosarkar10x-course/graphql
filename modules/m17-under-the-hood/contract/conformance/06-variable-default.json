@@ -1,0 +1,15 @@
+{
+  "name" : "variable-default",
+  "schema" : "shelfie",
+  "query" : "query Q($n: Int = 2) { books(first: $n) { id } }",
+  "spec" : "6.1.2 CoerceVariableValues: default when not provided",
+  "expected" : {
+    "data" : {
+      "books" : [ {
+        "id" : "b1"
+      }, {
+        "id" : "b2"
+      } ]
+    }
+  }
+}

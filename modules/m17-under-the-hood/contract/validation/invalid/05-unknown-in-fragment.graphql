@@ -1,0 +1,1 @@
+query { user(id: "u1") { ...Card } } fragment Card on User { name nickname }

@@ -1,0 +1,181 @@
+1 verview #sec-Overview
+2 anguage #sec-Language
+2.1 ource Text #sec-Language.Source-Text
+2.1.1 hite Space #sec-White-Space
+2.1.2 ine Terminators #sec-Line-Terminators
+2.1.3 omments #sec-Comments
+2.1.4 nsignificant Commas #sec-Insignificant-Commas
+2.1.5 exical Tokens #sec-Language.Source-Text.Lexical-Tokens
+2.1.6 gnored Tokens #sec-Language.Source-Text.Ignored-Tokens
+2.1.7 unctuators #sec-Punctuators
+2.1.8 ames #sec-Names
+2.2 escriptions #sec-Descriptions
+2.3 ocument #sec-Document
+2.4 perations #sec-Language.Operations
+2.5 election Sets #sec-Selection-Sets
+2.6 ields #sec-Language.Fields
+2.7 rguments #sec-Language.Arguments
+2.8 ield Alias #sec-Field-Alias
+2.9 ragments #sec-Language.Fragments
+2.9.1 ype Conditions #sec-Type-Conditions
+2.9.2 nline Fragments #sec-Inline-Fragments
+2.10 nput Values #sec-Input-Values
+2.10.1 nt Value #sec-Int-Value
+2.10.2 loat Value #sec-Float-Value
+2.10.3 oolean Value #sec-Boolean-Value
+2.10.4 tring Value #sec-String-Value
+2.10.5 ull Value #sec-Null-Value
+2.10.6 num Value #sec-Enum-Value
+2.10.7 ist Value #sec-List-Value
+2.10.8 nput Object Values #sec-Input-Object-Values
+2.11 ariables #sec-Language.Variables
+2.12 ype References #sec-Type-References
+2.13 irectives #sec-Language.Directives
+2.14 chema Coordinates #sec-Schema-Coordinates
+3 ype System #sec-Type-System
+3.1 ype System Extensions #sec-Type-System-Extensions
+3.2 ype System Descriptions #sec-Type-System-Descriptions
+3.3 chema #sec-Schema
+3.3.1 oot Operation Types #sec-Root-Operation-Types
+3.3.2 chema Extension #sec-Schema-Extension
+3.4 ypes #sec-Types
+3.4.1 rapping Types #sec-Wrapping-Types
+3.4.2 nput and Output Types #sec-Input-and-Output-Types
+3.4.3 ype Extensions #sec-Type-Extensions
+3.5 calars #sec-Scalars
+3.5.1 nt #sec-Int
+3.5.2 loat #sec-Float
+3.5.3 tring #sec-String
+3.5.4 oolean #sec-Boolean
+3.5.5  #sec-ID
+3.5.6 calar Extensions #sec-Scalar-Extensions
+3.6 bjects #sec-Objects
+3.6.1 ield Arguments #sec-Field-Arguments
+3.6.2 ield Deprecation #sec-Field-Deprecation
+3.6.3 bject Extensions #sec-Object-Extensions
+3.7 nterfaces #sec-Interfaces
+3.7.1 nterface Extensions #sec-Interface-Extensions
+3.8 nions #sec-Unions
+3.8.1 nion Extensions #sec-Union-Extensions
+3.9 nums #sec-Enums
+3.9.1 num Extensions #sec-Enum-Extensions
+3.10 nput Objects #sec-Input-Objects
+3.10.1 neOf Input Objects #sec-OneOf-Input-Objects
+3.10.2 nput Object Extensions #sec-Input-Object-Extensions
+3.11 ist #sec-List
+3.12 on-Null #sec-Non-Null
+3.12.1 ombining List and Non-Null #sec-Combining-List-and-Non-Null
+3.13 irectives #sec-Type-System.Directives
+3.13.1 @skip #sec--skip
+3.13.2 @include #sec--include
+3.13.3 @deprecated #sec--deprecated
+3.13.4 @specifiedBy #sec--specifiedBy
+3.13.5 @oneOf #sec--oneOf
+4 ntrospection #sec-Introspection
+4.1 ype Name Introspection #sec-Type-Name-Introspection
+4.2 chema Introspection #sec-Schema-Introspection
+4.2.1 he __Schema Type #sec-The-__Schema-Type
+4.2.2 he __Type Type #sec-The-__Type-Type
+4.2.3 he __Field Type #sec-The-__Field-Type
+4.2.4 he __InputValue Type #sec-The-__InputValue-Type
+4.2.5 he __EnumValue Type #sec-The-__EnumValue-Type
+4.2.6 he __Directive Type #sec-The-__Directive-Type
+5 alidation #sec-Validation
+5.1 ocuments #sec-Documents
+5.1.1 xecutable Definitions #sec-Executable-Definitions
+5.2 perations #sec-Validation.Operations
+5.2.1 ll Operation Definitions #sec-All-Operation-Definitions
+5.2.1.1 peration Type Existence #sec-Operation-Type-Existence
+5.2.2 amed Operation Definitions #sec-Named-Operation-Definitions
+5.2.2.1 peration Name Uniqueness #sec-Operation-Name-Uniqueness
+5.2.3 nonymous Operation Definitions #sec-Anonymous-Operation-Definitions
+5.2.3.1 one Anonymous Operation #sec-Lone-Anonymous-Operation
+5.2.4 ubscription Operation Definitions #sec-Subscription-Operation-Definitions
+5.2.4.1 ingle Root Field #sec-Single-Root-Field
+5.3 ields #sec-Validation.Fields
+5.3.1 ield Selections #sec-Field-Selections
+5.3.2 ield Selection Merging #sec-Field-Selection-Merging
+5.3.3 eaf Field Selections #sec-Leaf-Field-Selections
+5.4 rguments #sec-Validation.Arguments
+5.4.1 rgument Names #sec-Argument-Names
+5.4.2 rgument Uniqueness #sec-Argument-Uniqueness
+5.4.3 equired Arguments #sec-Required-Arguments
+5.5 ragments #sec-Validation.Fragments
+5.5.1 ragment Declarations #sec-Fragment-Declarations
+5.5.1.1 ragment Name Uniqueness #sec-Fragment-Name-Uniqueness
+5.5.1.2 ragment Spread Type Existence #sec-Fragment-Spread-Type-Existence
+5.5.1.3 ragments on Object, Interface or Union Types #sec-Fragments-on-Object-Interface-or-Union-Types
+5.5.1.4 ragments Must Be Used #sec-Fragments-Must-Be-Used
+5.5.2 ragment Spreads #sec-Fragment-Spreads
+5.5.2.1 ragment Spread Target Defined #sec-Fragment-Spread-Target-Defined
+5.5.2.2 ragment Spreads Must Not Form Cycles #sec-Fragment-Spreads-Must-Not-Form-Cycles
+5.5.2.3 ragment Spread Is Possible #sec-Fragment-Spread-Is-Possible
+5.5.2.3.1 bject Spreads in Object Scope #sec-Object-Spreads-in-Object-Scope
+5.5.2.3.2 bstract Spreads in Object Scope #sec-Abstract-Spreads-in-Object-Scope
+5.5.2.3.3 bject Spreads in Abstract Scope #sec-Object-Spreads-in-Abstract-Scope
+5.5.2.3.4 bstract Spreads in Abstract Scope #sec-Abstract-Spreads-in-Abstract-Scope
+5.6 alues #sec-Values
+5.6.1 alues of Correct Type #sec-Values-of-Correct-Type
+5.6.2 nput Object Field Names #sec-Input-Object-Field-Names
+5.6.3 nput Object Field Uniqueness #sec-Input-Object-Field-Uniqueness
+5.6.4 nput Object Required Fields #sec-Input-Object-Required-Fields
+5.7 irectives #sec-Validation.Directives
+5.7.1 irectives Are Defined #sec-Directives-Are-Defined
+5.7.2 irectives Are in Valid Locations #sec-Directives-Are-in-Valid-Locations
+5.7.3 irectives Are Unique per Location #sec-Directives-Are-Unique-per-Location
+5.8 ariables #sec-Validation.Variables
+5.8.1 ariable Uniqueness #sec-Variable-Uniqueness
+5.8.2 ariables Are Input Types #sec-Variables-Are-Input-Types
+5.8.3 ll Variable Uses Defined #sec-All-Variable-Uses-Defined
+5.8.4 ll Variables Used #sec-All-Variables-Used
+5.8.5 ll Variable Usages Are Allowed #sec-All-Variable-Usages-Are-Allowed
+6 xecution #sec-Execution
+6.1 xecuting Requests #sec-Executing-Requests
+6.1.1 alidating Requests #sec-Validating-Requests
+6.1.2 oercing Variable Values #sec-Coercing-Variable-Values
+6.2 xecuting Operations #sec-Executing-Operations
+6.2.1 uery #sec-Query
+6.2.2 utation #sec-Mutation
+6.2.3 ubscription #sec-Subscription
+6.2.3.1 ource Stream #sec-Source-Stream
+6.2.3.2 esponse Stream #sec-Subscription.Response-Stream
+6.2.3.3 nsubscribe #sec-Unsubscribe
+6.3 xecuting Selection Sets #sec-Executing-Selection-Sets
+6.3.1 xecuting the Root Selection Set #sec-Executing-the-Root-Selection-Set
+6.3.2 ield Collection #sec-Field-Collection
+6.3.3 xecuting Collected Fields #sec-Executing-Collected-Fields
+6.3.4 ormal and Serial Execution #sec-Normal-and-Serial-Execution
+6.4 xecuting Fields #sec-Executing-Fields
+6.4.1 oercing Field Arguments #sec-Coercing-Field-Arguments
+6.4.2 alue Resolution #sec-Value-Resolution
+6.4.3 alue Completion #sec-Value-Completion
+6.4.4 andling Execution Errors #sec-Handling-Execution-Errors
+7 esponse #sec-Response
+7.1 esponse Format #sec-Response-Format
+7.1.1 xecution Result #sec-Execution-Result
+7.1.2 esponse Stream #sec-Response-Format.Response-Stream
+7.1.3 equest Error Result #sec-Request-Error-Result
+7.1.4 esponse Position #sec-Response-Position
+7.1.5 ata #sec-Data
+7.1.6 rrors #sec-Errors
+7.1.7 xtensions #sec-Extensions
+7.1.8 dditional Entries #sec-Additional-Entries
+7.2 erialization Format #sec-Serialization-Format
+7.2.1 Serialization #sec-JSON-Serialization
+7.2.2 erialized Map Ordering #sec-Serialized-Map-Ordering
+A AAppendix: Conformance #sec-Appendix-Conformance
+B BAppendix: Notation Conventions #sec-Appendix-Notation-Conventions
+B.1 B.1Context-Free Grammar #sec-Context-Free-Grammar
+B.2 B.2Lexical and Syntactic Grammar #sec-Lexical-and-Syntactic-Grammar
+B.3 B.3Grammar Notation #sec-Grammar-Notation
+B.4 B.4Grammar Semantics #sec-Grammar-Semantics
+B.5 B.5Algorithms #sec-Algorithms
+B.6 B.6Data Collections #sec-Data-Collections
+C CAppendix: Grammar Summary #sec-Appendix-Grammar-Summary
+C.1 C.1Source Text #sec-Appendix-Grammar-Summary.Source-Text
+C.2 C.2Ignored Tokens #sec-Appendix-Grammar-Summary.Ignored-Tokens
+C.3 C.3Lexical Tokens #sec-Appendix-Grammar-Summary.Lexical-Tokens
+C.4 C.4Document Syntax #sec-Document-Syntax
+C.5 C.5Schema Coordinate Syntax #sec-Schema-Coordinate-Syntax
+D DAppendix: Type System Definitions #sec-Appendix-Type-System-Definitions
+E EAppendix: Copyright and Licensing #sec-Appendix-Copyright-and-Licensing

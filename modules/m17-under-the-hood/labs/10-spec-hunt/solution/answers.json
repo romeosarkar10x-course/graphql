@@ -1,0 +1,17 @@
+{
+  "q01": "6.3.2",
+  "q02": "GetOperation",
+  "q03": "No longer supported",
+  "q04": "2147483647",
+  "q05": "oneOf",
+  "q06": "4",
+  "q07": "U+FEFF",
+  "q08": "5.3.2",
+  "q09": "include, skip",
+  "q10": "extensions",
+  "q11": "mutation",
+  "q12": "U+000A",
+  "q13": "2.14",
+  "q14": "C",
+  "q15": "IsVariableUsageAllowed"
+}

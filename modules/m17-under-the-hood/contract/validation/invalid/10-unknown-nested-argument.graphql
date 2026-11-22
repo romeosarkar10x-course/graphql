@@ -1,0 +1,1 @@
+{ book(id: "b1") { reviews(first: 2) { rating } } }

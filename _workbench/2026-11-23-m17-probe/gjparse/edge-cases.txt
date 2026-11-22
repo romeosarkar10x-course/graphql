@@ -1,0 +1,28 @@
+FAIL "desc" query Q { a }  ->  InvalidSyntaxException: Invalid syntax with offending token '"desc"' at line 1 column 1
+FAIL """frag""" fragment F on T { a } { ...F }  ->  InvalidSyntaxException: Invalid syntax with offending token '"""frag"""' at line 1 column 1
+FAIL query ($x: Int, "var desc" $y: Int) { a }  ->  InvalidSyntaxException: Invalid syntax with offending token '"var desc"' at line 1 column 17
+FAIL { a { } }  ->  InvalidSyntaxException: Invalid syntax with offending token '}' at line 1 column 7
+OK   { a(s: "tab\there") }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 string tabU+0009here string tabU+0009here arg@1:5 field a@1:3 op
+OK   { a(s: "ctrl\u0001x") }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 string ctrlU+0001x string ctrlU+0001x arg@1:5 field a@1:3 op
+OK   { a(s: "\u{1F600}") }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 string U+1F600 string U+1F600 arg@1:5 field a@1:3 op
+OK   { a(s: "\uD83D\uDE00") }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 string U+1F600 string U+1F600 arg@1:5 field a@1:3 op
+FAIL { a(s: "\uD83D") }  ->  InvalidUnicodeSyntaxException: Invalid unicode encountered. Leading surrogate must be followed by a trailing surrogate. Offending token '\uD83D' at line 1 column 8
+FAIL { a(s: "\u{110000}") }  ->  InvalidUnicodeSyntaxException: Invalid unicode encountered. Not a valid code point. Offending token '\u{110000}' at line 1 column 8
+OK   { a(s: "😀😀") b }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 string U+1F600U+1F600 string U+1F600U+1F600 arg@1:5 field a@1:3 field b@1:14 field b@1:14 op
+FAIL { a(n: 0x1) }  ->  InvalidSyntaxException: Invalid syntax with ANTLR error 'token recognition error at: '0x'' at line 1 column 8
+FAIL { a(n: 1.) }  ->  InvalidSyntaxException: Invalid syntax with ANTLR error 'token recognition error at: '1.)'' at line 1 column 8
+FAIL { a(n: 00) }  ->  InvalidSyntaxException: Invalid syntax with ANTLR error 'token recognition error at: '00'' at line 1 column 8
+FAIL { a(n: 1e) }  ->  InvalidSyntaxException: Invalid syntax with ANTLR error 'token recognition error at: '1e)'' at line 1 column 8
+OK   { a(n: -0) }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 arg@1:5 field a@1:3 op
+OK   { a(n: 1.5e+3) }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 arg@1:5 field a@1:3 op
+OK   { a(s: """\n    hello\n      world\n  """) }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 string helloU+000A  world string helloU+000A  world arg@1:5 field a@1:3 op
+OK   { a(s: """ \""" """) }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 string  """  string  """  arg@1:5 field a@1:3 op
+OK   <BOM>{ a }  ->  OperationDefinition@1:2 op field a@1:4 field a@1:4 op
+FAIL { a(s: "\x") }  ->  InvalidSyntaxException: Invalid syntax with ANTLR error 'token recognition error at: '"\x'' at line 1 column 8
+FAIL { a.b }  ->  InvalidSyntaxException: Invalid syntax with ANTLR error 'token recognition error at: '.b'' at line 1 column 4
+FAIL { a(n: 1..2) }  ->  InvalidSyntaxException: Invalid syntax with ANTLR error 'token recognition error at: '1..'' at line 1 column 8
+OK   { a(n: true1) }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 arg@1:5 field a@1:3 op
+OK   query { a } extend type Q { b: Int }  ->  OperationDefinition@1:1 ObjectTypeExtensionDefinition@1:13 op field a@1:9 field a@1:9 op
+OK   type Q { a: Int }  ->  ObjectTypeDefinition@1:1
+OK   { a(n: "<U+2028>") }  ->  OperationDefinition@1:1 op field a@1:3 arg@1:5 string U+2028 string U+2028 arg@1:5 field a@1:3 op
+FAIL { a(s: "\u00e9\U00e9") }  ->  InvalidSyntaxException: Invalid syntax with ANTLR error 'token recognition error at: '"\u00e9\U'' at line 1 column 8

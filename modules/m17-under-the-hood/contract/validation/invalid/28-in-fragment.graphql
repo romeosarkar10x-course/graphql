@@ -1,0 +1,1 @@
+query Q($text: String) { ...S } fragment S on Query { search(text: $text) { __typename } }

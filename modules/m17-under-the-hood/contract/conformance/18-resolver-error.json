@@ -1,0 +1,29 @@
+{
+  "name" : "resolver-error",
+  "schema" : "fixture",
+  "query" : "{ ok boom }",
+  "data" : {
+    "ok" : "fine",
+    "boom" : {
+      "$throw" : "no boom today"
+    }
+  },
+  "spec" : "6.4.4 Handling Execution Errors: null and an error at the path",
+  "expected" : {
+    "errors" : [ {
+      "message" : "Exception while fetching data (/boom) : no boom today",
+      "locations" : [ {
+        "line" : 1,
+        "column" : 6
+      } ],
+      "path" : [ "boom" ],
+      "extensions" : {
+        "classification" : "DataFetchingException"
+      }
+    } ],
+    "data" : {
+      "ok" : "fine",
+      "boom" : null
+    }
+  }
+}

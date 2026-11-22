@@ -1,0 +1,1 @@
+{ clubs { ...A } } fragment A on Club { name ...A }

@@ -1,0 +1,15 @@
+{
+  "name" : "unknown-operation-name",
+  "schema" : "shelfie",
+  "query" : "query A { hello }",
+  "operationName" : "Z",
+  "spec" : "6.1 GetOperation: a request error",
+  "expected" : {
+    "errors" : [ {
+      "message" : "Unknown operation named 'Z'.",
+      "extensions" : {
+        "classification" : "ValidationError"
+      }
+    } ]
+  }
+}

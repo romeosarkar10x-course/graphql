@@ -1,0 +1,32 @@
+{
+  "name": "enum-not-a-value",
+  "schema": "fixture",
+  "query": "{ color }",
+  "data": {
+    "color": "PURPLE"
+  },
+  "spec": "3.9 Enum result coercion",
+  "expected": {
+    "errors": [
+      {
+        "message": "Can't serialize value (/color) : Invalid input for enum 'Color'. Unknown value 'PURPLE'",
+        "path": [
+          "color"
+        ],
+        "extensions": {
+          "classification": "DataFetchingException"
+        },
+        "locations": [
+          {
+            "line": 1,
+            "column": 3
+          }
+        ]
+      }
+    ],
+    "data": {
+      "color": null
+    }
+  },
+  "graphqlJava": "graphql-java 26.1 leaves locations off result coercion errors; the spec says an error that can be associated with a point in the document should have them (7.1.6), so the expected error has them"
+}

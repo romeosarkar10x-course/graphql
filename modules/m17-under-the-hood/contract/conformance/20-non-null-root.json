@@ -1,0 +1,26 @@
+{
+  "name" : "non-null-root",
+  "schema" : "fixture",
+  "query" : "{ ok boomNonNull }",
+  "data" : {
+    "ok" : "fine",
+    "boomNonNull" : {
+      "$throw" : "root"
+    }
+  },
+  "spec" : "6.4.4: data becomes null",
+  "expected" : {
+    "errors" : [ {
+      "message" : "Exception while fetching data (/boomNonNull) : root",
+      "locations" : [ {
+        "line" : 1,
+        "column" : 6
+      } ],
+      "path" : [ "boomNonNull" ],
+      "extensions" : {
+        "classification" : "DataFetchingException"
+      }
+    } ],
+    "data" : null
+  }
+}

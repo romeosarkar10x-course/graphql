@@ -1,0 +1,1 @@
+mutation M($rating: String!) { createReview(input: {bookId: "b1", rating: $rating, body: "A fine read, really."}) { userErrors { message } } }

@@ -1,0 +1,12 @@
+{
+  "name" : "oneof-input",
+  "schema" : "fixture",
+  "query" : "{ ok: echo(one: {id: 7}) }",
+  "data" : { },
+  "spec" : "3.10.1 OneOf Input Objects; ID input coercion from an Int literal",
+  "expected" : {
+    "data" : {
+      "ok" : "{\"one\":{\"id\":\"7\"}}"
+    }
+  }
+}

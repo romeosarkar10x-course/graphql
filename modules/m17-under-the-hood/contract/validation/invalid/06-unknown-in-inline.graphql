@@ -1,0 +1,1 @@
+{ search(text: "a") { ... on Book { title blurb } ... on Club { name } } }

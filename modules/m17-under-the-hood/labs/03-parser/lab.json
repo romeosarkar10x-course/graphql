@@ -1,0 +1,1 @@
+{"title": "Parser and AST records; fuzz yours against graphql-java's with Jazzer and investigate every disagreement", "lecture": "17.3", "kind": "lab", "grading": "both", "needs": ["internet"]}

@@ -1,0 +1,2 @@
+{"labs": ["m17/03", "m17/08", "m17/09"],
+ "files": ["m17-under-the-hood/03-parser/FUZZ.md", "m17-under-the-hood/08-http/AUDIT.md", "m17-under-the-hood/09-project-engine/DESIGN.md"]}

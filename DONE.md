@@ -302,3 +302,23 @@ Earlier: `bin/course check --starters` (2026-11-21): 11 auto-graded labs, 0 prob
       changelog, migration guide validated against both schemas, announcement
 - [x] Mini-project and games: m16/08 incident game day (seeded faults, answers checked) · m16/09 governance
       council (rubric) · m16/10 Grafana ops dashboard checked panel by panel, and the runbook
+
+## Module 17 (8 lectures, 8 labs, 1 mini-project, 2 games)
+
+- [x] Contract: `engine/` (minigql, the reference engine: sealed tokens, records AST, six rules, executor on
+      virtual threads, introspection, SDL printer; 1,525 counted lines, no runtime dependencies) · `harness/`
+      (`Cases`, `Corpus`, `TokenDiff`, `ParseDiff`, `ValidateDiff`, `Conformance`, `Parallel`, `Smoke`,
+      `RoundTrip`, `IntrospectDiff`; `Gj` drives graphql-java 26.1, `Known` lists its departures from the spec) ·
+      40 invalid and 8 valid validation documents · 30 conformance tests and a fixture schema · the kitchen-sink
+      schema · graphql-http 1.23.1 pinned (`http-audit/`) · hashed answer keys (`answers/answers.sh`)
+- [x] Lectures 17.1–17.8 (Hook / Concept / Java build / Experiment / Check)
+- [x] Labs: m17/01 five behaviours traced to sections, RFC stages · m17/02 lexer, 20 cases, 1,000-document
+      differential (954 agree, 46 known) · m17/03 parser, 21 cases, differential (767 agree, 233 known), Jazzer
+      fuzz test and report · m17/04 six rules, 40/40 invalid and 20/20 valid agree · m17/05 30/30 conformance,
+      7 slow resolvers in 200 ms on virtual threads, Module 2's 12 operations identical · m17/06 12 round-trip
+      checks · m17/07 graphql-java internals (rubric; the Gradle build not run, see TODO) · m17/08 Module 5's
+      server through graphql-http: 0 errors, the 4 warnings and 18 notices the edition overrules
+- [x] Mini-project and games: m17/09 build from scratch (every suite, under 2,000 lines) · m17/10 spec scavenger
+      hunt (15 hashed answers, leaderboard) · m17/11 mock working group (rubric)
+- [x] `bin/course check m17 --starters`: 9 auto-graded labs, 0 problems
+      (`_workbench/2026-11-23-m17-check-starters.log`)

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>CoerceInputValue() | GraphQL RFC Tracker</title><meta name="description" content="CoerceInputValue(). 6 commits pushed on 2025-07-05."/><link rel="canonical" href="https://rfcs.graphql.org/rfcs/1179/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="/styles.css"/></head><body><div class="page-shell"><header class="site-header"><a class="brand" href="/"><span class="brand-mark">GraphQL</span> <span class="brand-copy">RFC Tracker</span></a><nav class="site-nav"><a href="/rfcs/">All RFCs</a><a href="/activity/">Activity</a><a href="https://github.com/graphql/graphql-spec">graphql-spec</a><a href="https://github.com/graphql/graphql-wg">graphql-wg</a></nav></header><main><section class="hero hero-compact"><p class="eyebrow">RFC 1 / Proposal</p><h1>CoerceInputValue()</h1><div class="hero-meta"><div><span class="meta-label">Opened on</span><strong>2025-07-04</strong></div><div><span class="meta-label">Updated on</span><strong>2025-07-08</strong></div></div></section><section class="section-grid"><aside class="summary-card"><h2>Summary</h2><dl class="meta-grid"><dt>Identifier</dt><dd>#1179</dd><dt>Stage</dt><dd>RFC 1 / Proposal</dd><dt>Champion</dt><dd><a href="https://github.com/leebyron">@leebyron</a></dd><dt>Updated</dt><dd>2025-07-08</dd></dl><ul class="link-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1179">Spec PR</a></li></ul></aside><article class="markdown-body"><h2>At a glance</h2>
+<ul>
+<li>Identifier: #1179</li>
+<li>Stage: RFC 1 / Proposal</li>
+<li>Champion: <a href="https://github.com/leebyron">@leebyron</a></li>
+<li>Latest activity: 6 commits pushed on 2025-07-05</li>
+<li>Spec PR: <a href="https://github.com/graphql/graphql-spec/pull/1179">https://github.com/graphql/graphql-spec/pull/1179</a></li>
+</ul>
+<h2>Spec PR description</h2>
+<p>As an alternative to #1058 and #1178 - this is a more substantial overhaul of how input value coercion is defined in favor of a system of composed algorithms.</p>
+<h2>A quick summary of what this introduces:</h2>
+<ul>
+<li>
+<p>Introduces the concept of a <em>coercion failure</em> which has a similar &quot;raised error&quot; behavior, but is caught and translated into specific errors based on each callsite. That removes the awkwardness of &quot;a request error is actually an execution error here&quot;.</p>
+</li>
+<li>
+<p>A new &quot;Input Coercion&quot; section which defines <code>CoerceInputValue()</code>. This is the point of reusability which handles nullability and then forks out to each specific input type.</p>
+</li>
+<li>
+<p>Algorithms for each kind of type&#x27;s input coercion. Notably input objects and lists which have been under-defined (as an alt to #1058).</p>
+</li>
+<li>
+<p>A validation rule for default variable values, which I believe exists in graphql.js but was missing in spec.</p>
+</li>
+</ul>
+<h2>Open Qs:</h2>
+<ul>
+<li>
+<p>Is this the right place for the Input Coercion subsection?</p>
+</li>
+<li>
+<p>Have I missed anything?</p>
+</li>
+</ul><section class="detail-timeline"><h2>Timeline</h2><div class="activity-groups detail-timeline-groups"><section class="activity-month"><div class="activity-month-divider"><span>July 2025</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/commit/e9a4ec2e67fc9e53a3b47012acc6758f7c9d867c">6 commits pushed</a> on 2025-07-05<ul class="activity-event-commits"><li>@leebyron committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/560ead4f20ce10992397de0cfe7fedd47999d8fc">Update spec/Section 3 -- Type System.md</a>&quot;</li><li>@leebyron committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/069811b312805429189e4a5fd975cb0f2445d36c">Update spec/Section 3 -- Type System.md</a>&quot;</li><li>@leebyron committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/5b68af0109c4b7327ff5e381d33903fbe2216c8c">Update spec/Section 6 -- Execution.md</a>&quot;</li><li>@leebyron committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/bc51bfa597b8138c759cea3fecce0bcd030bcb29">Update spec/Section 6 -- Execution.md</a>&quot;</li><li>@leebyron committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/49e367f91f899a1fc3f3e93dd8720a41aa87a8b3">Update spec/Section 6 -- Execution.md</a>&quot;</li><li>@leebyron committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/e9a4ec2e67fc9e53a3b47012acc6758f7c9d867c">Update spec/Section 6 -- Execution.md</a>&quot;</li></ul></li><li><a href="https://github.com/graphql/graphql-spec/pull/1179">Spec PR</a> created on 2025-07-04 by leebyron</li><li>@leebyron committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/4f40177dc1d8ee3e5cd84d4a8ed6ec478dd786e3">CoerceInputValue()</a>&quot; on 2025-07-04</li><li><a href="https://github.com/graphql/graphql-spec/pull/1179">Advanced to RFC 1</a> on 2025-07-04 by leebyron</li></ul></section></div></section></article></section></main><footer class="site-footer"><p>Copyright © GraphQL Contributors</p></footer></div></body></html>

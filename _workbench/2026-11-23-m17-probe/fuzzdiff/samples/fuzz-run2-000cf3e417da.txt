@@ -1,0 +1,6 @@
+yours:        Document[definitions=[Operation[loc=Loc[line=1, column=1], description="J
+涶涶涶梢
+
+
+浵劶扢"z, type=subscription, name=null, variables=[], directives=[], selections=[Field[loc=Loc[line=5, column=22], alias=null, name=s, arguments=[], directives=[], selections=[]]]]]]
+graphql-java: REJECT

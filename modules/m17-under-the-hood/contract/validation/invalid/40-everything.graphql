@@ -1,0 +1,1 @@
+query Q($x: Int, $y: Boolean) { club(id: $x, order: 1) { owner { name } owner { name: handle } colour ...C } } fragment C on Club { ...D } fragment D on Club { ...C }

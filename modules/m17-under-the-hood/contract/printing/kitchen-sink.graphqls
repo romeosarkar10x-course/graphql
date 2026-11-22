@@ -1,0 +1,87 @@
+"""
+Every type-system feature the course's printer must round-trip.
+Block descriptions keep "quotes" and line breaks.
+"""
+schema {
+  query: Root
+  mutation: Change
+}
+
+"A custom scalar with a specification URL."
+scalar Instant @specifiedBy(url: "https://scalars.graphql.org/chillicream/date-time.html")
+
+scalar Json
+
+directive @cost(weight: Int = 1, reasons: [String!] = ["cpu", "io"]) repeatable on FIELD_DEFINITION | OBJECT
+
+"Marks owned types."
+directive @owner(
+  "The team."
+  team: String!
+) on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
+
+interface Node {
+  id: ID!
+}
+
+interface Named implements Node {
+  id: ID!
+  "Display name."
+  name: String
+}
+
+type Root {
+  node(id: ID!): Node
+  search(filter: Filter = {text: "a", limit: 5, tags: ["x", "y"]}, order: Order = TITLE): [Result!]! @cost(weight: 5) @cost(weight: 2)
+  now: Instant
+  raw: Json @deprecated
+  old(id: ID @deprecated(reason: "Use node."), page: Int = 1): String @deprecated(reason: "Use search.")
+}
+
+type Change {
+  rename(input: Rename!): Named
+}
+
+type Book implements Node & Named @owner(team: "catalog") {
+  id: ID!
+  name: String
+  pages: Int
+  ratio: Float
+  ok: Boolean
+}
+
+type Club implements Node & Named {
+  id: ID!
+  name: String
+  members(first: Int = 10, after: String): [Named]
+}
+
+union Result @owner(team: "search") = Book | Club
+
+enum Order {
+  TITLE
+  "Newest first."
+  NEWEST
+  OLDEST @deprecated(reason: "Use NEWEST.")
+}
+
+input Filter {
+  text: String = ""
+  limit: Int = 10
+  tags: [String!]
+  nested: [[Int]]
+  order: Order
+}
+
+input Rename @oneOf {
+  book: ID
+  club: ID
+}
+
+extend type Book {
+  subtitle: String
+}
+
+extend enum Order {
+  POPULAR
+}

@@ -1,0 +1,15 @@
+{
+  "name" : "list-input-coercion",
+  "schema" : "fixture",
+  "query" : "{ a: echo(list: 3) b: echo(list: [1, 2]) c: echo(nested: 1) d: echo(nested: [1, 2]) }",
+  "data" : { },
+  "spec" : "3.11 List input coercion: a single value becomes a list of one; RFC #1058 is about to rewrite this algorithm",
+  "expected" : {
+    "data" : {
+      "a" : "{\"list\":[3]}",
+      "b" : "{\"list\":[1,2]}",
+      "c" : "{\"nested\":[[1]]}",
+      "d" : "{\"nested\":[[1],[2]]}"
+    }
+  }
+}

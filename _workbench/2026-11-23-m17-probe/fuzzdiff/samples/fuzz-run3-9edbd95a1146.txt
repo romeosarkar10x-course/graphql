@@ -1,0 +1,2 @@
+yours:        REJECT
+graphql-java: Document[definitions=[ObjectDef[description=null, name=z, interfaces=[], directives=[], fields=[]], Operation[loc=Loc[line=1, column=8], description=null, type=query, name=null, variables=[], directives=[], selections=[Field[loc=Loc[line=1, column=9], alias=null, name=uD, arguments=[], directives=[Directive[loc=Loc[line=1, column=11], name=u, arguments=[]], Directive[loc=Loc[line=1, column=13], name=s, arguments=[]], Directive[loc=Loc[line=1, column=15], name=s, arguments=[]]], selections=[]]]]]]

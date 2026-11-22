@@ -1,0 +1,1 @@
+query Q($id: ID!, $unused: Int) { club(id: $id) { name } }

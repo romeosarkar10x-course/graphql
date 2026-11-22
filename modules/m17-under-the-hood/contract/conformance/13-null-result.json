@@ -1,0 +1,14 @@
+{
+  "name" : "null-result",
+  "schema" : "shelfie",
+  "query" : "{ user(id: \"nobody\") { name } club(id: \"c1\") { name } }",
+  "spec" : "6.4.3 CompleteValue: null for a nullable field",
+  "expected" : {
+    "data" : {
+      "user" : null,
+      "club" : {
+        "name" : "The Midnight Readers"
+      }
+    }
+  }
+}

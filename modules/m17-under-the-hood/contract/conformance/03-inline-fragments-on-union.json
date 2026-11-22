@@ -1,0 +1,32 @@
+{
+  "name" : "inline-fragments-on-union",
+  "schema" : "shelfie",
+  "query" : "{ search(text: \"the\") { __typename ... on Book { title } ... on Club { name } ... on User { handle } } }",
+  "spec" : "6.3.2 DoesFragmentTypeApply",
+  "expected" : {
+    "data" : {
+      "search" : [ {
+        "__typename" : "Book",
+        "title" : "The Left Hand of Darkness"
+      }, {
+        "__typename" : "Book",
+        "title" : "The Remains of the Day"
+      }, {
+        "__typename" : "Book",
+        "title" : "The Name of the Rose"
+      }, {
+        "__typename" : "Book",
+        "title" : "The Dispossessed"
+      }, {
+        "__typename" : "Book",
+        "title" : "The Seven Moons of Maali Almeida"
+      }, {
+        "__typename" : "Book",
+        "title" : "Klara and the Sun"
+      }, {
+        "__typename" : "Club",
+        "name" : "The Midnight Readers"
+      } ]
+    }
+  }
+}

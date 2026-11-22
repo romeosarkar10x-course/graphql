@@ -1,0 +1,1 @@
+{ search(text: "a") { ... on Book { reviews(last: 1) { id } } ... on User { reviews { id } } } }

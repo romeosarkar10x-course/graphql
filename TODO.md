@@ -1,9 +1,16 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 16
+## Now: user review of Module 17
 
-The user said "continue.." (2026-11-22) after Module 15's report; Module 16 is built. Wait for review before
-Module 17.
+The user said "continue..." (2026-11-23) after Module 16's report; Module 17 is built. Wait for review before
+Module 18.
+
+Decision for the user:
+
+- [ ] Lab 17.7's local build of graphql-java (`RELEASE_VERSION=26.1-local ./gradlew publishToMavenLocal
+      -PpublishToMavenLocal`) was not run: running graphql-java's Gradle wrapper was blocked in the authoring
+      session. Run it yourself (or allow it), then confirm the flags and record the test count and time in the
+      reference `INTERNALS.md`.
 
 Decisions still open from Module 15:
 
@@ -115,9 +122,19 @@ Decisions still open from Module 15:
 - [ ] Mini-project 8 and game 8a time-based checks (bot every 20/30 ms) were green on one machine;
       watch for flakiness on slow machines.
 
+- [ ] Module 17: re-check each graphql-java release against `harness/Known.java` (lone CR, U+2028/U+2029, block
+      strings with CR or short blank lines, descriptions on operations, empty `{}` in SDL, the fieldless-type
+      lookahead, missing locations on result-coercion and null-for-non-null errors); drop rules it fixes.
+- [ ] Module 17: re-run graphql-http against lab 17.8 on each release; the four edition conflicts (572B, FDE2,
+      7B9B, 86EE) and the 18 MAY-400 notices may be updated to the September 2026 edition.
+- [ ] Module 17: the spec baseline is the September 2025 edition; when a new edition ships, re-check the hunt's 15
+      answers, lab 17.1's sections and the draft-only features (RFC #1227 empty selection sets).
+- [ ] Jazzer 0.30.0 needs the JUnit BOM import and `jazzer.instrument`; re-check on a new release. The fuzz test
+      uses about 2 GB.
+
 ## Next modules (in order)
 
-- [ ] M17–M18, capstone, per plan/syllabus.md
+- [ ] M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 

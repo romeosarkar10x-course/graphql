@@ -1,0 +1,21 @@
+{
+  "name" : "named-fragments",
+  "schema" : "shelfie",
+  "query" : "query { club(id: \"c1\") { ...Club } } fragment Club on Club { name owner { ...Person } members(first: 2) { ...Person } } fragment Person on User { handle }",
+  "spec" : "6.3.2 CollectFields",
+  "expected" : {
+    "data" : {
+      "club" : {
+        "name" : "The Midnight Readers",
+        "owner" : {
+          "handle" : "kemia"
+        },
+        "members" : [ {
+          "handle" : "kemia"
+        }, {
+          "handle" : "asha"
+        } ]
+      }
+    }
+  }
+}

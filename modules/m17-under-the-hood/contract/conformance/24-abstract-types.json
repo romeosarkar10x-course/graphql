@@ -1,0 +1,30 @@
+{
+  "name" : "abstract-types",
+  "schema" : "fixture",
+  "query" : "{ nodes { __typename id ... on Book { title } ... on Author { name } } }",
+  "data" : {
+    "nodes" : [ {
+      "__typename" : "Book",
+      "id" : "b1",
+      "title" : "Dune"
+    }, {
+      "__typename" : "Author",
+      "id" : "a1",
+      "name" : "Le Guin"
+    } ]
+  },
+  "spec" : "6.4.3 ResolveAbstractType",
+  "expected" : {
+    "data" : {
+      "nodes" : [ {
+        "__typename" : "Book",
+        "id" : "b1",
+        "title" : "Dune"
+      }, {
+        "__typename" : "Author",
+        "id" : "a1",
+        "name" : "Le Guin"
+      } ]
+    }
+  }
+}

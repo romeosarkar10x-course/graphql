@@ -1,0 +1,1 @@
+{ clubs { ...A } } fragment A on Club { ...B ...C } fragment B on Club { ...C } fragment C on Club { id }

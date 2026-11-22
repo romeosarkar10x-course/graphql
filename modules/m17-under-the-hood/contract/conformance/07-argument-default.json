@@ -1,0 +1,21 @@
+{
+  "name" : "argument-default",
+  "schema" : "shelfie",
+  "query" : "{ club(id: \"c2\") { members { id } } }",
+  "spec" : "6.4.1 CoerceArgumentValues: the argument's default (10)",
+  "expected" : {
+    "data" : {
+      "club" : {
+        "members" : [ {
+          "id" : "u7"
+        }, {
+          "id" : "u5"
+        }, {
+          "id" : "u9"
+        }, {
+          "id" : "u12"
+        } ]
+      }
+    }
+  }
+}

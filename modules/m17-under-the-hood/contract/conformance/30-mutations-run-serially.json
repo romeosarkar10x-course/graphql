@@ -1,0 +1,14 @@
+{
+  "name" : "mutations-run-serially",
+  "schema" : "fixture",
+  "query" : "mutation { first: step(name: \"first\", ms: 150) second: step(name: \"second\") third: step(name: \"third\", ms: 50) }",
+  "data" : { },
+  "spec" : "6.2.2: mutation root fields run one after another",
+  "expected" : {
+    "data" : {
+      "first" : [ "first" ],
+      "second" : [ "first", "second" ],
+      "third" : [ "first", "second", "third" ]
+    }
+  }
+}

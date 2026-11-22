@@ -1,0 +1,20 @@
+{
+  "name" : "enum-and-float",
+  "schema" : "shelfie",
+  "query" : "{ clubs { visibility } book(id: \"b1\") { averageRating } }",
+  "spec" : "3.5.2 Float, 3.9 Enums: result coercion",
+  "expected" : {
+    "data" : {
+      "clubs" : [ {
+        "visibility" : "PUBLIC"
+      }, {
+        "visibility" : "PUBLIC"
+      }, {
+        "visibility" : "PRIVATE"
+      } ],
+      "book" : {
+        "averageRating" : 4.2
+      }
+    }
+  }
+}

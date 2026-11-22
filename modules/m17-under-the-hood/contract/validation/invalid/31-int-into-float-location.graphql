@@ -1,0 +1,1 @@
+query Q($n: Float) { books(first: $n) { title } }

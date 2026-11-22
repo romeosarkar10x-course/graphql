@@ -1,0 +1,55 @@
+"The conformance fixture: data comes from each test's `data`; see FixtureResolver for `$throw`, `echo` and `step`."
+type Query {
+  ok: String
+  boom: String
+  boomNonNull: String!
+  child: Child
+  children: [Child]
+  strictChildren: [Child!]
+  nodes: [Node!]!
+  big: Int
+  ratio: Float
+  color: Color
+  "Returns its coerced arguments as JSON with sorted keys."
+  echo(list: [Int], nested: [[Int]], input: Filter, one: Pick, color: Color, id: ID): String
+}
+
+type Child {
+  name: String
+  required: String!
+}
+
+interface Node {
+  id: ID!
+}
+
+type Book implements Node {
+  id: ID!
+  title: String
+}
+
+type Author implements Node {
+  id: ID!
+  name: String
+}
+
+enum Color {
+  RED
+  GREEN
+}
+
+input Filter {
+  text: String = "any"
+  limit: Int = 10
+  tags: [String]
+}
+
+input Pick @oneOf {
+  id: ID
+  name: String
+}
+
+type Mutation {
+  "Sleeps `ms`, appends `name` to the log, returns the log so far."
+  step(name: String!, ms: Int = 0): [String!]!
+}

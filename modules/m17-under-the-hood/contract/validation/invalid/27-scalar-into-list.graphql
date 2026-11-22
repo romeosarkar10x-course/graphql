@@ -1,0 +1,1 @@
+query Q($b: Boolean!) { hello @skip(if: $b) clubs { meetups(upcomingOnly: $b) { title } } user(id: $b) { name } }
