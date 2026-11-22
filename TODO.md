@@ -1,13 +1,23 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 11
+## Now: user review of Module 12
 
-The user said "continue" (2026-11-21) after Module 10; Module 11 is built. Wait for review before Module 12.
+The user said "continue" (2026-11-22) after Module 11; Module 12 is built. Wait for review before Module 13.
 
 ## Verification debt
 
 - [ ] Rerun the full `bin/course check --starters` (the 2026-11-21 run after Module 10 was stopped at m10/01;
-      after Module 11 only `bin/course check m11 --starters` ran). It is CPU-heavy: run it when the machine is free.
+      after Modules 11 and 12 only their own module checks ran). It is CPU-heavy: run it when the machine is free.
+- [ ] Module 12: npm pins (Apollo Client 4.2.12, React 19.2.9, jsdom 27.4.0, Relay 20.1.1) skip lines that were
+      days old on 2026-11-22; move to Apollo Client 4.3, React 19.3, Relay 21 next term and re-run lab 12.6's
+      measure. Re-check whether relay-compiler still panics on a `.graphqls` schema name.
+- [ ] Module 12: re-check for a Maven plugin for Apollo Kotlin 5 (lab 12.7 would leave Gradle), and whether
+      Spring's `documentName` starts sending `operationName` and `HttpSyncGraphQlClient` starts wrapping I/O
+      errors in `GraphQlTransportException` (labs 12.2, 12.8).
+- [ ] Module 12: lab 12.8's 97% and 85% thresholds are statistical (four runs: 99–100% and 65–71%); watch for
+      flakes. Lab 12.10's pty check sleeps 8 s for startup; slow machines may need more.
+- [ ] Module 12: Apollo Kotlin's Android `SqlNormalizedCacheFactory` signature and the in-memory nature of
+      `optimisticUpdates` are from documentation knowledge, not run (no Android SDK).
 - [ ] Module 11: Apollo Client's `Accept: multipart/mixed;deferSpec=20220824` is from Apollo's documentation,
       not tested; RFC 1110 is a draft (re-read before each term; its PR links graphql-java issue #4497, not read).
 - [ ] Module 11: lab 11.5's load numbers are single runs on one 24-core machine, first runs include the JIT.
@@ -65,7 +75,7 @@ The user said "continue" (2026-11-21) after Module 10; Module 11 is built. Wait 
 
 ## Next modules (in order)
 
-- [ ] M10–M18, capstone, per plan/syllabus.md
+- [ ] M13–M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 

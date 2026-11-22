@@ -1,0 +1,7 @@
+{
+  "title": "Mobile clients (optional): Apollo Kotlin with a SQLite normalised cache; airplane mode, a queued mutation, sync",
+  "lecture": "12.7",
+  "kind": "lab",
+  "grading": "rubric",
+  "needs": ["ref", "toxiproxy", "internet"]
+}

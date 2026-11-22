@@ -1,0 +1,7 @@
+{
+  "title": "A normalised cache in about 200 lines: cache ids, field keys, references; one write updates every query",
+  "lecture": "12.5",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["ref"]
+}

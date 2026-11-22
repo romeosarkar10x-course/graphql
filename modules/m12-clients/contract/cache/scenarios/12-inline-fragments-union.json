@@ -1,0 +1,130 @@
+{
+  "description": "Union members are told apart by __typename; possibleTypes lets a fragment on an interface apply.",
+  "policies": {
+    "possibleTypes": {
+      "Node": [
+        "Book",
+        "Club",
+        "User"
+      ]
+    }
+  },
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ search(text: \"the\") { __typename ... on Book { id title } ... on Club { id name } ... on User { id handle } } }",
+      "variables": {},
+      "data": {
+        "search": [
+          {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness"
+          },
+          {
+            "__typename": "Club",
+            "id": "c1",
+            "name": "The Midnight Readers"
+          },
+          {
+            "__typename": "User",
+            "id": "u3",
+            "handle": "theo"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ search(text: \"the\") { __typename ... on Book { id title } ... on Club { id name } ... on User { id handle } } }",
+      "variables": {},
+      "expect": {
+        "search": [
+          {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness"
+          },
+          {
+            "__typename": "Club",
+            "id": "c1",
+            "name": "The Midnight Readers"
+          },
+          {
+            "__typename": "User",
+            "id": "u3",
+            "handle": "theo"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ search(text: \"the\") { __typename ... on Node { id } } }",
+      "variables": {},
+      "expect": {
+        "search": [
+          {
+            "__typename": "Book",
+            "id": "b1"
+          },
+          {
+            "__typename": "Club",
+            "id": "c1"
+          },
+          {
+            "__typename": "User",
+            "id": "u3"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ search(text: \"the\") { ... on Book { title } } }",
+      "variables": {},
+      "expect": {
+        "search": [
+          {
+            "title": "The Left Hand of Darkness"
+          },
+          {},
+          {}
+        ]
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "search({\"text\":\"the\"})": [
+            {
+              "__ref": "Book:b1"
+            },
+            {
+              "__ref": "Club:c1"
+            },
+            {
+              "__ref": "User:u3"
+            }
+          ]
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        },
+        "Club:c1": {
+          "__typename": "Club",
+          "id": "c1",
+          "name": "The Midnight Readers"
+        },
+        "User:u3": {
+          "__typename": "User",
+          "id": "u3",
+          "handle": "theo"
+        }
+      }
+    }
+  ]
+}

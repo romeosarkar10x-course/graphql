@@ -1,0 +1,68 @@
+{
+  "description": "Aliases are response keys, not storage keys.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ a: book(id: \"b1\") { __typename id t: title } b: book(id: \"b2\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "a": {
+          "__typename": "Book",
+          "id": "b1",
+          "t": "The Left Hand of Darkness"
+        },
+        "b": {
+          "__typename": "Book",
+          "id": "b2",
+          "title": "Piranesi"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ x: book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "expect": {
+        "x": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b2\") { name: title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "name": "Piranesi"
+        }
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "book({\"id\":\"b1\"})": {
+            "__ref": "Book:b1"
+          },
+          "book({\"id\":\"b2\"})": {
+            "__ref": "Book:b2"
+          }
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        },
+        "Book:b2": {
+          "__typename": "Book",
+          "id": "b2",
+          "title": "Piranesi"
+        }
+      }
+    }
+  ]
+}

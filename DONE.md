@@ -140,6 +140,27 @@
 - [x] Games: m09/09 Performance race (baseline measured in the same run) · m09/10 Guess the query count (10 rounds)
 - [x] Mini-project m09/11 N+1 detector (JUnit 5 extension, 9 harness fixtures, GitHub Actions workflow)
 
+## Module 12 (8 lectures, 8 labs, 2 mini-projects, 1 game)
+
+- [x] Infra: `bin/course web` (npm in `node:24.22.1-slim`) and `bin/course mobile` (`gradle:9.9.1-jdk21`, Apollo
+      Kotlin's codegen is Gradle-only), both on the course network with caches in `.cache/`; no image change
+- [x] Contract: `shelfie.graphqls` (reference schema copy), `chat-server/` (Module 11's chat), `Capture.java`
+      (wire tap), `clients-test.sh`, `cache/` (SPEC.md, 25 JSON scenarios, `Scenarios.java`, `LiveDemo.java`)
+- [x] Lectures 12.1–12.8 (Hook / Concept / Java build / Experiment / Check)
+- [x] Labs: m12/01 java.net.http client, stub-server wire checks, dedupe · m12/02 shelfie-digest: sync,
+      reactive, per-request user, interceptor, chat subscription across a restart · m12/03 DgsGraphQlClient
+      multi-query, rename fails to compile · m12/04 SmallRye typesafe and dynamic, captured on the wire ·
+      m12/05 normalised cache, scenarios 01–10, live two-page update · m12/06 Apollo Client vs Relay render
+      counts in jsdom (optional, rubric) · m12/07 Apollo Kotlin airplane mode with SQLite cache and outbox
+      (optional, rubric) · m12/08 Resilience4j retry and breaker, safe createReview replays under Toxiproxy
+- [x] Mini-projects: m12/09 normalised cache, 25 scenarios (scenario-swap group variant) · m12/10 JLine Shelfie
+      CLI, 20 completion cases and a pty Tab check (completion duel) · Game m12/11 Same screen, three clients (rubric)
+- [x] Probes: `_workbench/2026-11-22-m12-probe/FINDINGS.md` (19 findings)
+
+`bin/course check m12 --starters` (2026-11-22): 8 auto-graded labs, 0 problems
+(`_workbench/2026-11-22-m12-check-starters.log`). Labs 12.6, 12.7 and 12.11 are rubric-only; 12.6 and 12.7's
+reference solutions were run by hand (`web-renders.txt`, `mobile-airplane*.txt`). Full-course check still TODO.
+
 ## Module 11 (7 lectures, 7 labs, 1 mini-project, 2 games)
 
 - [x] Infra: Kafka 4.4.0 course service (one KRaft node), PostgreSQL with `wal_level=logical`, `needs: kafka`,

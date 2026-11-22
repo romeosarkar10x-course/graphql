@@ -1,0 +1,7 @@
+{
+  "title": "Mini-project: build your own normalised cache, 25 scenarios (fragments, policies, pagination, eviction, optimistic layers, watches)",
+  "lecture": "12.5",
+  "kind": "project",
+  "grading": "auto",
+  "needs": []
+}

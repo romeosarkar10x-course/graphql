@@ -1,0 +1,3 @@
+server.port: 4000
+shelfie.url: http://shelfie-ref:8080/graphql
+chat.url: ws://localhost:4100/graphql

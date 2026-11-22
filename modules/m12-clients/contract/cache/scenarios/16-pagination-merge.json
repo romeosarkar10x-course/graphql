@@ -1,0 +1,183 @@
+{
+  "description": "merge: append concatenates pages under one key; a read returns the merged list.",
+  "policies": {
+    "fields": {
+      "Query.feed": {
+        "keyArgs": [],
+        "merge": "append"
+      }
+    }
+  },
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ feed(first: 2) { __typename id body } }",
+      "variables": {},
+      "data": {
+        "feed": [
+          {
+            "__typename": "Review",
+            "id": "v1",
+            "body": "one"
+          },
+          {
+            "__typename": "Review",
+            "id": "v2",
+            "body": "two"
+          }
+        ]
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ feed(first: 2, after: \"v2\") { __typename id body } }",
+      "variables": {},
+      "data": {
+        "feed": [
+          {
+            "__typename": "Review",
+            "id": "v3",
+            "body": "three"
+          },
+          {
+            "__typename": "Review",
+            "id": "v4",
+            "body": "four"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ feed(first: 2) { id body } }",
+      "variables": {},
+      "expect": {
+        "feed": [
+          {
+            "id": "v1",
+            "body": "one"
+          },
+          {
+            "id": "v2",
+            "body": "two"
+          },
+          {
+            "id": "v3",
+            "body": "three"
+          },
+          {
+            "id": "v4",
+            "body": "four"
+          }
+        ]
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id reviews(last: 1) { __typename id } } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "reviews": [
+            {
+              "__typename": "Review",
+              "id": "v9"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id reviews(last: 2) { __typename id } } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "reviews": [
+            {
+              "__typename": "Review",
+              "id": "v8"
+            },
+            {
+              "__typename": "Review",
+              "id": "v9"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "feed": [
+            {
+              "__ref": "Review:v1"
+            },
+            {
+              "__ref": "Review:v2"
+            },
+            {
+              "__ref": "Review:v3"
+            },
+            {
+              "__ref": "Review:v4"
+            }
+          ],
+          "book({\"id\":\"b1\"})": {
+            "__ref": "Book:b1"
+          }
+        },
+        "Review:v1": {
+          "__typename": "Review",
+          "id": "v1",
+          "body": "one"
+        },
+        "Review:v2": {
+          "__typename": "Review",
+          "id": "v2",
+          "body": "two"
+        },
+        "Review:v3": {
+          "__typename": "Review",
+          "id": "v3",
+          "body": "three"
+        },
+        "Review:v4": {
+          "__typename": "Review",
+          "id": "v4",
+          "body": "four"
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "reviews({\"last\":1})": [
+            {
+              "__ref": "Review:v9"
+            }
+          ],
+          "reviews({\"last\":2})": [
+            {
+              "__ref": "Review:v8"
+            },
+            {
+              "__ref": "Review:v9"
+            }
+          ]
+        },
+        "Review:v8": {
+          "__typename": "Review",
+          "id": "v8"
+        },
+        "Review:v9": {
+          "__typename": "Review",
+          "id": "v9"
+        }
+      }
+    }
+  ]
+}

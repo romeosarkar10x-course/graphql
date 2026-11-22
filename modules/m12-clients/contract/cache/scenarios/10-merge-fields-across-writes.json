@@ -1,0 +1,74 @@
+{
+  "description": "Writes to one entity add fields; a later write overwrites only what it carries.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ books(first: 1) { __typename id authors publishedYear } }",
+      "variables": {},
+      "data": {
+        "books": [
+          {
+            "__typename": "Book",
+            "id": "b1",
+            "authors": [
+              "Ursula K. Le Guin"
+            ],
+            "publishedYear": 1969
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { __typename id title authors publishedYear } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness",
+          "authors": [
+            "Ursula K. Le Guin"
+          ],
+          "publishedYear": 1969
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "LHoD"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { title publishedYear } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "title": "LHoD",
+          "publishedYear": 1969
+        }
+      }
+    }
+  ]
+}

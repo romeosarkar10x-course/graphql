@@ -1,0 +1,119 @@
+{
+  "description": "Layers stack in order; the server's answer lands in the base under a layer and shows once the layer goes.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "writeOptimistic",
+      "layer": "a",
+      "query": "mutation { renameBook(id: \"b1\", title: \"Working title\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "renameBook": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "Draft A"
+        }
+      }
+    },
+    {
+      "op": "writeOptimistic",
+      "layer": "b",
+      "query": "mutation { renameBook(id: \"b1\", title: \"Working title\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "renameBook": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "Draft B"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "title": "Draft B"
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "mutation { renameBook(id: \"b1\", title: \"Working title\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "renameBook": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "Final title"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "title": "Draft B"
+        }
+      }
+    },
+    {
+      "op": "removeOptimistic",
+      "layer": "b"
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "title": "Draft A"
+        }
+      }
+    },
+    {
+      "op": "removeOptimistic",
+      "layer": "a"
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "title": "Final title"
+        }
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "book({\"id\":\"b1\"})": {
+            "__ref": "Book:b1"
+          }
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "Final title"
+        }
+      }
+    }
+  ]
+}

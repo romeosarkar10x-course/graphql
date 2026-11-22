@@ -1,0 +1,7 @@
+{
+  "title": "Type-safe clients: generated requests and projections with DgsGraphQlClient; a renamed field fails to compile",
+  "lecture": "12.3",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["ref"]
+}

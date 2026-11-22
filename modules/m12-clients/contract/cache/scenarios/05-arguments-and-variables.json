@@ -1,0 +1,137 @@
+{
+  "description": "Field keys: arguments sorted, variables replaced by values, absent variables left out.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "query ($id: ID!) { book(id: $id) { __typename id title } }",
+      "variables": {
+        "id": "b1"
+      },
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "query ($id: ID!) { book(id: $id) { __typename id title } }",
+      "variables": {
+        "id": "b2"
+      },
+      "expect": null
+    },
+    {
+      "op": "write",
+      "query": "{ books(titleContains: \"the\", first: 2) { __typename id } }",
+      "variables": {},
+      "data": {
+        "books": [
+          {
+            "__typename": "Book",
+            "id": "b1"
+          },
+          {
+            "__typename": "Book",
+            "id": "b3"
+          }
+        ]
+      }
+    },
+    {
+      "op": "write",
+      "query": "query ($t: String) { books(titleContains: $t, first: 1) { __typename id } }",
+      "variables": {},
+      "data": {
+        "books": [
+          {
+            "__typename": "Book",
+            "id": "b1"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "query ($n: Int) { books(first: $n, titleContains: \"the\") { id } }",
+      "variables": {
+        "n": 2
+      },
+      "expect": {
+        "books": [
+          {
+            "id": "b1"
+          },
+          {
+            "id": "b3"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ books(first: 1) { id } }",
+      "variables": {},
+      "expect": {
+        "books": [
+          {
+            "id": "b1"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ books(first: 3) { id } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "book({\"id\":\"b1\"})": {
+            "__ref": "Book:b1"
+          },
+          "books({\"first\":2,\"titleContains\":\"the\"})": [
+            {
+              "__ref": "Book:b1"
+            },
+            {
+              "__ref": "Book:b3"
+            }
+          ],
+          "books({\"first\":1})": [
+            {
+              "__ref": "Book:b1"
+            }
+          ]
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        },
+        "Book:b3": {
+          "__typename": "Book",
+          "id": "b3"
+        }
+      }
+    }
+  ]
+}

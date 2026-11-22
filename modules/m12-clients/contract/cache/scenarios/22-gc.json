@@ -1,0 +1,84 @@
+{
+  "description": "gc removes what ROOT_QUERY can no longer reach, transitively.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ club(id: \"c1\") { __typename id name currentBook { __typename id title } } }",
+      "variables": {},
+      "data": {
+        "club": {
+          "__typename": "Club",
+          "id": "c1",
+          "name": "The Midnight Readers",
+          "currentBook": {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness"
+          }
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b2\") { __typename id title reviews(last: 1) { __typename id author { __typename id name } } } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b2",
+          "title": "Piranesi",
+          "reviews": [
+            {
+              "__typename": "Review",
+              "id": "v3",
+              "author": {
+                "__typename": "User",
+                "id": "u5",
+                "name": "Hugo Silva"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "gc",
+      "expect": []
+    },
+    {
+      "op": "evict",
+      "id": "ROOT_QUERY",
+      "field": "book({\"id\":\"b2\"})"
+    },
+    {
+      "op": "gc",
+      "expect": [
+        "Book:b2",
+        "Review:v3",
+        "User:u5"
+      ]
+    },
+    {
+      "op": "gc",
+      "expect": []
+    },
+    {
+      "op": "read",
+      "query": "{ club(id: \"c1\") { __typename id name currentBook { __typename id title } } }",
+      "variables": {},
+      "expect": {
+        "club": {
+          "__typename": "Club",
+          "id": "c1",
+          "name": "The Midnight Readers",
+          "currentBook": {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness"
+          }
+        }
+      }
+    }
+  ]
+}

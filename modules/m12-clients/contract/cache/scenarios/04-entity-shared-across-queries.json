@@ -1,0 +1,126 @@
+{
+  "description": "Two queries show book b1; a mutation renames it once; both reads see the new title (the lecture's experiment).",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ club(id: \"c1\") { __typename id name currentBook { __typename id title } } }",
+      "variables": {},
+      "data": {
+        "club": {
+          "__typename": "Club",
+          "id": "c1",
+          "name": "The Midnight Readers",
+          "currentBook": {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness"
+          }
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ books(first: 2) { __typename id title } }",
+      "variables": {},
+      "data": {
+        "books": [
+          {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness"
+          },
+          {
+            "__typename": "Book",
+            "id": "b2",
+            "title": "Piranesi"
+          }
+        ]
+      }
+    },
+    {
+      "op": "write",
+      "query": "mutation { renameBook(id: \"b1\", title: \"The Left Hand of Darkness (50th anniversary)\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "renameBook": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness (50th anniversary)"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ club(id: \"c1\") { __typename id name currentBook { __typename id title } } }",
+      "variables": {},
+      "expect": {
+        "club": {
+          "__typename": "Club",
+          "id": "c1",
+          "name": "The Midnight Readers",
+          "currentBook": {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness (50th anniversary)"
+          }
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ books(first: 2) { __typename id title } }",
+      "variables": {},
+      "expect": {
+        "books": [
+          {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness (50th anniversary)"
+          },
+          {
+            "__typename": "Book",
+            "id": "b2",
+            "title": "Piranesi"
+          }
+        ]
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "club({\"id\":\"c1\"})": {
+            "__ref": "Club:c1"
+          },
+          "books({\"first\":2})": [
+            {
+              "__ref": "Book:b1"
+            },
+            {
+              "__ref": "Book:b2"
+            }
+          ]
+        },
+        "Club:c1": {
+          "__typename": "Club",
+          "id": "c1",
+          "name": "The Midnight Readers",
+          "currentBook": {
+            "__ref": "Book:b1"
+          }
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness (50th anniversary)"
+        },
+        "Book:b2": {
+          "__typename": "Book",
+          "id": "b2",
+          "title": "Piranesi"
+        }
+      }
+    }
+  ]
+}

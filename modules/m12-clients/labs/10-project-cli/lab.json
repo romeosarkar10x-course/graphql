@@ -1,0 +1,7 @@
+{
+  "title": "Mini-project: the Shelfie CLI, a JLine terminal client with tab completion driven by introspection",
+  "lecture": "12.2",
+  "kind": "project",
+  "grading": "auto",
+  "needs": ["ref"]
+}

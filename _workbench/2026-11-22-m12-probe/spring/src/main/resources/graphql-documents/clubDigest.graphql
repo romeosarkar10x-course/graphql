@@ -1,0 +1,3 @@
+query clubDigest($id: ID!) {
+  club(id: $id) { id name memberCount currentBook { title authors } owner { name } }
+}

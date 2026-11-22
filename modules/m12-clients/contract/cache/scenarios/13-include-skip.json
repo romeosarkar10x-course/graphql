@@ -1,0 +1,72 @@
+{
+  "description": "@include and @skip decide which fields are written and which a read needs.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "query ($full: Boolean!) { book(id: \"b1\") { __typename id title synopsis @include(if: $full) pageCount @skip(if: true) } }",
+      "variables": {
+        "full": false
+      },
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "query ($full: Boolean!) { book(id: \"b1\") { __typename id title synopsis @include(if: $full) pageCount @skip(if: true) } }",
+      "variables": {
+        "full": false
+      },
+      "expect": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "query ($full: Boolean!) { book(id: \"b1\") { __typename id title synopsis @include(if: $full) pageCount @skip(if: true) } }",
+      "variables": {
+        "full": true
+      },
+      "expect": null
+    },
+    {
+      "op": "write",
+      "query": "query ($full: Boolean!) { book(id: \"b1\") { __typename id title synopsis @include(if: $full) pageCount @skip(if: true) } }",
+      "variables": {
+        "full": true
+      },
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness",
+          "synopsis": "An envoy on a planet whose people have no fixed sex."
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "query ($full: Boolean!) { book(id: \"b1\") { __typename id title synopsis @include(if: $full) pageCount @skip(if: true) } }",
+      "variables": {
+        "full": true
+      },
+      "expect": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness",
+          "synopsis": "An envoy on a planet whose people have no fixed sex."
+        }
+      }
+    }
+  ]
+}

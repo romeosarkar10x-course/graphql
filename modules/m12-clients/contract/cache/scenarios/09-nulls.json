@@ -1,0 +1,63 @@
+{
+  "description": "A stored null is a value: reading it is a hit.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ club(id: \"c3\") { __typename id name currentBook { __typename id title } } }",
+      "variables": {},
+      "data": {
+        "club": {
+          "__typename": "Club",
+          "id": "c3",
+          "name": "Sunday Sci-Fi",
+          "currentBook": null
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ club(id: \"c3\") { name currentBook { title } } }",
+      "variables": {},
+      "expect": {
+        "club": {
+          "name": "Sunday Sci-Fi",
+          "currentBook": null
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"nope\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": null
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"nope\") { title } }",
+      "variables": {},
+      "expect": {
+        "book": null
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "club({\"id\":\"c3\"})": {
+            "__ref": "Club:c3"
+          },
+          "book({\"id\":\"nope\"})": null
+        },
+        "Club:c3": {
+          "__typename": "Club",
+          "id": "c3",
+          "name": "Sunday Sci-Fi",
+          "currentBook": null
+        }
+      }
+    }
+  ]
+}

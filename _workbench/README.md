@@ -33,3 +33,5 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-21-m10-check-starters.log` | `bin/course check --starters` after Module 10 (partial: stopped at m10/01 at the user's request) |
 | `2026-11-21-m11-probe/` | Module 11: `FINDINGS.md` (20 findings), the probe app (`app/`), WebSocket/SSE/`@defer` probes (`probe1-4*.txt`), slow-consumer floods (`probe2.txt`, `probe3.txt`, `lab03-flood.txt`), lab 11.2 frames and reconnect logs, lab 11.5 load runs (`lab05-load*.txt`), lab 11.6 timings (`lab06-defer.txt`), the stress-test run that found the reconnect race (`stress1/`) |
 | `2026-11-21-m11-check-starters.log` | `bin/course check m11 --starters` after Module 11 |
+| `2026-11-22-m12-probe/` | Module 12: `FINDINGS.md` (19 findings), probe projects (`typesafe/`, `spring/`, `quarkus/`), DGS serialized document, rename compile log, SmallRye wire captures, exception types, Toxiproxy fault probes and four resilience runs, the cache scenario generator and live demo (`cache/`), web render counts, Apollo Kotlin airplane runs with and without keyFields |
+| `2026-11-22-m12-check-starters.log` | `bin/course check m12 --starters` after Module 12 |

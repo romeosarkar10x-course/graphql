@@ -1,0 +1,12 @@
+{"id":"c1","name":"The Midnight Readers","memberCount":8,"currentBook":{"title":"The Left Hand of Darkness","authors":["Ursula K. Le Guin"]},"owner":{"name":"Kemi Adeyemi"}}
+
+{"id":"c2","name":"Slow Burn Mysteries","memberCount":4,"currentBook":{"title":"The Name of the Rose","authors":["Umberto Eco"]},"owner":{"name":"Grace Kim"}}
+{"timestamp":"2026-11-21T20:20:25.558Z","status":500,"error":"Internal Server Error","path":"/bad"}
+{"data":{"sendMessage":{"id":"m7"}}}{"data":{"sendMessage":{"id":"m8"}}}
+[{"id":"m7","author":"Ada","body":"hi"},{"id":"m8","author":"Ada","body":"hi"}]
+ws subscribed
+sync intercept 116
+sync intercept 116
+sync intercept 27
+2026-11-21T20:20:25.555Z ERROR 192 --- [nio-4000-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.graphql.client.FieldAccessException: Invalid field 'club', errors: [{message=Validation error (FieldUndefined@[club/nope]) : Field 'nope' in type 'Club' is undefined, locations=[{line=1, column=20}], extensions={classification=ValidationError}}]] with root cause
+org.springframework.graphql.client.FieldAccessException: Invalid field 'club', errors: [{message=Validation error (FieldUndefined@[club/nope]) : Field 'nope' in type 'Club' is undefined, locations=[{line=1, column=20}], extensions={classification=ValidationError}}]

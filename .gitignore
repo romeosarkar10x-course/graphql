@@ -3,3 +3,4 @@ workspace/
 target/
 *.class
 .idea/
+node_modules/

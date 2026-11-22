@@ -1,0 +1,110 @@
+{
+  "description": "keyFields: an entity without an id field is identified by other fields.",
+  "policies": {
+    "types": {
+      "Edition": {
+        "keyFields": [
+          "isbn"
+        ]
+      }
+    }
+  },
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id editions { __typename isbn format } } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "editions": [
+            {
+              "__typename": "Edition",
+              "isbn": "9780441478125",
+              "format": "paperback"
+            },
+            {
+              "__typename": "Edition",
+              "isbn": "9780143111597",
+              "format": "hardcover"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ edition(isbn: \"9780441478125\") { __typename isbn pages } }",
+      "variables": {},
+      "data": {
+        "edition": {
+          "__typename": "Edition",
+          "isbn": "9780441478125",
+          "pages": 304
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { editions { format pages } } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { editions { isbn format } } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "editions": [
+            {
+              "isbn": "9780441478125",
+              "format": "paperback"
+            },
+            {
+              "isbn": "9780143111597",
+              "format": "hardcover"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "book({\"id\":\"b1\"})": {
+            "__ref": "Book:b1"
+          },
+          "edition({\"isbn\":\"9780441478125\"})": {
+            "__ref": "Edition:{\"isbn\":\"9780441478125\"}"
+          }
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "editions": [
+            {
+              "__ref": "Edition:{\"isbn\":\"9780441478125\"}"
+            },
+            {
+              "__ref": "Edition:{\"isbn\":\"9780143111597\"}"
+            }
+          ]
+        },
+        "Edition:{\"isbn\":\"9780441478125\"}": {
+          "__typename": "Edition",
+          "isbn": "9780441478125",
+          "format": "paperback",
+          "pages": 304
+        },
+        "Edition:{\"isbn\":\"9780143111597\"}": {
+          "__typename": "Edition",
+          "isbn": "9780143111597",
+          "format": "hardcover"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{"name":"m12probe","listen":"[::]:8667","upstream":"shelfie-ref:8080","enabled":true,"Logger":{},"toxics":[]}
+== no toxic
+50/50 ok in 74 ms {}
+== reset_peer 0.3 shared client
+99/100 ok in 98 ms {IOException: HTTP/1.1 header parser received no bytes=1}
+== reset_peer 0.3 fresh client per call
+74/100 ok in 188 ms {IOException: HTTP/1.1 header parser received no bytes=26}
+== timeout 0.3 fresh
+20/30 ok in 20096 ms {HttpTimeoutException: request timed out=10}
+== reset_peer 0.3 shared client, keepalive.timeout=0
+135/200 ok in 194 ms {IOException: HTTP/1.1 header parser received no bytes=65}
+== reset_peer 0.3 shared client, keepalive.timeout=0
+130/200 ok in 185 ms {IOException: HTTP/1.1 header parser received no bytes=70}
+== reset_peer 0.3 shared client, connectionPoolSize=1? keepalive default
+200/200 ok in 147 ms {}
+{"attributes":{"timeout":0},"name":"rp","type":"reset_peer","stream":"downstream","toxicity":0.3}
+client ok=9 failed=11; server reviews before=15 after=15
+10
+u11 reviews before: 0
+b1 transport failure (curl 0)
+b2 {"data":{"createReview":{"review":{"id":"r17"},"userErrors":[]}}}
+b3 {"data":{"createReview":{"review":{"id":"r18"},"userErrors":[]}}}
+b4 {"data":{"createReview":{"review":{"id":"r19"},"userErrors":[]}}}
+b5 {"data":{"createReview":{"review":{"id":"r20"},"userErrors":[]}}}
+b6 {"data":{"createReview":{"review":{"id":"r21"},"userErrors":[]}}}
+b7 transport failure (curl 0)
+b8 transport failure (curl 0)
+b9 transport failure (curl 0)
+b10 {"data":{"createReview":{"review":{"id":"r25"},"userErrors":[]}}}
+client ok=6 failed=4; u11 reviews on the server after: 10
+== replay of b1 after a lost response:
+{"data":{"createReview":{"review":null,"userErrors":[{"code":"DUPLICATE","message":"You already reviewed this book."}]}}}

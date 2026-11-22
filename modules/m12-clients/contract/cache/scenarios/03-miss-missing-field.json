@@ -1,0 +1,34 @@
+{
+  "description": "Asking for one field the cache never saw is a miss; a subset is a hit.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { __typename id title pageCount } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    }
+  ]
+}

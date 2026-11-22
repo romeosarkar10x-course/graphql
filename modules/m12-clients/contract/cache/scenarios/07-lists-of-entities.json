@@ -1,0 +1,113 @@
+{
+  "description": "A list of entities becomes a list of references; an author shared by two reviews is one record.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title reviews(last: 2) { __typename id rating author { __typename id name } } } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness",
+          "reviews": [
+            {
+              "__typename": "Review",
+              "id": "v1",
+              "rating": 4,
+              "author": {
+                "__typename": "User",
+                "id": "u5",
+                "name": "Hugo Silva"
+              }
+            },
+            {
+              "__typename": "Review",
+              "id": "v7",
+              "rating": 5,
+              "author": {
+                "__typename": "User",
+                "id": "u5",
+                "name": "Hugo Silva"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "book({\"id\":\"b1\"})": {
+            "__ref": "Book:b1"
+          }
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness",
+          "reviews({\"last\":2})": [
+            {
+              "__ref": "Review:v1"
+            },
+            {
+              "__ref": "Review:v7"
+            }
+          ]
+        },
+        "Review:v1": {
+          "__typename": "Review",
+          "id": "v1",
+          "rating": 4,
+          "author": {
+            "__ref": "User:u5"
+          }
+        },
+        "Review:v7": {
+          "__typename": "Review",
+          "id": "v7",
+          "rating": 5,
+          "author": {
+            "__ref": "User:u5"
+          }
+        },
+        "User:u5": {
+          "__typename": "User",
+          "id": "u5",
+          "name": "Hugo Silva"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { reviews(last: 2) { rating author { name } } } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "reviews": [
+            {
+              "rating": 4,
+              "author": {
+                "name": "Hugo Silva"
+              }
+            },
+            {
+              "rating": 5,
+              "author": {
+                "name": "Hugo Silva"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { reviews(last: 5) { rating } } }",
+      "variables": {},
+      "expect": null
+    }
+  ]
+}

@@ -135,3 +135,17 @@ in Docker.
     Spring for GraphQL 2.1 has no incremental transport. "First paint" is time to first byte.
   - The mini-project and the two games are graded by scripted runs; group variants use terminal clients and
     `COURSE_PUBLISH=<port>` to share a server.
+- Module 12 (2026-11-22), probes in `_workbench/2026-11-22-m12-probe/` (`FINDINGS.md`, 19 findings):
+  - 12.6 (web) and 12.7 (mobile) are optional, rubric-graded labs in their own images: `bin/course web`
+    (Node.js 24, jsdom instead of a browser, render counts from the components) and `bin/course mobile`
+    (Gradle 9.9: Apollo Kotlin's codegen has no current Maven plugin; the JVM process stands in for a phone,
+    Toxiproxy for airplane mode). No Android SDK, no browser.
+  - 12.6 compares Apollo Client (props, `React.memo`, data masking) with Relay; urql is lecture-only.
+  - The normalised cache's contract is 25 language-neutral JSON scenarios (`contract/cache/`): lab 12.5 runs
+    01–10, mini-project 12.9 all 25. The runner calls the mini-project's methods by reflection so lab 12.5's
+    cache needs only write/read/extract.
+  - 12.2 subscribes to a copy of Module 11's chat server (`contract/chat-server/`); the reference server's
+    `meetupScheduled` never emits.
+  - 12.8's faults come from a per-test Toxiproxy proxy on :8667, with the client's keep-alive off
+    (Toxiproxy decides per connection). Persisted documents from clients are lecture and notes only.
+  - Game "Same screen, three clients" is rubric-graded (m12/11).

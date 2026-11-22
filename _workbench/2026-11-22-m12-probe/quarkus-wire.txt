@@ -1,0 +1,2 @@
+>>> POST {"query":"query club($id: ID!, $last: Int!) { club(id: $id) {name memberCount owner {name} currentBook {title authors publishedYear reviews(last: $last) {rating body author {name}}}} }","variables":{"id":"c1","last":2},"operationName":"club"}
+>>> POST {"query":"query clubCard($id:ID!){club(id:$id){name memberCount owner{name} currentBook{title authors publishedYear reviews(last:2){rating body author{name}}}}}","variables":{"id":"c1"}}

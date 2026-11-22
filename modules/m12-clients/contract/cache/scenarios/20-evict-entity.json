@@ -1,0 +1,61 @@
+{
+  "description": "Evicting an entity makes every read through it a miss; other reads still hit.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ club(id: \"c1\") { __typename id name currentBook { __typename id title } } }",
+      "variables": {},
+      "data": {
+        "club": {
+          "__typename": "Club",
+          "id": "c1",
+          "name": "The Midnight Readers",
+          "currentBook": {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness"
+          }
+        }
+      }
+    },
+    {
+      "op": "evict",
+      "id": "Book:b1"
+    },
+    {
+      "op": "read",
+      "query": "{ club(id: \"c1\") { __typename id name currentBook { __typename id title } } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "read",
+      "query": "{ club(id: \"c1\") { name } }",
+      "variables": {},
+      "expect": {
+        "club": {
+          "name": "The Midnight Readers"
+        }
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "club({\"id\":\"c1\"})": {
+            "__ref": "Club:c1"
+          }
+        },
+        "Club:c1": {
+          "__typename": "Club",
+          "id": "c1",
+          "name": "The Midnight Readers",
+          "currentBook": {
+            "__ref": "Book:b1"
+          }
+        }
+      }
+    }
+  ]
+}

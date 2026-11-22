@@ -1,0 +1,11 @@
+{
+  club(id: "c1") {
+    name
+    currentBook {
+      title
+      reviews(last: 2) {
+        rating
+      }
+    }
+  }
+}

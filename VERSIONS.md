@@ -41,6 +41,14 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | Debezium | 3.7.1.Final (`debezium-embedded`, `debezium-connector-postgres`, 2026-11-06) | — | Module 11.5, embedded engine; works with the Boot BOM's Kafka 4.4.0 libraries; PostgreSQL runs with `wal_level=logical` |
 | Reactor | 2026.0.0 BOM (Boot) | — | Module 11 sinks and operators |
 | graphql-java incremental delivery | 26.1, `ExperimentalApi.ENABLE_INCREMENTAL_SUPPORT` | `@defer` and `@stream` | `@defer` only (`@stream` is an unknown directive); payloads in the earlier draft's shape (`path`/`label`, no `pending`/`completed`); Spring for GraphQL 2.1 has no incremental transport |
+| DGS codegen client API | `generateClientApi` in graphqlcodegen-maven-plugin 3.11.0, `graphql-dgs-codegen-shared-core` 8.8.0 (2026-11-02) | DGS Gradle plugin | Module 12.3 with Spring's `DgsGraphQlClient`; no DGS framework, so no graphql-java 25 pin. Generated requests inline arguments as literals |
+| SmallRye GraphQL client | `quarkus-smallrye-graphql-client` (Quarkus platform 3.40.1.2) | — | Module 12.4; `@Id String` is sent as nullable `ID` without `@NonNull` |
+| Resilience4j | 2.4.0 (`resilience4j-retry`, `resilience4j-circuitbreaker`, 2026-03-14) | — | Module 12.8; `HttpSyncGraphQlClient` surfaces RestClient's `ResourceAccessException`, so retry that, not `GraphQlTransportException` |
+| JLine | 4.7.0 (`org.jline:jline`, 2026-11-12) | — | mini-project 12.10; needs `Enable-Native-Access: ALL-UNNAMED` in the manifest on Java 25 |
+| Node.js (web lab) | 24.22.1 (`node:24.22.1-slim`, official image, `bin/course web`) | — | lab 12.6 only; the course image stays Java-only |
+| Apollo Client / React / jsdom | 4.2.12 / 19.2.9 / 27.4.0 | Apollo Client, urql, Relay | lab 12.6; 4.3.8, React 19.3.1 and jsdom 31 were days old on 2026-11-22, the previous lines are pinned; urql is lecture-only |
+| Relay | 20.1.1 (`react-relay`, `relay-runtime`, `relay-compiler`, `babel-plugin-relay`; 2025-08-06) | — | lab 12.6; 21.0.1 was a day old. relay-compiler 20.1.1 panics on a `.graphqls` schema file name; Babel 7.29 + `@babel/preset-react` build it |
+| Apollo Kotlin | 5.2.0 (2026-09-16), Gradle plugin `com.apollographql.apollo`, `apollo-normalized-cache-sqlite` | — | lab 12.7; **Gradle 9.9.1** (`gradle:9.9.1-jdk21`, `bin/course mobile`) and Kotlin 2.4.10, because the only Maven plugin (`com.github.aoudiamoncef:apollo-client-maven-plugin` 7.1.0, 2023) targets Apollo 3.8.2. No Android SDK |
 | InQL, DVGA, OWASP ZAP | not run | run | lecture 10.8 describes them: InQL needs Burp's GUI, DVGA and ZAP are large images |
 | GitHub Actions | actions/checkout v7, actions/setup-java v6 | — | Module 9 project workflow (Module 7's pins v4) |
 | PostgreSQL JDBC | 42.7.14 (Boot BOM; also in course-lib) | — | single-file SQL labs (8.2) |

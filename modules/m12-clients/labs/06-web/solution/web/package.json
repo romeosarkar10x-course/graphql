@@ -1,0 +1,27 @@
+{
+  "name": "shelfie-web-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "relay": "relay-compiler",
+    "build": "relay-compiler && babel src --out-dir dist --extensions .js,.jsx --out-file-extension .js",
+    "measure": "npm run build && node --import ./graphql-artifacts.mjs dist/measure.js"
+  },
+  "dependencies": {
+    "@apollo/client": "4.2.12",
+    "graphql": "16.15.0",
+    "react": "19.2.9",
+    "react-dom": "19.2.9",
+    "react-relay": "20.1.1",
+    "relay-runtime": "20.1.1",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.29.7",
+    "@babel/core": "7.29.13",
+    "@babel/preset-react": "7.29.7",
+    "babel-plugin-relay": "20.1.1",
+    "jsdom": "27.4.0",
+    "relay-compiler": "20.1.1"
+  }
+}

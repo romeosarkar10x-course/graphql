@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <!-- The Boot parent only for its dependency versions; this is a plain command-line program. -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.2.0</version>
+    <relativePath/>
+  </parent>
+  <groupId>dev.shelfie</groupId>
+  <artifactId>shelfie-typed</artifactId>
+  <version>1</version>
+
+  <properties>
+    <java.version>25</java.version>
+  </properties>
+
+  <dependencies>
+    <!-- DgsGraphQlClient lives in Spring for GraphQL; it runs on any GraphQlClient -->
+    <dependency>
+      <groupId>org.springframework.graphql</groupId>
+      <artifactId>spring-graphql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <!-- Base classes of the generated client API (GraphQLQuery, BaseSubProjectionNode) -->
+    <dependency>
+      <groupId>com.netflix.graphql.dgs.codegen</groupId>
+      <artifactId>graphql-dgs-codegen-shared-core</artifactId>
+      <version>8.8.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>shelfie-typed</finalName>
+    <plugins>
+      <!-- DGS codegen for Maven (community plugin; Netflix's own plugin is Gradle-only). generateClientApi
+           adds a <Field>GraphQLQuery and a <Field>ProjectionRoot per root field. -->
+      <plugin>
+        <groupId>io.github.deweyjose</groupId>
+        <artifactId>graphqlcodegen-maven-plugin</artifactId>
+        <version>3.11.0</version>
+        <executions>
+          <execution>
+            <id>dgs-codegen</id>
+            <goals><goal>generate</goal></goals>
+            <configuration>
+              <schemaPaths>
+                <param>src/main/resources/schema</param>
+              </schemaPaths>
+              <packageName>dev.shelfie.typed.generated</packageName>
+              <generateClientApi>true</generateClientApi>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-generated-sources</id>
+            <phase>generate-sources</phase>
+            <goals><goal>add-source</goal></goals>
+            <configuration>
+              <sources><source>${project.build.directory}/generated-sources</source></sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- One runnable jar with its dependencies: java -jar target/shelfie-typed.jar <url> <clubId> -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration><mainClass>dev.shelfie.typed.ClubPage</mainClass></configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

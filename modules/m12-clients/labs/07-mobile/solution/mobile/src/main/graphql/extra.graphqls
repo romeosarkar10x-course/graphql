@@ -1,0 +1,6 @@
+# Client-side schema extensions: cache ids. Without them Apollo Kotlin keys objects by their path in the
+# response, and the club card and the mutation result would be two different books.
+extend type Book @typePolicy(keyFields: "id")
+extend type Club @typePolicy(keyFields: "id")
+extend type User @typePolicy(keyFields: "id")
+extend type Review @typePolicy(keyFields: "id")

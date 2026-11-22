@@ -1,0 +1,33 @@
+[ERROR] COMPILATION ERROR : 
+[ERROR] /tmp/tmp.qbuAarU4z4/renamed/src/main/java/dev/shelfie/typed/ClubPage.java:[33,27] cannot find symbol
+  symbol:   method title()
+  location: class dev.shelfie.typed.generated.client.BookProjection<dev.shelfie.typed.generated.client.ClubProjectionRoot<com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>,com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>>,dev.shelfie.typed.generated.client.ClubProjectionRoot<com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>,com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>>>
+[ERROR] /tmp/tmp.qbuAarU4z4/renamed/src/main/java/dev/shelfie/typed/ClubPage.java:[36,48] cannot find symbol
+  symbol:   method title()
+  location: class dev.shelfie.typed.generated.client.BooksProjectionRoot<com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>,com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>>
+[ERROR] /tmp/tmp.qbuAarU4z4/renamed/src/main/java/dev/shelfie/typed/ClubPage.java:[49,60] cannot find symbol
+  symbol:   method getTitle()
+  location: variable current of type dev.shelfie.typed.generated.types.Book
+[ERROR] /tmp/tmp.qbuAarU4z4/renamed/src/main/java/dev/shelfie/typed/ClubPage.java:[57,38] cannot find symbol
+  symbol:   method getTitle()
+  location: variable b of type dev.shelfie.typed.generated.types.Book
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.16.0:compile (default-compile) on project shelfie-typed: Compilation failure: Compilation failure: 
+[ERROR] /tmp/tmp.qbuAarU4z4/renamed/src/main/java/dev/shelfie/typed/ClubPage.java:[33,27] cannot find symbol
+[ERROR]   symbol:   method title()
+[ERROR]   location: class dev.shelfie.typed.generated.client.BookProjection<dev.shelfie.typed.generated.client.ClubProjectionRoot<com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>,com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>>,dev.shelfie.typed.generated.client.ClubProjectionRoot<com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>,com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>>>
+[ERROR] /tmp/tmp.qbuAarU4z4/renamed/src/main/java/dev/shelfie/typed/ClubPage.java:[36,48] cannot find symbol
+[ERROR]   symbol:   method title()
+[ERROR]   location: class dev.shelfie.typed.generated.client.BooksProjectionRoot<com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>,com.netflix.graphql.dgs.client.codegen.BaseSubProjectionNode<?,?>>
+[ERROR] /tmp/tmp.qbuAarU4z4/renamed/src/main/java/dev/shelfie/typed/ClubPage.java:[49,60] cannot find symbol
+[ERROR]   symbol:   method getTitle()
+[ERROR]   location: variable current of type dev.shelfie.typed.generated.types.Book
+[ERROR] /tmp/tmp.qbuAarU4z4/renamed/src/main/java/dev/shelfie/typed/ClubPage.java:[57,38] cannot find symbol
+[ERROR]   symbol:   method getTitle()
+[ERROR]   location: variable b of type dev.shelfie.typed.generated.types.Book
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

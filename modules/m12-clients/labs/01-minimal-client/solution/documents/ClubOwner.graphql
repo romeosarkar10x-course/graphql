@@ -1,0 +1,10 @@
+query ClubOwner($id: ID!) {
+  club(id: $id) {
+    name
+    owner {
+      id
+      name
+      handle
+    }
+  }
+}

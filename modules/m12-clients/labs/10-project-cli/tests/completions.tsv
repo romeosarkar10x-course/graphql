@@ -1,0 +1,20 @@
+{ bo	book books
+{ book(id: "b1") { ti	title
+{ club(id: "c1") { owner { ha	handle
+{ search(text: "a") { ... on 	Book Club User
+{ books(ti	titleContains
+query { clubs { mem	memberCount members
+mutation { jo	joinClub
+{ book(id: "b1") { reviews { author { na	name
+{ book(id: "b1") { 	authors averageRating coverUrl id isbn pageCount publishedYear reviews synopsis title
+{ book(id: "b1") { title } bo	book books
+qu	query
+{ club(id: "c1") { members(fi	first
+{ books(titleContains: "x", 	first titleContains
+{ books(titleContains: "x" fi	first
+{ books(titleContains: 	
+query ($id: ID!) { book(id: $id) { ti	title
+{ club(id: "c1") { meetups(upcomingOnly: true) { club { ow	owner
+{ search(text: "a") { ... on Book { ti	title
+{ book(id: "b1") { title # a comment { 	authors averageRating coverUrl id isbn pageCount publishedYear reviews synopsis title
+{ book(id: "b1") { title description: synopsis pub	publishedYear

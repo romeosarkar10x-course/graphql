@@ -1,0 +1,227 @@
+"""
+Shelfie reference schema, Modules 0 to 4. Deliberately small: timestamps are plain Strings until
+custom scalars arrive in Module 3, and lists are plain lists until connections arrive in Module 8.
+Mutations (Module 4) act as the user named in the `X-Shelfie-User` header, e.g. `X-Shelfie-User: u1`.
+POST /_course/reset-data puts the data back to the seed.
+"""
+type Query {
+  "A friendly smoke-test field. Module 0.1 asserts on it."
+  hello: String!
+  club(id: ID!): Club
+  clubs: [Club!]!
+  user(id: ID!): User
+  book(id: ID!): Book
+  "All books in catalogue order. `titleContains` filters, ignoring case; `first` caps the list."
+  books(titleContains: String, first: Int = 20): [Book!]!
+  "Books, clubs and users whose title, name or handle contains `text`, ignoring case. Books first, then clubs, then users."
+  search(text: String!): [SearchResult!]!
+}
+
+"Anything `search` can return. Module 2.4 selects from it with inline fragments."
+union SearchResult = Book | Club | User
+
+type Subscription {
+  "Fires when a club schedules a meetup. Declared for Module 2.5 validation exercises; Module 11 delivers events."
+  meetupScheduled(clubId: ID!): Meetup!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String
+  owner: User!
+  "Members in join order. `first` caps the list."
+  members(first: Int = 10): [User!]!
+  memberCount: Int!
+  "The book the club is reading right now, if any."
+  currentBook: Book
+  meetups(upcomingOnly: Boolean = true): [Meetup!]!
+  visibility: Visibility!
+  createdAt: String!
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  bio: String
+  avatarUrl: String
+  location: String
+  clubs: [Club!]!
+  reviews: [Review!]!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  authors: [String!]!
+  isbn: String
+  publishedYear: Int
+  pageCount: Int
+  coverUrl: String
+  synopsis: String
+  "Mean rating rounded to 2 decimals, null when there are no reviews."
+  averageRating: Float
+  "Newest first. `last` caps the list."
+  reviews(last: Int = 5): [Review!]!
+}
+
+type Review {
+  id: ID!
+  "1 to 5."
+  rating: Int!
+  body: String!
+  createdAt: String!
+  author: User!
+  book: Book!
+}
+
+type Meetup {
+  id: ID!
+  title: String!
+  startsAt: String!
+  location: String!
+  club: Club!
+}
+
+"""
+Writes, Module 4. Every mutation takes one `input` argument and returns a payload (4.2), except
+`uploadCover`, whose `file` must be a separate argument for the multipart request convention (4.6).
+"""
+type Mutation {
+  "Payload style: rule violations come back in `userErrors`, never as top-level errors (4.3)."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+  "Result-union style: the same rules as `createReview`, one member type per outcome (4.3)."
+  createReviewTyped(input: CreateReviewInput!): CreateReviewResult!
+  "Only the review's author may delete it."
+  deleteReview(input: DeleteReviewInput!): DeleteReviewPayload!
+  "Joining a club you are already in succeeds and changes nothing: the mutation is idempotent (4.4)."
+  joinClub(input: JoinClubInput!): JoinClubPayload!
+  "Leaving a club you are not in succeeds and changes nothing. The owner cannot leave."
+  leaveClub(input: LeaveClubInput!): LeaveClubPayload!
+  """
+  GraphQL multipart request convention (4.6): send `multipart/form-data` with `operations`, `map` and
+  the file parts, plus a `GraphQL-Require-Preflight: 1` header (CSRF protection). The server holds the
+  whole file in memory, which `serverBufferedBytes` reports.
+  """
+  uploadCover(bookId: ID!, file: Upload!): UploadCoverPayload!
+  "Signed-URL alternative (4.6), step 1: get a short-lived URL and PUT the bytes to object storage."
+  createCoverUpload(input: CreateCoverUploadInput!): CreateCoverUploadPayload!
+  "Signed-URL alternative, step 2: tell Shelfie the upload finished; it checks the object and links it."
+  confirmCoverUpload(input: ConfirmCoverUploadInput!): UploadCoverPayload!
+}
+
+"A file part of a multipart request. Only valid as an argument; never returned."
+scalar Upload
+
+input CreateReviewInput {
+  bookId: ID!
+  "1 to 5."
+  rating: Int!
+  "10 to 2000 characters."
+  body: String!
+}
+
+type CreateReviewPayload {
+  "Null when `userErrors` is not empty."
+  review: Review
+  userErrors: [UserError!]!
+}
+
+"A rule the input broke. `field` is the path to the offending input field, e.g. [\"input\", \"rating\"]."
+type UserError {
+  field: [String!]
+  message: String!
+  code: UserErrorCode!
+}
+
+enum UserErrorCode {
+  UNAUTHENTICATED
+  NOT_FOUND
+  INVALID
+  DUPLICATE
+  FORBIDDEN
+}
+
+union CreateReviewResult = ReviewCreated | ValidationFailed | NotAllowed
+
+type ReviewCreated {
+  review: Review!
+}
+
+type ValidationFailed {
+  "At least one."
+  problems: [FieldProblem!]!
+}
+
+type FieldProblem {
+  field: [String!]!
+  message: String!
+}
+
+type NotAllowed {
+  reason: String!
+}
+
+input DeleteReviewInput {
+  id: ID!
+}
+
+type DeleteReviewPayload {
+  "The id that was deleted, null when nothing was."
+  deletedReviewId: ID
+  "The reviewed book, so a client can refresh `averageRating` from the same response."
+  book: Book
+  userErrors: [UserError!]!
+}
+
+input JoinClubInput {
+  clubId: ID!
+}
+
+type JoinClubPayload {
+  club: Club
+  userErrors: [UserError!]!
+}
+
+input LeaveClubInput {
+  clubId: ID!
+}
+
+type LeaveClubPayload {
+  club: Club
+  userErrors: [UserError!]!
+}
+
+type UploadCoverPayload {
+  book: Book
+  "Bytes received and their SHA-256 (hex), so a client can check nothing was lost."
+  bytes: Int
+  sha256: String
+  "How many bytes of the file the GraphQL server held in memory to handle this upload."
+  serverBufferedBytes: Int
+  userErrors: [UserError!]!
+}
+
+input CreateCoverUploadInput {
+  bookId: ID!
+  "image/jpeg or image/png."
+  contentType: String!
+}
+
+type CreateCoverUploadPayload {
+  "PUT the bytes here with the same Content-Type. Valid for 10 minutes."
+  uploadUrl: String
+  "Pass to `confirmCoverUpload`."
+  uploadId: ID
+  userErrors: [UserError!]!
+}
+
+input ConfirmCoverUploadInput {
+  uploadId: ID!
+}

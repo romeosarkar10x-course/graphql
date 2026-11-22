@@ -1,0 +1,78 @@
+{
+  "description": "Evicting one field: the record stays, only reads of that field miss.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ books(first: 1) { __typename id title } }",
+      "variables": {},
+      "data": {
+        "books": [
+          {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness"
+          }
+        ]
+      }
+    },
+    {
+      "op": "evict",
+      "id": "ROOT_QUERY",
+      "field": "book({\"id\":\"b1\"})"
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "read",
+      "query": "{ books(first: 1) { title } }",
+      "variables": {},
+      "expect": {
+        "books": [
+          {
+            "title": "The Left Hand of Darkness"
+          }
+        ]
+      }
+    },
+    {
+      "op": "evict",
+      "id": "Book:b1",
+      "field": "title"
+    },
+    {
+      "op": "read",
+      "query": "{ books(first: 1) { title } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "read",
+      "query": "{ books(first: 1) { id } }",
+      "variables": {},
+      "expect": {
+        "books": [
+          {
+            "id": "b1"
+          }
+        ]
+      }
+    }
+  ]
+}

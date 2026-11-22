@@ -1,0 +1,24 @@
+        plain:     ok 131/200, failed 69, circuit open 0, 2376 ms
+        resilient: ok 199/200, failed 1, circuit open 0, 11740 ms
+  [32mpass[0m  --plain: the faults are real (65% of 200 queries succeed)
+  [32mpass[0m  resilient: at least 97% of 200 queries succeed (99%)
+  [32mpass[0m  the client reports all 10 as done, with the ids Shelfie stored (4 recovered after a lost response)
+        unreachable: ok 0/100, failed 2, circuit open 98, 744 ms (wall 1344 ms)
+  [32mpass[0m  Shelfie unreachable: the breaker opens (98 of 100 calls refused at once, 1344 ms)
+FAIL m12/08   (stuck? modules/m12-clients/labs/08-resilience/HINTS.md has three escalating hints)
+        plain:     ok 143/200, failed 57, circuit open 0, 1371 ms
+        resilient: ok 200/200, failed 0, circuit open 0, 9154 ms
+  [32mpass[0m  --plain: the faults are real (71% of 200 queries succeed)
+  [32mpass[0m  resilient: at least 97% of 200 queries succeed (100%)
+  [32mpass[0m  the client reports all 10 as done, with the ids Shelfie stored (5 recovered after a lost response)
+        unreachable: ok 0/100, failed 2, circuit open 98, 776 ms (wall 1367 ms)
+  [32mpass[0m  Shelfie unreachable: the breaker opens (98 of 100 calls refused at once, 1367 ms)
+FAIL m12/08   (stuck? modules/m12-clients/labs/08-resilience/HINTS.md has three escalating hints)
+        plain:     ok 137/200, failed 63, circuit open 0, 3898 ms
+        resilient: ok 199/200, failed 1, circuit open 0, 7568 ms
+  [32mpass[0m  --plain: the faults are real (68% of 200 queries succeed)
+  [32mpass[0m  resilient: at least 97% of 200 queries succeed (99%)
+  [32mpass[0m  the client reports all 10 as done, with the ids Shelfie stored (3 recovered after a lost response)
+        unreachable: ok 0/100, failed 2, circuit open 98, 987 ms (wall 1597 ms)
+  [32mpass[0m  Shelfie unreachable: the breaker opens (98 of 100 calls refused at once, 1597 ms)
+FAIL m12/08   (stuck? modules/m12-clients/labs/08-resilience/HINTS.md has three escalating hints)

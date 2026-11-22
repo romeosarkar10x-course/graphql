@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <!-- The Boot parent only for its dependency versions and the runnable-jar plugin. -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>4.2.0</version>
+    <relativePath/>
+  </parent>
+  <groupId>dev.shelfie</groupId>
+  <artifactId>shelfie-cli</artifactId>
+  <version>1</version>
+
+  <properties>
+    <java.version>25</java.version>
+  </properties>
+
+  <dependencies>
+    <!-- Line editing, history and tab completion -->
+    <dependency>
+      <groupId>org.jline</groupId>
+      <artifactId>jline</artifactId>
+      <version>4.7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>tools.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>shelfie-cli</finalName>
+    <plugins>
+      <!-- JLine's terminal provider uses the FFM API: allow it, or Java 25 prints a restricted-method warning -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive><manifestEntries><Enable-Native-Access>ALL-UNNAMED</Enable-Native-Access></manifestEntries></archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration><mainClass>dev.shelfie.cli.Main</mainClass></configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

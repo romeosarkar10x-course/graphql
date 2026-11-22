@@ -1,0 +1,29 @@
+query ClubCard($id: ID!) {
+  club(id: $id) {
+    id
+    name
+    memberCount
+    currentBook {
+      id
+      title
+      averageRating
+    }
+  }
+}
+
+mutation AddReview($input: CreateReviewInput!) {
+  createReview(input: $input) {
+    review {
+      id
+      rating
+      book {
+        id
+        averageRating
+      }
+    }
+    userErrors {
+      code
+      message
+    }
+  }
+}

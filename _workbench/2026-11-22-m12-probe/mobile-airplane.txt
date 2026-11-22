@@ -1,0 +1,17 @@
+$ shelfie-mobile online
+[network] The Midnight Readers (8 members), reading The Left Hand of Darkness: 4.2
+--- airplane mode ON
+$ shelfie-mobile online
+[network] no club card: Failed to execute GraphQL http network request
+$ shelfie-mobile offline
+[cache] The Midnight Readers (8 members), reading The Left Hand of Darkness: 4.2
+$ shelfie-mobile review b1 1 Read on a plane, not for me.
+offline: review for b1 queued (1 in the outbox)
+$ shelfie-mobile offline
+[cache] The Midnight Readers (8 members), reading The Left Hand of Darkness: 4.2
+--- airplane mode OFF
+$ shelfie-mobile sync
+synced: review r16 for b1, average now 3.67
+[cache, after sync] The Midnight Readers (8 members), reading The Left Hand of Darkness: 3.67
+$ shelfie-mobile online
+[network] The Midnight Readers (8 members), reading The Left Hand of Darkness: 3.67

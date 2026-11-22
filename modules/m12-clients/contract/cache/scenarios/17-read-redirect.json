@@ -1,0 +1,94 @@
+{
+  "description": "read: toReference makes book(id:) a hit for a book cached by a list query.",
+  "policies": {
+    "fields": {
+      "Query.book": {
+        "read": "toReference",
+        "typename": "Book",
+        "idArg": "id"
+      }
+    }
+  },
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ books(first: 2) { __typename id title } }",
+      "variables": {},
+      "data": {
+        "books": [
+          {
+            "__typename": "Book",
+            "id": "b1",
+            "title": "The Left Hand of Darkness"
+          },
+          {
+            "__typename": "Book",
+            "id": "b2",
+            "title": "Piranesi"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b2\") { __typename id title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "__typename": "Book",
+          "id": "b2",
+          "title": "Piranesi"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "query ($id: ID!) { book(id: $id) { title } }",
+      "variables": {
+        "id": "b1"
+      },
+      "expect": {
+        "book": {
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b9\") { title } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b2\") { pageCount } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "books({\"first\":2})": [
+            {
+              "__ref": "Book:b1"
+            },
+            {
+              "__ref": "Book:b2"
+            }
+          ]
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        },
+        "Book:b2": {
+          "__typename": "Book",
+          "id": "b2",
+          "title": "Piranesi"
+        }
+      }
+    }
+  ]
+}

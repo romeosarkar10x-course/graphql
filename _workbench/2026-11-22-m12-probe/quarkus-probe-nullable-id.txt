@@ -1,0 +1,25 @@
+app
+lib
+quarkus
+quarkus-app-dependencies.txt
+quarkus-run.jar
+2026-11-21 20:20:45,922 ERROR [io.quarkus.runtime.Application] (main) Failed to start application: GraphQlClientException: errors from service
+errors:
+- Error{message=Validation error (VariableTypeMismatch@[book]) : Variable 'id' of type 'ID' used in position expecting type 'ID!', locations=[{line=1, column=32}], path=null, extensions={classification=ValidationError}})
+	at io.smallrye.graphql.client.impl.typesafe.ResultBuilder.readErrors(ResultBuilder.java:116)
+	at io.smallrye.graphql.client.impl.typesafe.ResultBuilder.read(ResultBuilder.java:67)
+	at io.smallrye.graphql.client.vertx.typesafe.VertxTypesafeGraphQLClientProxy.executeSingleResultOperationOverHttpSync(VertxTypesafeGraphQLClientProxy.java:178)
+	at io.smallrye.graphql.client.vertx.typesafe.VertxTypesafeGraphQLClientProxy.invoke(VertxTypesafeGraphQLClientProxy.java:160)
+	at io.smallrye.graphql.client.vertx.typesafe.VertxTypesafeGraphQLClientBuilder.invoke(VertxTypesafeGraphQLClientBuilder.java:249)
+	at io.smallrye.graphql.client.vertx.typesafe.VertxTypesafeGraphQLClientBuilder.lambda$build$0(VertxTypesafeGraphQLClientBuilder.java:209)
+	at jdk.proxy2/jdk.proxy2.$Proxy2.book(Unknown Source)
+	at probe.Main$Shelfie_RpdDHascnWUYVIXT7Ws1DerlPdc_Synthetic_ClientProxy.book(Unknown Source)
+	at probe.Main.run(Main.java:32)
+	at probe.Main_ClientProxy.run(Unknown Source)
+	at io.quarkus.runtime.ApplicationLifecycleManager.run(ApplicationLifecycleManager.java:151)
+	at io.quarkus.runtime.Quarkus.run(Quarkus.java:79)
+	at io.quarkus.runtime.Quarkus.run(Quarkus.java:50)
+	at io.quarkus.runner.GeneratedMain.main(Unknown Source)
+	at io.quarkus.bootstrap.runner.QuarkusEntryPoint.doRun(QuarkusEntryPoint.java:70)
+	at io.quarkus.bootstrap.runner.QuarkusEntryPoint.main(QuarkusEntryPoint.java:36)
+

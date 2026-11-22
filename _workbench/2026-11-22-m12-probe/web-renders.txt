@@ -1,0 +1,12 @@
+Apollo Client, props
+  first load:     ClubCard 2, BookPanel 1, MemberRow 8
+  after addReview: ClubCard 1, BookPanel 1, MemberRow 8   ("The Left Hand of Darkness: 4.2" -> "The Left Hand of Darkness: 3.67", 2 requests)
+Apollo Client, props + React.memo
+  first load:     ClubCard 2, BookPanel 1, MemberRow 8
+  after addReview: ClubCard 1, BookPanel 1, MemberRow 0   ("The Left Hand of Darkness: 4.2" -> "The Left Hand of Darkness: 3.67", 2 requests)
+Apollo Client, data masking
+  first load:     ClubCard 2, BookPanel 1, MemberRow 8
+  after addReview: ClubCard 0, BookPanel 1, MemberRow 0   ("The Left Hand of Darkness: 4.2" -> "The Left Hand of Darkness: 3.67", 2 requests)
+Relay
+  first load:     ClubCard 3, BookPanel 1, MemberRow 8
+  after addReview: ClubCard 0, BookPanel 1, MemberRow 0   ("The Left Hand of Darkness: 4.2" -> "The Left Hand of Darkness: 3.67", 2 requests)

@@ -1,0 +1,97 @@
+{
+  "description": "keyArgs: only the listed arguments are part of the storage key; without merge the last write wins.",
+  "policies": {
+    "fields": {
+      "Query.books": {
+        "keyArgs": [
+          "titleContains"
+        ]
+      }
+    }
+  },
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ books(titleContains: \"the\", first: 2) { __typename id } }",
+      "variables": {},
+      "data": {
+        "books": [
+          {
+            "__typename": "Book",
+            "id": "b1"
+          },
+          {
+            "__typename": "Book",
+            "id": "b3"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ books(titleContains: \"the\", first: 5) { id } }",
+      "variables": {},
+      "expect": {
+        "books": [
+          {
+            "id": "b1"
+          },
+          {
+            "id": "b3"
+          }
+        ]
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ books(titleContains: \"the\", first: 1) { __typename id } }",
+      "variables": {},
+      "data": {
+        "books": [
+          {
+            "__typename": "Book",
+            "id": "b3"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ books(titleContains: \"the\", first: 2) { id } }",
+      "variables": {},
+      "expect": {
+        "books": [
+          {
+            "id": "b3"
+          }
+        ]
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ books(titleContains: \"rose\", first: 2) { id } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "books({\"titleContains\":\"the\"})": [
+            {
+              "__ref": "Book:b3"
+            }
+          ]
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1"
+        },
+        "Book:b3": {
+          "__typename": "Book",
+          "id": "b3"
+        }
+      }
+    }
+  ]
+}

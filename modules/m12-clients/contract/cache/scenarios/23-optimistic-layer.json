@@ -1,0 +1,70 @@
+{
+  "description": "An optimistic write is visible to reads at once, absent from the base store, and gone when removed.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "writeOptimistic",
+      "layer": "rename-1",
+      "query": "mutation { renameBook(id: \"b1\", title: \"Working title\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "renameBook": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "Working title"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "title": "Working title"
+        }
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "book({\"id\":\"b1\"})": {
+            "__ref": "Book:b1"
+          }
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "removeOptimistic",
+      "layer": "rename-1"
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+org.springframework.web.client.ResourceAccessException <- java.net.ConnectException: I/O error on POST request for "http://localhost:1/graphql": null
+org.springframework.web.client.ResourceAccessException <- java.net.ConnectException: I/O error on POST request for "http://localhost:1/graphql": null
+org.springframework.web.client.ResourceAccessException <- java.net.ConnectException: I/O error on POST request for "http://localhost:1/graphql": null
+org.springframework.web.client.HttpClientErrorException$NotFound <- : Not Found
+org.springframework.web.client.HttpClientErrorException$NotFound <- : Not Found
+org.springframework.web.client.HttpClientErrorException$NotFound <- : Not Found

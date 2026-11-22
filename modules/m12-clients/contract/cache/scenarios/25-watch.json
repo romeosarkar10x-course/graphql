@@ -1,0 +1,136 @@
+{
+  "description": "A watch hears about changes to its own result only, and nothing after it is cancelled.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "watch",
+      "name": "w",
+      "query": "{ book(id: \"b1\") { title } }",
+      "variables": {}
+    },
+    {
+      "op": "notified",
+      "name": "w",
+      "count": 0
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "notified",
+      "name": "w",
+      "count": 1,
+      "last": {
+        "book": {
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b2\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b2",
+          "title": "Piranesi"
+        }
+      }
+    },
+    {
+      "op": "notified",
+      "name": "w",
+      "count": 1
+    },
+    {
+      "op": "writeOptimistic",
+      "layer": "l",
+      "query": "mutation { renameBook(id: \"b1\", title: \"Working title\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "renameBook": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "Working title"
+        }
+      }
+    },
+    {
+      "op": "notified",
+      "name": "w",
+      "count": 2,
+      "last": {
+        "book": {
+          "title": "Working title"
+        }
+      }
+    },
+    {
+      "op": "removeOptimistic",
+      "layer": "l"
+    },
+    {
+      "op": "notified",
+      "name": "w",
+      "count": 3,
+      "last": {
+        "book": {
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "evict",
+      "id": "Book:b1"
+    },
+    {
+      "op": "notified",
+      "name": "w",
+      "count": 4,
+      "last": null
+    },
+    {
+      "op": "unwatch",
+      "name": "w"
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "notified",
+      "name": "w",
+      "count": 4
+    }
+  ]
+}

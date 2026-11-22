@@ -61,7 +61,8 @@ Playing with friends: [docs/GROUP_PLAY.md](docs/GROUP_PLAY.md).
 | Production | [M9 Performance and data loading](modules/m09-performance/README.md) | Ready |
 | | [M10 Security](modules/m10-security/README.md) | Ready |
 | | [M11 Real-time](modules/m11-realtime/README.md) | Ready |
-| | M12 Clients · M13 Testing · M14 Advanced patterns | Planned |
+| | [M12 Clients](modules/m12-clients/README.md) | Ready |
+| | M13 Testing · M14 Advanced patterns | Planned |
 | Platform | M15 Federation · M16 Production · M17 Under the hood · M18 The frontier · Capstone | Planned |
 
 ## Layout

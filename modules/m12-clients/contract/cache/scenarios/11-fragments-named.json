@@ -1,0 +1,56 @@
+{
+  "description": "Named fragments on the object's own type apply; a fragment on another type does not.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "query { book(id: \"b1\") { ...Card } } fragment Card on Book { __typename id title authors }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness",
+          "authors": [
+            "Ursula K. Le Guin"
+          ]
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "query { book(id: \"b1\") { ...Names } } fragment Names on Book { authors t: title }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "authors": [
+            "Ursula K. Le Guin"
+          ],
+          "t": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "query { book(id: \"b1\") { title ...U } } fragment U on User { handle }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    }
+  ]
+}

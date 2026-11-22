@@ -1,0 +1,4 @@
+synced: review r16 for b1, average now 3.67
+[cache, after sync] The Midnight Readers (8 members), reading The Left Hand of Darkness: 4.2
+$ shelfie-mobile online
+[network] The Midnight Readers (8 members), reading The Left Hand of Darkness: 3.67

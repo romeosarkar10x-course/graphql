@@ -1,0 +1,42 @@
+{
+  "description": "Nothing written is a miss; so is a different argument.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "read",
+      "query": "{ book(id: \"b2\") { __typename id title } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b2\") { __typename id title } }",
+      "variables": {},
+      "expect": null
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { __typename id title } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "title": "The Left Hand of Darkness"
+        }
+      }
+    }
+  ]
+}

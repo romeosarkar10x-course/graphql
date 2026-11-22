@@ -1,0 +1,7 @@
+{
+  "title": "Web clients (optional): the same club card in Apollo Client and Relay; re-render counts after one mutation",
+  "lecture": "12.6",
+  "kind": "lab",
+  "grading": "rubric",
+  "needs": ["ref", "internet"]
+}

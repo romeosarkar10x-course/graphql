@@ -1,0 +1,38 @@
+before: book page 4.2, club page 4.2
+after:  book page 3.67, club page 3.67 (Shelfie says 3.67)
+store:  {
+  "ROOT_QUERY" : {
+    "book({\"id\":\"b1\"})" : {
+      "__ref" : "Book:b1"
+    },
+    "club({\"id\":\"c1\"})" : {
+      "__ref" : "Club:c1"
+    }
+  },
+  "Book:b1" : {
+    "__typename" : "Book",
+    "id" : "b1",
+    "title" : "The Left Hand of Darkness",
+    "averageRating" : 3.67
+  },
+  "Club:c1" : {
+    "__typename" : "Club",
+    "id" : "c1",
+    "name" : "The Midnight Readers",
+    "currentBook" : {
+      "__ref" : "Book:b1"
+    }
+  },
+  "Review:r16" : {
+    "__typename" : "Review",
+    "id" : "r16",
+    "rating" : 1,
+    "book" : {
+      "__ref" : "Book:b1"
+    }
+  }
+}
+PASS the mutation result changed b1's average rating on Shelfie
+PASS the cached book page shows the new average without a refetch
+PASS the cached club page shows it too: one record, two queries
+PASS three requests in all: two pages and one mutation

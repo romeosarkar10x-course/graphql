@@ -1,0 +1,116 @@
+{
+  "description": "A mutation result updates the entities it returns; lists it does not mention stay stale.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ book(id: \"b1\") { __typename id averageRating reviews(last: 5) { __typename id rating } } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "averageRating": 4.0,
+          "reviews": [
+            {
+              "__typename": "Review",
+              "id": "v1",
+              "rating": 4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "mutation ($input: CreateReviewInput!) { createReview(input: $input) { review { __typename id rating book { __typename id averageRating } } } }",
+      "variables": {
+        "input": {
+          "bookId": "b1",
+          "rating": 5,
+          "body": "Better on a second read."
+        }
+      },
+      "data": {
+        "createReview": {
+          "review": {
+            "__typename": "Review",
+            "id": "v16",
+            "rating": 5,
+            "book": {
+              "__typename": "Book",
+              "id": "b1",
+              "averageRating": 4.33
+            }
+          }
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { __typename id averageRating reviews(last: 5) { __typename id rating } } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "__typename": "Book",
+          "id": "b1",
+          "averageRating": 4.33,
+          "reviews": [
+            {
+              "__typename": "Review",
+              "id": "v1",
+              "rating": 4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b1\") { reviews(last: 5) { id } } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "reviews": [
+            {
+              "id": "v1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "book({\"id\":\"b1\"})": {
+            "__ref": "Book:b1"
+          }
+        },
+        "Book:b1": {
+          "__typename": "Book",
+          "id": "b1",
+          "averageRating": 4.33,
+          "reviews({\"last\":5})": [
+            {
+              "__ref": "Review:v1"
+            }
+          ]
+        },
+        "Review:v1": {
+          "__typename": "Review",
+          "id": "v1",
+          "rating": 4
+        },
+        "Review:v16": {
+          "__typename": "Review",
+          "id": "v16",
+          "rating": 5,
+          "book": {
+            "__ref": "Book:b1"
+          }
+        }
+      }
+    }
+  ]
+}

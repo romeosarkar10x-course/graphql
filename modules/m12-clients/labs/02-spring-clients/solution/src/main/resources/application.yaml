@@ -1,0 +1,7 @@
+server.port: 4000
+# Not "shelfie.url": the course image exports SHELFIE_URL, and Spring's relaxed binding would read that
+# environment variable as shelfie.url (without /graphql).
+digest:
+  shelfie-graphql: http://shelfie-ref:8080/graphql
+  chat: ws://localhost:4100/graphql
+  room: r1

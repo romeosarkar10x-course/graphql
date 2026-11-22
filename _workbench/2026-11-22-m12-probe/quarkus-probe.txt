@@ -1,0 +1,6 @@
+typed: The Left Hand of Darkness [Ursula K. Le Guin] [Review[rating=4, author=Author[name=Hugo Silva]], Review[rating=3, author=Author[name=Jonas Berg]], Review[rating=5, author=Author[name=Chloe Martin]], Review[rating=4, author=Author[name=Ben Okafor]], Review[rating=5, author=Author[name=Asha Rao]]]
+typed list: 2
+dynamic doc: query {book(id:"b1"){title authors}}
+dynamic: The Left Hand of Darkness [Ursula K. Le Guin] null errors=null
+dynamic bad: hasErrors=false [Error{message=Validation error (FieldUndefined@[book/nope]) : Field 'nope' in type 'Book' is undefined, locations=[{line=1, column=20}], path=null, extensions={classification=ValidationError}}]
+typed nope: null

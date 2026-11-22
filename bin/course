@@ -22,6 +22,8 @@
 #   bin/course shell [-c 'cmd']           bash inside the course image, repo at /course
 #   bin/course native <mvn args>          mvn inside a GraalVM CE 25 image, for native builds (game 6b)
 #   bin/course inspector <args>           graphql-inspector 7.0.2 (Node.js, own image), e.g. diff old.graphql new.graphql
+#   bin/course web <npm args>             Module 12's web lab: npm in a Node.js 24 image on the course network
+#   bin/course mobile <cmd>               Module 12's mobile lab: Gradle 9.9 + JDK 21 image on the course network
 #   bin/course seckit <tool> <args>       Module 10 scanners (graphql-cop, clairvoyance), own image; shares the
 #                                         network of your running course container, so target localhost:4000
 #   bin/course image                      (re)build the course image
@@ -133,6 +135,22 @@ case "$cmd" in
     case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course inspector from a directory inside the course repo" ;; esac
     docker run --rm -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" \
       graphql-course-inspector:1 "$@" ;;
+  web)   # lab 12.6: npm (Apollo Client, Relay, jsdom) in the official Node.js image, on the course network so
+         # http://shelfie-ref:8080 resolves; npm's cache in .cache/npm. Run it from a web/ project directory.
+    [[ $# -ge 1 ]] || die "usage: bin/course web <npm args>   e.g. bin/course web ci && bin/course web run measure"
+    case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course web from a directory inside the course repo" ;; esac
+    mkdir -p "$ROOT/.cache/npm"
+    net=(); docker network inspect "$NETWORK" >/dev/null 2>&1 && net=(--network "$NETWORK")
+    docker run --rm "${net[@]}" -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -e npm_config_cache=/course/.cache/npm \
+      -e npm_config_update_notifier=false -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" node:24.22.1-slim npm "$@" ;;
+  mobile)   # lab 12.7: Apollo Kotlin needs Gradle (its code generator is a Gradle plugin only). The official Gradle
+            # image, on the course network; Gradle's caches in .cache/gradle. Run it from the lab's mobile/ directory.
+    [[ $# -ge 1 ]] || die "usage: bin/course mobile <cmd>   e.g. bin/course mobile gradle -q installDist, bin/course mobile ./airplane.sh"
+    case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course mobile from a directory inside the course repo" ;; esac
+    mkdir -p "$ROOT/.cache/gradle"
+    net=(); docker network inspect "$NETWORK" >/dev/null 2>&1 && net=(--network "$NETWORK")
+    docker run --rm "${net[@]}" -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -e GRADLE_USER_HOME=/course/.cache/gradle \
+      -e GRADLE_OPTS=-Dorg.gradle.daemon=false -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" gradle:9.9.1-jdk21 "$@" ;;
   seckit)   # graphql-cop and Clairvoyance (lab 10.8), in their own Python image
     [[ $# -ge 1 ]] || die "usage: bin/course seckit graphql-cop -t http://localhost:4000/graphql | clairvoyance <url> -o schema.json"
     docker image inspect graphql-course-seckit:1 >/dev/null 2>&1 \

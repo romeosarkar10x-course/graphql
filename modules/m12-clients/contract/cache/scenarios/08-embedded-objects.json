@@ -1,0 +1,92 @@
+{
+  "description": "Objects without an id live inside their parent and are replaced wholesale.",
+  "policies": {},
+  "ops": [
+    {
+      "op": "write",
+      "query": "{ book(id: \"b3\") { __typename id stats { pages ratingCount } } settings { theme } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b3",
+          "stats": {
+            "pages": 502,
+            "ratingCount": 2
+          }
+        },
+        "settings": {
+          "theme": "dark"
+        }
+      }
+    },
+    {
+      "op": "extract",
+      "expect": {
+        "ROOT_QUERY": {
+          "book({\"id\":\"b3\"})": {
+            "__ref": "Book:b3"
+          },
+          "settings": {
+            "theme": "dark"
+          }
+        },
+        "Book:b3": {
+          "__typename": "Book",
+          "id": "b3",
+          "stats": {
+            "pages": 502,
+            "ratingCount": 2
+          }
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b3\") { stats { ratingCount } } settings { theme } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "stats": {
+            "ratingCount": 2
+          }
+        },
+        "settings": {
+          "theme": "dark"
+        }
+      }
+    },
+    {
+      "op": "write",
+      "query": "{ book(id: \"b3\") { __typename id stats { pages } } }",
+      "variables": {},
+      "data": {
+        "book": {
+          "__typename": "Book",
+          "id": "b3",
+          "stats": {
+            "pages": 512
+          }
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b3\") { stats { pages } } }",
+      "variables": {},
+      "expect": {
+        "book": {
+          "stats": {
+            "pages": 512
+          }
+        }
+      }
+    },
+    {
+      "op": "read",
+      "query": "{ book(id: \"b3\") { stats { pages ratingCount } } }",
+      "variables": {},
+      "expect": null
+    }
+  ]
+}
