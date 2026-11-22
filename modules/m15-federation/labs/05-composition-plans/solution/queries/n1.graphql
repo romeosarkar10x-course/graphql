@@ -1,0 +1,2 @@
+# Every member of every club, every review they wrote, every book reviewed.
+{ clubs { name members { handle reviews { rating book { title } } } } }

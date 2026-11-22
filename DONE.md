@@ -140,6 +140,26 @@
 - [x] Games: m09/09 Performance race (baseline measured in the same run) · m09/10 Guess the query count (10 rounds)
 - [x] Mini-project m09/11 N+1 detector (JUnit 5 extension, 9 harness fixtures, GitHub Actions workflow)
 
+## Module 15 (7 lectures, 7 labs, 2 mini-projects, 1 game)
+
+- [x] Contract: `subgraphs/` (Shelfie's four subgraphs in one jar, `/_stats`, `/_reset`, delays), `compose/` (The
+      Guild's composer, Rover-style config), `fed.sh`, `stack.sh`, `PlanSteps.java`, `Load.java`, `routers/`,
+      `plain/` (two plain services for Nadel), `monolith.graphqls`; `bin/course fed` (Apollo Router 2.19.0, Hive
+      Router 0.3.9, sha256-checked); `checkpoint-host.sh` hook in `bin/course checkpoint`
+- [x] Lectures 15.1–15.7 (Hook / Concept / Java build / Experiment / Check)
+- [x] Labs: m15/01 ownership map checked against federation's rules, three-shape estimate · m15/02 Nadel gateway,
+      batched `@hydrated`, a rename at the gateway by the grader · m15/03 every Federation 2 directive in SDL, the
+      no-key experiment · m15/04 Spring subgraphs, `@EntityMapping` List, DataLoader and single forms, store query
+      counts through Apollo Router · m15/05 composition in CI (script and workflow), five plans predicted ·
+      m15/06 Apollo and Hive configs for headers, introspection, plans, timeouts; load comparison · m15/07 move
+      `Review.book` under traffic with blue/green deploys, zero errors, runbook
+- [x] Mini-projects and game: m15/08 team simulation, club book of the month, `docker compose up --wait` ·
+      m15/09 query-plan puzzle (10 plans, leaderboard) · m15/10 accounts subgraph in Kotlin (graphql-kotlin 11)
+- [x] Probes: `_workbench/2026-11-22-m15-probe/FINDINGS.md` (13 findings)
+
+`bin/course check m15 --starters` (2026-11-22): 10 auto-graded labs, 0 problems (`_workbench/2026-11-22-m15-check-starters.log`);
+m15/02 re-run after re-pinning Nadel. `docker compose up --wait` of mini-project 15.8 run by hand on the host. Full-course check still TODO.
+
 ## Module 14 (7 lectures, 7 labs, 2 mini-projects, 1 game)
 
 - [x] Contract: `openlibrary/` (a fake Open Library from responses recorded 2026-11-22, with slow/down/garbage/

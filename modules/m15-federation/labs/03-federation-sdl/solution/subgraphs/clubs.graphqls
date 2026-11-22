@@ -1,0 +1,30 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.9",
+        import: ["@key", "@external", "@requires", "@override"])
+
+type Query {
+  clubs: [Club!]!
+  club(id: ID!): Club
+}
+
+type Club @key(fields: "id") {
+  id: ID!
+  name: String!
+  members: [User!]!
+  currentBook: Book
+}
+
+type User @key(fields: "id") {
+  id: ID!
+  clubs: [Club!]!
+  "Moving from accounts: a quarter of the traffic is answered here until the label says 100."
+  clubCount: Int! @override(from: "accounts", label: "percent(25)")
+}
+
+type Book @key(fields: "id") {
+  id: ID!
+  pages: Int! @external
+  "Weeks at 100 pages a week; needs catalog's page count."
+  weeksToRead: Int! @requires(fields: "pages")
+  clubsReading: [Club!]!
+}

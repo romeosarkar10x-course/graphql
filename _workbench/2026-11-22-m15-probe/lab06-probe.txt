@@ -1,0 +1,13 @@
+== apollo
+{"timestamp":"2026-11-22T14:41:45.824523308Z","level":"WARN","message":"The `apollo.router.session.count.active` metric is deprecated and may be removed in a future release. Switch to the OpenTelemetry-compliant `http.server.active_requests` metric i
+{"data":{"me":{"handle":"benok"}}}
+{"authorization":"Bearer abc","x-shelfie-user":"u2"}
+{"errors":[{"message":"introspection has been disabled","extensions":{"code":"INTROSPECTION_DISABLED"}}]}
+{"data":{"book":null},"errors":[{"message":"Subgraph errors redacted","path":["book"]}],"extensions":{"valueCompletion":[{"message":"Cannot return null for non-nullable type Int","path":["book"]}]}}
+took 2054 ms
+== hive
+{"data":{"me":{"handle":"benok"}}}
+{"authorization":"Bearer abc","x-shelfie-user":"u2"}
+{"errors":[{"message":"Introspection queries are disabled","extensions":{"code":"INTROSPECTION_DISABLED"}}]}
+{"data":{"book":null},"errors":[{"message":"Unexpected error","extensions":{"code":"SUBGRAPH_REQUEST_TIMEOUT","service":"reviews","affectedPath":"book"}}]}
+took 2009 ms

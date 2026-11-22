@@ -1,0 +1,11 @@
+p01 apollo=[["accounts"]] hive=[["accounts"]]
+p02 apollo=[["accounts"],["clubs","reviews"]] hive=[["accounts"],["clubs","reviews"]]
+p03 apollo=[["reviews"]] hive=[["reviews"]]
+p04 apollo=[["reviews"],["accounts"]] hive=[["reviews"],["accounts"]]
+p05 apollo=[["catalog"],["clubs"],["accounts"]] hive=[["catalog"],["clubs"],["accounts"]]
+p06 apollo=[["catalog"],["clubs"]] hive=[["catalog"],["clubs"]]
+p07 apollo=[["clubs"],["reviews"],["accounts"]] hive=[["clubs"],["reviews"],["accounts"]]
+p08 apollo=[["reviews"],["catalog"]] hive=[["reviews"],["catalog"]]
+p09 apollo=[["catalog"],["reviews"]] hive=[["catalog"],["reviews"]]
+p10 apollo=[["clubs"],["catalog"]] hive=[["clubs"],["catalog"]]
+{"data":{"addReview":null},"errors":[{"message":"sign in to review","path":["addReview"],"extensions":{"classification":"UNAUTHORIZED","service":"reviews"}}]}

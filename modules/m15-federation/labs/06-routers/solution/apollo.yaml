@@ -1,0 +1,21 @@
+# Apollo Router 2.19 for Shelfie in production. The course starts it with --listen and --supergraph.
+supergraph:
+  # Clients get the schema from the registry and the docs, not from production.
+  introspection: false
+health_check:
+  listen: 127.0.0.1:8088
+  enabled: true
+headers:
+  all:
+    request:
+      operations:
+        # Subgraphs decide who the reader is; the router only passes the credentials on. Nothing else is
+        # forwarded (cookies stay at the edge).
+        - propagate:
+            named: authorization
+        - propagate:
+            named: x-shelfie-user
+traffic_shaping:
+  all:
+    # A subgraph that has not answered in 2 s costs its fields, not the page.
+    timeout: 2s

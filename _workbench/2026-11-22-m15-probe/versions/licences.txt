@@ -1,0 +1,6 @@
+wundergraph/cosmo	TypeScript	Apache-2.0
+graphql-hive/gateway	TypeScript	MIT
+ChilliCream/graphql-platform	C#	MIT
+graphql-hive/router	Rust	MIT
+apollographql/router	Rust	NOASSERTION
+atlassian-labs/nadel	Kotlin	Apache-2.0

@@ -1,0 +1,30 @@
+# Lab 15.3 starter: what this team owns, without any federation yet. See the lab README.
+
+type Query {
+  books(first: Int = 10): [Book!]!
+  book(id: ID!): Book
+  bookByIsbn(isbn: String!): Book
+  media(id: ID!): Media
+}
+
+"Anything Shelfie catalogues: books and audiobooks."
+interface Media {
+  id: ID!
+  title: String!
+}
+
+"Partners know books by ISBN only."
+type Book implements Media {
+  id: ID!
+  isbn: String!
+  title: String!
+  authors: [String!]!
+  pages: Int!
+}
+
+type Audiobook implements Media {
+  id: ID!
+  title: String!
+  narrator: String!
+  minutes: Int!
+}

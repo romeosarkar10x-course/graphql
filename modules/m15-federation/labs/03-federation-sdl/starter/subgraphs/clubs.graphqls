@@ -1,0 +1,28 @@
+# Lab 15.3 starter: what this team owns, without any federation yet. See the lab README.
+
+type Query {
+  clubs: [Club!]!
+  club(id: ID!): Club
+}
+
+type Club {
+  id: ID!
+  name: String!
+  members: [User!]!
+  currentBook: Book
+}
+
+type User {
+  id: ID!
+  clubs: [Club!]!
+  "Taking over from accounts."
+  clubCount: Int!
+}
+
+type Book {
+  id: ID!
+  pages: Int!
+  "Weeks at 100 pages a week, from catalog's page count."
+  weeksToRead: Int!
+  clubsReading: [Club!]!
+}

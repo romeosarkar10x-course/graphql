@@ -1,0 +1,19 @@
+# Shelfie's four subgraphs as the contract jar serves them (contract/subgraphs), in Rover's supergraph.yaml shape.
+federation_version: =2.9.0
+subgraphs:
+  accounts:
+    routing_url: http://localhost:4001/graphql
+    schema:
+      file: /course/_workbench/2026-11-22-m15-probe/kotlin/accounts-kotlin.graphqls
+  catalog:
+    routing_url: http://localhost:4002/graphql
+    schema:
+      file: /course/modules/m15-federation/contract/subgraphs/src/main/resources/graphql/catalog/catalog.graphqls
+  reviews:
+    routing_url: http://localhost:4003/graphql
+    schema:
+      file: /course/modules/m15-federation/contract/subgraphs/src/main/resources/graphql/reviews/reviews.graphqls
+  clubs:
+    routing_url: http://localhost:4004/graphql
+    schema:
+      file: /course/modules/m15-federation/contract/subgraphs/src/main/resources/graphql/clubs/clubs.graphqls

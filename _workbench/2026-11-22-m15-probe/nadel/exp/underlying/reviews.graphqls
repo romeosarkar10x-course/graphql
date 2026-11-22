@@ -1,0 +1,8 @@
+type Query {
+  review(id: ID!): Review
+  "Newest first."
+  latestReviews(first: Int = 5): [Review!]!
+  reviewsFor(bookId: ID!): [Review!]!
+}
+"A review knows its book's id, nothing else about it."
+type Review { id: ID! bookId: ID! authorId: ID! rating: Int! body: String! }

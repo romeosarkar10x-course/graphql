@@ -39,3 +39,5 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-22-m13-check-starters.log` | `bin/course check m13 --starters` after Module 13 |
 | `2026-11-22-m14-probe/` | Module 14: `FINDINGS.md` (18 findings), Spring probe (directive order, Locale, per-tenant schema), Open Library recordings, spec and RFC text, RLS/foreign-key probe, lab probe outputs (locales, BFF, zoo), good-faith introspection |
 | `2026-11-22-m14-check-starters.log` | `bin/course check m14 --starters` after Module 14 |
+| `2026-11-22-m15-probe/` | Module 15: `FINDINGS.md` (13 findings), version and licence probes, router docs (Apollo, Hive JSON Schema), Spring federation probe (`spring/`, entity forms), composer probes, both routers' ops and plans, no-key errors, Nadel gateway runs (`nadel/`), graphql-kotlin probe (`kotlin/`), lab 15.4 variants and 15.7 wrong order, compose up on the host |
+| `2026-11-22-m15-check-starters.log` | `bin/course check m15 --starters` after Module 15 |

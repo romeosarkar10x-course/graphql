@@ -1,0 +1,6 @@
+nadel gateway on 4000
+{"data":{"latestReviews":[{"id":"r15","rating":4,"book":{"title":"Station Eleven","pages":333}},{"id":"r14","rating":5,"book":{"title":"The Remains of the Day","pages":245}},{"id":"r13","rating":4,"book":{"title":"The Seven Moons of Maali Almeida","pages":400}},{"id":"r12","rating":5,"book":{"title":"The Seven Moons of Maali Almeida","pages":400}}]}}
+{"queries":["{ books(ids: [\"b8\", \"b3\", \"b9\"]) { title pages batch_hydration__book__id: id } }"],"service":"catalog","requests":1}
+{"requests":1,"service":"reviews","queries":["{ latestReviews(first: 4) { id rating batch_hydration__book__bookId: bookId __typename__batch_hydration__book: __typename } }"]}
+{"data":{"book":{"title":"Piranesi"}}}
+{"data":{"__type":{"fields":[{"name":"id"},{"name":"rating"},{"name":"body"},{"name":"book"}]}}}

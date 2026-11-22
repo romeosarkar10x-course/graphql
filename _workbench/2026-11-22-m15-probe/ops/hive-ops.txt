@@ -1,0 +1,24 @@
+== hive plan shape
+["queryPlan"]
+{"queryPlan":{"kind":"QueryPlan","node":{"kind":"Sequence","nodes":[{"kind":"Fetch","serviceName":"reviews","operationKind":"query","operation":"{latestReviews(first: 5){__typename id}}"},{"kind":"Flatten","path":[{"Field":"latestReviews"},"@"],"node":{"kind":"Fetch","serviceName":"catalog","operationKind":"query","operation":"query($representations:[_Any!]!){_entities(representations: $representations){...on Review{book{title}}}}","requires":[{"kind":"InlineFragment","typeCondition":"Review","selections":[{"kind":"Field","name":"__typename"},{"kind":"Field","name":"id"}]}]}}]}}}
+{"data":{"me":{"handle":"chloem"}}}
+swapped
+traffic ok=200 bad=0
+{"data":{"review":{"book":{"title":"The Left Hand of Darkness"}}}}
+v2 catalog: {"Book":1}
+-- percent(50) on hive
+{"data":{"review":{"book":{"title":"The Left Hand of Darkness"}}}}
+catalog: {"Book":22,"Review":18}
+-- custom label with expression
+{"data":{"review":{"book":{"title":"The Left Hand of Darkness"}}}}
+catalog: {"Book":20,"Review":20}
+-- defer
+---
+Content-Type: application/json
+
+{"errors":[{"message":"Unknown directive \"@defer\".","locations":[{"line":1,"column":30}],"extensions":{"code":"KnownDirectives"}}]}
+-----
+-- subscriptions enabled
+4
+{"timestamp":"2026-11-22T14:18:32.947632Z","level":"INFO","target":"router::core","message":"hive-router starting...","version":"0.3.9"}
+{"timestamp":"2026-11-22T14:18:32.987082Z","level":"INFO","target":"router::supergraph","message":"supergraph loaded successfully with changes, updating..."}

@@ -1,0 +1,1 @@
+{ a: book(id: "b1") { title } b: book(id: "b2") { title reviewCount } }

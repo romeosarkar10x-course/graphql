@@ -1,0 +1,24 @@
+== apollo
+{"club":{"name":"The Midnight Readers","owner":{"name":"Kemi Adeyemi"},"currentBook":{"title":"The Left Hand of Darkness","weeksToRead":4,"averageRating":4.2,"reviews":[{"rating":5,"author":{"handle":"asha","name":"Asha Rao"}},{"rating":4,"author":{"handle":"benok","name":"Ben Okafor"}},{"rating":5,"author":{"handle":"chloem","name":"Chloe Martin"}},{"rating":3,"author":{"handle":"jonasb","name":"Jonas Berg"}},{"rating":4,"author":{"handle":"hugos","name":"Hugo Silva"}}]}}}
+null
+[
+  "apolloQueryPlan"
+]
+{"subgraph":"accounts","requests":2,"entityCalls":{"User":2},"entityItems":{"User":6}}
+{"subgraph":"catalog","requests":1,"entityCalls":{"Book":1},"entityItems":{"Book":1}}
+{"subgraph":"reviews","requests":1,"entityCalls":{"Book":1},"entityItems":{"Book":1}}
+{"subgraph":"clubs","requests":2,"entityCalls":{"Book":1},"entityItems":{"Book":1}}
+{"data":{"latestReviews":[{"id":"r15","author":{"handle":"asha"},"book":{"title":"Station Eleven"}},{"id":"r14","author":{"handle":"inesd"},"book":{"title":"The Remains of the Day"}},{"id":"r13","author":{"handle":"chloem"},"book":{"title":"The Seven Moons of Maali Almeida"}}]}}
+{"data":{"me":null}}
+{}
+== hive
+{"club":{"name":"The Midnight Readers","owner":{"name":"Kemi Adeyemi"},"currentBook":{"title":"The Left Hand of Darkness","weeksToRead":4,"averageRating":4.2,"reviews":[{"rating":5,"author":{"handle":"asha","name":"Asha Rao"}},{"rating":4,"author":{"handle":"benok","name":"Ben Okafor"}},{"rating":5,"author":{"handle":"chloem","name":"Chloe Martin"}},{"rating":3,"author":{"handle":"jonasb","name":"Jonas Berg"}},{"rating":4,"author":{"handle":"hugos","name":"Hugo Silva"}}]}}}
+null
+jq: error (at /tmp/r1.json:0): null (null) has no keys
+{"subgraph":"accounts","requests":2,"entityCalls":{"User":2},"entityItems":{"User":6}}
+{"subgraph":"catalog","requests":1,"entityCalls":{"Book":1},"entityItems":{"Book":1}}
+{"subgraph":"reviews","requests":1,"entityCalls":{"Book":1},"entityItems":{"Book":1}}
+{"subgraph":"clubs","requests":2,"entityCalls":{"Book":1},"entityItems":{"Book":1}}
+{"data":{"latestReviews":[{"id":"r15","author":{"handle":"asha"},"book":{"title":"Station Eleven"}},{"id":"r14","author":{"handle":"inesd"},"book":{"title":"The Remains of the Day"}},{"id":"r13","author":{"handle":"chloem"},"book":{"title":"The Seven Moons of Maali Almeida"}}]}}
+{"data":{"me":null}}
+{}

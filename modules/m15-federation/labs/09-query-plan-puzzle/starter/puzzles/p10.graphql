@@ -1,0 +1,1 @@
+{ club(id: "c3") { members { clubs { currentBook { title } } } } }

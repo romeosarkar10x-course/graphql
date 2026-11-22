@@ -1,0 +1,6 @@
+v R01 catalog: {"queries":6,"byMethod":{"bookById":6}}
+v R02 reviews: {"queries":15,"byMethod":{"reviewsForBook":15}}
+{"errors":[{"message":"INTERNAL_ERROR for 1c54b3fc-739f-9ac0-a6ed-cfdaa9a684ff","locations":[{"line":1,"column":23}],"path":["_entities",0],"extensions":{"classification":"INTERNAL_ERROR"}}],"data":{"_entities":[null]}}
+/course/modules/m15-federation/labs/04-java-subgraphs/solution R01 catalog: {"queries":1,"byMethod":{"booksByIdOrIsbn":1}}
+/course/modules/m15-federation/labs/04-java-subgraphs/solution R02 reviews: {"queries":1,"byMethod":{"reviewsForBooks":1}}
+{"errors":[{"message":"Entity fetcher returned null or completed empty","locations":[],"path":["_entities",0],"extensions":{"classification":"NOT_FOUND"}}],"data":{"_entities":[null]}}

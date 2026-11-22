@@ -1,0 +1,7 @@
+0.42134418907 last-modified: Fri, 06 Nov 2026 00:20:09 GMT
+0.43127676811 last-modified: Thu, 12 Nov 2026 00:37:58 GMT
+0.43139174339 last-modified: Thu, 12 Nov 2026 02:11:05 GMT
+0.44642751879 last-modified: Fri, 20 Nov 2026 00:10:50 GMT
+federation-graphql-java-support-7.0.0.pom last-modified: Mon, 03 Aug 2026 15:28:11 GMT
+kotlin-maven-plugin-2.4.20.pom last-modified: Mon, 07 Sep 2026 08:24:28 GMT
+graphql-kotlin-federation-11.0.0.pom last-modified: Wed, 07 Oct 2026 23:16:08 GMT

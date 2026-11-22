@@ -1,0 +1,9 @@
+  [32mpass[0m  at the end reviews owns Review.book, no @override left
+        states/2 applied (240 requests so far, 85 failed)
+        states/3 applied (422 requests so far, 193 failed)
+  [31mfail[0m  zero errors across the migration
+        193 of 478 requests failed; first: 14:45:53 {"errors":[{"message":"Cannot query field \"book\" on type \"Review\".","locations":[{"line":1,"column":29}],"extensions":{"code":"GRAPHQL_VALIDATION_FAILED"}}]}
+  [32mpass[0m  Review.book now comes from reviews (catalog only adds the title)
+  [32mpass[0m  RUNBOOK.md exists
+  [31mfail[0m  RUNBOOK.md: answer the questions (rubric-graded: bin/course grade m15/07)
+  2 check(s) failed

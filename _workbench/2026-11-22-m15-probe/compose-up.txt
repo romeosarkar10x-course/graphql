@@ -1,0 +1,1 @@
+docker compose up --wait: build exit 0, 4 subgraphs healthy, supergraph exit 0, router healthy; club c1 page answered (blurb Project Hail Mary, displayName Jonas Berg (@jonasb)); compose down clean. 2026-11-22, Docker Compose 5.8.0

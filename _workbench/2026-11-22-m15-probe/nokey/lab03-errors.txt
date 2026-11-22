@@ -1,0 +1,2 @@
+type Book implements Media {
+INTERFACE_KEY_NOT_ON_IMPLEMENTATION: [catalog] Key @key(fields: "id") on interface type "Media" is missing on implementation type "Book".

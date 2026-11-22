@@ -1,0 +1,7 @@
+{
+  "title": "Stitching and hydration: a Nadel gateway (Atlassian, Kotlin on the JVM) over two plain GraphQL services, a batched hydrated Review.book, and a rename at the gateway",
+  "lecture": "15.2",
+  "kind": "lab",
+  "grading": "both",
+  "needs": []
+}

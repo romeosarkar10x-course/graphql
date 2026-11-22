@@ -1,0 +1,31 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.9", import: ["@key", "@tag"])
+
+type Query {
+  books(first: Int = 10): [Book!]! @tag(name: "public")
+  book(id: ID!): Book @tag(name: "public")
+  bookByIsbn(isbn: String!): Book @tag(name: "public")
+  media(id: ID!): Media
+}
+
+"Anything Shelfie catalogues: books and audiobooks."
+interface Media @key(fields: "id") {
+  id: ID!
+  title: String!
+}
+
+"Two keys: other subgraphs may point at a book by id or by ISBN."
+type Book implements Media @key(fields: "id") @key(fields: "isbn") {
+  id: ID! @tag(name: "public")
+  isbn: String! @tag(name: "public")
+  title: String! @tag(name: "public")
+  authors: [String!]! @tag(name: "public")
+  pages: Int!
+}
+
+type Audiobook implements Media @key(fields: "id") {
+  id: ID!
+  title: String!
+  narrator: String!
+  minutes: Int!
+}

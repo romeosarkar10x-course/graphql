@@ -1,0 +1,6 @@
+n1 apollo={"steps":[["clubs"],["accounts","reviews"],["catalog"]],"fetches":4} hive={"steps":[["clubs"],["accounts","reviews"],["catalog"]],"fetches":4} requests: accounts=1 catalog=1 reviews=1 clubs=1
+q1 apollo={"steps":[["catalog"]],"fetches":1} hive={"steps":[["catalog"]],"fetches":1} requests: accounts=0 catalog=1 reviews=0 clubs=0
+q2 apollo={"steps":[["catalog"],["reviews"]],"fetches":2} hive={"steps":[["catalog"],["reviews"]],"fetches":2} requests: accounts=0 catalog=1 reviews=1 clubs=0
+q3 apollo={"steps":[["reviews"]],"fetches":1} hive={"steps":[["reviews"]],"fetches":1} requests: accounts=0 catalog=0 reviews=1 clubs=0
+q4 apollo={"steps":[["reviews"],["accounts","catalog"]],"fetches":3} hive={"steps":[["reviews"],["accounts","catalog"]],"fetches":3} requests: accounts=1 catalog=1 reviews=1 clubs=0
+q5 apollo={"steps":[["clubs"],["accounts","catalog"],["clubs"]],"fetches":4} hive={"steps":[["clubs"],["accounts","catalog"],["clubs"]],"fetches":4} requests: accounts=1 catalog=1 reviews=0 clubs=2

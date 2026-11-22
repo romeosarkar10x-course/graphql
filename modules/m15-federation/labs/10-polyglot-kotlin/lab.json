@@ -1,0 +1,7 @@
+{
+  "title": "Polyglot preview: Shelfie's accounts subgraph re-implemented in Kotlin with graphql-kotlin (Expedia), built with Maven, composed with three Java subgraphs",
+  "lecture": "15.4",
+  "kind": "project",
+  "grading": "auto",
+  "needs": ["fed"]
+}

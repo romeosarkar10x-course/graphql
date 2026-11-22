@@ -1,0 +1,11 @@
+{
+  "types": {
+    "User": "monolith",
+    "Book": "monolith",
+    "Review": "monolith",
+    "Club": "monolith",
+    "Meetup": "monolith"
+  },
+  "fields": {},
+  "keys": {}
+}

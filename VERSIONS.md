@@ -84,3 +84,11 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | Open Library (recorded) | responses of 2026-11-22, served by `modules/m14-patterns/contract/openlibrary/FakeOpenLibrary.java` | — | labs 14.4, 14.10; re-record each term (data changes, the API may too) |
 | graphql-java-extended-scalars | 24.0 (`DateTime`, `Date`) | — | lab 14.2; no release newer than 24.0 on Central (2026-11-22) |
 | Resilience4j circuit breaker | 2.4.0 | — | lab 14.4 (as Module 12) |
+| Apollo Router | 2.19.0 (2026-10-22), Elastic License 2.0, run unlicensed | Apollo Router | Module 15; `bin/course fed` (sha256-checked into `.cache/fed`); subscriptions need a licence; 2.19.1 was 6 days old |
+| Hive Router | 0.3.9 (2026-10-29), MIT | — | Module 15, second router; no `@defer`; 0.3.19 was 2 days old |
+| federation-jvm | `federation-graphql-java-support` 7.0.0 (2026-08-03) | — | Module 15 subgraphs; not in Boot's BOM; 7.1.1 (2026-11-17) too new |
+| Federation composition | `@theguild/federation-composition` 0.27.0 (2026-09-23, MIT), graphql 16.15.0 | Rover / Hive CLI | Module 15; supports federation v2.0 to v2.9; Rover's composition needs ELv2 acceptance (not accepted) |
+| Nadel | `com.atlassian:nadel` 0.42134418907 (2026-11-06), Apache-2.0 | — | lab 15.2; brings its own graphql-java; 0.44642751879 (2026-11-20) probed, too new to pin |
+| graphql-kotlin | 11.0.0 (2026-10-07), Kotlin 2.4.20 (`kotlin-maven-plugin`, 2026-09-07), maven-shade-plugin 3.6.2 | — | mini-project 15.10; federation link pinned to v2.9 (default v2.13) |
+| GitHub Actions (Module 15) | `actions/checkout@v7`, `actions/setup-node@v7`, `actions/upload-artifact@v7` | — | lab 15.5 workflow, read by the test, not run |
+| Jackson / slf4j-nop in standalone Module 15 jars | `tools.jackson.core:jackson-databind` 3.1.8 (2026-10-18); slf4j-nop 1.7.36 (Nadel's slf4j 1.x) / 2.0.17 (Kotlin) | — | lab 15.2 and mini-project 15.10, outside Spring Boot |

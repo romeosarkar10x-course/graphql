@@ -1,0 +1,8 @@
+{
+  "q1": [["catalog"]],
+  "q2": [["catalog"], ["reviews"]],
+  "q3": [["reviews"]],
+  "q4": [["reviews"], ["accounts", "catalog"]],
+  "q5": [["clubs"], ["accounts", "catalog"], ["clubs"]],
+  "n1": [["clubs"], ["accounts", "reviews"], ["catalog"]]
+}

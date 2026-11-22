@@ -1,0 +1,36 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.9", import: ["@key", "@external", "@provides", "@override"])
+
+type Query {
+  review(id: ID!): Review
+  "Newest first."
+  latestReviews(first: Int = 5): [Review!]!
+}
+
+type Mutation {
+  "Signed in only (X-Shelfie-User); null and an error otherwise."
+  addReview(bookId: ID!, rating: Int!, body: String!): Review
+}
+
+type Review @key(fields: "id") {
+  id: ID!
+  rating: Int!
+  body: String!
+  "Reviews keeps a copy of each author's handle, so it can answer that without accounts."
+  author: User! @provides(fields: "handle")
+  book: Book! @override(from: "catalog", label: "reviews-book")
+}
+
+type Book @key(fields: "id") {
+  id: ID!
+  "Oldest first."
+  reviews: [Review!]!
+  reviewCount: Int!
+  "Null without reviews."
+  averageRating: Float
+}
+
+type User @key(fields: "id") {
+  id: ID!
+  handle: String! @external
+  reviews: [Review!]!
+}

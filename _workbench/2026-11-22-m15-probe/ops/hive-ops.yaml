@@ -1,0 +1,13 @@
+http:
+  host: 127.0.0.1
+query_planner:
+  allow_expose: true
+supergraph:
+  source: file
+  path: /tmp/sg.graphql
+  poll_interval: 1s
+headers:
+  all:
+    request:
+      - propagate:
+          named: x-shelfie-user

@@ -1,13 +1,26 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 14
+## Now: user review of Module 15
 
-The user said "continue..." (2026-11-22) after Module 13; Module 14 is built. Wait for review before Module 15.
+The user said "continue..." (2026-11-22) after Module 14; Module 15 is built. Wait for review before Module 16.
+
+Decisions for the user (Module 15):
+
+- [ ] Rover: accept the Elastic License 2.0 for its composition plugin (then labs could use Rover), or keep The
+      Guild's MIT composer (current).
+- [ ] Apollo Router's anonymous telemetry: tests run with its default; set `APOLLO_TELEMETRY_DISABLED=true` in
+      `contract/fed.sh` and `compose.yaml` if you prefer.
 
 ## Verification debt
 
 - [ ] Rerun the full `bin/course check --starters` (the 2026-11-21 run after Module 10 was stopped at m10/01;
       after Modules 11 to 14 only their own module checks ran). It is CPU-heavy: run it when the machine is free.
+- [ ] Module 15: `checkpoint-host.sh` and `docker compose up` verified on Linux (Docker Compose 5.8.0) only; check
+      Docker Desktop (paths for `COURSE_ROOT`, user ids). The full `bin/course checkpoint 15` flow (with a learner
+      workspace) has not been run end to end; the compose run itself was run by hand.
+- [ ] Module 15: re-check pins each term: Apollo Router (2.19.1 and newer), Hive Router (0.3.19), federation-jvm
+      7.1.1, composition 0.27.2 and federation v2.10+ support, Nadel (fast releases), graphql-kotlin's default link.
+- [ ] Module 15: lab 15.5's GitHub Actions workflow is read by the test, not run on GitHub.
 - [ ] Module 14: re-record Open Library each term (`contract/openlibrary/data/`; FINDINGS 8) and re-check its API
       shape; lab 14.4's and 14.10's expected values come from the recording.
 - [ ] Module 14: lab 14.5 creates one Kafka topic per test run (`m14-reviews-<time>-<n>`); they pile up in the
@@ -92,7 +105,7 @@ The user said "continue..." (2026-11-22) after Module 13; Module 14 is built. Wa
 
 ## Next modules (in order)
 
-- [ ] M15–M18, capstone, per plan/syllabus.md
+- [ ] M16–M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 

@@ -1,0 +1,7 @@
+{
+  "title": "Mini-project, team simulation: four teams each own a subgraph and ship \"club book of the month\" together, then run the whole graph with docker compose",
+  "lecture": "15.7",
+  "kind": "project",
+  "grading": "both",
+  "needs": ["fed"]
+}

@@ -1,0 +1,12 @@
+{
+  "p01": [["accounts"]],
+  "p02": [["accounts"], ["clubs", "reviews"]],
+  "p03": [["reviews"]],
+  "p04": [["reviews"], ["accounts"]],
+  "p05": [["catalog"], ["clubs"], ["accounts"]],
+  "p06": [["catalog"], ["clubs"]],
+  "p07": [["clubs"], ["reviews"], ["accounts"]],
+  "p08": [["reviews"], ["catalog"]],
+  "p09": [["catalog"], ["reviews"]],
+  "p10": [["clubs"], ["catalog"]]
+}

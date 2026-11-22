@@ -1,0 +1,5 @@
+# Apollo Router 2.19 for Shelfie in production (lab 15.6). The course starts it with --listen and --supergraph,
+# and waits for the health check below: keep it.
+health_check:
+  listen: 127.0.0.1:8088
+  enabled: true

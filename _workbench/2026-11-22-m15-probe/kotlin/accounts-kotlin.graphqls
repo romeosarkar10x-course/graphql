@@ -1,0 +1,41 @@
+schema @link(as : "", import : ["@key", "@shareable"], url : "https://specs.apollo.dev/federation/v2.9"){
+  query: Query
+}
+
+"Space separated list of primary keys needed to access federated object"
+directive @key(fields: federation__FieldSet!, resolvable: Boolean = true) repeatable on OBJECT | INTERFACE
+
+"Links definitions within the document to external schemas."
+directive @link(as: String, import: [link__Import], url: String!) repeatable on SCHEMA
+
+"Indicates that given object and/or field can be resolved by multiple subgraphs"
+directive @shareable repeatable on OBJECT | FIELD_DEFINITION
+
+union _Entity = User
+
+type Query {
+  "Union of all types that use the @key directive, including both types native to the schema and extended types"
+  _entities(representations: [_Any!]!): [_Entity]!
+  _service: _Service!
+  user(id: ID!): User
+  users: [User!]!
+}
+
+type User @key(fields : "id", resolvable : true) {
+  city: String
+  handle: String! @shareable
+  id: ID!
+  name: String!
+}
+
+type _Service {
+  sdl: String!
+}
+
+"Federation scalar type used to represent any external entities passed to _entities query."
+scalar _Any
+
+"Federation type representing set of fields"
+scalar federation__FieldSet
+
+scalar link__Import

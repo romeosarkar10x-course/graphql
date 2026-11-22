@@ -1,0 +1,4 @@
+nadel gateway on 4000
+{"data":{"latestReviews":[{"id":"r15","book":{"name":"Station Eleven"}},{"id":"r14","book":{"name":"The Remains of the Day"}},{"id":"r13","book":{"name":"The Seven Moons of Maali Almeida"}},{"id":"r12","book":{"name":"The Seven Moons of Maali Almeida"}}]}}
+{"requests":4,"service":"catalog","queries":["{ book(id: \"b3\") { rename__name__title: title __typename__rename__name: __typename } }","{ book(id: \"b9\") { rename__name__title: title __typename__rename__name: __typename } }","{ book(id: \"b8\") { rename__name__title: title __typename__rename__name: __typename } }","{ book(id: \"b9\") { rename__name__title: title __typename__rename__name: __typename } }"]}
+{"errors":[{"message":"Validation error (FieldUndefined@[book/title]) : Field 'title' in type 'Book' is undefined","locations":[{"line":1,"column":20}],"extensions":{"classification":"ValidationError"}}]}

@@ -1,0 +1,6 @@
+com.atlassian:nadel 2024-12-10T04-34-06-f2ee9344 2024-12-10T04:41:31Z
+com.graphql-java:nadel 2021-03-26T09-09-21-fabd441 2021-03-26T09:10:07Z
+com.atlassian:nadel-test 2022-04-05T04-35-54-29b76c29 2022-04-05T04:38:58Z
+com.atlassian:nadel-engine-nextgen 2022-03-22T05-05-01-a5d0b804 2022-03-22T05:10:01Z
+com.atlassian:nadel-api 2022-03-22T05-05-01-a5d0b804 2022-03-22T05:09:01Z
+com.atlassian:nadel-engine 2022-03-03T13-36-24-9b3db244 2022-03-03T13:46:58Z

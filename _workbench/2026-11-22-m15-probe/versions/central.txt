@@ -1,0 +1,6 @@
+federation-graphql-java-support               latest=7.1.1 release=7.1.1 updated=20261117194507
+graphql-kotlin-federation                     latest=11.0.0 release=11.0.0 updated=20261007232433
+graphql-kotlin-maven-plugin                   latest=11.0.0 release=11.0.0 updated=20261007232433
+graphql-kotlin-spring-server                  latest=11.0.0 release=11.0.0 updated=20261007232437
+kotlin-maven-plugin                           latest=2.5.0-RC release=2.5.0-RC updated=20261111082541
+graphql-dgs-spring-graphql-starter            latest=12.1.1 release=12.1.1 updated=20261111025837

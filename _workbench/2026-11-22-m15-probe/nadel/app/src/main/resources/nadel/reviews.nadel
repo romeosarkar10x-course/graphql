@@ -1,0 +1,15 @@
+type Query {
+  review(id: ID!): Review
+  latestReviews(first: Int = 5): [Review!]!
+}
+type Review {
+  id: ID!
+  rating: Int!
+  body: String!
+  book: Book @hydrated(
+    service: "catalog"
+    field: "books"
+    arguments: [{ name: "ids", value: "$source.bookId" }]
+    identifiedBy: "id"
+  )
+}

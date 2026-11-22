@@ -1,0 +1,4 @@
+# Hive Router 0.3 for the course: the supergraph path, port and host come from SUPERGRAPH_FILE_PATH, PORT and HOST
+# (contract/fed.sh sets them), and the course exposes query plans for experiments.
+query_planner:
+  allow_expose: true

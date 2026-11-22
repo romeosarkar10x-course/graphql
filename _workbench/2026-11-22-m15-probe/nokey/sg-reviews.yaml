@@ -1,0 +1,17 @@
+subgraphs:
+  accounts:
+    routing_url: http://localhost:4001/graphql
+    schema:
+      file: ../../../modules/m15-federation/contract/subgraphs/src/main/resources/graphql/accounts/accounts.graphqls
+  catalog:
+    routing_url: http://localhost:4002/graphql
+    schema:
+      file: ../../../modules/m15-federation/contract/subgraphs/src/main/resources/graphql/catalog/catalog.graphqls
+  reviews:
+    routing_url: http://localhost:4003/graphql
+    schema:
+      file: ./reviews-nokey.graphqls
+  clubs:
+    routing_url: http://localhost:4004/graphql
+    schema:
+      file: ../../../modules/m15-federation/contract/subgraphs/src/main/resources/graphql/clubs/clubs.graphqls

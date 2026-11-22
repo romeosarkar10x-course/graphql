@@ -1,0 +1,30 @@
+# Lab 15.3 starter: what this team owns, without any federation yet. See the lab README.
+
+type Query {
+  "Newest first."
+  latestReviews(first: Int = 5): [Review!]!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  body: String!
+  "Reviews stores each author's handle with the review."
+  author: User!
+  media: Media!
+}
+
+type User {
+  id: ID!
+  handle: String!
+  reviews: [Review!]!
+}
+
+"Reviews does not know which kinds of Media catalog has."
+type Media {
+  id: ID!
+  reviews: [Review!]!
+  reviewCount: Int!
+  "Null without reviews."
+  averageRating: Float
+}

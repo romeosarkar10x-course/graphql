@@ -1,0 +1,4 @@
+# Hive Router 0.3 for Shelfie in production (lab 15.6). The course sets the port and the supergraph path by
+# environment (PORT, SUPERGRAPH_FILE_PATH) and points ROUTER_CONFIG_FILE_PATH at this file.
+http:
+  host: 127.0.0.1

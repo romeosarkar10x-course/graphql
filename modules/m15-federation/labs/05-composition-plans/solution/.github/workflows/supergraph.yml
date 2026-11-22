@@ -1,0 +1,31 @@
+# Every pull request that touches a subgraph's schema must still compose. The composed supergraph is kept as an
+# artifact, so a reviewer (or a deploy job) can read exactly what the routers will load.
+name: supergraph
+
+on:
+  pull_request:
+    paths:
+      - "subgraphs/**"
+      - "supergraph.yaml"
+  push:
+    branches: [main]
+    paths:
+      - "subgraphs/**"
+      - "supergraph.yaml"
+
+jobs:
+  compose:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: compose/package-lock.json
+      - name: Compose
+        run: ci/compose.sh
+      - uses: actions/upload-artifact@v7
+        with:
+          name: supergraph
+          path: supergraph.graphql

@@ -1,0 +1,87 @@
+# The federated Shelfie stack in one command, from this directory:
+#
+#   docker compose up --wait        build, four subgraphs, compose the supergraph, router on localhost:4000
+#   docker compose down
+#
+# Everything runs in the course image (bin/course image builds it). The repository's .cache (Maven repository,
+# Node.js, the routers from bin/course fed) comes from COURSE_ROOT: three levels up from workspace/m15-.../.
+name: shelfie-federated
+
+x-course: &course
+  image: graphql-course:1
+  user: "${COURSE_UID:-1000}:${COURSE_GID:-1000}"
+  environment:
+    HOME: /tmp
+  working_dir: /app
+  volumes:
+    - .:/app
+    - ${COURSE_ROOT:-../../..}/.cache:/course/.cache
+
+x-subgraph: &subgraph
+  <<: *course
+  depends_on:
+    build:
+      condition: service_completed_successfully
+
+services:
+  build:
+    <<: *course
+    command: ["mvn", "-q", "package", "-DskipTests"]
+
+  accounts:
+    <<: *subgraph
+    command: ["java", "-XX:TieredStopAtLevel=1", "-Xmx192m", "-jar", "target/shelfie-team.jar",
+              "--spring.profiles.active=accounts", "--server.port=4001"]
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "localhost:4001/_stats"]
+      interval: 2s
+      retries: 60
+
+  catalog:
+    <<: *subgraph
+    command: ["java", "-XX:TieredStopAtLevel=1", "-Xmx192m", "-jar", "target/shelfie-team.jar",
+              "--spring.profiles.active=catalog", "--server.port=4002"]
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "localhost:4002/_stats"]
+      interval: 2s
+      retries: 60
+
+  reviews:
+    <<: *subgraph
+    command: ["java", "-XX:TieredStopAtLevel=1", "-Xmx192m", "-jar", "target/shelfie-team.jar",
+              "--spring.profiles.active=reviews", "--server.port=4003"]
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "localhost:4003/_stats"]
+      interval: 2s
+      retries: 60
+
+  clubs:
+    <<: *subgraph
+    command: ["java", "-XX:TieredStopAtLevel=1", "-Xmx192m", "-jar", "target/shelfie-team.jar",
+              "--spring.profiles.active=clubs", "--server.port=4004"]
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "localhost:4004/_stats"]
+      interval: 2s
+      retries: 60
+
+  supergraph:
+    <<: *course
+    command: ["bash", "ci/supergraph.sh"]
+    depends_on:
+      accounts: { condition: service_healthy }
+      catalog: { condition: service_healthy }
+      reviews: { condition: service_healthy }
+      clubs: { condition: service_healthy }
+
+  router:
+    <<: *course
+    command: ["/course/.cache/fed/bin/router", "--config", "router.yaml", "--supergraph", "supergraph.graphql",
+              "--listen", "0.0.0.0:4000"]
+    depends_on:
+      supergraph: { condition: service_completed_successfully }
+    ports:
+      - "4000:4000"
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "localhost:8088/health"]
+      interval: 2s
+      retries: 60

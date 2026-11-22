@@ -1,0 +1,39 @@
+{
+  "types": {
+    "User": "accounts",
+    "Book": "catalog",
+    "Review": "reviews",
+    "Club": "clubs",
+    "Meetup": "clubs"
+  },
+  "fields": {
+    "Query.me": "accounts",
+    "Query.user": "accounts",
+    "Query.books": "catalog",
+    "Query.book": "catalog",
+    "Query.bookByIsbn": "catalog",
+    "Query.latestReviews": "reviews",
+    "Query.clubs": "clubs",
+    "Query.club": "clubs",
+    "Query.upcomingMeetups": "clubs",
+    "Mutation.updateProfile": "accounts",
+    "Mutation.wantToRead": "accounts",
+    "Mutation.addReview": "reviews",
+    "Mutation.deleteReview": "reviews",
+    "Mutation.joinClub": "clubs",
+    "Mutation.scheduleMeetup": "clubs",
+    "User.reviews": "reviews",
+    "User.clubs": "clubs",
+    "User.attending": "clubs",
+    "Book.reviews": "reviews",
+    "Book.reviewCount": "reviews",
+    "Book.averageRating": "reviews",
+    "Book.clubsReading": "clubs"
+  },
+  "keys": {
+    "User": "id",
+    "Book": "id",
+    "Review": "id",
+    "Club": "id"
+  }
+}

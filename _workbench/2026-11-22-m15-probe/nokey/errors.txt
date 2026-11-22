@@ -1,0 +1,9 @@
+== noid
+INVALID_FIELD_SHARING: Non-shareable field "Book.id" is resolved from multiple subgraphs: it is resolved from subgraphs "catalog", "clubs" and "reviews" and defined as non-shareable in subgraph "catalog"
+exit=1
+== nokey
+INVALID_FIELD_SHARING: Non-shareable field "Book.id" is resolved from multiple subgraphs: it is resolved from subgraphs "catalog", "clubs" and "reviews" and defined as non-shareable in subgraph "catalog"
+exit=1
+== reviews
+INVALID_FIELD_SHARING: Non-shareable field "Book.id" is resolved from multiple subgraphs: it is resolved from subgraphs "catalog", "clubs" and "reviews" and defined as non-shareable in subgraph "reviews"
+exit=1

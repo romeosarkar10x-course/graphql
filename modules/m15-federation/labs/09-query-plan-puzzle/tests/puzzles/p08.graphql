@@ -1,0 +1,2 @@
+# Not signed in: the mutation fails, but the router still plans it.
+mutation { addReview(bookId: "b2", rating: 5, body: "Again!") { id book { title } } }

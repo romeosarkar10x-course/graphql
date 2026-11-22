@@ -1,0 +1,41 @@
+# The federated Shelfie stack in one command, from this directory:
+#
+#   docker compose up --wait        build, four subgraphs, compose the supergraph, router on localhost:4000
+#   docker compose down
+#
+# Everything runs in the course image (bin/course image builds it). The repository's .cache (Maven repository,
+# Node.js, the routers from bin/course fed) comes from COURSE_ROOT: three levels up from workspace/m15-.../.
+name: shelfie-federated
+
+x-course: &course
+  image: graphql-course:1
+  user: "${COURSE_UID:-1000}:${COURSE_GID:-1000}"
+  environment:
+    HOME: /tmp
+  working_dir: /app
+  volumes:
+    - .:/app
+    - ${COURSE_ROOT:-../../..}/.cache:/course/.cache
+
+x-subgraph: &subgraph
+  <<: *course
+  depends_on:
+    build:
+      condition: service_completed_successfully
+
+services:
+  build:
+    <<: *course
+    command: ["mvn", "-q", "package", "-DskipTests"]
+
+  accounts:
+    <<: *subgraph
+    command: ["java", "-XX:TieredStopAtLevel=1", "-Xmx192m", "-jar", "target/shelfie-team.jar",
+              "--spring.profiles.active=accounts", "--server.port=4001"]
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "localhost:4001/_stats"]
+      interval: 2s
+      retries: 60
+
+  # TODO (mini-project 15.8): catalog, reviews and clubs like accounts; then "supergraph" (ci/supergraph.sh, once
+  # all four are healthy) and "router" (on localhost:4000, after the supergraph is written).

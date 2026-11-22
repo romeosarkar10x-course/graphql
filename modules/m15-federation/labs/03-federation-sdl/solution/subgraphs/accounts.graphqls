@@ -1,0 +1,21 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.9",
+        import: ["@key", "@shareable", "@inaccessible", "@tag"])
+
+type Query {
+  "The signed-in reader."
+  me: User
+  user(id: ID!): User @tag(name: "public")
+}
+
+"A reader. The accounts team owns who people are."
+type User @key(fields: "id") {
+  id: ID! @tag(name: "public")
+  name: String! @tag(name: "public")
+  "Reviews keeps a copy, so both subgraphs may answer it."
+  handle: String! @shareable @tag(name: "public")
+  "For sign-in and mail only: in the supergraph, never in the API."
+  email: String! @inaccessible
+  "Moving to clubs (see clubs.graphqls): accounts still answers the rest of the traffic."
+  clubCount: Int!
+}

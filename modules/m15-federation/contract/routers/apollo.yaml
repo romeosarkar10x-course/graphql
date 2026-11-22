@@ -1,0 +1,10 @@
+# Apollo Router 2.19 for the course: the listen address comes from --listen; health on 127.0.0.1:8088.
+supergraph:
+  introspection: true
+health_check:
+  listen: 127.0.0.1:8088
+  enabled: true
+include_subgraph_errors:
+  all: true
+plugins:
+  experimental.expose_query_plan: true

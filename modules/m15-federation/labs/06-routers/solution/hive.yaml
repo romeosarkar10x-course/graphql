@@ -1,0 +1,14 @@
+# Hive Router 0.3 for Shelfie in production. The course sets the port and the supergraph path by environment.
+http:
+  host: 127.0.0.1
+introspection: false
+headers:
+  all:
+    request:
+      - propagate:
+          named: authorization
+      - propagate:
+          named: x-shelfie-user
+traffic_shaping:
+  all:
+    request_timeout: 2s

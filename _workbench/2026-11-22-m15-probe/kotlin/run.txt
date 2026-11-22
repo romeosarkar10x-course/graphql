@@ -1,0 +1,30 @@
+accounts (Kotlin) on 4001
+schema @link(import : ["@key", "@shareable", "FieldSet"], url : "https://specs.apollo.dev/federation/v2.13"){
+  query: Query
+}
+union _Entity = User
+type Query {
+  _entities(representations: [_Any!]!): [_Entity]!
+  _service: _Service!
+  user(id: ID!): User
+  users: [User!]!
+}
+type User @key(fields : "id", resolvable : true) {
+  city: String
+  handle: String! @shareable
+  id: ID!
+  name: String!
+}
+type _Service {
+  sdl: String!
+}
+scalar FieldSet
+scalar _Any
+scalar link__Import
+{"data":{"_entities":[{"name":"Ben Okafor","handle":"benok"},null]}}
+{"data":{"users":[{"id":"u1","handle":"asha"},{"id":"u2","handle":"benok"}]}}
+accounts (Kotlin) on 4001
+schema @link(as : "", import : ["@key", "@shareable"], url : "https://specs.apollo.dev/federation/v2.9"){
+  query: Query
+}
+composed

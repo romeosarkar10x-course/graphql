@@ -1,0 +1,1 @@
+{ latestReviews(first: 2) { author { handle } } }

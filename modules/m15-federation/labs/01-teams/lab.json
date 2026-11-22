@@ -1,0 +1,7 @@
+{
+  "title": "One graph, many teams: map Shelfie's monolith schema to four teams, then estimate what one feature costs under a monolith, a BFF and a federated graph",
+  "lecture": "15.1",
+  "kind": "lab",
+  "grading": "both",
+  "needs": []
+}

@@ -7,11 +7,12 @@ modules/mNN-slug/
   README.md               overview: lecture/lab table, games table, spec refs, checkpoint
   checkpoint.md           8 quiz questions, answers folded in <details>
   checkpoint.json         {"labs": [...], "files": [...]} for bin/course checkpoint NN
+  checkpoint-host.sh      optional: run on the host by bin/course checkpoint NN before the in-image checks (M15: docker compose up)
   contract/               shared .graphql files, expected outputs, view-model specs (optional)
   lectures/N.M-slug.md    Hook / Concept / Java build / Experiment / Check (with folded answers)
   labs/NN-slug/
     README.md             the brief: what, how to run, done-when; group variant for games
-    lab.json              {"title","lecture","kind": lab|project|game,"grading": auto|rubric|both,"needs": [ref|toxiproxy|postgres|redis|kafka|keycloak|varnish|internet|docker|node]}
+    lab.json              {"title","lecture","kind": lab|project|game,"grading": auto|rubric|both,"needs": [ref|toxiproxy|postgres|redis|kafka|keycloak|varnish|internet|docker|node|fed]}
     HINTS.md              exactly three escalating hints; the third is still not the answer
     rubric.md             for rubric/both labs: points table and pass mark
     starter/              copied to workspace/ by bin/course start; must FAIL the tests

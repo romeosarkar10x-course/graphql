@@ -1,0 +1,18 @@
+# Lab 15.3 starter: what this team owns, without any federation yet. See the lab README.
+
+type Query {
+  "The signed-in reader."
+  me: User
+  user(id: ID!): User
+}
+
+"A reader. The accounts team owns who people are."
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  "For sign-in and mail only: no client may see it."
+  email: String!
+  "Clubs will take this over."
+  clubCount: Int!
+}

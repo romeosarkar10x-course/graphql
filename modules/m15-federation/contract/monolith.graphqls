@@ -1,0 +1,87 @@
+"""
+Shelfie before federation: one schema, one service, one team (Module 15.1). Every type and field here has to
+find an owner among four teams: accounts, catalog, reviews and clubs.
+"""
+type Query {
+  "The signed-in reader."
+  me: User
+  user(id: ID!): User
+  books(first: Int = 10): [Book!]!
+  book(id: ID!): Book
+  bookByIsbn(isbn: String!): Book
+  "Newest first."
+  latestReviews(first: Int = 5): [Review!]!
+  clubs: [Club!]!
+  club(id: ID!): Club
+  "Upcoming meetups of every public club, soonest first."
+  upcomingMeetups(first: Int = 10): [Meetup!]!
+}
+
+type Mutation {
+  updateProfile(name: String, city: String): User
+  addReview(bookId: ID!, rating: Int!, body: String!): Review
+  deleteReview(id: ID!): ID
+  joinClub(clubId: ID!): Club
+  scheduleMeetup(clubId: ID!, title: String!, startsAt: String!, location: String!): Meetup
+  "Add a book to the signed-in reader's want-to-read list."
+  wantToRead(bookId: ID!): User
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  city: String
+  email: String!
+  joinedAt: String!
+  "Books the reader wants to read, newest first."
+  wantToRead: [Book!]!
+  reviews: [Review!]!
+  clubs: [Club!]!
+  "Meetups the reader said they will attend."
+  attending: [Meetup!]!
+}
+
+type Book {
+  id: ID!
+  isbn: String!
+  title: String!
+  authors: [String!]!
+  year: Int!
+  pages: Int!
+  coverUrl: String
+  reviews: [Review!]!
+  reviewCount: Int!
+  averageRating: Float
+  "Clubs reading it now."
+  clubsReading: [Club!]!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  body: String!
+  createdAt: String!
+  author: User!
+  book: Book!
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String
+  owner: User!
+  members: [User!]!
+  memberCount: Int!
+  currentBook: Book
+  meetups: [Meetup!]!
+}
+
+type Meetup {
+  id: ID!
+  title: String!
+  startsAt: String!
+  location: String!
+  club: Club!
+  attendees: [User!]!
+}

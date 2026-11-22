@@ -1,0 +1,6 @@
+@theguild/federation-composition 0.27.2 2026-11-19T15:20:13.325Z MIT
+@graphql-hive/gateway 2.15.11 2026-11-20T15:01:54.854Z MIT
+@graphql-hive/router 0.0.0-manual-f9542ee 2025-10-26T18:30:20.675Z MIT
+@apollo/composition 2.14.5 2026-11-20T21:40:28.821Z Elastic-2.0
+@apollo/rover 1.1.0 2026-11-19T17:45:29.053Z MIT
+@graphql-hive/cli 0.68.6 2026-11-20T14:18:45.348Z MIT

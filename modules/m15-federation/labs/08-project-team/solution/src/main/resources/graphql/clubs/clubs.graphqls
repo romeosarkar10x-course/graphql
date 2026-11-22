@@ -1,0 +1,42 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.9", import: ["@key", "@external", "@requires"])
+
+type Query {
+  clubs: [Club!]!
+  club(id: ID!): Club
+}
+
+type Mutation {
+  "The club's owner only (X-Shelfie-User): anyone else gets null and an error. month is YYYY-MM."
+  pickBookOfTheMonth(clubId: ID!, bookId: ID!, month: String!): Club
+}
+
+"A club's pick for one month."
+type BookOfTheMonth {
+  month: String!
+  book: Book!
+  pickedBy: User!
+}
+
+type Club @key(fields: "id") {
+  id: ID!
+  name: String!
+  owner: User!
+  members: [User!]!
+  memberCount: Int!
+  currentBook: Book
+  "This club's latest pick; null until the owner picks one."
+  bookOfTheMonth: BookOfTheMonth
+}
+
+type User @key(fields: "id") {
+  id: ID!
+  clubs: [Club!]!
+}
+
+type Book @key(fields: "id") {
+  id: ID!
+  pages: Int! @external
+  "Weeks a club needs at Shelfie's pace of 100 pages a week: the catalog's page count, rounded up."
+  weeksToRead: Int! @requires(fields: "pages")
+  clubsReading: [Club!]!
+}

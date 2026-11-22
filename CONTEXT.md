@@ -175,3 +175,17 @@ in Docker.
     lecture-only.
   - Game 14.9 fixes three directives to an exact spec (auto) plus a rubric-graded exhibit; mini-project 14.10 has
     no group variant (one gateway per grader run).
+- Module 15 (2026-11-22), probes in `_workbench/2026-11-22-m15-probe/` (`FINDINGS.md`, 13 findings):
+  - Composition is `@theguild/federation-composition` 0.27.0 (MIT) in Node.js; Rover's composition needs the
+    Elastic License 2.0 accepted, which was not done on the user's behalf (user decision pending, TODO).
+  - Two routers run: Apollo Router 2.19.0 (ELv2, unlicensed: no subscriptions) and Hive Router 0.3.9 (MIT: no
+    `@defer`), fetched by `bin/course fed` into `.cache/fed/bin` with sha256 checks; labs declare `"needs":
+    ["fed"]`. Apollo's anonymous telemetry is left at its default (user decision pending, TODO).
+  - Subgraphs are Spring for GraphQL + federation-jvm 7.0.0 (`FederationSchemaFactory`); DGS, Cosmo, Hive Gateway,
+    Fusion and feddi are lecture-only. 15.2 uses Nadel outside Spring; mini-project 15.10 is graphql-kotlin 11
+    with Maven, federation link pinned to v2.9.
+  - `contract/stack.sh` runs the graph by hand (`SKIP=` for the learner's own subgraphs); `fed.sh` is the tests'
+    helper library.
+  - The checkpoint's `docker compose up` runs on the host: `bin/course checkpoint NN` now runs
+    `modules/mNN-*/checkpoint-host.sh` first when it exists (only Module 15 has one).
+  - 15.7's zero errors: traffic every 50 ms through blue/green deploys with Apollo's hot reload.

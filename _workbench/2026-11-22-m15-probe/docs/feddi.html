@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVM-native GraphQL federation platform - feddi</title>
+    <meta name="description" content="feddi is a managed GraphQL federation platform. Compose multiple GraphQL services into a single unified API with a self-hosted gateway, CLI-first workflow, and field-level analytics.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-KAoU455vcX8lnBdtygh9A.js"></script>
+    <script>
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+    </script>
+    <style>
+        /* ── Color tokens (overridden by feddi-overrides when theme studio is active) ── */
+        :root {
+            /* Backgrounds */
+            --feddi-bg:               #1C1D26;
+            --feddi-surface:          #12141C;
+            --feddi-section-bg:       #13141D;
+            --feddi-code-bar:         #0F1018;
+            --feddi-code-body:        #080910;
+
+            /* Borders */
+            --feddi-border:           #272838;
+            --feddi-border-card:      #1E2230;
+            --feddi-border-ui:        #2E3048;
+            --feddi-border-outline:   #333333;
+            --feddi-code-sep:         #181B28;
+
+            /* Accent */
+            --feddi-accent:           #5B82B5;
+            --feddi-accent-hover:     #6A91C4;
+            --feddi-accent-muted:     #3D5880;
+
+            /* Text */
+            --feddi-text:             #ffffff;
+            --feddi-text-body:        #D0DBE7;
+            --feddi-text-ui:          #cccccc;
+            --feddi-text-muted:       #8899AA;
+            --feddi-text-dim:         #6B7990;
+            --feddi-text-faint:       #4A5566;
+            --feddi-text-placeholder: #444444;
+            --feddi-warn:             #E8A838;
+            --feddi-error:            #c0504a;
+            --feddi-callout-bg:       rgba(91,130,181,0.08);
+
+            /* Layout */
+            --header-height:          77px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: rgba(255,255,255,0.18); color: inherit; }
+        /* Global anchor-jump offset: pushes every #fragment landing
+           point below the sticky header. Applies to any scroll caused
+           by a hash navigation on any marketing page. */
+        html { scroll-padding-top: calc(var(--header-height) + 16px); }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            font-weight: 400;
+            color: var(--feddi-text);
+            line-height: 1.6;
+            background: var(--feddi-bg);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+            font-weight: 600;
+        }
+        a { color: var(--feddi-accent); text-decoration: none; }
+        a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+        main p a, main li a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+        main p a:hover, main li a:hover { text-decoration: none; }
+        .accent { color: var(--feddi-accent); }
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--feddi-accent);
+            margin-bottom: 12px;
+        }
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--feddi-border);
+            background: var(--feddi-bg);
+        }
+        .site-header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 18px 24px;
+        }
+        .site-header .logo { text-decoration: none; }
+        .site-header .logo:hover { text-decoration: none; opacity: 0.75; }
+        .site-header .logo img { height: 40px; width: auto; display: block; filter: brightness(0) invert(1); }
+        .site-header nav { display: flex; align-items: center; gap: 32px; }
+        .site-header nav a {
+            color: var(--feddi-text-muted);
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .site-header nav a:hover { color: var(--feddi-text); text-decoration: none; }
+        .site-header nav a.nav-active { color: var(--feddi-text); }
+        [data-theme="light"] .site-header nav a.nav-active { color: #1A1C2A; }
+        .nav-github {
+            display: flex;
+            align-items: center;
+            color: var(--feddi-text-muted);
+            transition: color 0.15s;
+            text-decoration: none;
+        }
+        .nav-github:hover { color: var(--feddi-text); text-decoration: none; }
+        .nav-github svg { display: block; }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.15s, border-color 0.15s, color 0.15s;
+        }
+        .btn:hover { text-decoration: none; }
+        .btn-cta-primary { background: var(--feddi-accent); color: var(--feddi-bg); }
+        .btn-cta-primary:hover { background: var(--feddi-accent-hover); }
+        .btn-cta-secondary { border: 1px solid var(--feddi-accent); color: var(--feddi-accent); background: transparent; }
+        .btn-cta-secondary:hover { background: var(--feddi-accent); color: var(--feddi-bg); text-decoration: none; }
+        .site-header .btn-cta-primary { padding: 8px 16px; font-weight: 500; color: var(--feddi-bg); }
+        .site-header .btn-cta-primary:hover { color: var(--feddi-bg); }
+        .site-header .btn-cta-secondary { padding: 8px 16px; font-weight: 500; color: var(--feddi-accent); }
+        .site-header .btn-cta-secondary:hover { background: var(--feddi-accent); color: var(--feddi-bg); }
+        .nav-btn-group { display: flex; gap: 8px; align-items: center; }
+
+        /* Theme toggle — only visible on the docs page */
+        .nav-theme-toggle { display: none; align-items: center; }
+        [data-page="docs"] .nav-theme-toggle { display: flex; }
+        .nav-theme-toggle button {
+            background: transparent;
+            border: 1px solid var(--feddi-border-outline);
+            border-radius: 6px;
+            color: var(--feddi-text-muted);
+            font-size: 14px;
+            font-family: inherit;
+            padding: 5px 10px;
+            cursor: pointer;
+            line-height: 1;
+            transition: border-color 0.15s, color 0.15s;
+        }
+        .nav-theme-toggle button:hover { border-color: var(--feddi-text-muted); color: var(--feddi-text); }
+        .nav-theme-icon-light { display: none; }
+        [data-theme="light"] .nav-theme-icon-dark { display: none; }
+        [data-theme="light"] .nav-theme-icon-light { display: inline; }
+
+        /* ── Light theme: token overrides ──────────────────────── */
+        [data-theme="light"] {
+            --feddi-bg:             #F4F6FC;
+            --feddi-surface:        #EAEDFA;
+            --feddi-section-bg:     #ECEFFE;
+            --feddi-code-bar:       #DDE4F4;
+            --feddi-code-body:      #E8ECF8;
+            --feddi-code-sep:       #D0D8F0;
+            --feddi-border:         #CDD3E8;
+            --feddi-border-card:    #D8DEEE;
+            --feddi-border-ui:      #CDD3E8;
+            --feddi-border-outline: #CDD3E8;
+            --feddi-text:           #1A1C2A;
+            --feddi-text-body:      #3A4560;
+            --feddi-text-ui:        #2A2E40;
+            --feddi-text-muted:     #4A5568;
+            --feddi-text-dim:       #6B7990;
+            --feddi-text-faint:     #8890A4;
+            --feddi-accent:         #3D5FAD;
+            --feddi-accent-hover:   #2E4E9C;
+            --feddi-accent-muted:   #4A6CBF;
+            --feddi-callout-bg:     #EEF3FC;
+            --feddi-warn:           #B07D10;
+            --feddi-error:          #B03030;
+        }
+        [data-theme="light"] .site-header .logo img,
+        [data-theme="light"] .footer-brand-logo img { filter: none; }
+
+        /* ── Hamburger button (mobile only) ─────────────────────── */
+        .nav-hamburger {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: var(--feddi-text-muted);
+            line-height: 0;
+        }
+        .nav-hamburger:hover { color: var(--feddi-text); }
+
+        /* ── Drawer backdrop ─────────────────────────────────────── */
+        .nav-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 199;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .nav-backdrop.open { opacity: 1; pointer-events: auto; }
+
+        /* ── Slide-in drawer ─────────────────────────────────────── */
+        .nav-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 280px;
+            background: var(--feddi-bg);
+            border-left: 1px solid var(--feddi-border);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 24px 32px;
+            transform: translateX(100%);
+            transition: transform 0.25s ease;
+            overflow-y: auto;
+        }
+        .nav-drawer.open { transform: translateX(0); }
+        .nav-drawer-close {
+            align-self: flex-end;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--feddi-text-muted);
+            padding: 4px;
+            line-height: 0;
+            margin-bottom: 24px;
+        }
+        .nav-drawer-close:hover { color: var(--feddi-text); }
+        .nav-drawer a {
+            display: block;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--feddi-text-dim);
+            text-decoration: none;
+            border-bottom: 1px solid var(--feddi-border);
+        }
+        .nav-drawer a:last-of-type { border-bottom: none; }
+        .nav-drawer a:hover { color: var(--feddi-text); text-decoration: none; }
+        .nav-drawer a.nav-active { color: var(--feddi-accent); }
+
+        /* ── Mobile nav ─────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .site-header-inner { padding: 14px 16px; }
+            /* Hide all nav items except Talk to us */
+            .site-header nav a:not(.btn-cta-secondary),
+            .site-header nav .nav-btn-group .btn-cta-primary,
+            .site-header nav .nav-github { display: none; }
+            /* Push nav+hamburger together to the right */
+            .site-header nav { margin-left: auto; gap: 0; }
+            .nav-hamburger { display: block; margin-left: 12px; }
+            .site-header .btn-cta-secondary { padding: 7px 14px; font-size: 14px; }
+            .nav-theme-toggle { display: none !important; }
+            .nav-backdrop { display: block; }
+        }
+
+        /* ── Footer ─────────────────────────────────────────────── */
+        .site-footer {
+            border-top: 1px solid var(--feddi-border);
+            padding: 64px 24px 0;
+            margin-top: 80px;
+            background: var(--feddi-bg);
+        }
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            padding-bottom: 56px;
+        }
+        .footer-brand-logo { margin-bottom: 16px; }
+        .footer-brand-logo img { height: 36px; width: auto; display: block; filter: brightness(0) invert(1); }
+        .footer-brand-tagline {
+            font-size: 14px;
+            color: var(--feddi-text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+            max-width: 280px;
+        }
+        .footer-social { display: flex; gap: 16px; }
+        .footer-social a {
+            color: var(--feddi-text-muted);
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.15s;
+            text-decoration: none;
+        }
+        .footer-social a:hover { color: var(--feddi-text); text-decoration: none; }
+        .footer-col-heading {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--feddi-text);
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+        }
+        .footer-col { display: flex; flex-direction: column; gap: 12px; }
+        .footer-col a {
+            font-size: 14px;
+            color: var(--feddi-text-muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-col a:hover { color: var(--feddi-text); text-decoration: none; }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-top: 1px solid var(--feddi-border);
+            padding: 20px 0;
+        }
+        .footer-copyright { font-size: 14px; color: var(--feddi-text-faint); }
+
+        /* ── Mobile footer ──────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .site-footer { padding: 48px 16px 0; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .footer-brand { grid-column: span 2; }
+        }
+    </style>
+    <script>
+        // Blocking: runs before first paint to prevent flash.
+        // NOTE: <style> must come before this <script> so that feddi-overrides (appended below)
+        // is inserted AFTER the static style in the CSSOM, giving it later source order and
+        // thus winning the cascade for :root custom property declarations.
+        // Light/dark mode: only restore on docs page. Other pages always stay dark.
+        if (localStorage.getItem('feddi-theme') === 'light' && window.location.pathname.startsWith('/docs')) {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+        // Always inject feddi-overrides AFTER the static <style> so preset vars win via source order.
+        // Falls back to slate defaults when no preset is saved.
+        // Only inject feddi-overrides when the user has an explicit saved preset.
+        // Never fall back to hardcoded defaults — that would override the marketing
+        // page's --feddi-bg (#1C1D26) with the platform's darker default (#0C0D12).
+        (function() {
+            try {
+                var saved = JSON.parse(localStorage.getItem('feddi-state'));
+                var t = saved && saved.current;
+                if (!t || !t.bg) return;
+                function clamp(v) { return Math.max(0, Math.min(255, Math.round(v))); }
+                function hexShift(h, amt) {
+                    h = h.replace('#','');
+                    return '#' + [parseInt(h.slice(0,2),16)+amt, parseInt(h.slice(2,4),16)+amt, parseInt(h.slice(4,6),16)+amt]
+                        .map(function(v){ return clamp(v).toString(16).padStart(2,'0'); }).join('');
+                }
+                function hexAlpha(h, a) {
+                    h = h.replace('#','');
+                    return 'rgba('+parseInt(h.slice(0,2),16)+','+parseInt(h.slice(2,4),16)+','+parseInt(h.slice(4,6),16)+','+a+')';
+                }
+                var bg          = t.bg;
+                var accent      = t.accent      || '#5B82B5';
+                var surface     = t.surface     || hexShift(bg, 12);
+                var accentHover = hexShift(accent, 16);
+                var borderCard  = t.borderCard  || hexShift(bg, 30);
+                var borderSec   = t.borderSec   || hexShift(bg, 20);
+                var css = ':root{'
+                    + '--feddi-bg:'+bg+';'
+                    + '--feddi-surface:'+surface+';'
+                    + '--feddi-border:'+borderSec+';'
+                    + '--feddi-border-card:'+borderCard+';'
+                    + '--feddi-accent:'+accent+';'
+                    + '--feddi-accent-hover:'+accentHover+';'
+                    + '--feddi-callout-bg:'+hexAlpha(accent,0.08)+';'
+                    + '}';
+                var style = document.createElement('style');
+                style.id = 'feddi-overrides';
+                style.textContent = css;
+                document.head.appendChild(style);
+            } catch(e) {}
+        })();
+    </script>
+</head>
+<body>
+    <div style="display: contents">
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a href="/" class="logo"><img src="/feddi-logo.svg" alt="feddi"></a>
+
+            <nav>
+                <a href="/get-started">Get Started</a>
+                <a href="/downloads">Downloads</a>
+                <a href="/#pricing">Pricing</a>
+                <a href="/docs">Docs</a>
+                <a href="/about">About Us</a>
+                <span class="nav-theme-toggle">
+                    <button data-theme-toggle aria-label="Toggle color mode">
+                        <span class="nav-theme-icon-dark">☀</span>
+                        <span class="nav-theme-icon-light">☾</span>
+                    </button>
+                </span>
+                <a href="https://github.com/feddi-dev/feddi-gateway" class="nav-github" target="_blank" rel="noopener" aria-label="GitHub">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                </a>
+                <div class="nav-btn-group">
+                    <a href="/contact" class="btn btn-cta-secondary">Talk to us</a>
+                    <a href="/platform/" class="btn btn-cta-primary">Go to Platform</a>
+                </div>
+            </nav>
+
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                    <rect x="2" y="5" width="18" height="2" rx="1" fill="currentColor"/>
+                    <rect x="2" y="10" width="18" height="2" rx="1" fill="currentColor"/>
+                    <rect x="2" y="15" width="18" height="2" rx="1" fill="currentColor"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
+
+    <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation" aria-hidden="true">
+        <button class="nav-drawer-close" id="nav-drawer-close" aria-label="Close menu">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+                <line x1="4" y1="4" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <line x1="18" y1="4" x2="4" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <a href="/get-started">Get Started</a>
+        <a href="/downloads">Downloads</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/docs">Docs</a>
+        <a href="/about">About Us</a>
+        <a href="https://github.com/feddi-dev/feddi-gateway" target="_blank" rel="noopener">GitHub</a>
+        <a href="/contact">Talk to us</a>
+        <a href="/platform/">Go to Platform</a>
+    </nav>
+
+    <script>
+        (function() {
+            var hamburger = document.getElementById('nav-hamburger');
+            var drawer = document.getElementById('nav-drawer');
+            var backdrop = document.getElementById('nav-backdrop');
+            var closeBtn = document.getElementById('nav-drawer-close');
+
+            function openDrawer() {
+                drawer.classList.add('open');
+                backdrop.classList.add('open');
+                hamburger.setAttribute('aria-expanded', 'true');
+                drawer.setAttribute('aria-hidden', 'false');
+                backdrop.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                closeBtn.focus();
+            }
+
+            function closeDrawer() {
+                drawer.classList.remove('open');
+                backdrop.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+                drawer.setAttribute('aria-hidden', 'true');
+                backdrop.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                hamburger.focus();
+            }
+
+            hamburger.addEventListener('click', openDrawer);
+            backdrop.addEventListener('click', closeDrawer);
+            closeBtn.addEventListener('click', closeDrawer);
+
+            drawer.querySelectorAll('a').forEach(function(a) {
+                a.addEventListener('click', closeDrawer);
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+            });
+        })();
+    </script>
+    </div>
+
+    <style>
+        /* ── Shared section utilities ──────────────────────── */
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--feddi-accent);
+            margin-bottom: 12px;
+        }
+        .section-heading {
+            font-size: 38px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--feddi-text);
+            margin-bottom: 16px;
+        }
+        .section-lead {
+            font-size: 18px;
+            color: var(--feddi-text-body);
+            line-height: 1.65;
+            margin-bottom: 56px;
+        }
+
+        /* ── Hero ───────────────────────────────────────────── */
+        .hero { padding: 100px 0 96px; }
+        .hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .hero h1 {
+            font-size: clamp(1.875rem, 4.67vw, 3.2rem);
+            font-weight: 600;
+            line-height: 1.08;
+            margin-bottom: 20px;
+            letter-spacing: -0.03em;
+            color: var(--feddi-text);
+        }
+        .hero h1 .accent { color: var(--feddi-accent); }
+        .hero-sub {
+            font-size: 18px;
+            color: var(--feddi-text-body);
+            margin-bottom: 16px;
+            max-width: 420px;
+            line-height: 1.65;
+        }
+        .hero-cred {
+            font-size: 14px;
+            color: var(--feddi-text-dim);
+            margin-bottom: 36px;
+            max-width: 420px;
+            line-height: 1.6;
+        }
+        .hero-actions { display: flex; gap: 16px; }
+        .hero-trust {
+            margin-top: 28px;
+            font-size: 13px;
+            color: var(--feddi-text-body);
+            letter-spacing: 0.02em;
+        }
+
+        /* ── Hero code window ───────────────────────────────── */
+        .hero-code-window {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--feddi-border);
+            box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+        }
+        .hero-code-bar {
+            background: var(--feddi-code-bar);
+            padding: 11px 14px;
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            border-bottom: 1px solid var(--feddi-code-sep);
+        }
+        .hero-code-bar .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .hero-code-bar .dot:nth-child(1) { background: #ff5f57; }
+        .hero-code-bar .dot:nth-child(2) { background: #febc2e; }
+        .hero-code-bar .dot:nth-child(3) { background: #28c840; }
+        .hero-code-bar .filename {
+            margin-left: 10px;
+            font-size: 12px;
+            color: var(--feddi-text-dim);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+        }
+        .hero-code-body {
+            background: var(--feddi-code-body);
+            padding: 20px 24px;
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* ── Problem ────────────────────────────────────────── */
+        .problem-section {
+            padding: 6rem 0;
+        }
+        .problem-section .section-inner { text-align: center; }
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            text-align: left;
+            margin-top: 40px;
+            margin-bottom: 28px;
+        }
+        .problem-card {
+            padding: 1.5rem;
+            background: var(--feddi-surface);
+            border-radius: 10px;
+            border: 1px solid var(--feddi-border-card);
+        }
+        .problem-icon {
+            width: 36px;
+            height: 36px;
+            margin-bottom: 16px;
+            color: var(--feddi-accent);
+        }
+        .problem-card h3 { font-size: 19px; font-weight: 600; margin-bottom: 10px; color: var(--feddi-text); }
+        .problem-card p { font-size: 15px; color: var(--feddi-text-body); line-height: 1.65; }
+        .problem-footnote {
+            font-size: 13px;
+            color: var(--feddi-text-dim);
+            letter-spacing: 0.01em;
+        }
+
+        /* ── How it works ───────────────────────────────────── */
+        .how-it-works {
+            padding: 6rem 0;
+        }
+        .how-it-works .section-intro { text-align: center; margin-bottom: 64px; }
+        .how-it-works .section-intro .section-lead { margin-bottom: 0; }
+        .steps { display: flex; flex-direction: column; gap: 48px; }
+        .step {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+            background: transparent;
+        }
+        .step-text { text-align: left; background: transparent; }
+        .step-num {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--feddi-accent);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .step-text h3 { font-size: 24px; font-weight: 600; margin-bottom: 12px; color: var(--feddi-text); }
+        .step-text p { font-size: 16px; color: var(--feddi-text-body); line-height: 1.65; }
+        .step-text .step-cta {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--feddi-text-dim);
+        }
+        .step-text .step-cta a { color: var(--feddi-accent); }
+        .step-terminal {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--feddi-border-card);
+            margin-top: calc(12px * 1.5 + 16px);
+        }
+        .step-terminal-bar {
+            background: var(--feddi-code-bar);
+            padding: 12px 16px;
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            border-bottom: 1px solid var(--feddi-code-sep);
+        }
+        .step-terminal-bar span {
+            width: 12px; height: 12px; border-radius: 50%;
+        }
+        .step-terminal-bar span:nth-child(1) { background: #ff5f57; }
+        .step-terminal-bar span:nth-child(2) { background: #febc2e; }
+        .step-terminal-bar span:nth-child(3) { background: #28c840; }
+        .step-terminal-body {
+            background: var(--feddi-code-body);
+            padding: 20px 24px;
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13.5px;
+            line-height: 1.8;
+        }
+        .step-terminal-body .cli-line { color: var(--feddi-accent); }
+        .step-terminal-body .cli-prompt { color: var(--feddi-accent); margin-right: 10px; user-select: none; }
+        .step-terminal-body .cli-out { color: var(--feddi-text-body); padding-left: 20px; }
+        .step-terminal-body .cli-warn { color: var(--feddi-warn); padding-left: 20px; }
+        .step-terminal-body .cli-ann { color: var(--feddi-text-dim); padding-left: 20px; font-style: italic; }
+
+        /* ── Features ───────────────────────────────────────── */
+        .features-section { padding: 6rem 0; }
+        .features-section .section-inner { text-align: center; }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            text-align: left;
+        }
+        .feature-terminal {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--feddi-border-card);
+            display: flex;
+            flex-direction: column;
+        }
+        .feature-terminal-bar {
+            background: var(--feddi-code-bar);
+            padding: 10px 14px;
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            border-bottom: 1px solid var(--feddi-code-sep);
+            flex-shrink: 0;
+        }
+        .feature-terminal-bar span { width: 12px; height: 12px; border-radius: 50%; }
+        .feature-terminal-bar span:nth-child(1) { background: #ff5f57; }
+        .feature-terminal-bar span:nth-child(2) { background: #febc2e; }
+        .feature-terminal-bar span:nth-child(3) { background: #28c840; }
+        .feature-terminal-body {
+            background: var(--feddi-code-body);
+            padding: 16px 20px;
+            font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            flex: 1;
+        }
+        .feature-terminal-body .ft-cmd { color: var(--feddi-accent); }
+        .feature-terminal-body .ft-ok { color: var(--feddi-accent); }
+        .feature-terminal-body .ft-warn { color: var(--feddi-warn); }
+        .feature-terminal-body .ft-dim { color: var(--feddi-text-dim); padding-left: 16px; }
+        .feature-terminal-body .ft-row { display: flex; gap: 12px; }
+        .feature-terminal-body .ft-field { min-width: 130px; }
+        .feature-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: var(--feddi-section-bg);
+            border: 1px solid var(--feddi-border-card);
+        }
+        .feature-card-wide {
+            grid-column: span 2;
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: var(--feddi-section-bg);
+            border: 1px solid var(--feddi-border-card);
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+        .feature-card-wide .feature-card-text {
+            flex: 0 0 calc(50% - 0.75rem);
+        }
+        .feature-card-wide .feature-terminal {
+            flex: 1;
+            align-self: stretch;
+        }
+        .feature-tag {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--feddi-accent);
+            margin-bottom: 12px;
+        }
+        .feature-card h3 { font-size: 19px; font-weight: 600; margin-bottom: 10px; color: var(--feddi-text); }
+        .feature-card p:not(.feature-tag) { font-size: 15px; color: var(--feddi-text-body); line-height: 1.65; }
+        .feature-card-wide h3 { font-size: 19px; font-weight: 600; margin-bottom: 10px; color: var(--feddi-text); }
+        .feature-card-wide p:not(.feature-tag) { font-size: 15px; color: var(--feddi-text-body); line-height: 1.65; }
+
+        .cli-line { color: var(--feddi-accent); }
+        .cli-prompt { color: var(--feddi-accent); margin-right: 10px; user-select: none; }
+        .cli-out { color: var(--feddi-text-body); padding-left: 20px; }
+        .cli-cmt { color: var(--feddi-text-dim); font-style: italic; }
+        .cli-final { padding-left: 0; font-weight: 500; }
+        .cli-gap { height: 6px; }
+
+        /* ── Pricing ────────────────────────────────────────── */
+        .pricing-section { padding: 6rem 0; }
+        .pricing-section .section-inner { text-align: center; }
+        .pricing-table-wrap { overflow-x: auto; margin-top: 40px; }
+        .pricing-table {
+            width: 100%;
+            max-width: 760px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .pricing-table thead th {
+            padding: 16px 24px;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--feddi-text);
+            border-bottom: 1px solid var(--feddi-border-card);
+        }
+        .pricing-table thead th:first-child { width: 44%; }
+        .pricing-table thead th:not(:first-child) { width: 28%; }
+        .pricing-table thead th.col-enterprise { color: var(--feddi-accent); }
+        .pricing-table .pricing-table-subtitle {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--feddi-text-muted);
+            display: block;
+            margin-top: 2px;
+        }
+        .pricing-table tr.group-header td {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--feddi-text-dim);
+            padding: 20px 24px 6px;
+        }
+        .pricing-table tr.feature-row td {
+            font-size: 15px;
+            color: var(--feddi-text-body);
+            padding: 10px 24px;
+            border-bottom: 1px solid var(--feddi-border-card);
+        }
+        .pricing-table tr.feature-row td:not(:first-child) {
+            color: var(--feddi-text-body);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .pricing-table .check { color: var(--feddi-accent); font-weight: 700; }
+        .pricing-table .dash { color: var(--feddi-text-dim); }
+        .pricing-table tr.pricing-cta td { padding: 28px 24px 0; }
+        .pricing-table tr.pricing-cta td a.btn { display: block; width: 100%; box-sizing: border-box; padding-left: 0; padding-right: 0; }
+
+        /* Mobile: hide table, show cards */
+        .pricing-cards-mobile { display: none; }
+        .pricing-card {
+            border-radius: 10px;
+            padding: 32px 24px;
+            background: var(--feddi-surface);
+            text-align: left;
+            margin-bottom: 16px;
+        }
+        .pricing-card-free { border: 1px solid var(--feddi-border-card); }
+        .pricing-card-enterprise { border: 1px solid var(--feddi-accent); }
+        .pricing-card h3 { font-size: 24px; font-weight: 600; margin-bottom: 4px; color: var(--feddi-text); }
+        .pricing-card .subtitle { font-size: 14px; color: var(--feddi-text-muted); margin-bottom: 20px; }
+        .pricing-card ul { list-style: none; padding: 0; margin: 0 0 24px; }
+        .pricing-card ul li {
+            font-size: 15px;
+            color: var(--feddi-text-body);
+            padding: 9px 0;
+            border-bottom: 1px solid var(--feddi-border-card);
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+        .pricing-card ul li::before { content: "✓"; color: var(--feddi-accent); font-weight: 700; flex-shrink: 0; }
+        /* ── Contact ────────────────────────────────────────── */
+        .contact-section {
+            padding: 6rem 0;
+        }
+        .contact-section .section-inner { text-align: center; max-width: 560px; }
+        .contact-direct { font-size: 15px; color: var(--feddi-text-body); margin-bottom: 28px; }
+        .contact-direct a { color: var(--feddi-accent); font-weight: 500; }
+        .contact-divider {
+            display: flex; align-items: center; gap: 16px;
+            color: var(--feddi-text-dim); font-size: 13px; margin-bottom: 28px;
+        }
+        .contact-divider::before, .contact-divider::after {
+            content: ""; flex: 1; height: 1px; background: var(--feddi-border-card);
+        }
+        .contact-form label {
+            display: block; font-size: 14px; font-weight: 500;
+            color: var(--feddi-text-muted); margin-bottom: 6px; text-align: left;
+        }
+        .contact-form input, .contact-form textarea {
+            display: block; width: 100%; padding: 10px 14px;
+            border: 1px solid var(--feddi-border-card); border-radius: 6px;
+            font-size: 15px; font-family: inherit; color: var(--feddi-text);
+            background: var(--feddi-surface);
+            margin-bottom: 18px; transition: border-color 0.15s;
+        }
+        .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--feddi-text-placeholder); }
+        .contact-form input:focus, .contact-form textarea:focus {
+            outline: none; border-color: var(--feddi-accent);
+        }
+        .contact-form textarea { min-height: 110px; resize: vertical; }
+        .contact-form input.field-error, .contact-form textarea.field-error {
+            border-color: var(--feddi-error); margin-bottom: 4px;
+        }
+        .field-error-msg {
+            font-size: 12px;
+            color: var(--feddi-error);
+            margin-bottom: 14px;
+            display: block;
+            text-align: left;
+        }
+        .contact-form button {
+            padding: 10px 24px; border-radius: 6px; font-weight: 600;
+            font-size: 15px; background: var(--feddi-accent); color: var(--feddi-section-bg);
+            border: none; cursor: pointer; transition: background 0.15s;
+        }
+        .contact-form button:hover { background: var(--feddi-accent-hover); }
+        .contact-form button:disabled { background: var(--feddi-accent-muted); cursor: default; }
+        .contact-success { padding: 20px 0; }
+        .contact-success h3 { font-size: 24px; font-weight: 600; margin-bottom: 10px; color: var(--feddi-text); }
+        .contact-success p { font-size: 16px; color: var(--feddi-text-body); }
+
+        /* ── Responsive ─────────────────────────────────────── */
+        @media (max-width: 768px) {
+            /* Hero */
+            .hero { padding: 60px 0 48px; }
+            .hero-inner { grid-template-columns: 1fr; }
+            .hero-right { display: none; }
+            .hero h1 { font-size: 36px; letter-spacing: -0.02em; }
+            .hero-sub { font-size: 16px; max-width: 100%; margin-bottom: 28px; }
+            .hero-actions { flex-wrap: wrap; gap: 10px; }
+            .hero-trust { font-size: 12px; }
+
+            /* Global sections */
+            .section-inner { padding: 0 16px; }
+            .section-heading { font-size: 26px; }
+            .section-lead { font-size: 16px; margin-bottom: 32px; }
+            .how-it-works, .features-section,
+            .pricing-section, .contact-section { padding: 4rem 0; }
+
+            /* Cards */
+            .problem-grid { grid-template-columns: 1fr; gap: 12px; }
+            .steps { gap: 40px; }
+            .step { grid-template-columns: 1fr; gap: 24px; }
+            .feature-grid { grid-template-columns: 1fr; gap: 12px; }
+            .feature-terminal { width: 100%; }
+            .feature-card-wide { grid-column: span 1; flex-direction: column; }
+            .feature-card-wide .feature-card-text { flex: none; width: 100%; }
+
+            /* Pricing */
+            .pricing-table-wrap { display: none; }
+            .pricing-cards-mobile { display: block; }
+
+            /* Contact */
+            .contact-section .section-inner { max-width: 100%; }
+
+        }
+
+    </style>
+
+    <main>
+
+        <!-- 1. Hero -->
+        <section class="hero">
+            <div class="section-inner hero-inner">
+                <div class="hero-left">
+                    <p class="section-label">GraphQL Federation Platform</p>
+                    <h1>The first <span class="accent">JVM-native</span> GraphQL federation gateway.</h1>
+                    <p class="hero-sub">Federation inside your JVM. No foreign runtime, no governance gap, no proprietary directives. Built on the GraphQL federation spec, an open standard governed by the GraphQL Foundation, not a single vendor.</p>
+                    <p class="hero-cred">Built by Andi Marek, creator of GraphQL Java, the runtime powering Spring GraphQL and Netflix DGS, and team.</p>
+                    <div class="hero-actions">
+                        <a href="/platform/signup" class="btn btn-cta-primary">Sign up free</a>
+                        <a href="/get-started" class="btn btn-cta-secondary">Get started</a>
+                    </div>
+                    <p class="hero-trust">Always open source. Self-hosted. No vendor lock-in.</p>
+                </div>
+                <div class="hero-right">
+                    <div class="hero-code-window">
+                        <div class="hero-code-bar">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                        <div class="hero-code-body">
+                            <div class="cli-line cli-cmt"># 1. authenticate</div>
+                            <div class="cli-line"><span class="cli-prompt">❯</span>feddi auth login --token fddi_...</div>
+                            <div class="cli-line cli-out">✓ Authenticated as you@company.com</div>
+                            <div class="cli-gap"></div>
+                            <div class="cli-line cli-cmt"># 2. create your graph</div>
+                            <div class="cli-line"><span class="cli-prompt">❯</span>feddi graph create $ORG_ID "payments-api"</div>
+                            <div class="cli-line cli-out">✓ Created graph: payments-api</div>
+                            <div class="cli-line"><span class="cli-prompt">❯</span>feddi variant create $GRAPH_ID production</div>
+                            <div class="cli-line cli-out">✓ Created variant: production</div>
+                            <div class="cli-gap"></div>
+                            <div class="cli-line cli-cmt"># 3. publish your subgraphs</div>
+                            <div class="cli-line"><span class="cli-prompt">❯</span>feddi subgraph publish $ID --schema ./orders.graphqls</div>
+                            <div class="cli-line cli-out">✓ Schema published. Composition successful.</div>
+                            <div class="cli-line"><span class="cli-prompt">❯</span>feddi subgraph publish $ID --schema ./users.graphqls</div>
+                            <div class="cli-line cli-out">✓ Schema published. Composition successful.</div>
+                            <div class="cli-gap"></div>
+                            <div class="cli-line cli-out cli-final">⬡ supergraph ready — start the gateway</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Problem -->
+        <section class="problem-section">
+            <div class="section-inner">
+                <p class="section-label">The Problem</p>
+                <h2 class="section-heading">Every federation gateway runs outside your JVM</h2>
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 3h5v5"/>
+                            <path d="M8 3H3v5"/>
+                            <path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3"/>
+                            <path d="m15 9 6-6"/>
+                        </svg>
+                        <h3>Policy runs twice</h3>
+                        <p>Your custom policy and enforcement logic lives in the JVM. A Rust or Go gateway can't reach it in-process, so you rebuild it outside the JVM or expose it over HTTP, adding latency at every enforcement point.</p>
+                    </div>
+                    <div class="problem-card">
+                        <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="6" height="6" rx="1"/>
+                            <rect x="16" y="3" width="6" height="6" rx="1"/>
+                            <rect x="9" y="15" width="6" height="6" rx="1"/>
+                            <path d="M5 9v3h14V9M12 12v3"/>
+                        </svg>
+                        <h3>Operations fracture</h3>
+                        <p>Your team owns the JVM stack end to end: deployment, tuning, debugging, on-call. A Rust or Go gateway is a separate discipline with its own runbooks and expertise your platform team now has to carry.</p>
+                    </div>
+                    <div class="problem-card">
+                        <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 12l2 2 4-4"/>
+                            <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/>
+                        </svg>
+                        <h3>Compliance overhead</h3>
+                        <p>Every compliance audit now covers an additional runtime and a separate tech stack your security team must validate independently.</p>
+                    </div>
+                </div>
+                <p class="problem-footnote">feddi Gateway runs on the JVM. Your subgraphs don't have to.</p>
+            </div>
+        </section>
+
+        <!-- 3. How it works  -->
+        <section id="platform" class="how-it-works">
+            <div class="section-inner">
+                <div class="section-intro">
+                    <p class="section-label">How it works</p>
+                    <h2 class="section-heading">From subgraphs to unified API</h2>
+                    <p class="section-lead">Three steps and you're running federation.</p>
+                </div>
+                <div class="steps">
+
+                    <!-- Step 01: text left, terminal right -->
+                    <div class="step">
+                        <div class="step-text">
+                            <div class="step-num">Step 01</div>
+                            <h3>Publish your subgraph schemas</h3>
+                            <p>Push each subgraph schema to feddi via CLI. feddi validates the schema and stores it. Every push triggers automatic composition.</p>
+                            <p class="step-cta">Need an access token? <a href="/platform/signup">Sign up free</a> — takes 30 seconds.</p>
+                        </div>
+                        <div class="step-terminal">
+                            <div class="step-terminal-bar">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="step-terminal-body">
+                                <div class="cli-line"><span class="cli-prompt">❯</span>feddi subgraph publish $ID --schema ./orders.graphqls</div>
+                                <div class="cli-out">✓ Schema published. Composition successful.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 02: text left, terminal right -->
+                    <div class="step">
+                        <div class="step-text">
+                            <div class="step-num">Step 02</div>
+                            <h3>Composition runs automatically</h3>
+                            <p>On every publish, feddi composes your subgraphs, validates compatibility and blocks breaking changes before they reach production.</p>
+                        </div>
+                        <div class="step-terminal">
+                            <div class="step-terminal-bar">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="step-terminal-body">
+                                <div class="cli-line"><span class="cli-prompt">❯</span>feddi subgraph publish $ID --schema ./orders.graphqls</div>
+                                <div class="cli-warn">△ Breaking: Query.order field type changed</div>
+                                <div class="cli-out">  Field has 4,821 requests in last 30 days</div>
+                                <div class="cli-warn">  Schema NOT published. Composition unsuccessful.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 03: text left, terminal right -->
+                    <div class="step">
+                        <div class="step-text">
+                            <div class="step-num">Step 03</div>
+                            <h3>Self-host the gateway</h3>
+                            <p>Run the feddi Gateway as a standalone Java process in your existing infrastructure. It polls for schema updates and routes all GraphQL traffic locally. Your data never leaves.</p>
+                        </div>
+                        <div class="step-terminal">
+                            <div class="step-terminal-bar">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="step-terminal-body">
+                                <div class="cli-line"><span class="cli-prompt">❯</span>feddi-gateway</div>
+                                <div class="cli-out">✓ Gateway started on :8080</div>
+                                <div class="cli-out">✓ Supergraph loaded (3 subgraphs)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Features -->
+        <section class="features-section">
+            <div class="section-inner">
+                <p class="section-label">Features</p>
+                <h2 class="section-heading">Everything federation needs</h2>
+                <p class="section-lead">Built on the open GraphQL federation standard. Designed for production.</p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <p class="feature-tag">Schema registry</p>
+                        <h3>One source of truth</h3>
+                        <p>Every subgraph schema, composition result, and change history in one place. feddi tracks ownership, validates compatibility across teams, and gives platform leads full visibility across the supergraph.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p class="feature-tag">Open standard</p>
+                        <h3>No vendor lock-in</h3>
+                        <p>feddi implements the open <a href="https://graphql.org/learn/federation/" target="_blank" rel="noopener" style="color:var(--feddi-accent);">GraphQL federation standard</a>, developed by the GraphQL Foundation, with engineers from Apollo, Netflix, The Guild, Hasura, ChilliCream, and WunderGraph. No proprietary extensions. Your existing GraphQL services are already compatible subgraphs.</p>
+                    </div>
+                    <div class="feature-card-wide">
+                        <div class="feature-card-text">
+                            <p class="feature-tag">Analytics & safety</p>
+                            <h3>Know before you break</h3>
+                            <p>Field-level usage tracking shows you which fields are in active use. Breaking change detection rejects dangerous schema changes or warns you when a field is truly unused.</p>
+                        </div>
+                        <div class="feature-terminal">
+                            <div class="feature-terminal-bar">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="feature-terminal-body">
+                                <div class="ft-cmd"><span class="cli-prompt">❯</span> feddi usage fields $VARIANT_ID</div>
+                                <div class="ft-row ft-ok"><span>✓</span><span class="ft-field">Query.orders</span><span>12,847 req</span><span>0 errors</span></div>
+                                <div class="ft-row ft-ok"><span>✓</span><span class="ft-field">Order.lineItems</span><span>9,203 req</span><span>0 errors</span></div>
+                                <div class="ft-row ft-warn"><span>△</span><span class="ft-field">Query.user</span><span>6,441 req</span><span>2 errors</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <p class="feature-tag">Input usage</p>
+                        <h3>Know before you remove an argument</h3>
+                        <p>Before removing an argument, check who's still passing it and when they last did. feddi tracks every argument and input object field your clients actually send.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p class="feature-tag">CLI & agent-first</p>
+                        <h3>Automate everything</h3>
+                        <p>Manage your entire federation from the terminal. Every action is a CLI command with machine-readable output, built to work with AI coding agents like Claude Code, Cursor, and Copilot.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p class="feature-tag">Self-hosted gateway</p>
+                        <h3>Your traffic stays yours</h3>
+                        <p>The feddi Gateway runs in your own infrastructure alongside your subgraphs. GraphQL traffic never passes through feddi's servers. The platform only handles metadata.</p>
+                    </div>
+                    <div class="feature-card">
+                        <p class="feature-tag">In-process extensions</p>
+                        <h3>Extend the gateway in Java, zero latency</h3>
+                        <p>feddi extensions run inside the JVM alongside your feddi Gateway. No network hop, no coprocess overhead.</p>
+                    </div>
+                    <div class="feature-card-wide">
+                        <div class="feature-card-text">
+                            <p class="feature-tag">Persisted documents</p>
+                            <h3>Safelist your operations</h3>
+                            <p>Pre-register GraphQL operations so clients send a hash instead of a full query string. Smaller payloads, no arbitrary query execution, and a dedicated publish key for your CI pipeline.</p>
+                        </div>
+                        <div class="feature-terminal">
+                            <div class="feature-terminal-bar">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="feature-terminal-body">
+                                <div class="ft-cmd"><span class="cli-prompt">❯</span> feddi pdl publish $PDL_ID --document ./ops.graphql</div>
+                                <div class="ft-ok">✓ 12 operations published.</div>
+                                <div class="ft-dim">3 already existed, skipped.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Pricing -->
+        <section id="pricing" class="pricing-section">
+            <div class="section-inner">
+                <p class="section-label">Pricing</p>
+                <h2 class="section-heading">Start free, scale as you grow</h2>
+                <p class="section-lead">No credit card required to get started.</p>
+                <!-- Desktop: table -->
+                <div class="pricing-table-wrap">
+                    <table class="pricing-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Free</th>
+                                <th class="col-enterprise">Enterprise</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="feature-row"><td>Self-hosted feddi Gateway (open source)</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                            <tr class="feature-row"><td>feddi CLI — automate everything</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                            <tr class="feature-row"><td>Graphs, variants &amp; subgraphs</td><td>Unlimited</td><td>Unlimited</td></tr>
+                            <tr class="feature-row"><td>Persisted documents</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                            <tr class="feature-row"><td>In-process gateway extensions</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                            <tr class="feature-row"><td>Breaking change detection</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                            <tr class="feature-row"><td>Usage-informed breaking changes</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
+                            <tr class="feature-row"><td>Single sign-on (SSO)</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
+                            <tr class="feature-row"><td>Audit logging</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
+
+                            <tr class="group-header"><td colspan="3">Usage analytics</td></tr>
+                            <tr class="feature-row"><td>Operations / month</td><td>1M</td><td>Unlimited</td></tr>
+                            <tr class="feature-row"><td>Retention</td><td>30 days</td><td>Custom</td></tr>
+                            <tr class="feature-row"><td>Field &amp; operation usage</td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+                            <tr class="feature-row"><td>Input field usage</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
+                            <tr class="feature-row"><td>Client &amp; version breakdown</td><td><span class="dash">—</span></td><td><span class="check">✓</span></td></tr>
+
+                            <tr class="group-header"><td colspan="3">Organization</td></tr>
+                            <tr class="feature-row"><td>Members</td><td>Up to 10</td><td>Unlimited</td></tr>
+
+                            <tr class="group-header"><td colspan="3">Support</td></tr>
+                            <tr class="feature-row"><td>Support</td><td><a href="https://github.com/feddi-dev/feddi-community-support" target="_blank" rel="noopener" style="color: var(--feddi-accent);">Community</a></td><td>Priority</td></tr>
+                            <tr class="feature-row"><td>SLA</td><td><span class="dash">—</span></td><td>Custom</td></tr>
+
+                            <tr class="pricing-cta">
+                                <td></td>
+                                <td><a href="/platform/signup" class="btn btn-cta-primary">Get Started Free</a></td>
+                                <td><a href="/contact" class="btn btn-cta-secondary">Talk to us</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile: cards -->
+                <div class="pricing-cards-mobile">
+                    <div class="pricing-card pricing-card-free">
+                        <h3>Free</h3>
+                        <p class="subtitle">&nbsp;</p>
+                        <ul>
+                            <li>Unlimited graphs, variants &amp; subgraphs</li>
+                            <li>Persisted documents</li>
+                            <li>In-process gateway extensions</li>
+                            <li>Breaking change detection</li>
+                            <li>Self-hosted feddi Gateway</li>
+                            <li>feddi CLI — automate everything</li>
+                            <li>1M operations / month, 30-day retention</li>
+                            <li>Field &amp; operation usage</li>
+                            <li>Up to 10 members</li>
+                            <li>Community support</li>
+                        </ul>
+                        <a href="/platform/signup" class="btn btn-cta-primary">Get Started Free</a>
+                    </div>
+                    <div class="pricing-card pricing-card-enterprise">
+                        <h3>Enterprise</h3>
+                        <p class="subtitle">Everything in Free, plus:</p>
+                        <ul>
+                            <li>Unlimited operations &amp; custom retention</li>
+                            <li>Usage-informed breaking changes</li>
+                            <li>Input field usage</li>
+                            <li>Client &amp; version breakdown</li>
+                            <li>Unlimited members</li>
+                            <li>Single sign-on (SSO)</li>
+                            <li>Audit logging</li>
+                            <li>Priority support &amp; custom SLA</li>
+                        </ul>
+                        <a href="/contact" class="btn btn-cta-secondary">Talk to us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Contact -->
+        <section id="contact" class="contact-section">
+            <div class="section-inner">
+                <p class="section-label">Contact</p>
+                <h2 class="section-heading">Get in touch</h2>
+                <p class="section-lead">You'll hear back from the people who built it.</p>
+
+                <div id="contact-form-wrap">
+                    <form id="contact-form" class="contact-form" novalidate>
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" name="email" required placeholder="you@company.com">
+
+                        <label for="contact-company">Company</label>
+                        <input type="text" id="contact-company" name="company" required placeholder="Your company">
+
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" name="message" required placeholder="What's your federation challenge?"></textarea>
+
+                        <button type="submit">Start the conversation</button>
+                    </form>
+                </div>
+
+                <div id="contact-success" class="contact-success" style="display: none;">
+                    <h3>Got it. You'll hear back shortly.</h3>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var form = this;
+
+            // Clear previous errors
+            form.querySelectorAll('.field-error-msg').forEach(function(el) { el.remove(); });
+            form.querySelectorAll('.field-error').forEach(function(el) { el.classList.remove('field-error'); });
+
+            var fields = [
+                { el: document.getElementById('contact-email'), msg: 'Please enter your email address.' },
+                { el: document.getElementById('contact-company'), msg: 'Please enter your company name.' },
+                { el: document.getElementById('contact-message'), msg: 'Please enter a message.' },
+            ];
+            var valid = true;
+            fields.forEach(function(f) {
+                if (!f.el.value.trim() || (f.el.type === 'email' && !f.el.value.includes('@'))) {
+                    f.el.classList.add('field-error');
+                    var err = document.createElement('span');
+                    err.className = 'field-error-msg';
+                    err.textContent = f.msg;
+                    f.el.insertAdjacentElement('afterend', err);
+                    valid = false;
+                }
+            });
+            if (!valid) return;
+
+            var btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            fetch('/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(new FormData(form)).toString()
+            }).then(function(res) {
+                if (res.ok) {
+                    document.getElementById('contact-form-wrap').style.display = 'none';
+                    document.getElementById('contact-success').style.display = 'block';
+                } else {
+                    btn.disabled = false;
+                    btn.textContent = 'Start the conversation';
+                }
+            }).catch(function() {
+                btn.disabled = false;
+                btn.textContent = 'Start the conversation';
+            });
+        });
+
+        // Clear error on input
+        ['contact-email', 'contact-company', 'contact-message'].forEach(function(id) {
+            document.getElementById(id).addEventListener('input', function() {
+                this.classList.remove('field-error');
+                var next = this.nextElementSibling;
+                if (next && next.classList.contains('field-error-msg')) next.remove();
+            });
+        });
+    </script>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+
+            <!-- Brand -->
+            <div class="footer-brand">
+                <div class="footer-brand-logo">
+                    <a href="/"><img src="/feddi-logo.svg" alt="feddi"></a>
+                </div>
+                <p class="footer-brand-tagline">Self-hosted. JVM-native. Built for the enterprise.</p>
+                <div class="footer-social">
+                    <a href="https://github.com/feddi-dev/feddi-gateway" target="_blank" rel="noopener" aria-label="GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.741 0 .269.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/company/feddi-dev" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Resources -->
+            <div>
+                <div class="footer-col-heading">Resources</div>
+                <div class="footer-col">
+                    <a href="/docs">Docs</a>
+                    <a href="/get-started">Get Started</a>
+                </div>
+            </div>
+
+            <!-- Company -->
+            <div>
+                <div class="footer-col-heading">Company</div>
+                <div class="footer-col">
+                    <a href="/about">About Us</a>
+                    <a href="/#pricing">Pricing</a>
+                    <a href="/contact">Talk to us</a>
+                </div>
+            </div>
+
+            <!-- Legal -->
+            <div>
+                <div class="footer-col-heading">Legal</div>
+                <div class="footer-col">
+                    <a href="/terms">Terms of service</a>
+                    <a href="/privacy">Privacy policy</a>
+                    <a href="/cookies">Cookie notice</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="footer-bottom">
+            <span class="footer-copyright">&copy; 2026 feddi. All rights reserved.</span>
+        </div>
+        <script>
+            // Nav active state: route-based (pathname) + scroll-based (IntersectionObserver on /)
+        (function() {
+            var path = window.location.pathname;
+            var navLinks = document.querySelectorAll('.site-header nav a[href], .nav-drawer a[href]');
+
+            // Route-based: exact pathname match takes precedence
+            var routeMatched = false;
+            navLinks.forEach(function(a) {
+                var href = a.getAttribute('href');
+                if (href && href.indexOf('#') === -1 && href === path) {
+                    a.classList.add('nav-active');
+                    routeMatched = true;
+                }
+            });
+
+            // Scroll-based: only on / when no route matched
+            if (routeMatched || path !== '/' || !window.IntersectionObserver) return;
+
+            var sections = document.querySelectorAll('section[id]');
+            if (!sections.length) return;
+
+            var activeId = null;
+
+            function updateNav() {
+                navLinks.forEach(function(a) {
+                    var href = a.getAttribute('href') || '';
+                    if (href.indexOf('#') !== -1) {
+                        a.classList.toggle('nav-active', href.split('#')[1] === activeId);
+                    }
+                });
+            }
+
+            var observer = new IntersectionObserver(function(entries) {
+                var entering = entries.filter(function(e) { return e.isIntersecting; });
+                if (entering.length) {
+                    activeId = entering[entering.length - 1].target.id;
+                } else if (entries.some(function(e) { return e.target.id === activeId; })) {
+                    activeId = null;
+                }
+                updateNav();
+            }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
+
+            sections.forEach(function(s) { observer.observe(s); });
+        })();
+
+        document.querySelectorAll('[data-theme-toggle]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+                    if (isLight) {
+                        document.documentElement.removeAttribute('data-theme');
+                        localStorage.setItem('feddi-theme', 'dark');
+                    } else {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                        localStorage.setItem('feddi-theme', 'light');
+                    }
+                });
+            });
+        </script>
+    </footer>
+
+</body>
+</html>

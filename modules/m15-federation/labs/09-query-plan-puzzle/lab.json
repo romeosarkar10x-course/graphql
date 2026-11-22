@@ -1,0 +1,7 @@
+{
+  "title": "Query-plan puzzle: predict the router's subgraph calls for ten queries, one point per exact plan",
+  "lecture": "15.5",
+  "kind": "game",
+  "grading": "auto",
+  "needs": ["fed"]
+}

@@ -1,0 +1,19 @@
+# Shelfie's four subgraphs as the contract jar serves them (copied into subgraphs/), in Rover's supergraph.yaml shape.
+federation_version: =2.9.0
+subgraphs:
+  accounts:
+    routing_url: http://localhost:4001/graphql
+    schema:
+      file: ./subgraphs/accounts.graphqls
+  catalog:
+    routing_url: http://localhost:4002/graphql
+    schema:
+      file: ./subgraphs/catalog.graphqls
+  reviews:
+    routing_url: http://localhost:4003/graphql
+    schema:
+      file: ./subgraphs/reviews.graphqls
+  clubs:
+    routing_url: http://localhost:4004/graphql
+    schema:
+      file: ./subgraphs/clubs.graphqls

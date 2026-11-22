@@ -1,0 +1,22 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.9", import: ["@key"])
+
+type Query {
+  books(first: Int = 10): [Book!]!
+  book(id: ID!): Book
+}
+
+"A book in Shelfie's catalogue. Owned by the catalog team; other teams add fields to it."
+type Book @key(fields: "id") @key(fields: "isbn") {
+  id: ID!
+  isbn: String!
+  title: String!
+  authors: [String!]!
+  year: Int!
+  pages: Int!
+}
+
+"History: reviews lived in the catalogue's database until last year, and the link to the book stayed here."
+type Review @key(fields: "id") {
+  id: ID!
+  book: Book!
+}

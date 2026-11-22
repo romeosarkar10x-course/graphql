@@ -26,6 +26,8 @@
 #   bin/course inspector <args>           graphql-inspector 7.0.2 (Node.js, own image), e.g. diff old.graphql new.graphql
 #   bin/course node <cmd>                 Node.js 24 (copied from the official image) inside the course image, e.g.
 #                                         bin/course node npm ci, bin/course node npx eslint (Module 13.6-13.7)
+#   bin/course fed                        Module 15: fetch Apollo Router 2.19.0 and Hive Router 0.3.9 into .cache/fed/bin
+#                                         (labs that need "fed" do it by themselves)
 #   bin/course web <npm args>             Module 12's web lab: npm in a Node.js 24 image on the course network
 #   bin/course mobile <cmd>               Module 12's mobile lab: Gradle 9.9 + JDK 21 image on the course network
 #   bin/course seckit <tool> <args>       Module 10 scanners (graphql-cop, clairvoyance), own image; shares the
@@ -78,6 +80,32 @@ ensure_node() {
   chmod +x "$ROOT/.cache/node/bin/npm" "$ROOT/.cache/node/bin/npx"
 }
 if wants_need node "${1:-}" "${@:2}" || [[ "${1:-}" == node ]]; then ensure_node; fi
+
+# "fed" (Module 15): two federation routers, downloaded once from their official GitHub releases into .cache/fed/bin
+# and checked against these SHA-256 sums, plus Node.js for the composer (contract/compose). Linux x86_64 builds: the
+# routers run inside the course image. bin/course fed fetches them by hand.
+FED_FILES=(
+  "router|https://github.com/apollographql/router/releases/download/v2.19.0/router-v2.19.0-x86_64-unknown-linux-gnu.tar.gz|b606982f3cfe986e01bbde12d8cf5cd0fd783df2fc754998d3bdf0e5d2b9b308"
+  "hive-router|https://github.com/graphql-hive/router/releases/download/hive-router/v0.3.9/hive_router_linux_amd64|f18ea5e8e0398b3bb34e56a16b056219f2a56f289e4be06d7f745e4faa1c852d"
+)
+ensure_fed() {
+  local entry name url sum dir="$ROOT/.cache/fed" tmp
+  mkdir -p "$dir/bin" "$dir/dl"
+  for entry in "${FED_FILES[@]}"; do
+    IFS='|' read -r name url sum <<<"$entry"
+    [[ -x "$dir/bin/$name" ]] && continue
+    tmp="$dir/dl/$(basename "$url")"
+    echo "course: downloading $name ($(basename "$url")) into .cache/fed (once)" >&2
+    [[ -f "$tmp" ]] || curl -fsSL -o "$tmp" "$url" || die "download failed: $url"
+    echo "$sum  $tmp" | sha256sum -c --quiet - || { rm -f "$tmp"; die "checksum mismatch for $tmp"; }
+    case "$tmp" in
+      *.tar.gz) tar -xzf "$tmp" -C "$dir/dl" && mv "$dir/dl/dist/router" "$dir/bin/$name" ;;
+      *) cp "$tmp" "$dir/bin/$name" ;;
+    esac
+    chmod +x "$dir/bin/$name"
+  done
+}
+if wants_need fed "${1:-}" "${@:2}" || [[ "${1:-}" == fed ]]; then ensure_node; ensure_fed; fi
 
 # Run a command in the course image, on the course network when it exists.
 in_image() {
@@ -176,6 +204,8 @@ case "$cmd" in
     case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course inspector from a directory inside the course repo" ;; esac
     docker run --rm -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" \
       graphql-course-inspector:1 "$@" ;;
+  fed)    # Module 15's routers are already fetched above (ensure_fed); show what is there
+    ls -1 "$ROOT/.cache/fed/bin" ;;
   node)   # Node.js and npm from .cache/node inside the course image (graphql-eslint, SpectaQL); npm's cache in .cache/npm
     [[ $# -ge 1 ]] || die "usage: bin/course node npm ci | node <script> | npx <tool> ..."
     in_image bash -c 'PATH="/course/.cache/node/bin:$PATH" npm_config_cache=/course/.cache/npm npm_config_update_notifier=false exec "$@"' node "$@" ;;
@@ -204,5 +234,9 @@ case "$cmd" in
     net=(--network "$NETWORK"); [[ -n "$cid" ]] && net=(--network "container:$cid")
     case "$PWD/" in "$ROOT"/*) wd="/course${PWD#"$ROOT"}" ;; *) wd=/course ;; esac
     docker run --rm "${net[@]}" -u "$COURSE_UID:$COURSE_GID" -v "$ROOT":/course -w "$wd" graphql-course-seckit:1 "$@" ;;
+  checkpoint)   # a module may also check something only the host can do (Module 15: docker compose up)
+    host_check=$(compgen -G "$ROOT/modules/m${1:-xx}-*/checkpoint-host.sh" | head -1 || true)
+    if [[ -n "$host_check" ]]; then ROOT="$ROOT" bash "$host_check" || die "checkpoint-${1} not reached yet"; fi
+    in_image /course/tools/course.sh checkpoint "$@" ;;
   *) in_image /course/tools/course.sh "$cmd" "$@" ;;
 esac
