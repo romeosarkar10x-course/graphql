@@ -49,6 +49,11 @@ needs_check() {
                   || { echo "  needs Keycloak: run bin/course ref up" >&2; return 1; } ;;
       varnish) (exec 3<>/dev/tcp/varnish/6082) 2>/dev/null \
                  || { echo "  needs Varnish: run bin/course ref up" >&2; return 1; } ;;
+      docker) curl -fsS -o /dev/null -m 5 --unix-socket /var/run/docker.sock http://localhost/_ping 2>/dev/null \
+                || { echo "  needs Docker (Testcontainers): bin/course mounts the host's /var/run/docker.sock for this lab;" \
+                          "is Docker's socket there, and can your user use it?" >&2; return 1; } ;;
+      node) [[ -x /course/.cache/node/bin/node ]] \
+              || { echo "  needs Node.js in .cache/node: bin/course copies it there for labs that need it (bin/course node --version)" >&2; return 1; } ;;
       internet) curl -fsS -o /dev/null -m 5 https://countries.trevorblades.com/graphql -X POST \
                   -H 'Content-Type: application/json' -d '{"query":"{__typename}"}' 2>/dev/null \
                   || { echo "  needs internet access to public GraphQL APIs" >&2; return 1; } ;;

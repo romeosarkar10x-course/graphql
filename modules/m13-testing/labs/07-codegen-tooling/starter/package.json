@@ -1,0 +1,14 @@
+{
+  "name": "shelfie-dev-tooling",
+  "private": true,
+  "description": "Lab 13.7: the schema's docs site (SpectaQL) and graphql-config, run with bin/course node",
+  "type": "module",
+  "scripts": {
+    "docs": "spectaql docs/spectaql.yml"
+  },
+  "devDependencies": {
+    "graphql": "16.15.0",
+    "graphql-config": "5.1.8",
+    "spectaql": "3.0.9"
+  }
+}

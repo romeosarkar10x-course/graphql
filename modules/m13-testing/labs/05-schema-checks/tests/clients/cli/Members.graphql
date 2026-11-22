@@ -1,0 +1,3 @@
+query Members($club: ID!) {
+  club(id: $club) { name members { name } memberCount }
+}

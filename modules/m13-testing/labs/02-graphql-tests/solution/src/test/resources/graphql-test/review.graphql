@@ -1,0 +1,3 @@
+query review($id: ID!) {
+  review(id: $id) { id body }
+}

@@ -1,0 +1,12 @@
+{
+  products(limit: 4) {
+    __typename
+    id
+    name
+    price
+    imageUrl
+    ... on Book { pageCount author { name email } }
+    ... on Mug { capacityMl }
+  }
+  node(id: "order-42") { __typename id ... on Order { status } }
+}

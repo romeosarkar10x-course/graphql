@@ -1,0 +1,94 @@
+10:35:19 AM PIT >> INFO : Verbose logging is disabled. If you encounter a problem, please enable it before reporting an issue.
+10:35:19 AM PIT >> INFO : Created 4 mutation test units in pre scan
+10:35:19 AM PIT >> INFO : Sending 30 test classes to minion
+10:35:19 AM PIT >> INFO : Sent tests to minion
+10:35:20 AM PIT >> INFO : MINION : Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+10:35:20 AM PIT >> INFO : MINION : WARNING: A Java agent has been loaded dynamically (/course/.cache/m2/net/bytebuddy/byte-buddy-agent/1.18.17/byte-buddy-agent-1.18.17.jar)
+10:35:20 AM PIT >> INFO : MINION : WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+10:35:20 AM PIT >> INFO : MINION : WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+10:35:20 AM PIT >> INFO : MINION : WARNING: Dynamic loading of agents will be disallowed by default in a future release
+10:35:20 AM PIT >> INFO : MINION : OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+/-\|/-\|/-\|/-\|/-\|/-\|/-\|/-\|/10:35:21 AM PIT >> INFO : Calculated coverage in 1 seconds.
+10:35:21 AM PIT >> INFO : 0 tests took longer than 2000 ms
+10:35:21 AM PIT >> INFO : Slowest test ([engine:junit-jupiter]/[class:dev.shelfie.app.graph.ShelfieControllerSliceTest]/[method:someoneElsesReviewCannotBeDeleted()]) took 322 ms
+10:35:21 AM PIT >> INFO : Largest test ([engine:junit-jupiter]/[class:dev.shelfie.app.service.ReviewServiceTest]/[method:oneReviewPerUserPerBook()]) covered 110 blocks
+10:35:21 AM PIT >> INFO : Created 3 mutation test units
+10:35:26 AM PIT >> WARNING : Minion exited abnormally due to TIMED_OUT
+/-\10:35:30 AM PIT >> INFO : Completed in 10 seconds
+================================================================================
+- Mutators
+================================================================================
+> org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator
+>> Generated 3 Killed 3 (100%)
+> KILLED 3 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 0 EQUIVALENT 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.returns.PrimitiveReturnsMutator
+>> Generated 3 Killed 2 (67%)
+> KILLED 2 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 1 EQUIVALENT 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.returns.BooleanTrueReturnValsMutator
+>> Generated 9 Killed 7 (78%)
+> KILLED 7 SURVIVED 1 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 1 EQUIVALENT 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.returns.NullReturnValsMutator
+>> Generated 8 Killed 8 (100%)
+> KILLED 8 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 0 EQUIVALENT 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.MathMutator
+>> Generated 3 Killed 3 (100%)
+> KILLED 3 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 0 EQUIVALENT 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.returns.EmptyObjectReturnValsMutator
+>> Generated 15 Killed 13 (87%)
+> KILLED 13 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 2 EQUIVALENT 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.returns.BooleanFalseReturnValsMutator
+>> Generated 4 Killed 3 (75%)
+> KILLED 3 SURVIVED 0 TIMED_OUT 0 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 1 EQUIVALENT 0 
+--------------------------------------------------------------------------------
+> org.pitest.mutationtest.engine.gregor.mutators.NegateConditionalsMutator
+>> Generated 24 Killed 23 (96%)
+> KILLED 22 SURVIVED 1 TIMED_OUT 1 NON_VIABLE 0 
+> MEMORY_ERROR 0 NOT_STARTED 0 STARTED 0 RUN_ERROR 0 
+> NO_COVERAGE 0 EQUIVALENT 0 
+--------------------------------------------------------------------------------
+================================================================================
+- Timings
+================================================================================
+> pre-scan for mutations : < 1 second
+> scan classpath : < 1 second
+> coverage and dependency analysis : 1 seconds
+> build mutation tests : < 1 second
+> run mutation analysis : 8 seconds
+--------------------------------------------------------------------------------
+> Total  : 10 seconds
+--------------------------------------------------------------------------------
+> 0 tests took longer than 2000 ms
+> Slowest test ([engine:junit-jupiter]/[class:dev.shelfie.app.graph.ShelfieControllerSliceTest]/[method:someoneElsesReviewCannotBeDeleted()]) took 322 ms
+> Largest test ([engine:junit-jupiter]/[class:dev.shelfie.app.service.ReviewServiceTest]/[method:oneReviewPerUserPerBook()]) covered 110 blocks
+================================================================================
+- Statistics
+================================================================================
+>> Line Coverage (for mutated classes only): 56/59 (95%)
+>> 30 tests examined
+>> Generated 69 mutations Killed 62 (90%)
+>> Mutations with no coverage 5. Test strength 97%
+>> Ran 84 tests (1.22 tests per mutation)
+Enhanced functionality available at https://www.arcmutate.com/
+
+Build messages:- 
+* Project uses Spring, but the Arcmutate Spring plugin is not present. (https://docs.arcmutate.com/docs/spring.html)

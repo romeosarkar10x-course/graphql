@@ -1,0 +1,13 @@
+# Lab 13.7: one description of "where is the schema, where are the operations" for every tool that asks:
+# the IntelliJ GraphQL plugin (completion, go-to-definition, validation as you type), graphql-eslint, and
+# the course's tooling check. Paths are relative to this file.
+schema: src/main/resources/graphql/*.graphqls
+documents:
+  - clients/**/*.graphql
+  - src/test/resources/graphql-test/**/*.graphql
+extensions:
+  endpoints:
+    local:
+      url: http://localhost:4000/graphql
+      headers:
+        X-Shelfie-User: u1

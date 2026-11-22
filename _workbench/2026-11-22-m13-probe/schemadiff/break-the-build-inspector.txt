@@ -1,0 +1,18 @@
+== 03
+[log] ✔  Field Club.description changed type from String to String!
+[success] No breaking changes detected
+== 05
+[log] ✔  Input field CreateReviewInput.rating changed type from Int! to Int
+[success] No breaking changes detected
+== 06
+[log] ⚠  Argument sortBy: String! (with default value) added to field Query.books
+[success] No breaking changes detected
+== 10
+[log] ⚠  Book object implements Node interface
+[log] ✔  Type Node was added
+[success] No breaking changes detected
+== 11
+[log] ✔  Field UserError.field changed type from [String!] to [String!]!
+[success] No breaking changes detected
+sortBy seen by the resolver: title
+{data={books=[]}}

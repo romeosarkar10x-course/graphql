@@ -35,3 +35,5 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-21-m11-check-starters.log` | `bin/course check m11 --starters` after Module 11 |
 | `2026-11-22-m12-probe/` | Module 12: `FINDINGS.md` (19 findings), probe projects (`typesafe/`, `spring/`, `quarkus/`), DGS serialized document, rename compile log, SmallRye wire captures, exception types, Toxiproxy fault probes and four resilience runs, the cache scenario generator and live demo (`cache/`), web render counts, Apollo Kotlin airplane runs with and without keyFields |
 | `2026-11-22-m12-check-starters.log` | `bin/course check m12 --starters` after Module 12 |
+| `2026-11-22-m13-probe/` | Module 13: `FINDINGS.md` (22 findings), Testcontainers probe (`tc/`), MockedWiringFactory, MockSpec RFC text, graphql-inspector action docs, SchemaDiff events and inspector comparisons (`schemadiff/`), graphql-eslint on the clean schema, SpectaQL build, PIT run (`pit/`), a rename without codegen |
+| `2026-11-22-m13-check-starters.log` | `bin/course check m13 --starters` after Module 13 |

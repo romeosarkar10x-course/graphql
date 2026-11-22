@@ -1,0 +1,26 @@
+"Lab 6.7's slice of Shelfie on Netflix DGS (Module 13 tests it with DgsQueryExecutor). Java types are generated at build time."
+type Query {
+  club(id: ID!): Club
+  clubs: [Club!]!
+  book(id: ID!): Book
+}
+
+type Club {
+  id: ID!
+  name: String!
+  memberCount: Int!
+  owner: User!
+  currentBook: Book
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+}
+
+type Book {
+  id: ID!
+  title: String!
+  averageRating: Float
+}

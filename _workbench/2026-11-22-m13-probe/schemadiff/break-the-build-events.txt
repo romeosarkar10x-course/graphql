@@ -1,0 +1,19 @@
+== rounds/01/new.graphqls
+== rounds/02/new.graphqls
+  DANGEROUS DIFFERENT type=Query kind=Object field=books components=[first] | The new API has changed default value on argument named 'first' on field 'Query.books' of type 'Query
+== rounds/03/new.graphqls
+== rounds/04/new.graphqls
+  BREAKING STRICTER type=Club kind=Object field=name components=[String!, String] | The new API has changed field 'Club.name' from type 'String!' to 'String'
+== rounds/05/new.graphqls
+== rounds/06/new.graphqls
+  BREAKING STRICTER type=Query kind=Object field=books components=[sortBy] | The new API has made the new argument 'sortBy' on field 'Query.books' non null and hence more strict for old consumers
+== rounds/07/new.graphqls
+  BREAKING STRICTER type=Book kind=Object field=authors components=[[String!]!, [String]!] | The new API has changed field 'Book.authors' from type '[String!]!' to '[String]!'
+== rounds/08/new.graphqls
+  BREAKING MISSING type=Query kind=Object field=books components=[titleContains] | The new API is missing the field argument 'Query.books.titleContains'
+== rounds/09/new.graphqls
+  BREAKING INVALID type=Club kind=Object field=meetups components=[[Meetup!]!, [Meeting!]!] | The new API has changed field 'Club.meetups' from type '[Meetup!]!' to '[Meeting!]!'
+== rounds/10/new.graphqls
+== rounds/11/new.graphqls
+== rounds/12/new.graphqls
+  BREAKING STRICTER type=Subscription kind=Object field=reviewAdded components=[ID, ID!] | The new API has changed field 'Subscription.reviewAdded' argument 'bookId' from type 'ID' to 'ID!'

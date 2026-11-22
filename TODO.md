@@ -1,13 +1,24 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 12
+## Now: user review of Module 13
 
-The user said "continue" (2026-11-22) after Module 11; Module 12 is built. Wait for review before Module 13.
+The user said "let's proceed with the next module!" (2026-11-22) after Module 12; Module 13 is built. Wait for
+review before Module 14.
 
 ## Verification debt
 
 - [ ] Rerun the full `bin/course check --starters` (the 2026-11-21 run after Module 10 was stopped at m10/01;
-      after Modules 11 and 12 only their own module checks ran). It is CPU-heavy: run it when the machine is free.
+      after Modules 11, 12 and 13 only their own module checks ran). It is CPU-heavy: run it when the machine is free.
+- [ ] Module 13: lab 13.3 mounts the Docker socket; verified on Linux (Docker 29.10) only. Check Docker Desktop
+      (macOS, Windows): socket path, group id (`stat -f %g` fallback), and whether Testcontainers finds the host.
+- [ ] Module 13: the MockMvc `HttpGraphQlTester` + bearer token `UNAUTHORIZED` (FINDINGS 7) is observed, not
+      explained; find the cause or a Spring issue before teaching more than "use a real port".
+- [ ] Module 13: GitHub Actions workflow (lab 13.5) is read, not run; its graphql-java class path (4 jars) was
+      checked locally. Run it once in a real repository. Hive and GraphOS checks are described, not run.
+- [ ] Module 13: re-check graphql-java's SchemaDiff on a non-null argument with a default (FINDINGS 14) and the
+      truncated default-value message; game 13.9 round 06 relies on the false positive.
+- [ ] Module 13: MockSpec is RFC 0 (strawman, updated 2026-11-21): re-read before each term; mini-project 13.10
+      follows its algorithm names. IntelliJ GraphQL plugin support for `graphql.config.yml` is from its docs.
 - [ ] Module 12: npm pins (Apollo Client 4.2.12, React 19.2.9, jsdom 27.4.0, Relay 20.1.1) skip lines that were
       days old on 2026-11-22; move to Apollo Client 4.3, React 19.3, Relay 21 next term and re-run lab 12.6's
       measure. Re-check whether relay-compiler still panics on a `.graphqls` schema name.
@@ -75,7 +86,7 @@ The user said "continue" (2026-11-22) after Module 11; Module 12 is built. Wait 
 
 ## Next modules (in order)
 
-- [ ] M13–M18, capstone, per plan/syllabus.md
+- [ ] M14–M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 

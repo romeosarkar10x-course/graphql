@@ -1,0 +1,11 @@
+[
+  {"id": "B1", "file": "src/main/java/dev/shelfie/app/service/ReviewService.java",
+   "old": "if (rating < 1 || rating > 5)", "new": "if (rating < 1 || rating > 6)",
+   "what": "the server accepts a rating of 6"},
+  {"id": "B2", "file": "src/main/java/dev/shelfie/app/graph/ReviewController.java",
+   "old": "reviews.create(viewer, input.bookId()", "new": "reviews.create(viewer == null ? \"u1\" : viewer, input.bookId()",
+   "what": "createReview without X-Shelfie-User posts as u1"},
+  {"id": "B3", "file": "src/main/java/dev/shelfie/app/graph/QueryController.java",
+   "old": "return catalog.books(titleContains, first);", "new": "return catalog.books(null, first);",
+   "what": "Query.books ignores titleContains"}
+]

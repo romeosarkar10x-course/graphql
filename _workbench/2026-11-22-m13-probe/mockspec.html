@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>GraphQL Response Mocking Specification | GraphQL RFC Tracker</title><meta name="description" content="GraphQL Response Mocking Specification. RFC document created on 2026-02-02."/><link rel="canonical" href="https://rfcs.graphql.org/rfcs/MockSpec/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="/styles.css"/></head><body><div class="page-shell"><header class="site-header"><a class="brand" href="/"><span class="brand-mark">GraphQL</span> <span class="brand-copy">RFC Tracker</span></a><nav class="site-nav"><a href="/rfcs/">All RFCs</a><a href="/activity/">Activity</a><a href="https://github.com/graphql/graphql-spec">graphql-spec</a><a href="https://github.com/graphql/graphql-wg">graphql-wg</a></nav></header><main><section class="hero hero-compact"><p class="eyebrow">RFC 0 / Strawman</p><h1>GraphQL Response Mocking Specification</h1><div class="hero-meta"><div><span class="meta-label">Opened on</span><strong>2026-02-02</strong></div><div><span class="meta-label">Updated on</span><strong>2026-11-21</strong></div></div></section><section class="section-grid"><aside class="summary-card"><h2>Summary</h2><dl class="meta-grid"><dt>Identifier</dt><dd>MockSpec</dd><dt>Stage</dt><dd>RFC 0 / Strawman</dd><dt>Champion</dt><dd>-</dd><dt>Updated</dt><dd>2026-11-21</dd></dl><ul class="link-list"><li><a href="https://github.com/graphql/graphql-wg/blob/main/rfcs/MockSpec.md">RFC document</a></li></ul></aside><article class="markdown-body"><h2>At a glance</h2>
+<ul>
+<li>Identifier: MockSpec</li>
+<li>Stage: RFC 0 / Strawman</li>
+<li>Champion: -</li>
+<li>Latest activity: RFC document created on 2026-02-02</li>
+<li>RFC document: <a href="https://github.com/graphql/graphql-wg/blob/main/rfcs/MockSpec.md">https://github.com/graphql/graphql-wg/blob/main/rfcs/MockSpec.md</a></li>
+</ul>
+<h2>RFC document</h2>
+<h1>GraphQL Response Mocking Specification</h1>
+<p><em>Working Draft - January 2026</em></p>
+<pre><code class="language-graphql">directive @mock(name: String) on QUERY | MUTATION | SUBSCRIPTION
+</code></pre>
+<h1>Overview</h1>
+<p>This specification defines a mechanism for GraphQL clients to return mock
+responses for operations without making network requests.</p>
+<h2>Motivation</h2>
+<p>Frontend development often outpaces backend implementation. Developers may need
+to build UI components against GraphQL operations before the server schema is
+complete or before resolvers are implemented. This specification enables
+developers to write and use queries immediately, with the client generating
+plausible mock responses automatically.</p>
+<p>This approach allows:</p>
+<ul>
+<li>Rapid prototyping without server dependencies</li>
+<li>Parallel frontend and backend development</li>
+<li>Testing edge cases and error states</li>
+<li>Demonstrations and design reviews with realistic data</li>
+</ul>
+<p>A query using the <code>@mock</code> directive:</p>
+<pre><code class="language-graphql">query GetBusinessInfo @mock {
+  business(id: &quot;123&quot;) {
+    name
+    rating
+  }
+}
+</code></pre>
+<p>Must return a mock response <strong>without</strong> making a network request:</p>
+<pre><code class="language-json">{
+  &quot;data&quot;: {
+    &quot;business&quot;: {
+      &quot;name&quot;: &quot;The Great British Bakery&quot;,
+      &quot;rating&quot;: 4.8
+    }
+  }
+}
+</code></pre>
+<h1>Conformance</h1>
+<p>A conforming client implementation of GraphQL Response Mocking must fulfill all
+normative requirements. Conformance requirements are described in this document
+via both descriptive assertions and key words with clearly defined meanings.</p>
+<h2>Schema-Aware vs Schema-Unaware Clients</h2>
+<p>Schema-unaware clients can adopt this specification with minimal friction, as
+they do not need to reconcile mock operations against a schema.</p>
+<p>Schema-aware clients face additional complexity: operations using the <code>@mock</code>
+directive may reference types and fields not yet present in the server schema.
+Such clients must patch their local schema to include these definitions, or
+disable validation for mocked operations. The mechanism for schema patching is
+outside the scope of this specification; contributions addressing this are
+welcome for inclusion in a future version.</p>
+<h1>The @mock Directive</h1>
+<p>The <code>@mock</code> directive indicates that an operation should return a mock
+response instead of executing against a server.</p>
+<pre><code class="language-graphql">query GetBusinessInfo @mock {
+  business(id: &quot;123&quot;) {
+    name
+  }
+}
+</code></pre>
+<p>The optional <code>name</code> argument specifies which <em>mock name</em> to use from the
+<em>mock file</em>. If omitted, the <em>default mock</em> is used.</p>
+<pre><code class="language-graphql">query GetBusinessInfo @mock(name: &quot;fetch_error&quot;) {
+  business(id: &quot;123&quot;) {
+    name
+  }
+}
+</code></pre>
+<p>When a client encounters an operation with the <code>@mock</code> directive, it must not
+send a network request. Instead, it must resolve the operation using the
+corresponding <em>mock file</em>.</p>
+<h1>Mock Files</h1>
+<h2>Mock File Location</h2>
+<p>Mock files must be stored in a <code>__graphql_mocks__</code> directory adjacent to the
+source file containing the operation definition.</p>
+<p>:: A <em>mock directory</em> is a directory named <code>__graphql_mocks__</code> located in the
+same directory as the source file containing the operation.</p>
+<p>For an operation named <code>GetBusinessInfo</code> defined in <code>BusinessDetails.js</code>:</p>
+<pre><code>.
+├── __graphql_mocks__
+│   └── GetBusinessInfo.json
+└── BusinessDetails.js
+</code></pre>
+<h2>Mock File Naming</h2>
+<p>:: A <em>mock file</em> is a JSON file within the <em>mock directory</em> whose name
+corresponds to an operation name.</p>
+<p>The mock file for an operation must be named <code>{OperationName}.json</code>, where
+<code>{OperationName}</code> is the name of the GraphQL operation.</p>
+<h2>Mock File Structure</h2>
+<p>A mock file must contain a JSON object. Each key-value pair in this object
+defines a named mock response.</p>
+<p>:: A <em>mock name</em> is a key in the mock file&#x27;s root JSON object. Mock names
+beginning with two underscores (<code>__</code>) are reserved for this specification.</p>
+<p>:: A <em>mock response</em> is the value associated with a <em>mock name</em>. It must be a
+valid GraphQL response object as defined by the GraphQL specification.</p>
+<p>:: The <em>default mock</em> is the mock response with the mock name <code>&quot;__default__&quot;</code>.</p>
+<p>A mock response must conform to the
+<a href="https://spec.graphql.org/draft/#sec-Response-Format">GraphQL Response Format</a>:</p>
+<ul>
+<li>It must contain a <code>&quot;data&quot;</code> key (which may be <code>null</code>)</li>
+<li>It may contain an <code>&quot;errors&quot;</code> key with an array of error objects</li>
+<li>It may contain an <code>&quot;extensions&quot;</code> key</li>
+</ul>
+<p>Additionally, it may contain a <code>&quot;__description__&quot;</code> key which stores a
+description of the response. This may be used when regenerating the
+<em>mock response</em>.</p>
+<pre><code class="language-json">{
+  &quot;__default__&quot;: {
+    &quot;data&quot;: {
+      &quot;business&quot;: {
+        &quot;name&quot;: &quot;FakeBusiness&quot;,
+        &quot;rating&quot;: 4.2
+      }
+    }
+  },
+  &quot;unrated&quot;: {
+    &quot;data&quot;: {
+      &quot;business&quot;: {
+        &quot;name&quot;: &quot;FakeBusiness&quot;,
+        &quot;rating&quot;: null
+      }
+    },
+    &quot;__description__&quot;: &quot;The business exists but has no rating.&quot;
+  },
+  &quot;business_fetch_error&quot;: {
+    &quot;data&quot;: null,
+    &quot;errors&quot;: [{
+      &quot;path&quot;: [&quot;business&quot;],
+      &quot;message&quot;: &quot;internal server error&quot;
+    }],
+    &quot;__description__&quot;: &quot;There was a server error when fetching the business; return null at the root and an error.&quot;
+  }
+}
+</code></pre>
+<h1>Mock Resolution</h1>
+<p>When executing an operation with the <code>@mock</code> directive, a conforming client
+must use the following algorithm.</p>
+<p>ResolveMockedOperation(operation, mockName):</p>
+<ul>
+<li>Let {operationName} be the name of {operation}.</li>
+<li>Let {sourceFile} be the source file containing {operation}.</li>
+<li>Let {mockDir} be the path formed by appending {&quot;/<strong>graphql_mocks</strong>&quot;} to the
+directory of {sourceFile}.</li>
+<li>Let {mockFilePath} be {mockDir} joined with {operationName} and {&quot;.json&quot;}.</li>
+<li>If the file at {mockFilePath} does not exist:
+<ul>
+<li>If automatic mock generation is enabled, call
+{GenerateDefaultMockFile(mockFilePath, operation)}.</li>
+<li>Otherwise, raise a client error indicating the mock file is missing.</li>
+</ul>
+</li>
+<li>Let {mocks} be the parsed JSON content of the file at {mockFilePath}.</li>
+<li>If {mocks} does not contain a key matching {mockName}:
+<ul>
+<li>Raise a client error indicating the requested mock name was not found.</li>
+</ul>
+</li>
+<li>Return the <em>mock response</em> for {mockName} in {mocks}.</li>
+</ul>
+<h1>Automatic Mock Generation</h1>
+<p>When a <em>mock file</em> does not exist for an operation, conforming clients must
+generate one automatically. This is the primary workflow: developers write
+queries and the client produces plausible responses without manual intervention.</p>
+<p>GenerateDefaultMockFile(mockFilePath, operation):</p>
+<ul>
+<li>Let {mockDir} be the parent directory of {mockFilePath}.</li>
+<li>If {mockDir} does not exist, create it.</li>
+<li>Let {defaultResponse} be a generated mock response for {operation}.</li>
+<li>Let {mockContent} be a JSON object with a single key {&quot;<strong>default</strong>&quot;} whose
+value is {defaultResponse}.</li>
+<li>Write {mockContent} to {mockFilePath}.</li>
+<li>Return {mockContent}.</li>
+</ul>
+<h2>Generation Strategies</h2>
+<p>The mechanism for adding mock responses is implementation-defined.</p>
+<p>It is recommended that implementers provide a workflow for developers to use
+a Large Language Model (LLM) to generate contextually appropriate mock data based
+on field names, types, and surrounding context. Detail is provided on this in the
+<a href="#sec-Agent-Tooling">Agent Tooling</a> section below.</p>
+<h1>Mock Validation</h1>
+<h2>Query Changes</h2>
+<p>As development progresses, the shape of a query may change — fields may be added,
+removed, or renamed. When this happens, an existing <em>mock response</em> may no
+longer be a valid response for the query. Conforming clients must detect when a
+<em>mock response</em> is incompatible with its operation and force corrective action.</p>
+<p>Mocks must be validated as part of the application test suite.</p>
+<p>Note: It is possible to detect if a JSON payload is valid for a given operation
+by constructing an in-memory GraphQL server that has no resolvers, and uses the
+JSON payload as its {rootValue} - and ensuring no errors are thrown for execution
+of the operation against the test server.</p>
+<p>GraphQL clients may warn or throw for an invalid <em>mock response</em>. Implementors
+must detect this, and similarly force corrective action (e.g. by forcing the
+user to regenerate or the fix the <em>mock repsonse</em> in the <em>mock file</em>).</p>
+<h2>Missing Mock Name</h2>
+<p>If the requested <em>mock name</em> does not exist in the <em>mock file</em>, the client must
+raise an error indicating the available mock names.</p>
+<h2>Invalid Mock Response</h2>
+<p>If a <em>mock response</em> does not conform to the GraphQL response format, client
+behavior is implementation-defined. Clients should validate mock responses and
+provide helpful error messages during development.</p>
+<h1>Client Integration</h1>
+<p>A conforming client must intercept operations containing the <code>@mock</code> directive
+before any network layer processing. The mock response must be returned through
+the same interface as a real server response, ensuring transparent substitution.</p>
+<p>Note: This allows existing application code to work identically whether using
+mocked or real responses, facilitating testing and development workflows.</p>
+<h2>Static Test Usage</h2>
+<p>Mock files may also be imported directly for use in static test environments.
+For example, test utilities that accept pre-defined mock responses can import
+from the <em>mock file</em> to ensure consistency between runtime mocking and test
+fixtures.</p>
+<pre><code class="language-javascript">import GetBusinessInfoMocks from &#x27;./__graphql_mocks__/GetBusinessInfo.json&#x27;;
+
+// Use in a test provider
+&lt;MockedProvider mocks={[
+  {
+    request: { query: GET_BUSINESS_INFO, variables: { id: &quot;123&quot; } },
+    result: GetBusinessInfoMocks.__default__
+  }
+]}&gt;
+  &lt;BusinessDetails id=&quot;123&quot; /&gt;
+&lt;/MockedProvider&gt;
+</code></pre>
+<p>This pattern keeps mock data centralized and avoids duplication between
+development-time mocking and test-time mocking.</p>
+<h1>Agent Tooling</h1>
+<p>This specification is designed to work well with LLM-based coding agents.
+Developers using agents can request new mock variants conversationally.</p>
+<p>For example, a developer may add a mock with the following prompt:</p>
+<pre><code class="language-example">&quot;add a mock response for GetBusinessInfo where the rating field returns an
+error&quot;
+</code></pre>
+<h2>Agent Skills</h2>
+<p>Implementers of this specification should provide an
+<a href="https://agentskills.io/home">Agent Skill</a> conforming to the Agent Skills
+Specification. This allows coding agents to discover and use mock management
+capabilities.</p>
+<p><strong>Non-Normative: Suggested Agent Skill</strong></p>
+<p>The following is a suggested <code>SKILL.md</code>. Implementers are welcome to replace or
+adapt this prompt to suit their implementation.</p>
+<pre><code class="language-markdown">---
+name: gql-mock-manager
+description: Create and edit mock responses for GraphQL operations using the @mock directive
+---
+
+This skill manages mock responses for GraphQL operations using the `@mock`
+directive.
+
+## Capabilities
+
+- **Add mock variant**: Create a new named mock response for an existing
+  operation
+- **Modify mock**: Update an existing mock response
+- **List mocks**: Show available mock names for an operation
+
+## File Structure
+
+Mock files are located in `__graphql_mocks__/{OperationName}.json` adjacent to
+the source file containing the operation.
+
+Each mock file is a JSON object where keys are mock names and values are
+GraphQL response objects with `data`, `errors`, and/or `extensions` fields.
+
+Additionally, there is an optional `__description__` field which you must add
+for all non-default mock responses.
+
+The `__default__` key is the default mock used when `@mock` is called without
+a `name` argument.
+
+\`\`\`json
+{
+  &quot;__default__&quot;: {
+    &quot;data&quot;: {
+      &quot;business&quot;: {
+        &quot;name&quot;: &quot;The Great British Bakery&quot;,
+        &quot;rating&quot;: 4.8&quot;
+      },
+    },
+    &quot;__description__&quot;: &quot;A fully complete response for the query.&quot;
+  },
+  &quot;not_found&quot;: { &quot;data&quot;: ... },
+  &quot;no_rating&quot;: { &quot;data&quot;: ... },
+}
+\`\`\`
+
+## Instructions
+
+When asked to add a mock variant:
+
+1. Locate the operation&#x27;s mock file
+2. Read the existing mock file to understand the response shape
+3. Create a new entry with a descriptive mock name
+4. Ensure the response includes appropriate `data` and/or `errors` fields
+5. Add a summary of the user&#x27;s prompt to the `__description__` field
+6. Write the updated mock file
+
+When the mock should represent an error state, use the GraphQL errors format -
+unless you know that the schema uses a union to represent error state. You must
+check against the schema.
+
+Example error:
+
+\`\`\`json
+{
+  &quot;data&quot;: { &quot;fieldName&quot;: null },
+  &quot;errors&quot;: [{
+    &quot;path&quot;: [&quot;fieldName&quot;],
+    &quot;message&quot;: &quot;field error&quot;
+  }]
+}
+\`\`\`
+
+## Schema
+
+Look for the GrpahQL schema in &lt;root&gt;/schema.graphql to understand what
+shape of data should be returned. Use plausible and realistic values (i.e.
+avoid &quot;foo&quot;, &quot;bar&quot;, &quot;myBusiness&quot;, &quot;string&quot; as values.)
+
+## Example
+
+User: &quot;Add a mock for GetBusinessInfo where the business is not found&quot;
+
+Action: Add to (or create) `./__graphql_mocks__/GetBusinessInfo.json`:
+
+\`\`\`json
+&quot;not_found&quot;: {
+  &quot;data&quot;: { &quot;business&quot;: null },
+  &quot;errors&quot;: [{
+    &quot;path&quot;: [&quot;business&quot;],
+    &quot;message&quot;: &quot;Business not found&quot;
+  }],
+  &quot;__description__&quot;: &quot;the business did not exist - return null for business and a corresponding error in the errors array&quot;
+}
+\`\`\`
+</code></pre><section class="detail-timeline"><h2>Timeline</h2><div class="activity-groups detail-timeline-groups"><section class="activity-month"><div class="activity-month-divider"><span>February 2026</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-wg/blob/5160deb91f76be77be56b1eb2c118c6dfe31087f/rfcs/MockSpec.md">RFC document</a> created on 2026-02-02 by Mark Larah</li></ul></section></div></section></article></section></main><footer class="site-footer"><p>Copyright © GraphQL Contributors</p></footer></div></body></html>

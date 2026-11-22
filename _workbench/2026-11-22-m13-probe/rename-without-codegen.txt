@@ -1,0 +1,13 @@
+Book.averageRating renamed to avgRating in the schema
+{"data":{"book":{"title":"The Left Hand of Darkness","avgRating":null}}}
+2026-11-22T10:34:33.398Z  INFO 131 --- [           main] o.s.b.g.a.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {Book=[avgRating]}
+	Unmapped registrations: {Book.averageRating=BookController#averageRating[1 args]}
+	Unmapped arguments: {}
+	Field nullness errors: {}
+	Argument nullness errors: {BookController#reviews[2 args]=[int last should be NULLABLE], ClubController#members[2 args]=[int first should be NULLABLE], ClubController#meetups[2 args]=[boolean upcomingOnly should be NULLABLE], QueryController#books[2
+	Skipped types: []
+2026-11-22T10:34:33.406Z  INFO 131 --- [           main] s.b.g.a.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP [POST] /graphql
+2026-11-22T10:34:33.435Z  INFO 131 --- [           main] s.b.g.a.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint WebSocket /graphql
+2026-11-22T10:34:33.447Z  INFO 131 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 4000 (http) with context path '/'
+2026-11-22T10:34:33.454Z  INFO 131 --- [           main] dev.shelfie.app.ShelfieApplication       : Started ShelfieApplication in 0.851 seconds (process running for 1.0)

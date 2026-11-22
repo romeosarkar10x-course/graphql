@@ -1,0 +1,7 @@
+{
+  "title": "Break the build: twelve sneaky schema changes; call each one before CI does, then explain where CI is wrong",
+  "lecture": "13.5",
+  "kind": "game",
+  "grading": "both",
+  "needs": []
+}

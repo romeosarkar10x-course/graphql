@@ -1,0 +1,53 @@
+# Lab 13.5: the schema gate. Runs on every pull request that touches the schema or a client operation.
+# Two checks, on purpose: graphql-inspector annotates the diff in the pull request (breaking, dangerous,
+# safe, per line), and SchemaCheck fails the build only when a known client is hurt, saying which one.
+name: Schema checks
+
+on:
+  pull_request:
+    paths:
+      - "src/main/resources/graphql/**"
+      - "clients/**"
+
+jobs:
+  inspector:
+    name: graphql-inspector diff
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: graphql-hive/graphql-inspector@master
+        with:
+          # the base branch's schema against this pull request's
+          schema: "main:src/main/resources/graphql/shelfie.graphqls"
+          fail-on-breaking: false
+          annotation-level: dangerous
+
+  clients:
+    name: client operations against the new schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "25"
+      - name: Fetch graphql-java for the single-file check
+        run: |
+          mkdir -p lib
+          curl -fsSL -o lib/graphql-java.jar https://repo1.maven.org/maven2/com/graphql-java/graphql-java/26.1/graphql-java-26.1.jar
+          curl -fsSL -o lib/java-dataloader.jar https://repo1.maven.org/maven2/com/graphql-java/java-dataloader/6.0.0/java-dataloader-6.0.0.jar
+          curl -fsSL -o lib/reactive-streams.jar https://repo1.maven.org/maven2/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar
+          curl -fsSL -o lib/jspecify.jar https://repo1.maven.org/maven2/org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar
+      - name: SchemaCheck (fails only when a known client breaks)
+        run: |
+          git show origin/${{ github.base_ref }}:src/main/resources/graphql/shelfie.graphqls > old.graphqls
+          java -cp "lib/*" SchemaCheck.java old.graphqls src/main/resources/graphql/shelfie.graphqls clients | tee schema-check.txt
+      - name: Explain the failure in the job summary
+        if: failure()
+        run: |
+          { echo '### Schema check failed'; echo '```'; cat schema-check.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

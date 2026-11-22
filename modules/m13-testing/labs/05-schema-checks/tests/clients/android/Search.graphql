@@ -1,0 +1,3 @@
+query Search($text: String) {
+  books(titleContains: $text, first: 10) { id title }
+}

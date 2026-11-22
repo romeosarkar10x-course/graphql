@@ -1,0 +1,4 @@
+query feed($n: Int!) {
+  feed(first: $n, kind: PHOTO) { id kind createdAt author { name } replies(first: 2) { body } }
+  trending { name }
+}

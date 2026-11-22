@@ -1,0 +1,11 @@
+[
+  {"id": "R1", "file": "src/main/resources/graphql/shelfie.graphqls",
+   "old": "  averageRating: Float\n", "new": "  avgRating: Float\n",
+   "what": "Book.averageRating renamed to avgRating in the schema"},
+  {"id": "R2", "file": "src/main/resources/graphql/shelfie.graphqls",
+   "old": "  \"At most 500 characters after trimming.\"\n  body: String!\n", "new": "  \"At most 500 characters after trimming.\"\n  text: String!\n",
+   "what": "CreateReviewInput.body renamed to text in the schema"},
+  {"id": "R3", "file": "src/main/resources/graphql/shelfie.graphqls",
+   "old": "  meetups(upcomingOnly: Boolean = true)", "new": "  meetups(futureOnly: Boolean = true)",
+   "what": "the argument Club.meetups(upcomingOnly:) renamed to futureOnly"}
+]

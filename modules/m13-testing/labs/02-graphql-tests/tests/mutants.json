@@ -1,0 +1,23 @@
+[
+  {"id": "G1", "file": "src/main/java/dev/shelfie/app/graph/ReviewController.java",
+   "old": "return reviews.added(bookId);", "new": "return reviews.added(bookId).take(2);",
+   "what": "reviewAdded ends after two events"},
+  {"id": "G2", "file": "src/main/java/dev/shelfie/app/graph/ReviewController.java",
+   "old": "return reviews.added(bookId);", "new": "return reviews.added(null);",
+   "what": "reviewAdded(bookId:) streams every book's reviews"},
+  {"id": "G3", "file": "src/main/java/dev/shelfie/app/graph/ReviewController.java",
+   "old": "return reviews.added(bookId);", "new": "return reviews.added(bookId).buffer(3).flatMapIterable(java.util.List::reversed);",
+   "what": "reviewAdded delivers events out of order"},
+  {"id": "G4", "file": "src/main/java/dev/shelfie/app/graph/ErrorAdvice.java",
+   "old": "errorType(ErrorType.NOT_FOUND)", "new": "errorType(ErrorType.BAD_REQUEST)",
+   "what": "an unknown review is classified BAD_REQUEST instead of NOT_FOUND"},
+  {"id": "G5", "file": "src/main/java/dev/shelfie/app/graph/ErrorAdvice.java",
+   "old": "return GraphqlErrorBuilder.newError(env).errorType(ErrorType.FORBIDDEN)", "new": "return GraphqlErrorBuilder.newError().errorType(ErrorType.FORBIDDEN)",
+   "what": "the FORBIDDEN error loses its path and locations"},
+  {"id": "G6", "file": "src/main/java/dev/shelfie/app/graph/ViewerInterceptor.java",
+   "old": "getFirst(\"X-Shelfie-User\")", "new": "getFirst(\"X-Shelfie-Viewer\")",
+   "what": "the HTTP layer reads the wrong header (only tests through the web layer can see it)"},
+  {"id": "G7", "file": "src/main/java/dev/shelfie/app/graph/ReviewController.java",
+   "old": "new UserError(p.field(), p.message())", "new": "new UserError(null, p.message())",
+   "what": "userErrors lose their field path"}
+]

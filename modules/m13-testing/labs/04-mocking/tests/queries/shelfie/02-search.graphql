@@ -1,0 +1,8 @@
+query search {
+  search(text: "dark") {
+    __typename
+    ... on Book { id title }
+    ... on Club { id name memberCount }
+    ... on User { id handle }
+  }
+}

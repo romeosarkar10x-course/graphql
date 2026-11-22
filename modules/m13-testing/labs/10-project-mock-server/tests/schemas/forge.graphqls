@@ -1,0 +1,73 @@
+"A code forge in the style of GitHub's API: Relay connections, custom scalars, interfaces that implement interfaces."
+scalar DateTime
+scalar URI
+scalar GitObjectID
+scalar HTML
+
+interface Node { id: ID! }
+interface Actor { login: String! url: URI! avatarUrl: URI! }
+interface RepositoryOwner implements Node & Actor { id: ID! login: String! url: URI! avatarUrl: URI! }
+
+type User implements Node & Actor & RepositoryOwner {
+  id: ID!
+  login: String!
+  name: String
+  url: URI!
+  avatarUrl: URI!
+  createdAt: DateTime!
+  repositories(first: Int, after: String): RepositoryConnection!
+}
+
+type Organization implements Node & Actor & RepositoryOwner {
+  id: ID!
+  login: String!
+  url: URI!
+  avatarUrl: URI!
+  description: String
+  repositories(first: Int, after: String): RepositoryConnection!
+}
+
+type Repository implements Node {
+  id: ID!
+  name: String!
+  nameWithOwner: String!
+  description: String
+  url: URI!
+  stargazerCount: Int!
+  isPrivate: Boolean!
+  pushedAt: DateTime
+  owner: RepositoryOwner!
+  defaultBranchRef: Ref
+  issues(first: Int, states: [IssueState!]): IssueConnection!
+}
+
+type Ref { name: String! target: Commit }
+type Commit implements Node { id: ID! oid: GitObjectID! messageHeadline: String! committedDate: DateTime! }
+
+enum IssueState { OPEN CLOSED }
+
+type Issue implements Node {
+  id: ID!
+  number: Int!
+  title: String!
+  bodyHTML: HTML!
+  state: IssueState!
+  createdAt: DateTime!
+  author: Actor
+}
+
+type PageInfo { hasNextPage: Boolean! endCursor: String }
+type RepositoryEdge { cursor: String! node: Repository }
+type RepositoryConnection { totalCount: Int! edges: [RepositoryEdge] nodes: [Repository] pageInfo: PageInfo! }
+type IssueEdge { cursor: String! node: Issue }
+type IssueConnection { totalCount: Int! edges: [IssueEdge] pageInfo: PageInfo! }
+
+union SearchResultItem = Repository | Issue | User | Organization
+
+type Query {
+  viewer: User!
+  repository(owner: String!, name: String!): Repository
+  repositoryOwner(login: String!): RepositoryOwner
+  node(id: ID!): Node
+  search(query: String!, first: Int!): [SearchResultItem!]!
+}

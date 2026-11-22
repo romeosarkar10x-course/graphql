@@ -1,0 +1,7 @@
+{
+  "title": "Mini-project: a schema-driven mock server, one standalone jar for any SDL file, with MockSpec named mocks",
+  "lecture": "13.4",
+  "kind": "project",
+  "grading": "both",
+  "needs": []
+}

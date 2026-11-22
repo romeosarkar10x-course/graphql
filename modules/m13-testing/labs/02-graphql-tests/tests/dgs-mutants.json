@@ -1,0 +1,8 @@
+[
+  {"id": "D1", "file": "src/main/java/dev/shelfie/dgs/ClubFetcher.java",
+   "old": "return Data.averageRating(book.getId());", "new": "return Data.averageRating(\"b1\");",
+   "what": "DGS: every book gets b1's average rating"},
+  {"id": "D2", "file": "src/main/java/dev/shelfie/dgs/ClubFetcher.java",
+   "old": ".memberCount(c.memberIds().size())", "new": ".memberCount(c.memberIds().size() - 1)",
+   "what": "DGS: memberCount leaves out the owner"}
+]

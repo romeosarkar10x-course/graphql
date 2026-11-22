@@ -149,3 +149,18 @@ in Docker.
   - 12.8's faults come from a per-test Toxiproxy proxy on :8667, with the client's keep-alive off
     (Toxiproxy decides per connection). Persisted documents from clients are lecture and notes only.
   - Game "Same screen, three clients" is rubric-graded (m12/11).
+- Module 13 (2026-11-22), probes in `_workbench/2026-11-22-m13-probe/` (`FINDINGS.md`, 22 findings):
+  - Testcontainers runs inside the course container: `bin/course` mounts the host's Docker socket (with its
+    group) only for labs whose lab.json needs `"docker"` (13.3), with a warning in the lab. Earlier modules keep
+    their course services.
+  - Node.js tools run inside the course image from `.cache/node` (copied once from `node:24.22.1-slim`) for labs
+    that need `"node"` (13.6 graphql-eslint, 13.7 SpectaQL); `bin/course node <cmd>`.
+  - Labs that teach testing grade the learner's tests by planted bugs: the learner's `src/test` runs against the
+    contract app's `src/main` (`contract/suite-test.sh`, `mutate.py`), must pass unchanged and fail on each mutant.
+    Game 13.8 does the same with PIT (80%).
+  - 13.5 is usage-aware (breaking changes fail only when a known client operation uses them), with the clients'
+    documents in the repo instead of a registry; Hive and GraphOS are described. The GitHub workflow is read by
+    the test, not run.
+  - IntelliJ's plugin is described; `graphql.config.yml` is checked with graphql-config. SpectaQL, not Magidoc.
+  - MockSpec (RFC 0) is read server-side in mini-project 13.10; game 13.9's answer key follows the spec, and
+    round 06 is a known SchemaDiff false positive.

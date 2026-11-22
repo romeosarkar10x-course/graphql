@@ -1,0 +1,3 @@
+exit 1
+lacks BREAKING
+has INVALID Stale

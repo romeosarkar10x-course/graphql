@@ -1,0 +1,17 @@
+query ClubPage($id: ID!) {
+  club(id: $id) {
+    name
+    description
+    visibility
+    owner { name }
+    members(first: 8) { handle }
+    meetups { title startsAt location }
+    currentBook { ...BookCard }
+  }
+}
+
+fragment BookCard on Book {
+  title
+  authors
+  averageRating
+}

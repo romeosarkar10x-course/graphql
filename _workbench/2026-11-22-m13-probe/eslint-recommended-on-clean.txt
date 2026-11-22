@@ -1,0 +1,3 @@
+Counter({'@graphql-eslint/description-style': 64, '@graphql-eslint/strict-id-in-types': 2})
+143 @graphql-eslint/strict-id-in-types type "CreateReviewPayload" must have exactly one non-nullable unique identifier. Accepted name: id. 
+151 @graphql-eslint/strict-id-in-types type "UserError" must have exactly one non-nullable unique identifier. Accepted name: id. Accepted t

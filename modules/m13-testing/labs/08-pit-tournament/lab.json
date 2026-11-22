@@ -1,0 +1,7 @@
+{
+  "title": "Mutation testing tournament: PIT injects bugs into the services, your tests kill them (target 80%)",
+  "lecture": "13.1",
+  "kind": "game",
+  "grading": "auto",
+  "needs": []
+}

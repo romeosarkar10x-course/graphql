@@ -1,0 +1,48 @@
+"A social network: recursion, nested and nullable lists, enums, mutations with inputs."
+type Query {
+  person(id: ID!): Person
+  feed(first: Int = 10, kind: PostKind): [Post!]!
+  trending: [[Tag!]]!
+}
+
+type Mutation {
+  post(input: PostInput!): Post!
+  follow(personId: ID!): Person!
+}
+
+enum PostKind { TEXT PHOTO LINK }
+
+type Person {
+  id: ID!
+  name: String!
+  handle: String!
+  email: String
+  avatarUrl: String
+  bio: String
+  joinedAt: String!
+  followerCount: Int!
+  followers(first: Int = 5): [Person!]!
+  posts(last: Int = 3): [Post]
+}
+
+type Post {
+  id: ID!
+  kind: PostKind!
+  body: String!
+  createdAt: String!
+  likeCount: Int!
+  author: Person!
+  tags: [Tag!]!
+  replies(first: Int): [Post!]!
+}
+
+type Tag {
+  name: String!
+  postCount: Int!
+}
+
+input PostInput {
+  kind: PostKind!
+  body: String!
+  tags: [String!]
+}

@@ -1,0 +1,4 @@
+mutation newPost($input: PostInput!) {
+  post(input: $input) { id kind body tags { name } author { handle } }
+  follow(personId: "p-2") { id followerCount }
+}

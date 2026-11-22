@@ -1,0 +1,19 @@
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/01-add-field-and-type/new.graphqls
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/02-remove-used-field/new.graphqls
+  BREAKING MISSING type=Book kind=Object field=isbn components=[] | The new API is missing the field 'Book.isbn'
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/03-remove-unused-field/new.graphqls
+  BREAKING MISSING type=Club kind=Object field=createdAt components=[] | The new API is missing the field 'Club.createdAt'
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/04-change-field-type/new.graphqls
+  BREAKING INVALID type=Meetup kind=Object field=location components=[String!, Int!] | The new API has changed field 'Meetup.location' from type 'String!' to 'Int!'
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/05-argument-made-required/new.graphqls
+  BREAKING STRICTER type=Query kind=Object field=books components=[String, String!] | The new API has changed field 'Query.books' argument 'titleContains' from type 'String' to 'String!'
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/06-required-input-field/new.graphqls
+  BREAKING STRICTER type=CreateReviewInput kind=InputObject field=headline components=[] | The new API has made the new input field 'headline' non null and hence more strict for old consumers
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/07-enum-value-added/new.graphqls
+  DANGEROUS ADDITION type=Visibility kind=Enum field=null components=[UNLISTED] | The new API has added a new enum value 'UNLISTED'
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/08-default-changed/new.graphqls
+  DANGEROUS DIFFERENT type=Club kind=Object field=members components=[first] | The new API has changed default value on argument named 'first' on field 'Club.members' of type 'Club
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/09-deprecated/new.graphqls
+  DANGEROUS DEPRECATION_ADDED type=User kind=Object field=handle components=[] | The new API deprecated a field 'User.handle'
+== modules/m13-testing/labs/05-schema-checks/tests/scenarios/10-enum-value-removed/new.graphqls
+  BREAKING MISSING type=Visibility kind=Enum field=null components=[PRIVATE] | The new API is missing an enum value 'PRIVATE'

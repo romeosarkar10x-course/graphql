@@ -1,0 +1,14 @@
+{
+  "__default__": {
+    "data": { "book": { "title": "Piranesi", "averageRating": 4.5 } }
+  },
+  "unrated": {
+    "data": { "book": { "title": "Good Omens", "averageRating": null } },
+    "__description__": "The book exists but nobody has reviewed it: the screen must say so instead of 0.00."
+  },
+  "fetch_error": {
+    "data": { "book": null },
+    "errors": [{ "message": "internal server error", "path": ["book"] }],
+    "__description__": "Shelfie failed to load the book: null at the root and one error."
+  }
+}

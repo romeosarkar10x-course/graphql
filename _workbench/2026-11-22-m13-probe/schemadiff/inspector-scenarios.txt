@@ -1,0 +1,25 @@
+== 03-remove-unused-field
+[log] 
+Detected the following changes (1) between schemas:
+[log] ✖  Field createdAt was removed from object type Club
+[error] Detected 1 breaking change
+== 07-enum-value-added
+[log] 
+Detected the following changes (1) between schemas:
+[log] ⚠  Enum value UNLISTED was added to enum Visibility
+[success] No breaking changes detected
+== 08-default-changed
+[log] 
+Detected the following changes (1) between schemas:
+[log] ⚠  Default value for argument first on field Club.members changed from 10 to 5
+[success] No breaking changes detected
+== 09-deprecated
+[log] 
+Detected the following changes (1) between schemas:
+[log] ✔  Field User.handle is deprecated
+[success] No breaking changes detected
+== 06-required-input-field
+[log] 
+Detected the following changes (1) between schemas:
+[log] ✖  Input field headline of type String! was added to input object type CreateReviewInput
+[error] Detected 1 breaking change

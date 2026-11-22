@@ -1,0 +1,43 @@
+09:51:08.706 [main] INFO org.apache.kafka.common.metrics.Metrics -- Metrics reporters closed
+09:51:08.707 [kafka-admin-client-thread | adminclient-1] INFO org.apache.kafka.common.utils.internals.AppInfoParser -- App info kafka.admin.client for adminclient-1 unregistered
+09:51:08.715 [kafka-admin-client-thread | adminclient-1] INFO org.apache.kafka.common.metrics.Metrics -- Metrics scheduler closed
+09:51:08.715 [kafka-admin-client-thread | adminclient-1] INFO org.apache.kafka.common.metrics.Metrics -- Closing reporter org.apache.kafka.common.metrics.JmxReporter
+09:51:08.715 [kafka-admin-client-thread | adminclient-1] INFO org.apache.kafka.common.metrics.Metrics -- Metrics reporters closed
+09:51:08.875 [main] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- Pulling docker image: quay.io/keycloak/keycloak:26.8.2. Please be patient; this may take some time but only needs to be done once.
+09:51:08.875 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Failure when attempting to lookup auth config. Please ignore if you don't have images in an authenticated registry. Details: (dockerImageName: quay.io/keycloak/keycloak:latest, configFile: /home/ubuntu/.docker/config.json, configEnv: DOCKER_AUTH_CONFIG). Falling back to docker-java default behaviour. Exception message: Status 404: No config supplied. Checked in order: /home/ubuntu/.docker/config.json (file not found), DOCKER_AUTH_CONFIG (not set)
+09:51:10.085 [docker-java-stream--1114878583] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- Starting to pull image
+09:51:10.085 [docker-java-stream--1114878583] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- Pulling image layers:  0 pending,  0 downloaded,  0 extracted, (0 bytes/0 bytes)
+09:51:10.094 [main] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- Image quay.io/keycloak/keycloak:26.8.2 pull took PT1.218696651S
+09:51:10.096 [main] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- Creating container for image: quay.io/keycloak/keycloak:26.8.2
+09:51:10.141 [main] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- Container quay.io/keycloak/keycloak:26.8.2 is starting: fa9ae41eeabc9cf5ec6e686385900b58af17d00dfff26cd0f1c56a9cb54451ed
+09:51:10.258 [main] INFO org.testcontainers.containers.wait.strategy.HttpWaitStrategy -- /romantic_rhodes: Waiting for 120 seconds for URL: http://10.100.0.1:32772/health/ready (where port 32772 maps to container port 9000)
+09:51:10.270 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: JAVA_OPTS_KC_HEAP already set in environment; overriding default settings
+09:51:10.771 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: Updating the configuration and installing your custom providers, if any. Please wait.
+09:51:12.307 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:12,305 WARN  [org.keycloak.common.Profile] (build-33) Deprecated features identity-brokering-api:v1, twitter-broker:v1 enabled by default. Check the upgrading guide for steps to use later versions if available.
+09:51:13.769 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:13,768 INFO  [io.quarkus.deployment.QuarkusAugmentor] (main) Quarkus augmentation completed in 2537ms
+09:51:14.122 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: Running the server in development mode. DO NOT use this configuration in production.
+09:51:15.255 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:14,460 WARN  [org.keycloak.models.sessions.infinispan.InfinispanStickySessionEncoderProviderFactory] (main) The option `shouldAttachRoute` is deprecated and will be removed in a future release. Disable it by setting `spi-sticky-session-encoder--infinispan--should-attach-route` to `false`
+09:51:15.258 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:15,251 INFO  [org.infinispan.CONTAINER] (main) ISPN000974: Virtual threads support: enabled
+09:51:15.780 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:15,779 INFO  [org.hibernate.orm.jdbc.batch] (JPA Startup Thread) HHH100501: Automatic JDBC statement batching enabled (maximum batch size 32)
+09:51:15.798 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:15,798 WARN  [org.keycloak.common.Profile] (main) Deprecated features identity-brokering-api:v1, twitter-broker:v1 enabled by default. Check the upgrading guide for steps to use later versions if available.
+09:51:16.180 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:16,179 INFO  [org.keycloak.quarkus.runtime.storage.database.liquibase.QuarkusJpaUpdaterProvider] (main) Initializing database schema. Using changelog META-INF/jpa-changelog-master.xml
+09:51:18.345 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:18,344 INFO  [org.infinispan.CONTAINER] (main) ISPN000556: Starting user marshaller 'org.infinispan.commons.marshall.ImmutableProtoStreamMarshaller'
+09:51:18.492 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:18,492 INFO  [org.keycloak.connections.infinispan.DefaultInfinispanConnectionProviderFactory] (main) Node name: node_831565, Site name: null, Cluster name: ISPN
+09:51:18.581 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:18,580 INFO  [org.keycloak.models.workflow.WorkflowsEventListenerFactory] (main) Workflow runner task scheduled: next execution at 21:51:18, then every PT12H
+09:51:18.607 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:18,607 INFO  [org.keycloak.services] (main) KC-SERVICES0050: Initializing master realm
+09:51:19.269 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:19,268 INFO  [org.keycloak.services] (main) KC-SERVICES0077: Created temporary admin user with username admin
+09:51:19.322 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:19,322 INFO  [org.keycloak.services.resources.KeycloakApplication] (main) Bootstrap completed in 3.523000 seconds
+09:51:19.375 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:19,375 INFO  [io.quarkus] (main) Keycloak 26.8.2 on JVM (powered by Quarkus 3.40.1.1) started in 5.539s. Listening on: http://0.0.0.0:8080. Management interface listening on http://0.0.0.0:9000.
+09:51:19.375 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:19,375 INFO  [io.quarkus] (main) Profile dev activated. 
+09:51:19.376 [docker-java-stream-1474155621] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- STDOUT: 2026-11-22 09:51:19,375 INFO  [io.quarkus] (main) Installed features: [agroal, cdi, hibernate-orm, jdbc-h2, keycloak, narayana-jta, opentelemetry, rest, rest-jackson, smallrye-context-propagation, smallrye-health, vertx]
+09:51:20.332 [main] INFO tc.quay.io/keycloak/keycloak:26.8.2 -- Container quay.io/keycloak/keycloak:26.8.2 started in PT10.236086723S
+Keycloak up in 11460 ms at http://10.100.0.1:32770
+09:51:20.578 [main] INFO tc.postgres:18.7-alpine -- Creating container for image: postgres:18.7-alpine
+09:51:20.624 [main] INFO tc.postgres:18.7-alpine -- Container postgres:18.7-alpine is starting: 9ba70f11a7a84e6b89d490aad08d30a21cc9ce60406db10f557014aa3cc4c413
+09:51:21.502 [main] INFO tc.postgres:18.7-alpine -- Container postgres:18.7-alpine started in PT0.923898517S
+09:51:21.503 [main] INFO tc.postgres:18.7-alpine -- Container is started (JDBC URL: jdbc:postgresql://10.100.0.1:32773/test?loggerLevel=OFF)
+PG up in 926 ms at jdbc:postgresql://10.100.0.1:32773/test?loggerLevel=OFF
+PostgreSQL 18.7 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+10:47:56.132 [main] INFO tc.testcontainers/ryuk:0.14.0 -- Container testcontainers/ryuk:0.14.0 started in PT0.238653996S
+10:47:57.594 [main] INFO tc.apache/kafka:4.4.0 -- Container apache/kafka:4.4.0 started in PT1.457142168S
+Kafka up in 2006 ms at 10.100.0.1:32855

@@ -1,0 +1,10 @@
+spectaql:
+  targetDir: public
+introspection:
+  schemaFile: shelfie.graphqls
+info:
+  title: Shelfie GraphQL API
+  description: Probe
+servers:
+  - url: http://localhost:4000/graphql
+    production: true

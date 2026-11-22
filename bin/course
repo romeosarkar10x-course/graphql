@@ -14,6 +14,8 @@
 #   bin/course jshell [file.jsh]          jshell with Jackson 3 and graphql-java on the class path
 #   bin/course java <File.java> [args]    run a single-file Java program with the same class path
 #   COURSE_PUBLISH=4000 bin/course shell  publish that port on the host, so friends can reach your server (group games)
+#   COURSE_DOCKER=1 bin/course shell      mount the host's Docker socket (Testcontainers, Module 13.3; test/check do it
+#                                         by themselves for labs whose lab.json needs "docker")
 #   bin/course gql validate|operations|schema-lines|coordinates|stats ...   document and schema helpers (tools/gql/Gql.java)
 #   bin/course design lint|shape|clients|diff|outage ...   schema-design helpers, Module 7 (tools/design/Design.java)
 #   bin/course catalog <schema> [rows]    Module 8: load the deterministic book catalogue into PostgreSQL
@@ -22,6 +24,8 @@
 #   bin/course shell [-c 'cmd']           bash inside the course image, repo at /course
 #   bin/course native <mvn args>          mvn inside a GraalVM CE 25 image, for native builds (game 6b)
 #   bin/course inspector <args>           graphql-inspector 7.0.2 (Node.js, own image), e.g. diff old.graphql new.graphql
+#   bin/course node <cmd>                 Node.js 24 (copied from the official image) inside the course image, e.g.
+#                                         bin/course node npm ci, bin/course node npx eslint (Module 13.6-13.7)
 #   bin/course web <npm args>             Module 12's web lab: npm in a Node.js 24 image on the course network
 #   bin/course mobile <cmd>               Module 12's mobile lab: Gradle 9.9 + JDK 21 image on the course network
 #   bin/course seckit <tool> <args>       Module 10 scanners (graphql-cop, clairvoyance), own image; shares the
@@ -39,6 +43,42 @@ build_image() { docker build -t "$IMAGE" "$ROOT/docker"; }
 
 compose() { docker compose -f "$ROOT/docker/compose.yaml" "$@"; }
 
+# What a lab needs beyond the image comes from lab.json's "needs": wants_need <need> <command> <args...> says whether
+# any lab in the command's scope needs it.
+wants_need() {
+  local need="$1" cmd="$2" pat=""; shift 2
+  case "$cmd" in
+    test) [[ "${1:-}" =~ ^m([0-9]{2})/([0-9]{2})$ ]] && pat="modules/m${BASH_REMATCH[1]}-*/labs/${BASH_REMATCH[2]}-*/lab.json" ;;
+    check) pat="modules/m*/labs/*/lab.json"
+           for a in "$@"; do [[ "$a" =~ ^m[0-9]{2}$ ]] && pat="modules/${a}-*/labs/*/lab.json"; done ;;
+    checkpoint) [[ "${1:-}" =~ ^[0-9]{2}$ ]] && pat="modules/m${1}-*/labs/*/lab.json" ;;
+  esac
+  [[ -n "$pat" ]] && (cd "$ROOT" && grep -lsE "\"needs\":[^]]*\"$need\"" $pat >/dev/null)
+}
+# "docker" (Testcontainers, Module 13.3): those labs get the host's Docker socket, and only those, because the
+# socket gives the container control of the host's Docker. COURSE_DOCKER=1 bin/course shell mounts it by hand.
+docker_sock=()
+sock=/var/run/docker.sock
+if [[ -S "$sock" ]] && { wants_need docker "${1:-}" "${@:2}" || [[ "${1:-}" == shell && "${COURSE_DOCKER:-}" == 1 ]]; }; then
+  docker_sock=(-v "$sock:$sock" --group-add "$(stat -L -c %g "$sock" 2>/dev/null || stat -L -f %g "$sock" 2>/dev/null || echo 0)")
+fi
+# "node" (graphql-eslint, SpectaQL, Module 13.6-13.7): Node.js copied once from the official image into .cache/node,
+# so the course image stays Java-only and tests can still run npm tools. bin/course node <args> runs it by hand.
+NODE_IMAGE=node:24.22.1-slim
+ensure_node() {
+  [[ -x "$ROOT/.cache/node/bin/node" ]] && return 0
+  echo "course: copying Node.js from $NODE_IMAGE into .cache/node (once, about 140 MB)" >&2
+  docker image inspect "$NODE_IMAGE" >/dev/null 2>&1 || docker pull -q "$NODE_IMAGE" >&2
+  local c; c=$(docker create "$NODE_IMAGE")
+  mkdir -p "$ROOT/.cache/node/bin" "$ROOT/.cache/node/lib"
+  docker cp -q "$c:/usr/local/bin/node" "$ROOT/.cache/node/bin/node" && docker cp -q "$c:/usr/local/lib/node_modules" "$ROOT/.cache/node/lib/"
+  docker container rm "$c" >/dev/null
+  printf '#!/bin/sh\nexec "$(dirname "$0")/node" "$(dirname "$0")/../lib/node_modules/npm/bin/npm-cli.js" "$@"\n' > "$ROOT/.cache/node/bin/npm"
+  printf '#!/bin/sh\nexec "$(dirname "$0")/node" "$(dirname "$0")/../lib/node_modules/npm/bin/npx-cli.js" "$@"\n' > "$ROOT/.cache/node/bin/npx"
+  chmod +x "$ROOT/.cache/node/bin/npm" "$ROOT/.cache/node/bin/npx"
+}
+if wants_need node "${1:-}" "${@:2}" || [[ "${1:-}" == node ]]; then ensure_node; fi
+
 # Run a command in the course image, on the course network when it exists.
 in_image() {
   local net=() tty=(-i)
@@ -51,6 +91,7 @@ in_image() {
     -e GITHUB_TOKEN="${GITHUB_TOKEN:-}" \
     ${SHELFIE_URL:+-e SHELFIE_URL="$SHELFIE_URL"} \
     ${COURSE_PUBLISH:+-p "$COURSE_PUBLISH:$COURSE_PUBLISH"} \
+    "${docker_sock[@]}" \
     -v "$ROOT":/course -w "$workdir" \
     "$IMAGE" "$@"
 }
@@ -135,6 +176,9 @@ case "$cmd" in
     case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course inspector from a directory inside the course repo" ;; esac
     docker run --rm -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" \
       graphql-course-inspector:1 "$@" ;;
+  node)   # Node.js and npm from .cache/node inside the course image (graphql-eslint, SpectaQL); npm's cache in .cache/npm
+    [[ $# -ge 1 ]] || die "usage: bin/course node npm ci | node <script> | npx <tool> ..."
+    in_image bash -c 'PATH="/course/.cache/node/bin:$PATH" npm_config_cache=/course/.cache/npm npm_config_update_notifier=false exec "$@"' node "$@" ;;
   web)   # lab 12.6: npm (Apollo Client, Relay, jsdom) in the official Node.js image, on the course network so
          # http://shelfie-ref:8080 resolves; npm's cache in .cache/npm. Run it from a web/ project directory.
     [[ $# -ge 1 ]] || die "usage: bin/course web <npm args>   e.g. bin/course web ci && bin/course web run measure"

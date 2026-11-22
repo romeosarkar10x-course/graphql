@@ -1,0 +1,3 @@
+subscription reviewAdded($bookId: ID) {
+  reviewAdded(bookId: $bookId) { id rating author { handle } book { id } }
+}

@@ -1,0 +1,9 @@
+{
+  find(text: "blue") {
+    __typename
+    ... on Book { id name author { name } }
+    ... on Mug { id name capacityMl }
+    ... on Person { id name email }
+  }
+  me { id name email }
+}

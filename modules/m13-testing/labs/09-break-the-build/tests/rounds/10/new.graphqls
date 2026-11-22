@@ -1,0 +1,162 @@
+# Shelfie under test (Module 13): the Module 6 schema plus a review lookup, a delete and a live feed of new
+# reviews. Seed data is the reference server's.
+
+"Every read starts here."
+type Query {
+  "A greeting, to check the server is up."
+  hello: String!
+  "A club by id, or null when there is none."
+  club(id: ID!): Club
+  "Every club, in id order."
+  clubs: [Club!]!
+  "A user by id, or null when there is none."
+  user(id: ID!): User
+  "A book by id, or null when there is none."
+  book(id: ID!): Book
+  "All books in catalogue order. `titleContains` filters, ignoring case; `first` caps the list."
+  books(titleContains: String, first: Int = 20): [Book!]!
+  "A review by id. An unknown id is a NOT_FOUND error."
+  review(id: ID!): Review
+  "The user named in the request context (header X-Shelfie-User over HTTP), or null."
+  viewer: User
+}
+
+"Writes. The viewer comes from the X-Shelfie-User header."
+type Mutation {
+  "Rating 1 to 5, one review per user per book. Rule violations come back in `userErrors`."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+  "Only the author may delete a review: anyone else gets a FORBIDDEN error. Returns the deleted id."
+  deleteReview(id: ID!): ID!
+}
+
+"Live updates over WebSocket (graphql-transport-ws) at /graphql."
+type Subscription {
+  "Every review stored from now on, for one book or, without `bookId`, for all books."
+  reviewAdded(bookId: ID): Review!
+}
+
+"A reading group."
+type Club {
+  "Stable identifier, e.g. c1."
+  id: ID!
+  "Display name."
+  name: String!
+  "What the club reads and how it meets."
+  description: String
+  "The member who runs the club."
+  owner: User!
+  "Members in join order. `first` caps the list."
+  members(first: Int = 10): [User!]!
+  "How many members the club has."
+  memberCount: Int!
+  "The book the club is reading now, if any."
+  currentBook: Book
+  "Meetups in date order; only upcoming ones unless `upcomingOnly` is false."
+  meetups(upcomingOnly: Boolean = true): [Meetup!]!
+  "Who can see the club."
+  visibility: Visibility!
+  "When the club was founded, ISO 8601."
+  createdAt: String!
+}
+
+"Who can see a club."
+enum Visibility {
+  "Anyone."
+  PUBLIC
+  "Members only."
+  PRIVATE
+}
+
+"A Shelfie member."
+type User {
+  "Stable identifier, e.g. u1."
+  id: ID!
+  "Full name."
+  name: String!
+  "Public handle, unique."
+  handle: String!
+  "Clubs the user belongs to."
+  clubs: [Club!]!
+  "Reviews the user wrote."
+  reviews: [Review!]!
+}
+
+"Anything with a stable id."
+interface Node {
+  "Stable identifier."
+  id: ID!
+}
+
+"A book in the catalogue."
+type Book implements Node {
+  "Stable identifier, e.g. b1."
+  id: ID!
+  "Title as printed."
+  title: String!
+  "Authors in credit order."
+  authors: [String!]!
+  "ISBN-13, when known."
+  isbn: String
+  "Year of first publication."
+  publishedYear: Int
+  "Mean rating rounded to 2 decimals, null when there are no reviews."
+  averageRating: Float
+  "Newest first. `last` caps the list."
+  reviews(last: Int = 5): [Review!]!
+}
+
+"One user's opinion of one book."
+type Review {
+  "Stable identifier, e.g. r1."
+  id: ID!
+  "1 to 5."
+  rating: Int!
+  "What the reviewer wrote, trimmed."
+  body: String!
+  "When the review was written, ISO 8601."
+  createdAt: String!
+  "Who wrote it."
+  author: User!
+  "The book it is about."
+  book: Book!
+}
+
+"A club meeting."
+type Meetup {
+  "Stable identifier, e.g. m1."
+  id: ID!
+  "What the meeting is about."
+  title: String!
+  "Start time, ISO 8601."
+  startsAt: String!
+  "A place or Online."
+  location: String!
+  "The club that meets."
+  club: Club!
+}
+
+"A new review."
+input CreateReviewInput {
+  "The book to review."
+  bookId: ID!
+  "1 to 5."
+  rating: Int!
+  "At most 500 characters after trimming."
+  body: String!
+}
+
+"The review, or why there is none."
+type CreateReviewPayload {
+  "The stored review, null when a rule was broken."
+  review: Review
+  "Every rule the input broke; empty on success."
+  userErrors: [UserError!]!
+}
+
+"A rule the input broke, for people to read."
+type UserError {
+  "Path to the input field at fault, e.g. [\"input\", \"rating\"]; null when no single field is at fault."
+  field: [String!]
+  "What went wrong."
+  message: String!
+}

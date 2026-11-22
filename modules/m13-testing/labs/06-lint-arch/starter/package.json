@@ -1,0 +1,14 @@
+{
+  "name": "shelfie-schema-lint",
+  "private": true,
+  "description": "Lab 13.6: graphql-eslint over the Shelfie schema (language-neutral: it reads the .graphqls files, not the Java)",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint src/main/resources/graphql"
+  },
+  "devDependencies": {
+    "@graphql-eslint/eslint-plugin": "4.4.2",
+    "eslint": "10.14.0",
+    "graphql": "16.15.0"
+  }
+}

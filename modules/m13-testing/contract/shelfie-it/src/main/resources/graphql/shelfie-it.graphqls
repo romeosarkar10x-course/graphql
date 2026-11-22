@@ -1,0 +1,36 @@
+"Module 13.3: a slice of Shelfie with real dependencies: PostgreSQL stores reviews, Kafka hears about them, Keycloak signs who wrote them."
+type Query {
+  "A book by id, or null."
+  book(id: ID!): Book
+}
+
+type Mutation {
+  "Needs a bearer token from Keycloak (realm shelfie, audience shelfie-api); the author is the token's preferred_username."
+  createReview(input: CreateReviewInput!): Review!
+}
+
+"A book."
+type Book {
+  id: ID!
+  title: String!
+  "Mean rating rounded to 2 decimals by PostgreSQL, null without reviews."
+  averageRating: Float
+  "Newest first."
+  reviews(last: Int = 5): [Review!]!
+}
+
+"A review, stored in PostgreSQL."
+type Review {
+  id: ID!
+  rating: Int!
+  body: String!
+  "The token's preferred_username."
+  author: String!
+}
+
+"A new review."
+input CreateReviewInput {
+  bookId: ID!
+  rating: Int!
+  body: String!
+}

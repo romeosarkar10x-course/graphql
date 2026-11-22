@@ -1,0 +1,64 @@
+=== scenarios/01-add-field-and-type/
+exit=0
+verdict: PASS (0 breaking and used, 0 breaking but unused, 0 dangerous, 0 invalid operations of 5)
+=== scenarios/02-remove-used-field/
+exit=1
+BREAKING Book.isbn: The new API is missing the field 'Book.isbn'
+  why: an operation that selects or sends it fails validation, before any resolver runs
+  used by BookPage (clients/web/BookPage.graphql)
+INVALID BookPage (clients/web/BookPage.graphql): Validation error (FieldUndefined@[book/isbn]) : Field 'isbn' in type 'Book' is undefined at clients/web/BookPage.graphql:5:5
+verdict: FAIL (1 breaking and used, 0 breaking but unused, 0 dangerous, 1 invalid operations of 5)
+=== scenarios/03-remove-unused-field/
+exit=0
+BREAKING Club.createdAt: The new API is missing the field 'Club.createdAt'
+  why: an operation that selects or sends it fails validation, before any resolver runs
+  unused by every known client operation
+verdict: PASS (0 breaking and used, 1 breaking but unused, 0 dangerous, 0 invalid operations of 5)
+=== scenarios/04-change-field-type/
+exit=1
+BREAKING Meetup.location: The new API has changed field 'Meetup.location' from type 'String!' to 'Int!'
+  why: the value has a new type; clients decode the old one
+  used by ClubPage (clients/web/ClubPage.graphql)
+verdict: FAIL (1 breaking and used, 0 breaking but unused, 0 dangerous, 0 invalid operations of 5)
+=== scenarios/05-argument-made-required/
+exit=1
+BREAKING Query.books: The new API has changed field 'Query.books' argument 'titleContains' from type 'String' to 'String!'
+  why: requests that omit it or send null are now rejected
+  used by Search (clients/android/Search.graphql)
+INVALID Search (clients/android/Search.graphql): Validation error (VariableTypeMismatch@[books]) : Variable 'text' of type 'String' used in position expecting type 'String!' at clients/android/Search.graphql:2:24
+verdict: FAIL (1 breaking and used, 0 breaking but unused, 0 dangerous, 1 invalid operations of 5)
+=== scenarios/06-required-input-field/
+exit=1
+BREAKING CreateReviewInput.headline: The new API has made the new input field 'headline' non null and hence more strict for old consumers
+  why: requests that omit it or send null are now rejected
+  used by CreateReview (clients/android/CreateReview.graphql)
+verdict: FAIL (1 breaking and used, 0 breaking but unused, 0 dangerous, 0 invalid operations of 5)
+=== scenarios/07-enum-value-added/
+exit=0
+DANGEROUS Visibility: The new API has added a new enum value 'UNLISTED'
+  why: clients that switch over every value meet one they have never seen
+  used by ClubPage (clients/web/ClubPage.graphql)
+verdict: PASS (0 breaking and used, 0 breaking but unused, 1 dangerous, 0 invalid operations of 5)
+=== scenarios/08-default-changed/
+exit=0
+DANGEROUS Club.members(first:): The new API has changed default value on argument named 'first' on field 'Club.members' of type 'Club
+  why: requests that rely on the default now get different data with no error
+  used by Members (clients/cli/Members.graphql)
+  used by ClubPage (clients/web/ClubPage.graphql)
+verdict: PASS (0 breaking and used, 0 breaking but unused, 1 dangerous, 0 invalid operations of 5)
+=== scenarios/09-deprecated/
+exit=0
+DANGEROUS User.handle: The new API deprecated a field 'User.handle'
+  why: still works, but clients should move off it before it is removed
+  used by BookPage (clients/web/BookPage.graphql)
+  used by ClubPage (clients/web/ClubPage.graphql)
+verdict: PASS (0 breaking and used, 0 breaking but unused, 1 dangerous, 0 invalid operations of 5)
+=== scenarios/10-enum-value-removed/
+exit=1
+BREAKING Visibility: The new API is missing an enum value 'PRIVATE'
+  why: an operation that selects or sends it fails validation, before any resolver runs
+  used by ClubPage (clients/web/ClubPage.graphql)
+verdict: FAIL (1 breaking and used, 0 breaking but unused, 0 dangerous, 0 invalid operations of 5)
+=== old
+exit=0
+verdict: PASS (0 breaking and used, 0 breaking but unused, 0 dangerous, 0 invalid operations of 5)

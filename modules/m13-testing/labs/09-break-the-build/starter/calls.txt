@@ -1,0 +1,14 @@
+# One line per round: <round> safe|dangerous|breaking. Decide from the diff alone, before running any tool.
+#   diff modules/m13-testing/labs/09-break-the-build/tests/old.graphqls modules/m13-testing/labs/09-break-the-build/tests/rounds/01/new.graphqls
+01
+02
+03
+04
+05
+06
+07
+08
+09
+10
+11
+12

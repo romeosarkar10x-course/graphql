@@ -1,0 +1,6 @@
+mutation createReview($input: CreateReviewInput!) {
+  createReview(input: $input) {
+    review { id rating body author { id } book { id } }
+    userErrors { field message }
+  }
+}

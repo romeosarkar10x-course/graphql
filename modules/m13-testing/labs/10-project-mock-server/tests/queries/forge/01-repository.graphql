@@ -1,0 +1,12 @@
+query repository {
+  repository(owner: "graphql", name: "graphql-spec") {
+    id name nameWithOwner description url stargazerCount isPrivate pushedAt
+    owner { __typename login url ... on Organization { description } ... on User { name createdAt } }
+    defaultBranchRef { name target { oid messageHeadline committedDate } }
+    issues(first: 3, states: [OPEN]) {
+      totalCount
+      pageInfo { hasNextPage endCursor }
+      edges { cursor node { number title bodyHTML state createdAt author { __typename login } } }
+    }
+  }
+}

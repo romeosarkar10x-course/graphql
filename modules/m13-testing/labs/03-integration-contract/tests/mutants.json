@@ -1,0 +1,11 @@
+[
+  {"id": "I1", "file": "src/main/java/dev/shelfie/it/ReviewStore.java",
+   "old": "ORDER BY created_at DESC, id DESC", "new": "ORDER BY created_at ASC, id ASC",
+   "what": "Book.reviews comes back oldest first (the SQL is wrong, and only a real database runs SQL)"},
+  {"id": "I2", "file": "src/main/java/dev/shelfie/it/ReviewStore.java",
+   "old": "SELECT ROUND(AVG(rating), 2)::float8", "new": "SELECT AVG(rating)::float8",
+   "what": "averageRating is no longer rounded by PostgreSQL"},
+  {"id": "I3", "file": "src/main/resources/application.yaml",
+   "old": "reviews-topic: shelfie.reviews", "new": "reviews-topic: shelfie.review",
+   "what": "new reviews are announced on the wrong Kafka topic"}
+]

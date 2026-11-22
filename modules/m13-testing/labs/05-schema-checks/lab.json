@@ -1,0 +1,7 @@
+{
+  "title": "Schema checks in CI: SchemaDiff with client usage, operations validated against the new schema, a workflow that explains failures",
+  "lecture": "13.5",
+  "kind": "lab",
+  "grading": "both",
+  "needs": []
+}

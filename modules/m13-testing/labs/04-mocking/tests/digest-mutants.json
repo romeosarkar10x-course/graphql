@@ -1,0 +1,17 @@
+[
+  {"id": "W1", "file": "src/main/java/dev/shelfie/digest/DigestClient.java",
+   "old": "\"variables\", Map.of(\"id\", userId)", "new": "\"variables\", Map.of(\"id\", \"u1\")",
+   "what": "the digest always asks for user u1"},
+  {"id": "W2", "file": "src/main/java/dev/shelfie/digest/DigestClient.java",
+   "old": "if (root.has(\"errors\") && (user.isMissingNode() || user.isNull()))", "new": "if (false)",
+   "what": "GraphQL errors are swallowed: a Shelfie outage looks like an unknown user"},
+  {"id": "W3", "file": "src/main/java/dev/shelfie/digest/DigestClient.java",
+   "old": "Comparator.comparingInt(Line::rating).reversed()", "new": "Comparator.comparingInt(Line::rating)",
+   "what": "the digest lists the worst-rated book first"},
+  {"id": "W4", "file": "src/main/java/dev/shelfie/digest/DigestClient.java",
+   "old": "\"operationName\", \"UserReviews\", ", "new": "",
+   "what": "the request no longer names its operation"},
+  {"id": "W5", "file": "src/main/java/dev/shelfie/digest/DigestClient.java",
+   "old": "if (user.isMissingNode() || user.isNull()) return List.of();", "new": "",
+   "what": "an unknown user crashes the digest"}
+]

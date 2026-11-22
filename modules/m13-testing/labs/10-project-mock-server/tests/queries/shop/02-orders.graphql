@@ -1,0 +1,10 @@
+query orders($since: DateTime) {
+  orders(filter: {status: PAID, since: $since}, first: 2) {
+    id
+    placedAt
+    status
+    itemCount
+    buyer { name email homepage friends(first: 2) { name friends { id } } }
+    lines { quantity product { __typename name } }
+  }
+}

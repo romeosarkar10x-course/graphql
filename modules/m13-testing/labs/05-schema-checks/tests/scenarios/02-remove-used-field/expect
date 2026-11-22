@@ -1,0 +1,4 @@
+exit 1
+has BREAKING Book.isbn
+has used by BookPage
+has INVALID BookPage

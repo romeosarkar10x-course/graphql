@@ -1,0 +1,5 @@
+query books($n: Int!) {
+  books(first: $n) { ...card }
+  b: book(id: "b7") { ...card isbn }
+}
+fragment card on Book { id title authors averageRating }

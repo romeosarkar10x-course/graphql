@@ -1,0 +1,1 @@
+Counter({'KILLED': 61, 'NO_COVERAGE': 5, 'SURVIVED': 2, 'TIMED_OUT': 1}) score 89.9

@@ -1,0 +1,7 @@
+{
+  "title": "Integration and contract tests: Testcontainers (PostgreSQL, Kafka, Keycloak) and one black-box Hurl contract for two servers",
+  "lecture": "13.3",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["docker"]
+}

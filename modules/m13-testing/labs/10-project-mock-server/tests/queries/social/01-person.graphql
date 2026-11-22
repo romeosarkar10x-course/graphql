@@ -1,0 +1,7 @@
+query person {
+  person(id: "p-7") {
+    id name handle email avatarUrl bio joinedAt followerCount
+    followers(first: 3) { id handle followers(first: 2) { handle } }
+    posts(last: 2) { id kind body likeCount tags { name postCount } }
+  }
+}

@@ -1,0 +1,6 @@
+mutation PostReview($input: CreateReviewInput!) {
+  createReview(input: $input) {
+    review { id rating }
+    userErrors { field message }
+  }
+}

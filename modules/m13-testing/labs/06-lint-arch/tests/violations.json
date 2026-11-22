@@ -1,0 +1,22 @@
+[
+  {"id": "V1", "tool": "archunit", "file": "src/main/java/dev/shelfie/app/graph/QueryController.java",
+   "old": "@QueryMapping public List<Club> clubs() { return catalog.clubs(); }",
+   "new": "@QueryMapping public List<Club> clubs() { return new dev.shelfie.app.store.CatalogRepository().clubs(); }",
+   "what": "a controller reads a repository directly, skipping the service"},
+  {"id": "V2", "tool": "archunit", "file": "src/main/java/dev/shelfie/app/service/ReviewService.java",
+   "old": "    public static final int MAX_BODY = 500;",
+   "new": "    public static final int MAX_BODY = 500;\n    static final Class<?> ERROR_TYPE = graphql.GraphQLError.class;",
+   "what": "a service depends on graphql-java (GraphQL types leak into the rules)"},
+  {"id": "V3", "tool": "spotless", "file": "src/main/java/dev/shelfie/app/service/CatalogService.java",
+   "old": "    public List<Club> clubs() { return catalog.clubs(); }",
+   "new": "\tpublic List<Club> clubs() { return catalog.clubs(); }   ",
+   "what": "a tab-indented line with trailing spaces"},
+  {"id": "V4", "tool": "eslint", "file": "src/main/resources/graphql/shelfie.graphqls",
+   "old": "  \"Year of first publication.\"\n  publishedYear: Int\n",
+   "new": "  \"Year of first publication.\"\n  publishedYear: Int\n  \"Pages in the first edition.\"\n  page_count: Int\n",
+   "what": "a snake_case field name in the schema"},
+  {"id": "V5", "tool": "eslint", "file": "src/main/resources/graphql/shelfie.graphqls",
+   "old": "  \"Public handle, unique.\"\n  handle: String!\n",
+   "new": "  \"Public handle, unique.\"\n  handle: String! @deprecated\n",
+   "what": "a deprecation that does not say what to use instead"}
+]

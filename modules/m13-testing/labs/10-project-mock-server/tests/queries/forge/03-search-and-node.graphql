@@ -1,0 +1,10 @@
+query search {
+  search(query: "graphql", first: 5) {
+    __typename
+    ... on Repository { nameWithOwner }
+    ... on Issue { number title }
+    ... on Actor { login }
+  }
+  node(id: "MDQ6VXNlcjE=") { __typename id }
+  repositoryOwner(login: "graphql") { __typename login ... on Node { id } }
+}

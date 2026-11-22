@@ -1,0 +1,25 @@
+# Defaults point at the course services (bin/course ref up). Integration tests replace all three with
+# Testcontainers (@ServiceConnection for PostgreSQL and Kafka, a property for Keycloak's issuer).
+server:
+  port: 4000
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/shelfie?currentSchema=m13_it
+    username: shelfie
+    password: shelfie
+  sql:
+    init:
+      mode: always
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8180/realms/shelfie
+          audiences: shelfie-api
+shelfie:
+  reviews-topic: shelfie.reviews

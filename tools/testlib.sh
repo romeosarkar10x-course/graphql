@@ -9,6 +9,7 @@
 #   TOXI_API  Toxiproxy admin API, http://toxiproxy:8474
 #   PGURL     PostgreSQL (Module 8 on), jdbc:postgresql://postgres:5432/shelfie, user/password shelfie
 #   LIB       jars for single-file Java programs (Jackson 3, graphql-java 26.1, JUnit console)
+#   PATH      also has node, npm and npx from .cache/node (labs that need "node")
 
 export REF="${REF:-http://shelfie-ref:8080}"
 export SLOW="${SLOW:-http://toxiproxy:8666}"
@@ -16,6 +17,8 @@ export TOXI_API="${TOXI_API:-http://toxiproxy:8474}"
 export PGURL="${PGURL:-jdbc:postgresql://postgres:5432/shelfie}"
 export LIB="${LIB:-/course/.cache/course-lib}"
 export SHELFIE_URL="${SHELFIE_URL:-$REF}"
+# Node.js for labs whose lab.json needs "node" (copied from the official image into .cache/node by bin/course).
+export PATH="$PATH:/course/.cache/node/bin" npm_config_cache=/course/.cache/npm npm_config_update_notifier=false npm_config_fund=false npm_config_audit=false
 
 T_FAILS=0
 

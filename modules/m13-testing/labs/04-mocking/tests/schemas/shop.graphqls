@@ -1,0 +1,66 @@
+"A schema the mock has never seen: interfaces, a union, custom scalars, enums, recursion and input types."
+scalar DateTime
+scalar URL
+scalar Money
+
+interface Node { id: ID! }
+
+interface Product implements Node {
+  id: ID!
+  name: String!
+  price: Money!
+  imageUrl: URL
+}
+
+type Book implements Node & Product {
+  id: ID!
+  name: String!
+  price: Money!
+  imageUrl: URL
+  pageCount: Int!
+  author: Person!
+}
+
+type Mug implements Node & Product {
+  id: ID!
+  name: String!
+  price: Money!
+  imageUrl: URL
+  capacityMl: Int!
+}
+
+type Person implements Node {
+  id: ID!
+  name: String!
+  email: String!
+  homepage: String
+  friends(first: Int = 3): [Person!]!
+}
+
+enum OrderStatus { PLACED PAID SHIPPED DELIVERED CANCELLED }
+
+type Order implements Node {
+  id: ID!
+  placedAt: DateTime!
+  status: OrderStatus!
+  buyer: Person!
+  lines: [OrderLine!]!
+  itemCount: Int!
+}
+
+type OrderLine {
+  product: Product!
+  quantity: Int!
+}
+
+union Hit = Book | Mug | Person
+
+input OrderFilter { status: OrderStatus, since: DateTime }
+
+type Query {
+  node(id: ID!): Node
+  products(limit: Int = 10): [Product!]!
+  orders(filter: OrderFilter, first: Int): [Order!]!
+  find(text: String!): [Hit!]!
+  me: Person
+}

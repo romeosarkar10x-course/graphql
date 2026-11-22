@@ -1,0 +1,6 @@
+query viewer {
+  viewer {
+    login avatarUrl createdAt
+    repositories(first: 4) { totalCount nodes { name stargazerCount owner { __typename login } } pageInfo { hasNextPage } }
+  }
+}

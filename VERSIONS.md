@@ -72,3 +72,12 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | GraphQL over HTTP | September 2026 edition (2026-11-12) | draft | https://http-spec.graphql.org/September2026/ ; copy in `_workbench/2026-11-21-m05-probe/` |
 | graphql-inspector | CLI 7.0.2 (2026-10-20), core 8.0.1, diff-command 7.0.2, graphql-js 16.12.0 | — | `bin/course inspector`, own image `docker/inspector.Dockerfile` (node 24.22.1-alpine); npm overrides stop caret ranges from pulling 7.0.8 (2026-11-20) |
 | GitHub GraphQL schema snapshot | 2026-11-21 | — | `tools/schemas/github-2026-11-21.graphql`, for offline validation; refresh each term |
+| Testcontainers in the course container | 2.0.5 (Boot BOM), Ryuk 0.14.0, `testcontainers-keycloak` 4.4.1 (2026-11-21) | — | Module 13.3; host Docker socket mounted only for labs that need `"docker"`; course images reused (postgres 18.7, kafka 4.4.0, keycloak 26.8.2) |
+| Node.js inside the course image | 24.22.1, npm 11.19.1, copied from `node:24.22.1-slim` into `.cache/node` | — | Modules 13.6-13.7 (`bin/course node`, labs that need `"node"`); course image unchanged |
+| graphql-eslint | `@graphql-eslint/eslint-plugin` 4.4.2 (2026-10-14), eslint 10.14.0 (2026-10-30), graphql 16.15.0 | — | lab 13.6; eslint 10.15.0 was 9 days old; graphql-eslint needs graphql ^16 |
+| Spotless | `spotless-maven-plugin` 3.11.0 (2026-11-02) | — | lab 13.6; 3.12.0 was one day old |
+| ArchUnit | `archunit-junit5` 1.5.1 (2026-09-25) | — | lab 13.6; reads Java 25 class files |
+| WireMock | `wiremock-standalone` 3.13.2 (2025-11-14) | — | lab 13.4; the 4.x line is beta (4.0.0-beta.44); runs on JUnit 6.1.3 |
+| PIT | `pitest-maven` 1.30.2 (2026-11-05), `pitest-junit5-plugin` 1.2.3 | — | game 13.8; the JUnit 5 plugin runs on Boot's JUnit 6.1.3 |
+| SpectaQL | 3.0.9 (2026-03-18), graphql-config 5.1.8 | SpectaQL or Magidoc | lab 13.7; Magidoc 9.0.0 was 12 days old; graphql-config 5 matches graphql-eslint's |
+| maven-shade-plugin | 3.6.2 | — | mini-project 13.10's standalone jar |

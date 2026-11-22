@@ -1,0 +1,13 @@
+query clubPage {
+  club(id: "c1") {
+    id
+    name
+    description
+    memberCount
+    visibility
+    createdAt
+    owner { id name handle }
+    members(first: 4) { id name handle }
+    currentBook { id title authors publishedYear averageRating reviews(last: 3) { id rating body createdAt author { name } } }
+  }
+}

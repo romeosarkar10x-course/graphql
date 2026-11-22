@@ -1,0 +1,179 @@
+{
+  "realm": "shelfie",
+  "enabled": true,
+  "accessTokenLifespan": 300,
+  "sslRequired": "none",
+  "roles": {
+    "realm": [
+      {
+        "name": "member"
+      },
+      {
+        "name": "moderator"
+      },
+      {
+        "name": "admin"
+      }
+    ]
+  },
+  "components": {
+    "org.keycloak.keys.KeyProvider": [
+      {
+        "name": "course-rsa",
+        "providerId": "rsa",
+        "subComponents": {},
+        "config": {
+          "priority": [
+            "200"
+          ],
+          "enabled": [
+            "true"
+          ],
+          "active": [
+            "true"
+          ],
+          "algorithm": [
+            "RS256"
+          ],
+          "privateKey": [
+            "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDiAwS5wHOmM/IWI/4zps4StWDVb+8DTDYFwSId6QA2g0nSOZhRXyTROAp95Ut/jndmNSRLORyY2JOohjzySQOWLyeoC2FP0OFMfnJWltJxiRpLNjIvfz/xtUx8xlxnqda4mGJwypZWcEF7B/vkoANd8HIg3GtZS39o3dRvsxfTVx20DLgWutD+UIJamsmiZNdoCYmtboIGP1Cx3Mgxg6Zw0aHe+JjRj6cmGIOPlMJx+BkDl+ZcglDt3Jz+Qj7bZXMHA49/X3QOPcMVnsp4UexU20DlnHgcn9Q4oh5VjhZYy1s5XkdoE98jfItKjkH6mgEeY8q9CNG3aGut/QafBh+VAgMBAAECggEAEAEIJH1phVaoCR9TEKYfA4dF4xvUbfIQl4dv+pjMMX2358hLbi1fSMH2toPIhh6CDaaZ+lNdaXcQBafzyJYGtf3wiV9PNbz2XhBw/a/SYjJWLCs/21xNiiY9HHOjZOM5Mw1j6fosMkJ0+bRO4mKVKCrBA0ivSeIlJsu0NALy+oa8LUtocImu0DEpiaDeRmJMvKfJHZA1hqJPLosrqzO00nhVH4Vu4fxp+RlrjU0NTACTD4VR+qqRK/8IqXCI/3UVCVTAmKvX/ZyLkx1T/+yKzXluE6qsixh/HITsJoxQAs56Dg53ynJajOHovvY9ZxtrArSaKRZGD3OAPw3DwDTVhQKBgQD5m5Xo7IDq9IFTKa7CV5JfBkZgYyIPWkLscDxj8i5OIKg78wX61AAZN+CSlwUFM/BpvCBY7QiejthxiJCMZY8PkLZ3k1NLuRv4RT4N7tG7e630/53Vbibmg3RiPp618xUux/ZV1l6qPBKHt3Oc663ypcGku22qvEvu1bHaxhDt2wKBgQDnzL0ygqGkfqXZlpcg7/2aDNQP3TKweNGSKS1nCkrStk8S6nmStsLd8/UgILoWgJ62T65hqOD29MRhNefoMLx9SZ1AKRTwe0afo69ImaRKfaOn3fpmYF2ukVwRJmkbti9EHERjF+XeiSctAIC3oR/PPx5onTkiNGdMe5oVDPX7TwKBgQC9wTff0RvYgnRmYoPGnohZ0Q1jbTmRbk7+K/zdBlmJb2411PSw0MYaZc5F4qUgZXHZD/mPYPNyhqmo9ebdtL9jV+I/WTKzmE/ZF9qrAOlUnBuM615zyL+t8jViErTZIajy3XU5oDRrOivkHOS5YLnmg3iI4Svn5inbsXz6EiUAjQKBgCpt04PXXXcap4j4g5lH1IfKKVbuCkU7GEFEwEbIH4IKVNcFjFNKmMi/yvKiiu1rhaGhXC4MF4GctAWHNHfP0/Cq9Nm1q1uJdRfrgj4rwWLRNI+Zlif/I6a8fLm26i5kXqp88hehXDYrrLwUB3uVRplM2GgVv0t/hBj/1uhbgvsJAoGBAMDiy3GtfsMiveKtVgk4r4BRJrCWDYONXx/Ciki7tU4muQ80fPwQRZ2eldopuFODYufE+ZSCayWWqxaZBhpyf4jxxi+UGqjVZSC1FWUu3mZ05cyg+G1hts56eZtpPLzI5h8wSfqW1MtiYLmKwwldpkuFfb/jEM1qQMFy7TtIQWyj"
+          ],
+          "certificate": [
+            "MIIC5DCCAcygAwIBAgIUfj9ktLqetBTQrdEMIEqSO8DgICAwDQYJKoZIhvcNAQELBQAwEjEQMA4GA1UEAwwHc2hlbGZpZTAeFw0yNjExMjExNTQ5NDZaFw0zNjExMTgxNTQ5NDZaMBIxEDAOBgNVBAMMB3NoZWxmaWUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDiAwS5wHOmM/IWI/4zps4StWDVb+8DTDYFwSId6QA2g0nSOZhRXyTROAp95Ut/jndmNSRLORyY2JOohjzySQOWLyeoC2FP0OFMfnJWltJxiRpLNjIvfz/xtUx8xlxnqda4mGJwypZWcEF7B/vkoANd8HIg3GtZS39o3dRvsxfTVx20DLgWutD+UIJamsmiZNdoCYmtboIGP1Cx3Mgxg6Zw0aHe+JjRj6cmGIOPlMJx+BkDl+ZcglDt3Jz+Qj7bZXMHA49/X3QOPcMVnsp4UexU20DlnHgcn9Q4oh5VjhZYy1s5XkdoE98jfItKjkH6mgEeY8q9CNG3aGut/QafBh+VAgMBAAGjMjAwMB0GA1UdDgQWBBS3f4EmJa+SB2VFTzy+kVWD73eJeTAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCWDgatg3oEmWArbGlpgpaqsfFgAxGMAMw7QgJPKGc0LWtvsu1Yuh186XLEZVCC2rVVJIL6euXpwHcDjuGqr/kLGzaNhs+jM0VsvTkrzaOTn4uJh5Qd0Psm0QixiqXFFGwveBlf7Uau/M6VE2mwG0Fv6/n1vGTPnyP7gOfM1W+HN4rkndrjxpJGG1bXkdT/L5FfwLot/ZKUzmm+dQlzTdUtjnIopfe2qRGAx31FS4X0/Te2+uz3cddT6Ut8CYptmXmcXOLVWN9IpzoeYg03zzYqoSOo/+QmO2zaAcLuezum5SF6T2PWAHEEFWe51EazfkCLF+9sv2bux1OxcPCtR2Wr"
+          ]
+        }
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "shelfie-cli",
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "redirectUris": [
+        "http://localhost:*"
+      ],
+      "webOrigins": [
+        "+"
+      ],
+      "protocolMappers": [
+        {
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "config": {
+            "claim.name": "roles",
+            "multivalued": "true",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "aud",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.custom.audience": "shelfie-api",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "ada",
+      "enabled": true,
+      "email": "ada@shelfie.test",
+      "emailVerified": true,
+      "firstName": "ada",
+      "lastName": "Reader",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "ada-pw",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "member"
+      ]
+    },
+    {
+      "username": "ben",
+      "enabled": true,
+      "email": "ben@shelfie.test",
+      "emailVerified": true,
+      "firstName": "ben",
+      "lastName": "Reader",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "ben-pw",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "member"
+      ]
+    },
+    {
+      "username": "max",
+      "enabled": true,
+      "email": "max@shelfie.test",
+      "emailVerified": true,
+      "firstName": "max",
+      "lastName": "Reader",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "max-pw",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "member",
+        "moderator"
+      ]
+    },
+    {
+      "username": "olu",
+      "enabled": true,
+      "email": "olu@shelfie.test",
+      "emailVerified": true,
+      "firstName": "olu",
+      "lastName": "Reader",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "olu-pw",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "member"
+      ]
+    },
+    {
+      "username": "root",
+      "enabled": true,
+      "email": "root@shelfie.test",
+      "emailVerified": true,
+      "firstName": "root",
+      "lastName": "Reader",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "root-pw",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "member",
+        "admin"
+      ]
+    }
+  ]
+}

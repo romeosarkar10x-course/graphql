@@ -1,0 +1,9 @@
+query BookPage($id: ID!) {
+  book(id: $id) {
+    title
+    authors
+    isbn
+    publishedYear
+    reviews(last: 10) { rating body author { name handle } }
+  }
+}

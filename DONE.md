@@ -140,6 +140,30 @@
 - [x] Games: m09/09 Performance race (baseline measured in the same run) · m09/10 Guess the query count (10 rounds)
 - [x] Mini-project m09/11 N+1 detector (JUnit 5 extension, 9 harness fixtures, GitHub Actions workflow)
 
+## Module 13 (7 lectures, 7 labs, 1 mini-project, 2 games)
+
+- [x] Infra: labs whose `lab.json` needs `"docker"` get the host's Docker socket (Testcontainers, 13.3);
+      labs that need `"node"` get Node.js 24.22.1 from `.cache/node`, copied once from `node:24.22.1-slim`
+      (`bin/course node`); `COURSE_DOCKER=1 bin/course shell`. No image change
+- [x] Contract: `shelfie-app/` (Shelfie under test, layered, review feed, PIT), `shelfie-it/` (PostgreSQL, Kafka,
+      Keycloak), `dgs-app/`, `digest/`, `suite-test.sh` + `mutate.py` (tests graded by planted bugs),
+      `mock/MockServer.java` + `mock/MockCheck.java`, `tooling-check.mjs`, `RoundVerdicts.java`, `sync-app.sh`
+- [x] Lectures 13.1–13.7 (Hook / Concept / Java build / Experiment / Check)
+- [x] Labs: m13/01 Mockito unit tests and a `@GraphQlTest` slice, 8 mutants · m13/02 documents, paths, errors,
+      exactly three subscription events, `DgsQueryExecutor`, 9 mutants · m13/03 Testcontainers ITs (3 mutants) and
+      one Hurl contract for the Module 5 and Module 13 servers (3 black-box mutants, HTTP audit 25/25 against
+      11/25) · m13/04 a `WiringFactory` for any schema (MockCheck), a screen switched from mock to Shelfie, WireMock
+      (5 mutants) · m13/05 SchemaDiff with client usage, 11 scenarios, a GitHub workflow · m13/06 graphql-eslint,
+      Spotless, ArchUnit, 5 violations · m13/07 DGS codegen with 3 renames that must fail compile,
+      `graphql.config.yml`, a SpectaQL site
+- [x] Games and mini-project: m13/08 PIT tournament (80%; reference 89%) · m13/09 Break the build (12 rounds,
+      hashed key, CI's false positive in round 06) · m13/10 standalone mock-server jar, 4 schemas, MockSpec (12 Hurl
+      checks)
+- [x] Probes: `_workbench/2026-11-22-m13-probe/FINDINGS.md` (22 findings)
+
+`bin/course check m13 --starters` (2026-11-22): 10 auto-graded labs, 0 problems (`_workbench/2026-11-22-m13-check-starters.log`).
+Full-course check still TODO.
+
 ## Module 12 (8 lectures, 8 labs, 2 mini-projects, 1 game)
 
 - [x] Infra: `bin/course web` (npm in `node:24.22.1-slim`) and `bin/course mobile` (`gradle:9.9.1-jdk21`, Apollo

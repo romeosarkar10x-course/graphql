@@ -1,0 +1,7 @@
+{
+  "title": "Code generation and dev tooling: DGS codegen in the build, graphql.config.yml for the IDE, a docs site from the SDL",
+  "lecture": "13.7",
+  "kind": "lab",
+  "grading": "both",
+  "needs": ["node"]
+}
