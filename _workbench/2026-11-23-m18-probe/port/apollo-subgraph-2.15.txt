@@ -1,0 +1,1 @@
+@apollo/subgraph EntityType export in dist/types.js: 2.13.3 yes, 2.14.0 yes, 2.14.1 yes, 2.14.4 yes, 2.15.0 no (checked tarballs 2026-11-23). @pothos/plugin-federation 4.5.4 esm imports it: SyntaxError with 2.15.1.

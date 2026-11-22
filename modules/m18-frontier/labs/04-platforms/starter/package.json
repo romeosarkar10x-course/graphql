@@ -1,0 +1,14 @@
+{
+  "name": "shelfie-generated",
+  "private": true,
+  "type": "module",
+  "description": "Module 18.4: a GraphQL API generated from Shelfie's club database by PostGraphile",
+  "scripts": {
+    "start": "postgraphile -C graphile.config.mjs"
+  },
+  "dependencies": {
+    "graphql": "16.15.0",
+    "postgraphile": "5.2.1"
+  },
+  "overrides": { "graphql": "16.15.0" }
+}

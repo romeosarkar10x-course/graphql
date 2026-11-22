@@ -1,0 +1,34 @@
+package dev.shelfie.mcp;
+
+import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.ai.tool.method.MethodToolCallbackProvider;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.graphql.client.HttpSyncGraphQlClient;
+import org.springframework.web.client.RestClient;
+
+/** Shelfie for AI agents: an MCP server at /mcp (Streamable HTTP). */
+@SpringBootApplication
+public class ShelfieMcpApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ShelfieMcpApplication.class, args);
+    }
+
+    /**
+     * Calls Shelfie. documentName("FindBooks") would load src/main/resources/graphql-documents/FindBooks.graphql
+     * (Spring's default DocumentSource), but those files now carry descriptions, and Shelfie's graphql-java 26.1
+     * rejects a description on an operation.
+     */
+    @Bean
+    HttpSyncGraphQlClient shelfie(@Value("${shelfie.graphql-url}") String url) {
+        return HttpSyncGraphQlClient.builder(RestClient.create(url)).build();
+    }
+
+    /** Every @Tool method of ShelfieTools becomes an MCP tool; its parameters become the tool's JSON input schema. */
+    @Bean
+    ToolCallbackProvider toolCallbacks(ShelfieTools tools) {
+        return MethodToolCallbackProvider.builder().toolObjects(tools).build();
+    }
+}

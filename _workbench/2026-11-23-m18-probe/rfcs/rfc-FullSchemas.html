@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Full Schemas | GraphQL RFC Tracker</title><meta name="description" content="Full Schemas. RFC document updated on 2026-01-28."/><link rel="canonical" href="https://rfcs.graphql.org/rfcs/FullSchemas/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="/styles.css"/></head><body><div class="page-shell"><header class="site-header"><a class="brand" href="/"><span class="brand-mark">GraphQL</span> <span class="brand-copy">RFC Tracker</span></a><nav class="site-nav"><a href="/rfcs/">All RFCs</a><a href="/activity/">Activity</a><a href="https://github.com/graphql/graphql-spec">graphql-spec</a><a href="https://github.com/graphql/graphql-wg">graphql-wg</a></nav></header><main><section class="hero hero-compact"><p class="eyebrow">RFC 0 / Strawman</p><h1>Full Schemas</h1><div class="hero-meta"><div><span class="meta-label">Opened on</span><strong>2023-08-26</strong></div><div><span class="meta-label">Updated on</span><strong>2026-11-22</strong></div></div></section><section class="section-grid"><aside class="summary-card"><h2>Summary</h2><dl class="meta-grid"><dt>Identifier</dt><dd>FullSchemas</dd><dt>Stage</dt><dd>RFC 0 / Strawman</dd><dt>Champion</dt><dd>-</dd><dt>Updated</dt><dd>2026-11-22</dd></dl><ul class="link-list"><li><a href="https://github.com/graphql/graphql-wg/blob/main/rfcs/FullSchemas.md">RFC document</a></li></ul><h3>Related</h3><ul class="link-list"><li><a href="/rfcs/1036/">#1036</a></li><li><a href="/rfcs/1163/">#1163</a></li><li><a href="/rfcs/300/">#300</a></li></ul></aside><article class="markdown-body"><h2>At a glance</h2>
+<ul>
+<li>Identifier: FullSchemas</li>
+<li>Stage: RFC 0 / Strawman</li>
+<li>Champion: -</li>
+<li>Latest activity: RFC document updated on 2026-01-28</li>
+<li>RFC document: <a href="https://github.com/graphql/graphql-wg/blob/main/rfcs/FullSchemas.md">https://github.com/graphql/graphql-wg/blob/main/rfcs/FullSchemas.md</a></li>
+<li>Related:
+<ul>
+<li><a href="/rfcs/1036/">#1036</a></li>
+<li><a href="/rfcs/1163/">#1163</a></li>
+<li><a href="/rfcs/300/">#300</a></li>
+</ul>
+</li>
+</ul>
+<h2>RFC document</h2>
+<h1>RFC: Full Schemas</h1>
+<p><strong>Proposed by:</strong> <a href="https://mastodon.mbonnin.net/@mb">Martin Bonnin</a> - Apollo</p>
+<h2>Problem statement</h2>
+<p>In its current form the GraphQL specification contains language about the presence of built-in definitions in SDL schemas:</p>
+<ul>
+<li>scalars MUST be absent from SDL (<a href="https://spec.graphql.org/October2021/#sel-GAHXJHABAB_D4G">here</a>)</li>
+<li>directives SHOULD be absent(<a href="https://spec.graphql.org/October2021/#sel-FAHnBPLCAACCcooU">here</a>)</li>
+<li>introspection types are not mentioned in the spec (See <a href="https://github.com/graphql/graphql-spec/pull/1036">here</a> for a pull request to address this)</li>
+</ul>
+<p>This is made for brevity and correctness reasons. When the SDL document is fed to a GraphQL implementation like graphql-js, there is no need to add the built-in definitions as the implementation will add them. Adding built-in definitions in the input schema could also be confusing: what definition is used? The one from the input schema or the one from the implementation? It makes sense overall to omit built-in definitions from SDL documents that are used by GraphQL implementations.</p>
+<p>But the absence of built-in definitions can make it impossible for client tools to validate an operation without knowing more details about what is supported by the server.</p>
+<p>For an example, the below query is valid if the server uses the latest draft but is not valid if the server uses the <a href="https://spec.graphql.org/October2021/#sel-GAJXNFADgHAADkHABsrC">Oct2021 specification</a>:</p>
+<pre><code class="language-graphql">{
+  __schema {
+    types {
+      name
+      inputFields {
+        name
+        # isDeprecated is only present in latest versions of the specification
+        isDeprecated
+        deprecationReason
+      }
+    }
+  }
+}
+</code></pre>
+<p>In general, it would be nice to have a SDL format that would be a full representation of the server schema, even if it means it is more verbose.</p>
+<p>With the advent of <a href="https://github.com/graphql/graphql-spec/pull/1163">service capabilities</a>, some SDL information is tied to the implementation and not to the type system. It makes sense to have &quot;full schemas&quot; contain this, but not too much in &quot;source schemas&quot;</p>
+<p>This proposal is about allowing SDL documents that contain all the information required for tooling to validate any operation, later denominated as &quot;full schema&quot;.</p>
+<h2>Proposal: be explicit about &quot;full schemas&quot; vs &quot;source schemas&quot;</h2>
+<p>Introduce &quot;full schemas&quot; in addition to the existing SDL schemas. A &quot;full schema&quot; is a schema that also contains the built-in definitions and service capabilities added by the implementation.</p>
+<h2>Questions</h2>
+<h3>Q: Why not always use introspection results?</h3>
+<p>Introspection is the tool that was designed for clients to consume schemas, so it could be argued that client should use that. However:</p>
+<ol>
+<li>Some servers have introspection disabled making it hard for clients to get an introspection schema</li>
+<li>In general, SDL is a much more readable and concise representation than the introspection JSON, making it more suited for workflows where the file is read by humans (IDEs, codegen, etc...)</li>
+<li>SDL schemas can represent applied directives, which introspection can&#x27;t (see <a href="https://github.com/graphql/graphql-spec/issues/300">#300</a>). Tools could use that information to provide a better developer experience, add functionality, etc...</li>
+</ol>
+<h3>Q: Wouldn&#x27;t that make inconsistent SDL documents containing unused definitions?</h3>
+<p>There is a (unwritten?) rule that SDL definitions must all be used (with an exception for built-in scalars and directive definitions). Hence, adding the introspection types to SDL would result in this schema being valid:</p>
+<pre><code class="language-graphql">type Query {
+    random: String
+}
+
+type __Schema { ... }
+type __Type { ... }
+enum __TypeKind { ... }
+type __Field { ... }
+type __InputValue { ... }
+type __EnumValue { ... }
+type __Directive { ... }
+enum __DirectiveLocation { ... }
+</code></pre>
+<p>Although technically nothing would use the <code>__Schema</code> type. For this, we would need to add the <code>__schema</code> meta-field:</p>
+<pre><code class="language-graphql">type Query {
+    random: String
+    __schema: __Schema
+}
+
+</code></pre>
+<p>But then doing so for typename would become very noisy:</p>
+<pre><code class="language-graphql">type Foo {
+    # add __typename here
+    __typename: String!
+}
+type Bar {
+    # and here as well
+    __typename: String!
+}
+union SomeUnion = Foo | Bar {
+    # Technically unions have __typename, should we do this? 
+    __typename: String!
+}
+
+</code></pre><section class="detail-timeline"><h2>Timeline</h2><div class="activity-groups detail-timeline-groups"><section class="activity-month"><div class="activity-month-divider"><span>January 2026</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-wg/blob/dded0a4ff41064d6989be427feea6fba77ce9b6e/rfcs/FullSchemas.md">RFC document</a> updated on 2026-01-28 by Martin Bonnin</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>August 2023</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-wg/blob/297b11eabb3de0fff2457401ea147ecdb8228e24/rfcs/FullSchemas.md">RFC document</a> created on 2023-08-26 by Martin Bonnin</li></ul></section></div></section></article></section></main><footer class="site-footer"><p>Copyright © GraphQL Contributors</p></footer></div></body></html>

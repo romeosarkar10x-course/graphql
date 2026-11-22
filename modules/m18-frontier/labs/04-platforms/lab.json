@@ -1,0 +1,1 @@
+{"title": "Platforms beyond hand-built servers: an API generated from the Shelfie database, and what it still lacks", "lecture": "18.4", "kind": "lab", "grading": "both", "needs": ["postgres", "node", "internet"]}

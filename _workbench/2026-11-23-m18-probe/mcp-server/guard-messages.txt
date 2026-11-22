@@ -1,0 +1,16 @@
+mutation { deleteReview(input: {id: "r1"}) { deletedReviewId } }
+  -> isError=true: denied: run_graphql is read-only; mutation operations are not allowed (writes have their own tools and need a human's approval)
+{ __schema { types { name } } }
+  -> isError=true: denied: introspection (__schema) is not available to agents
+{ clubs { members(first: 50) { clubs { members(first: 50) { name } } } } }
+  -> isError=true: denied: cost 5101 is over the limit of 200 (a field costs 1 plus its children, times first or last); ask for fewer items or fewer fields
+query($n: Int = 500) { books(first: $n) { title } }
+  -> isError=true: denied: cost 1000 is over the limit of 200 (a field costs 1 plus its children, times first or last); ask for fewer items or fewer fields
+{ a: books(first: 50) { title } b: books(first: 50) { title } c: books(first: 50) { title } }
+  -> isError=true: denied: cost 300 is over the limit of 200 (a field costs 1 plus its children, times first or last); ask for fewer items or fewer fields
+{ club(id: "c1") { members { clubs { members { clubs { members { clubs { name } } } } } } } }
+  -> isError=true: denied: depth 8 is over the limit of 6
+{ books(first: 100) { title } }
+  -> isError=false: {"books":[{"title":"The Left Hand of Darkness"},{"title":"Piranesi"},{"title":"The Remains of the Day"},{"title":"The Name of the Rose"},{"title":"Good Omens"},{"title":"Project Hail Mary"},{"title":"The Dispossessed"},{
+{ clubs { name } }
+  -> isError=false: {"clubs":[{"name":"The Midnight Readers"},{"name":"Slow Burn Mysteries"},{"name":"Booker Shortlist Survivors"}]}

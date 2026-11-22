@@ -1,0 +1,23 @@
+"""
+Search Shelfie for $text, ignoring case, across book titles, club names and reader names and handles.
+Returns books first, then clubs, then readers, each with its __typename and id, so a follow-up tool can fetch
+details. The quickest way to turn a name into an id.
+"""
+query Search($text: String!) {
+  search(text: $text) {
+    __typename
+    ... on Book {
+      id
+      title
+    }
+    ... on Club {
+      id
+      name
+    }
+    ... on User {
+      id
+      name
+      handle
+    }
+  }
+}

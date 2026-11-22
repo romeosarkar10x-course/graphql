@@ -1,0 +1,1 @@
+{ search(text: "Jonas Berg") { ... on User { name reviews { body book { title } } } } }

@@ -1,0 +1,28 @@
+"""
+One club by its id ($id, for example c1; get ids from ListClubs or Search): description, visibility, its
+owner (name and handle), member count, the first 10 members in join order and the current book. Returns null for
+an unknown id.
+"""
+query ClubDetails($id: ID!) {
+  club(id: $id) {
+    id
+    name
+    description
+    visibility
+    owner {
+      id
+      name
+      handle
+    }
+    memberCount
+    members(first: 10) {
+      id
+      name
+      handle
+    }
+    currentBook {
+      id
+      title
+    }
+  }
+}

@@ -1,0 +1,4 @@
+java startup_ms=986 (flags as fed.sh: -XX:TieredStopAtLevel=1 -Xmx192m)
+java {"requests":1000,"errors":0,"p50Ms":0,"p95Ms":1,"p99Ms":2,"maxMs":11,"rssMb":173,"peakRssMb":173}
+node startup_ms=170 (built; node v24.22.1)
+node {"requests":1000,"errors":0,"p50Ms":0,"p95Ms":1,"p99Ms":3,"maxMs":11,"rssMb":141,"peakRssMb":145}

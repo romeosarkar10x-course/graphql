@@ -1,0 +1,23 @@
+"""
+One book by its id ($id, for example b1; get ids from FindBooks or Search): title, authors, year, page
+count, synopsis, mean rating (null without reviews) and its three newest reviews with each reviewer's handle.
+Returns null for an unknown id.
+"""
+query BookDetails($id: ID!) {
+  book(id: $id) {
+    id
+    title
+    authors
+    publishedYear
+    pageCount
+    synopsis
+    averageRating
+    reviews(last: 3) {
+      rating
+      body
+      author {
+        handle
+      }
+    }
+  }
+}

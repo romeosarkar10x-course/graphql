@@ -1,0 +1,1 @@
+query AshaClubs { search(text: "Asha") { ... on User { name clubs { id name } } } }

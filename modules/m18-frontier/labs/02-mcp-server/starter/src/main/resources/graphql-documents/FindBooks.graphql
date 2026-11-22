@@ -1,0 +1,15 @@
+"""
+Find books in the Shelfie catalogue whose title contains $titleContains (ignoring case); leave it out to list
+the catalogue in order. Returns at most $first books (default 5, the server caps nothing, keep it small) with
+authors, publication year and mean rating. Use it to turn a title into a book id. There is no author filter: to
+find an author, list the catalogue and filter yourself.
+"""
+query FindBooks($titleContains: String, $first: Int = 5) {
+  books(titleContains: $titleContains, first: $first) {
+    id
+    title
+    authors
+    publishedYear
+    averageRating
+  }
+}

@@ -1,0 +1,1 @@
+{ books(first: 100) { title pageCount } }

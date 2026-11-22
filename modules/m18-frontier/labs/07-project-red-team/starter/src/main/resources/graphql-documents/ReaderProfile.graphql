@@ -1,0 +1,17 @@
+"""
+One reader by user id ($id, for example u1; get ids from Search, which matches names and handles):
+name, handle, bio, location and the clubs they belong to. Returns null for an unknown id.
+"""
+query ReaderProfile($id: ID!) {
+  user(id: $id) {
+    id
+    name
+    handle
+    bio
+    location
+    clubs {
+      id
+      name
+    }
+  }
+}

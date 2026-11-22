@@ -1,0 +1,1 @@
+query IshiguroBooks { books(first: 50) { id title authors publishedYear } }

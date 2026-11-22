@@ -322,3 +322,23 @@ Earlier: `bin/course check --starters` (2026-11-21): 11 auto-graded labs, 0 prob
       hunt (15 hashed answers, leaderboard) · m17/11 mock working group (rubric)
 - [x] `bin/course check m17 --starters`: 9 auto-graded labs, 0 problems
       (`_workbench/2026-11-23-m17-check-starters.log`)
+
+## Module 18 (6 lectures, 6 labs, 1 mini-project, 2 games)
+
+- [x] Contract: `agent/` (ten Shelfie operations, ten questions with hashed answers, `Agent.java`: `ops` with
+      Module 17's parser and graphql-java, `strip`, `cost` with Module 10's function, `score`) · `mcp.sh` (an MCP
+      client in bash, Streamable HTTP, protocol 2025-11-25) · `redteam/attacks.sh` (12 attacks, pluggable) ·
+      `port/` (15 signatures, seed, `port.hurl` that Java's reviews subgraph passes, `port.sh`, router config)
+- [x] Lectures 18.1–18.6 (Hook / Concept / Java build / Experiment / Check)
+- [x] Labs: m18/01 ten described operations, an LLM's ten queries scored (sample: 10 valid, 9 answered) · m18/02
+      Spring AI 2.0.2 MCP server, eight curated tools equal to their operations · m18/03 safety policy: read-only
+      default, guarded `run_graphql` (one query, no introspection, depth 6, cost 200), out-of-band approval,
+      caller passthrough, audit (26 checks) · m18/04 PostGraphile 5.2.1 on the club data, read-only and without
+      the SQL helper (7 Hurl checks) · m18/05 seven RFC stages (hashed, dated), reading notes, 250–350-word
+      explainer · m18/06 reviews subgraph in TypeScript (Yoga 6 + Pothos): same signatures, composes, 12 Hurl
+      checks
+- [x] Mini-project and games: m18/07 red team (seven seeded weaknesses; starter blocks 6 of 12 attacks, solution
+      12 and its own) · m18/08 polyglot day (Java, Kotlin, TypeScript in one supergraph; group by URL) · m18/09
+      lightning talks (rubric)
+- [x] `bin/course check m18 --starters`: 8 auto-graded labs, 0 problems
+      (`_workbench/2026-11-23-m18-check-starters.log`)

@@ -1,0 +1,23 @@
+{
+  "name": "shelfie-reviews-ts",
+  "private": true,
+  "type": "module",
+  "description": "Shelfie's reviews subgraph in TypeScript: GraphQL Yoga + Pothos (code-first) + Apollo Federation 2.9",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "@apollo/subgraph": "2.14.4",
+    "@pothos/core": "4.16.0",
+    "@pothos/plugin-directives": "4.3.3",
+    "@pothos/plugin-federation": "4.5.4",
+    "graphql": "16.15.0",
+    "graphql-yoga": "6.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "6.0.3"
+  },
+  "overrides": { "graphql": "16.15.0" }
+}

@@ -1,0 +1,81 @@
+{
+ "_": "Ten questions an agent should answer from Shelfie's reference server. answers: sha256 (first 16 hex) of each value the response must hold, trimmed, lower case, spaces collapsed (agent score). Plain text: labs/01-agent-context/solution/answers.tsv.",
+ "questions": [
+  {
+   "id": "q01",
+   "question": "Which public club is reading the highest-rated book right now?",
+   "answers": [
+    "f5967676960b9de6"
+   ]
+  },
+  {
+   "id": "q02",
+   "question": "Which books by Kazuo Ishiguro are in Shelfie's catalogue?",
+   "answers": [
+    "b8fa2bff06f44cb3",
+    "0317324371e9bdc0"
+   ]
+  },
+  {
+   "id": "q03",
+   "question": "Who owns The Midnight Readers, and in which city do they live?",
+   "answers": [
+    "d829028d85d25ab5",
+    "c108f9afa4843d20"
+   ]
+  },
+  {
+   "id": "q04",
+   "question": "How many members does Booker Shortlist Survivors have?",
+   "answers": [
+    "ef2d127de37b942b"
+   ]
+  },
+  {
+   "id": "q05",
+   "question": "What did Jonas Berg write about Project Hail Mary?",
+   "answers": [
+    "68e5f039f7ca484d"
+   ]
+  },
+  {
+   "id": "q06",
+   "question": "Which books have no reviews yet?",
+   "answers": [
+    "c55e569881b4cee4",
+    "c4bfd529a7a94c58",
+    "0317324371e9bdc0"
+   ]
+  },
+  {
+   "id": "q07",
+   "question": "What is the oldest book in the catalogue, and who wrote it?",
+   "answers": [
+    "7618c2e0f402c0dc",
+    "817eb16d71afe926"
+   ]
+  },
+  {
+   "id": "q08",
+   "question": "Which clubs is Asha Rao a member of?",
+   "answers": [
+    "ee7f402d0400285e",
+    "e0f2baf345af577d"
+   ]
+  },
+  {
+   "id": "q09",
+   "question": "When did The Midnight Readers hold their October wrap-up meetup?",
+   "answers": [
+    "1711df2d1724eeb1"
+   ]
+  },
+  {
+   "id": "q10",
+   "question": "Which book in the catalogue has the most pages?",
+   "answers": [
+    "58a52e35fedc8ffd"
+   ]
+  }
+ ]
+}

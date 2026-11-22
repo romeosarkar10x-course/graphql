@@ -1,0 +1,1 @@
+{ search(text: "Midnight Readers") { ... on Club { meetups(upcomingOnly: false) { title startsAt } } } }

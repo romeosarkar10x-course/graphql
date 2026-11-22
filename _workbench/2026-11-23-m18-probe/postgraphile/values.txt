@@ -1,0 +1,10 @@
+{"data":{"clubByRowId":{"name":"Last Mirror Club","readerByOwnerId":{"handle":"reader8","name":"Asha Haddad"},"bookByCurrentBookId":{"title":"The Glass Station","author":"Asha Silva"},"membershipsByClubId":{"totalCount":25,"nodes":[{"readerByReaderId":{"handle":"reader54"}},{"readerByReaderId":{"handle":"reader133"}},{"readerByReaderId":{"handle":"reader212"}}]}}}}
+{"data":{"allBooks":{"totalCount":2000},"allReviews":{"totalCount":9},"readerByHandle":null}}
+{"data":{"allClubs":{"nodes":[{"rowId":"1","name":"Last Mirror Club"},{"rowId":"2","name":"Paper Lantern Club"}],"pageInfo":{"endCursor":"WyJiNWJlMjZhYzQ2IiwiMiJd","hasNextPage":true}}}}
+{"data":{"allClubs":null},"errors":[{"message":"Invalid cursor, please enter a cursor from a previous request, or null.","locations":[{"line":1,"column":3}],"path":["allClubs"],"extensions":{}}]}
+{"data":{"clubByRowId":{"name":"Distant Letter Club","bookByCurrentBookId":null}}}
+{"data":{"readerByRowId":{"handle":"reader1","name":"Mei Mensah","membershipsByReaderId":{"totalCount":1},"reviewsByAuthorId":{"totalCount":10,"nodes":[{"rating":1,"bookByBookId":{"title":"The Lost River"}},{"rating":1,"bookByBookId":{"title":"The Velvet Library"}}]}}}}
+[null,null]
+{"data":{"node":{"__typename":"Book","title":"The Iron Forest"}}}
+{"errors":[{"message":"An error occurred (logged with hash: 'rUoqMhggpG9N2TsasvMF25xdN0c', id: '2HDWCYJG4Q')","extensions":{"errorId":"2HDWCYJG4Q"}}]}
+{"errors":[{"message":"Value \"RATING_DESC\" does not exist in \"ReviewOrderBy\" enum. Did you mean the enum value \"ROW_ID_DESC\"?","locations":[{"line":1,"column":33}],"extensions":{}}]}

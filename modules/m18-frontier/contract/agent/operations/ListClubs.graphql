@@ -1,0 +1,13 @@
+query ListClubs {
+  clubs {
+    id
+    name
+    visibility
+    memberCount
+    currentBook {
+      id
+      title
+      averageRating
+    }
+  }
+}

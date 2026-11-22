@@ -1,0 +1,9 @@
+query FindBooks($titleContains: String, $first: Int = 5) {
+  books(titleContains: $titleContains, first: $first) {
+    id
+    title
+    authors
+    publishedYear
+    averageRating
+  }
+}

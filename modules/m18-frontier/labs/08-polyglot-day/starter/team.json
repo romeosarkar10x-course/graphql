@@ -1,0 +1,9 @@
+{
+  "_": "Who runs what. run: contract (Module 15's Java jar), serve.sh (a lab directory's serve.sh <port>), jar:<path> (mvn package in dir, then java -jar <path> <port>). dir is relative to the course root, e.g. workspace/m18-frontier/06-port. Group variant: \"url\": \"http://<friend>:<port>/graphql\" instead of run.",
+  "subgraphs": [
+    { "name": "accounts", "language": "Java", "run": "contract" },
+    { "name": "catalog", "language": "Java", "run": "contract" },
+    { "name": "reviews", "language": "Java", "run": "contract" },
+    { "name": "clubs", "language": "Java", "run": "contract" }
+  ]
+}

@@ -1,0 +1,1 @@
+query OctoberWrapUp { clubs { name meetups { title startsAt location } } }

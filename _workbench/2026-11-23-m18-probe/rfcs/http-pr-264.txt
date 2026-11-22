@@ -1,0 +1,6 @@
+[RFC] Add Appendix A: Persisted Documents
+benjie
+Addresses #38 (though not the "automatic" version; though that can be built on top of this spec).
+
+This is a first draft.
+

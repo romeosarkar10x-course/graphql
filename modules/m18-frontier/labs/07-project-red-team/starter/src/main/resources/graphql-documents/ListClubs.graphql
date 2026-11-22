@@ -1,0 +1,18 @@
+"""
+Every book club on Shelfie with its visibility (PUBLIC or PRIVATE), member count and the book it is
+reading right now, with that book's mean rating. No arguments; there are only a few clubs. Start here for any
+question that compares clubs.
+"""
+query ListClubs {
+  clubs {
+    id
+    name
+    visibility
+    memberCount
+    currentBook {
+      id
+      title
+      averageRating
+    }
+  }
+}

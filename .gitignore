@@ -4,3 +4,4 @@ target/
 *.class
 .idea/
 node_modules/
+modules/m18-frontier/labs/*/*/dist/

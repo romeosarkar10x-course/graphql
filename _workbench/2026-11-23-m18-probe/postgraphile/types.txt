@@ -1,0 +1,7 @@
+["id: ID!","rowId: BigInt!","name: String!","ownerId: BigInt!","currentBookId: BigInt","bookByCurrentBookId: Book","readerByOwnerId: Reader","membershipsByClubId: MembershipConnection!"]
+["first","last","offset","before","after","condition","orderBy"]
+{"n":1000,"e":null}
+graphiql: 404
+/: 200
+/graphiql: 404
+/ruru: 404

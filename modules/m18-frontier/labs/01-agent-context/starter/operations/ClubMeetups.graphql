@@ -1,0 +1,11 @@
+query ClubMeetups($clubId: ID!, $upcomingOnly: Boolean = true) {
+  club(id: $clubId) {
+    id
+    name
+    meetups(upcomingOnly: $upcomingOnly) {
+      title
+      startsAt
+      location
+    }
+  }
+}

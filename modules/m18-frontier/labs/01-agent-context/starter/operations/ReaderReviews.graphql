@@ -1,0 +1,15 @@
+query ReaderReviews($id: ID!) {
+  user(id: $id) {
+    id
+    handle
+    reviews {
+      rating
+      body
+      createdAt
+      book {
+        id
+        title
+      }
+    }
+  }
+}

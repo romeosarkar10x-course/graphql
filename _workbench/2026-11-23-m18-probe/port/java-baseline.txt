@@ -1,0 +1,23 @@
+Book.averageRating: Float
+Book.id: ID!
+Book.reviewCount: Int!
+Book.reviews: [Review!]!
+Mutation.addReview(body: String!, bookId: ID!, rating: Int!): Review
+Query.latestReviews(first: Int = 5): [Review!]!
+Query.review(id: ID!): Review
+Review.author: User!
+Review.body: String!
+Review.book: Book!
+Review.id: ID!
+Review.rating: Int!
+User.handle: String!
+User.id: ID!
+User.reviews: [Review!]!
+Success /course/modules/m18-frontier/contract/port/port.hurl (19 request(s) in 275 ms)
+--------------------------------------------------------------------------------
+Executed files:    1
+Executed requests: 19 (68.8/s)
+Succeeded files:   1 (100.0%)
+Failed files:      0 (0.0%)
+Duration:          276 ms (0h:0m:0s:276ms)
+

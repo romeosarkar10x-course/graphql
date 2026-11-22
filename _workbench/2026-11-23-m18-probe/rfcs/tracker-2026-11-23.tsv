@@ -1,0 +1,156 @@
+#1227 Next stage	RFC 3 / Accepted	@benjie	Allow empty selection sets	Spec PR merged on 2026-09-17
+#1211 Next stage	RFC 3 / Accepted	@jbellenger	OneOf inhabitability	Spec PR merged on 2026-09-17
+#1183	RFC 3 / Accepted	@benjie	Fix "response position" definition; clarify sibling errors on propagation	Spec PR merged on 2026-09-17
+#1206	RFC 3 / Accepted	@BoD	Add support for directives on directive definitions	Spec PR merged on 2026-06-04
+#1193	RFC 3 / Accepted	@janettec	Update description of Fragments to emphasize evolving data needs	Spec PR merged on 2026-02-05
+#1092	RFC 3 / Accepted	@benjie	Recommend that order of unordered collections is maintained where possible	Spec PR merged on 2025-09-01
+#825	RFC 3 / Accepted	@benjie	OneOf Input Objects	Spec PR merged on 2025-09-01
+#794	RFC 3 / Accepted	@magicmark	Schema Coordinates	Spec PR merged on 2025-09-01
+#1056	RFC 3 / Accepted	@benjie	Fix CoerceArgumentValues() hasValue	Spec PR merged on 2025-07-03
+#793	RFC 3 / Accepted	@benjie	Default value coercion rules	Spec PR merged on 2025-07-01
+#1170	RFC 3 / Accepted	@fotoetienne	Add descriptions to executable documents | 2025 Update	Spec PR merged on 2025-07-01
+#1102	RFC 3 / Accepted	@benjie	Define Data Collections used in the spec	Spec PR merged on 2025-07-01
+#955	RFC 3 / Accepted	@benjaminjkraft	Add validation rule that operation types exist	Spec PR merged on 2025-06-26
+#1167	RFC 3 / Accepted	@benjie	Do not exclude schema keyword if schema has description	Spec PR merged on 2025-06-26
+#525	RFC 3 / Accepted	@smitt04	Allow deprecation of input values	Advanced to RFC 3 on 2025-06-12
+#860	RFC 3 / Accepted	@benjie	Prevent @skip and @include on root subscription selection set	Spec PR merged on 2025-06-05
+#1142	RFC 3 / Accepted	@martinbonnin	make `includeDeprecated` non nullable	Spec PR merged on 2025-05-01
+#1053	RFC 3 / Accepted	@benjie	Implementations may not deprecate a field that the interface hasn't deprecated	Spec PR merged on 2025-05-01
+#976	RFC 3 / Accepted	@benjie	Add 'extensions' to request	Spec PR merged on 2025-04-17
+#1040	RFC 3 / Accepted	@martinbonnin	Make the reason argument in `@deprecated` non-nullable	Spec PR merged on 2024-12-05
+#1073	RFC 3 / Accepted	@martinbonnin	Be strict about error paths format	Spec PR merged on 2024-04-04
+#987	RFC 3 / Accepted	@benjie	Fix ambiguity around when schema definition may be omitted	Spec PR merged on 2023-02-09
+#891	RFC 3 / Accepted	@dugenkui03	Add explanation about argument name uniqueness.	Spec PR merged on 2023-02-02
+#805	RFC 3 / Accepted	@IvanGoncharov	Allow deprecation of input values (field args, directive args, input fields)	Spec PR merged on 2022-06-03
+#849	RFC 3 / Accepted	@leebyron	Allow full unicode range	Spec PR merged on 2022-06-03
+#776	RFC 3 / Accepted	@benjie	__typename is not valid at subscription root	Added to WG agenda on 2021-05-13
+#649	RFC 3 / Accepted	@eapache	Custom Scalar Specification URLs	Spec PR merged on 2021-04-09
+#598	RFC 3 / Accepted	@leebyron	Avoid parse ambiguity on types & extensions	Spec PR merged on 2021-04-08
+#803	RFC 3 / Accepted	@benjie	Replace 'query error' with 'request error'	Spec PR merged on 2021-04-07
+#701	RFC 3 / Accepted	@spawnia	Disallow non-breakable chains of circular references in Input Objects	Spec PR merged on 2021-01-11
+#445	RFC 3 / Accepted	@spawnia	Disallow non-breakable chains of circular references in Input Objects	Spec PR closed on 2020-03-24
+#466	RFC 3 / Accepted	@IvanGoncharov	Add description to Schema	Spec PR merged on 2020-02-06
+#373	RFC 3 / Accepted	@mike-marcacci	Allow interfaces to implement other interfaces	Spec PR merged on 2020-01-11
+#472	RFC 3 / Accepted	@OlegIlyenko	Repeatable directives	Spec PR merged on 2020-01-10
+#601	RFC 3 / Accepted	@leebyron	Number value literal lookahead restrictions	Spec PR merged on 2020-01-10
+#599	RFC 3 / Accepted	@leebyron	Clarify that lexing is greedy	Spec PR merged on 2020-01-10
+#470	RFC 3 / Accepted	@OlegIlyenko	"Directive order is significant" section	Spec PR merged on 2019-08-07
+#510	RFC 3 / Accepted	@mjmahone	Allow directives on variable definitions	Advanced to RFC 3 on 2018-10-02
+#454	RFC 3 / Accepted	@IvanGoncharov	Add validation steps for schema extensions	Advanced to RFC 3 on 2018-10-02
+#459	RFC 3 / Accepted	@mjmahone	Remove Interface is implemented by 1+ Objects validation	Advanced to RFC 3 on 2018-10-02
+#462	RFC 3 / Accepted	@leebyron	Input & Output type definition	Advanced to RFC 3 on 2018-10-02
+#463	RFC 3 / Accepted	@leebyron	Ensure validation of directive arguments	Advanced to RFC 3 on 2018-10-02
+#1184 Next stage	RFC 2 / Draft	@benjie	Sibling errors should not be added after propagation	2 commits pushed on 2026-09-17
+#1224	RFC 2 / Draft	@benjie	Fragment arguments - needs champion	Spec PR closed on 2026-11-13
+#1081	RFC 2 / Draft	@JoviDeCroock	Fragment arguments/variables (syntax/validation/execution)	4 commits pushed on 2026-11-13
+#1110	RFC 2 / Draft	@robrichard	Incremental Delivery spec draft	2 commits pushed on 2026-07-15
+#1063	RFC 2 / Draft	@benjie	Type system ordering of: object interfaces, directive arguments, input object fields, enum values	Spec PR closed on 2025-09-01
+#1058	RFC 2 / Draft	@benjie	List coercion algorithm	Advanced to RFC 2 on 2025-07-03
+#1228 Next stage	RFC 1 / Proposal	@benjie	Allow empty object, interface, and union types	Added to WG agenda on 2026-12-03
+#1180 Next stage	RFC 1 / Proposal	@JoviDeCroock	Editorial: Fix cases in validation where technically a crash could occur due to non-existent definitions	Spec PR closed on 2026-02-24
+#1177 Next stage	RFC 1 / Proposal	@benjie	Incorporate meta-fields into ExecuteCollectedFields	4 commits pushed on 2025-07-04
+#1229	RFC 1 / Proposal	@benjie	Allow interfaces with no fields, unions with no members	Spec PR merged on 2026-11-05
+#1059	RFC 1 / Proposal	@benjie	Introduce Strict and Legacy All Variable Usages Are Allowed	Added to WG agenda on 2026-11-05
+#1163	RFC 1 / Proposal	@benjie	Error behaviors (including `onError: "NULL"`)	Top comment edited on 2026-08-06
+#1231	RFC 1 / Proposal	@benjie	A schema with all deprecated elements removed must itself be valid	Advanced to RFC 1 on 2026-07-02
+#1208	RFC 1 / Proposal	@benjie	Service capabilities	5 commits pushed on 2026-04-02
+#950	RFC 1 / Proposal	@yaacovCR	allow unions to include interfaces and unions	Spec PR closed on 2026-03-05
+#939	RFC 1 / Proposal	@yaacovCR	allow unions to declare implementation of interfaces	Spec PR closed on 2026-03-05
+#907	RFC 1 / Proposal	@IvanGoncharov	Add support for directives on directives	Spec PR closed on 2025-12-18
+#1179	RFC 1 / Proposal	@leebyron	CoerceInputValue()	6 commits pushed on 2025-07-05
+#997	RFC 1 / Proposal	@fotoetienne	Expand @deprecated to Objects	Added to WG agenda on 2025-06-26
+#1127	RFC 1 / Proposal	@benjie	When `sourceStream` errors, yield a `{ errors: [...] }` response	Advanced to RFC 1 on 2025-01-09
+#509	RFC 1 / Proposal	@taion	Allow singular variables in list locations	Advanced to RFC 1 on 2018-10-02
+#1230 Next stage	RFC 0 / Strawman	@benjie	Deprecate includeDeprecated, add `__schema(includeDeprecated:)`	Added to WG agenda on 2026-07-02
+#1200 Next stage	RFC 0 / Strawman	@PascalSenn	Add Schema Coordinate to GraphQL Errors	Spec PR created on 2025-10-28
+#1049	RFC 0 / Strawman	@martinbonnin	Introduce SourceSchemaDocument and FullSchemaDocument	Spec PR closed on 2026-10-31
+#674	RFC 0 / Strawman	@kassens	allow empty selections	Spec PR closed on 2026-09-17
+#1225	RFC 0 / Strawman	@robrichard	Prohibit root mutation and subscription types from implementing interfaces	Spec PR closed on 2026-06-22
+OptInFeatures	RFC 0 / Strawman	-	Opt-in features	RFC document updated on 2026-06-18
+#1082	RFC 0 / Strawman	@cuhtis	Proposed spec changes for string literal aliases	Advanced to RFC 0 on 2026-05-25
+#1165	RFC 0 / Strawman	@benjie	Add Transitional Non-Null appendix (`@noPropagate` directive)	Marked as Stale on 2026-03-19
+#1065	RFC 0 / Strawman	@benjie	SemanticNonNull type (null only on error)	Marked as Stale on 2026-03-19
+MockSpec	RFC 0 / Strawman	-	GraphQL Response Mocking Specification	RFC document created on 2026-02-02
+FullSchemas	RFC 0 / Strawman	-	Full Schemas	RFC document updated on 2026-01-28
+SchemaCoordinates	RFC 0 / Strawman	-	Status	RFC document updated on 2026-01-26
+FieldExtensions	RFC 0 / Strawman	-	Status	RFC document updated on 2026-01-26
+ClientControlledNullability	RFC 0 / Strawman	-	Status	RFC document updated on 2026-01-26
+#567	RFC 0 / Strawman	@benhead	allow directives on directive definitions	Spec PR closed on 2026-01-16
+wg#1871	RFC 0 / Strawman	@nikolayandr	Proposal: Omit fields when their resolver fails (optional execution mode, no new syntax)	WG discussion created on 2025-12-04
+#673	RFC 0 / Strawman	@spawnia	Servers must preserve lexical ordering between SDL and introspection	Spec PR closed on 2025-11-05
+ObjectIdentification	RFC 0 / Strawman	-	Object Identification	RFC document created on 2025-10-15
+MatchesDirective	RFC 0 / Strawman	-	Matches Directive	RFC document created on 2025-09-19
+InputUnion	RFC 0 / Strawman	-	NOTE: this document is kept for historic purposes; [`@oneOf`](https://github.com/graphql/graphql-spec/pull/825) gained RFC3 status in May 2025.	RFC document updated on 2025-06-05
+SemanticNullability	RFC 0 / Strawman	-	Semantic Nullability	RFC document updated on 2025-05-01
+wg#1700	RFC 0 / Strawman	@leebyron	Lee's new nullability & error propagation proposal	WG discussion created on 2025-03-26
+DisableErrorPropagationDirective	RFC 0 / Strawman	-	Disable Error Propagation Directive	RFC document created on 2025-03-19
+#1114	RFC 0 / Strawman	@yaacovCR	add __directive meta field parallel to __type	Advanced to RFC 0 on 2024-11-07
+DeferStream	RFC 0 / Strawman	-	GraphQL Defer and Stream Directives	RFC document updated on 2024-09-19
+FeatureDiscovery	RFC 0 / Strawman	-	Feature Discovery	RFC document updated on 2023-11-28
+Struct	RFC 0 / Strawman	-	Polymorphic-capable composite symmetric input/output type (`struct`)	RFC document updated on 2023-11-28
+wg#1410	RFC 0 / Strawman	@leebyron	Strict Semantic Nullability	WG discussion created on 2023-10-05
+wg#1394	RFC 0 / Strawman	@captbaritone	True Nullability Schema	WG discussion created on 2023-09-12
+#1015	RFC 0 / Strawman	@leebyron	"Root" Types clarity → "Operation Type"	Added to WG agenda on 2023-03-02
+FragmentArguments	RFC 0 / Strawman	-	Fragment Arguments	RFC document created on 2023-02-10
+wg#1239	RFC 0 / Strawman	@mjmahone	Fragment Arguments: RFC + Implementation Details	WG discussion created on 2023-01-19
+#998	RFC 0 / Strawman	@yaacovCR	add spec edits for references	Advanced to RFC 0 on 2022-11-04
+ExpandingSubtyping	RFC 0 / Strawman	-	Expanding Subtyping (for output types)	RFC document created on 2022-08-31
+AnnotationStructs	RFC 0 / Strawman	-	Annotation Structs	RFC document updated on 2022-08-31
+MetadataStructs	RFC 0 / Strawman	-	Metadata Structs	RFC document updated on 2022-08-16
+wg#1096	RFC 0 / Strawman	@leebyron	"Metadata Directives" Proposal	WG discussion created on 2022-08-04
+CompositeSchemas	RFC 0 / Strawman	-	GraphQL Composite Schemas	RFC document updated on 2022-07-22
+wg#1071	RFC 0 / Strawman	@benjie	Struct type	WG discussion created on 2022-07-18
+wg#944	RFC 0 / Strawman	@yaacovCR	New Intersection Type	WG discussion created on 2022-04-30
+wg#857	RFC 0 / Strawman	@mjmahone	Fragment Modularity	WG discussion created on 2022-01-07
+FragmentModularity	RFC 0 / Strawman	-	Fragment Modularity	RFC document created on 2022-01-06
+wg#815	RFC 0 / Strawman	@leebyron	Nested GraphQL Mutations	WG discussion created on 2021-12-02
+ImplicitInheritance	RFC 0 / Strawman	-	Implicit Inheritance	RFC document updated on 2021-09-03
+OperationExpressions	RFC 0 / Strawman	-	Operation Expressions	RFC document created on 2021-09-02
+SchemaFragments	RFC 0 / Strawman	-	Schema Fragments	RFC document created on 2021-09-02
+#879	RFC 0 / Strawman	@mjmahone	__fulfilled meta field	Added to WG agenda on 2021-09-02
+#706	RFC 0 / Strawman	@francisu	Add support for directives for an object field name	Advanced to RFC 0 on 2020-09-03
+Subscriptions	RFC 0 / Strawman	-	NOTE: this document is kept for historic purposes; GraphQL Subscriptions have been specified and released as part of the official [June 2018 GraphQL Specification](https://spec.graphql.org/June2018/).	RFC document updated on 2020-08-19
+#710	RFC 0 / Strawman	@chemisus	Add namedType and punctuatedName to __Type	Advanced to RFC 0 on 2020-05-07
+#631	RFC 0 / Strawman	@victorandree	Make root query operation type optional	Added to WG agenda on 2019-12-05
+#556	RFC 0 / Strawman	@langpavel	Document Directives	Top comment edited on 2019-02-01
+#521	RFC 0 / Strawman	@IvanGoncharov	Scalar serialize as built-in scalar type	Spec PR created on 2018-10-14
+#325	RFC 0 / Strawman	@IvanGoncharov	Add "Any" scalar type	Advanced to RFC 0 on 2018-10-02
+#892	RFC X / Superseded	@IvanGoncharov	Add descriptions to executable definitions	Spec PR closed on 2025-06-26
+#823	RFC X / Superseded	@benjie	operation expressions	Marked as Superseded on 2025-06-12
+#667	RFC X / Superseded	@lilianammmatos	[RFC Sketch] Defer and Stream Directives	Marked as Superseded on 2025-06-12
+#1048	RFC X / Superseded	@benjie	Null-Only-On-Error / Semantically-Non-Null type (asterisk)	Marked as Superseded on 2025-06-12
+#586	RFC X / Superseded	@benjie	Input Objects accepting exactly @oneField	Marked as Superseded on 2025-06-12
+#326	RFC X / Superseded	@leebyron	Scalar serialize as built-in scalar type	Marked as Superseded on 2025-06-12
+#471	RFC X / Superseded	@OlegIlyenko	Limit uniqueness to `@skip`, `@include` and `@deprecated` directives	Marked as Superseded on 2025-06-12
+#1023	RFC X / Superseded	@yaacovCR	incremental delivery without branching	Marked as Superseded on 2025-06-12
+#1026	RFC X / Superseded	@yaacovCR	incremental delivery with deduplication + concurrent execution	Marked as Superseded on 2025-06-12
+#999	RFC X / Superseded	@yaacovCR	introduce ExecuteGroupedFieldSet, CollectRootFields and CollectSubfields	Marked as Superseded on 2025-06-12
+#1034	RFC X / Superseded	@yaacovCR	incremental delivery with deduplication + concurrent execution	Marked as Superseded on 2025-06-12
+#1052	RFC X / Superseded	@yaacovCR	deduplicated incremental delivery	Marked as Superseded on 2025-06-12
+#1126	RFC X / Superseded	@benjie	GraphQL Subscriptions should handle errors in the source stream	Marked as Superseded on 2025-06-12
+#1157	RFC X / Superseded	@martinbonnin	Exclude custom scalar literals from validation	Marked as Superseded on 2025-06-12
+#877	RFC X / Superseded	@IvanGoncharov	Forbid duplicating argument names	Advanced to RFC 1 on 2025-06-12
+#1098	RFC X / Superseded	@Shane32	Add 5.2.4 Operation Type Exists	Advanced to RFC 1 on 2025-06-12
+#1153	RFC X / Superseded	@benjie	Allow clients to disable error propagation via request parameter	Advanced to RFC 1 on 2025-06-12
+#742	RFC X / Superseded	@robrichard	Spec edits for @defer/@stream	Advanced to RFC 2 on 2025-06-12
+#1091	RFC X / Superseded	@benjie	Define Data Collections used in the spec	Advanced to RFC 2 on 2025-06-12
+#1010	RFC X / Superseded	@mjmahone	Fragment Arguments: Spec Implementation	Advanced to RFC 1 on 2025-06-12
+#865	RFC X / Superseded	@mjmahone	Fragment Arguments (parameterized fragments) for GraphQL	Advanced to RFC 1 on 2025-06-12
+#1196	RFC X / Rejected	@egoodwinx	Field extensions: spec edits	Spec PR closed on 2026-07-30
+#1145	RFC X / Rejected	@twof	Introduce @disableErrorPropagation	Marked as Rejected on 2026-04-29
+#1045	RFC X / Rejected	@benjie	Remove fragmentSpreadName from visitedFragments when visit is complete	Spec PR closed on 2025-07-17
+#948	RFC X / Rejected	@benjie	OneOf Objects	Spec PR closed on 2025-07-03
+#806	RFC X / Rejected	@benjie	__typename should be valid at subscription root	Marked as Superseded on 2025-06-12
+#888	RFC X / Rejected	@nojvek	Map type	Marked as Rejected on 2025-06-12
+#960	RFC X / Rejected	@yaacovCR	Allow recursion within ResolveAbstractType	Marked as Rejected on 2025-06-12
+#1018	RFC X / Rejected	@benjie	Alternative proposal for `@stream`/`@defer`	Marked as Rejected on 2025-06-12
+#395	RFC X / Rejected	@tgriesser	inputUnion type	Marked as Rejected on 2025-06-12
+#895	RFC X / Rejected	@twof	Client Controlled Nullability	Advanced to RFC 1 on 2025-06-12
+#883	RFC X / Rejected	@IvanGoncharov	Relax SameResponseShape algorithm to be compatible with covariant fields	Advanced to RFC 1 on 2025-06-12
+#1166	RFC X / Rejected	@benjie	Enable 'schema' keyword to be provided without root operations	Spec PR closed on 2025-05-22
+#733	RFC X / Rejected	@benjie	Tagged type	Spec PR closed on 2024-07-01
+#319	RFC X / Rejected	@IvanGoncharov	Add '@ignoreIfUnknown' to allow forward compatibility for clients	Top comment edited on 2023-11-28
+#232	RFC X / Rejected	@stubailo	__id field for unique identifiers	Marked as Rejected on 2023-11-27
+#606	RFC X / Rejected	@victorandree	Support empty composite types	Added to WG agenda on 2019-12-05
+#460	RFC X / Rejected	@mjmahone	Require Interfaces to have 1+ Objects implementing	Spec PR closed on 2018-10-02
+#315	RFC X / Rejected	@excitement-engineer	Support DateTime scalar	Spec PR closed on 2018-10-02

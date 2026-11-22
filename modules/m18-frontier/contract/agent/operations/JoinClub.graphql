@@ -1,0 +1,13 @@
+mutation JoinClub($clubId: ID!) {
+  joinClub(input: {clubId: $clubId}) {
+    club {
+      id
+      name
+      memberCount
+    }
+    userErrors {
+      code
+      message
+    }
+  }
+}

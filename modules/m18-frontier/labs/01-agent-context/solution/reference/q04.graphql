@@ -1,0 +1,1 @@
+{ search(text: "Booker Shortlist Survivors") { ... on Club { name memberCount } } }

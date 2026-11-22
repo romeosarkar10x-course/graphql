@@ -1,0 +1,24 @@
+== tools
+{"name":"reader_profile","required":["id"],"props":["id"]}
+{"name":"reader_reviews","required":["id"],"props":["id"]}
+{"name":"search","required":["text"],"props":["text"]}
+{"name":"club_details","required":["id"],"props":["id"]}
+{"name":"list_clubs","required":[],"props":[]}
+{"name":"book_details","required":["id"],"props":["id"]}
+{"name":"find_books","required":[],"props":["first","titleContains"]}
+{"name":"club_meetups","required":["clubId"],"props":["clubId","upcomingOnly"]}
+== list_clubs
+{"clubs":[{"id":"c1","name":"The Midnight Readers","visibility":"PUBLIC","memberCount":8,"currentBook":{"id":"b1","title":"The Left Hand of Darkness","averageRating":4.2}},{"id":"c2","name":"Slow Burn Mysteries","visibility":"PUBLIC","memberCount":4,"currentBook":{"id":"b4","title":"The Name of the Rose","averageRating":4.5}},{"id":"c3","name":"Booker Shortlist Survivors","visibility":"PRIVATE","memberCount":5,"currentBook":{"id":"b9","title":"The Seven Moons of Maali Almeida","averageRating":4.5}}]}
+== book_details b999
+{"content":[{"type":"text","text":"{\"book\":null}"}],"isError":false}
+== club_meetups past
+{"club":{"id":"c1","name":"The Midnight Readers","meetups":[{"title":"October wrap-up: The Left Hand of Darkness","startsAt":"2026-10-30T19:00:00Z","location":"Online"},{"title":"Left Hand of Darkness, part 2","startsAt":"2026-11-27T19:00:00Z","location":"Blossom Book House, Bengaluru"},{"title":"December pick vote","startsAt":"2026-12-11T19:00:00Z","location":"Online"}]}}
+== find_books no args
+5
+== missing required
+{"content":[{"type":"text","text":"Tool (book_details) input validation failed: Validation failed: JSON schema validation errors: [: required property 'id' not found]"}],"isError":true}
+== unknown tool
+{"jsonrpc":"2.0","id":1,"error":{"code":-32602,"message":"Unknown tool: invalid_tool_name","data":"Tool not found: run_graphql"}}
+== session-less call
+{"jsonRpcError":{"code":-32603,"message":"Session not found: bogus"},"cause":null,"localizedMessage":"Session not found: bogus","message":"Session not found: bogus","stackTrace":[{"classLoaderName":nu
+HTTP/1.1 404 

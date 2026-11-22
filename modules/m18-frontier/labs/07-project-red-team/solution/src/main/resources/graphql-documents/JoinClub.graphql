@@ -1,0 +1,18 @@
+"""
+Make the signed-in reader a member of the club $clubId. Changes data: the reader becomes visible to the
+club. Joining a club twice succeeds and changes nothing. Problems (not signed in, unknown club) come back in
+userErrors with a code, not as an error.
+"""
+mutation JoinClub($clubId: ID!) {
+  joinClub(input: {clubId: $clubId}) {
+    club {
+      id
+      name
+      memberCount
+    }
+    userErrors {
+      code
+      message
+    }
+  }
+}

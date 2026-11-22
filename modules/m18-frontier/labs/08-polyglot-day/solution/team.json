@@ -1,0 +1,9 @@
+{
+  "_": "Solo polyglot day with the course's reference ports: Kotlin accounts (lab 15.10), Java catalog and clubs (the contract), TypeScript reviews (lab 18.6).",
+  "subgraphs": [
+    { "name": "accounts", "language": "Kotlin", "run": "jar:target/shelfie-accounts-kotlin.jar", "dir": "modules/m15-federation/labs/10-polyglot-kotlin/solution" },
+    { "name": "catalog", "language": "Java", "run": "contract" },
+    { "name": "reviews", "language": "TypeScript", "run": "serve.sh", "dir": "modules/m18-frontier/labs/06-port/solution" },
+    { "name": "clubs", "language": "Java", "run": "contract" }
+  ]
+}

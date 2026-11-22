@@ -1,0 +1,23 @@
+query ClubDetails($id: ID!) {
+  club(id: $id) {
+    id
+    name
+    description
+    visibility
+    owner {
+      id
+      name
+      handle
+    }
+    memberCount
+    members(first: 10) {
+      id
+      name
+      handle
+    }
+    currentBook {
+      id
+      title
+    }
+  }
+}

@@ -1,0 +1,18 @@
+query BookDetails($id: ID!) {
+  book(id: $id) {
+    id
+    title
+    authors
+    publishedYear
+    pageCount
+    synopsis
+    averageRating
+    reviews(last: 3) {
+      rating
+      body
+      author {
+        handle
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+supergraph:
+  introspection: true
+health_check:
+  listen: 127.0.0.1:8088
+  enabled: true
+include_subgraph_errors:
+  all: true
+headers:
+  all:
+    request:
+      operations:
+        - propagate:
+            named: x-shelfie-user

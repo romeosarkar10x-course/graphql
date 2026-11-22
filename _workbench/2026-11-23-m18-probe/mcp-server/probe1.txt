@@ -1,0 +1,18 @@
+== initialize
+{"jsonrpc":"2.0","id":1,"result":{"protocolVersion":"2025-06-18","capabilities":{"completions":{},"logging":{},"prompts":{"listChanged":true},"resources":{"subscribe":false,"listChanged":true},"tools":{"listChanged":true}},"serverInfo":{"name":"shelfie-probe","version":"1.0.0"}}}
+HTTP/1.1 200 
+Mcp-Session-Id: cf499665-21b7-4146-a2e4-a9e3ba9c7ede
+Content-Type: application/json
+initialized: 202
+== tools/list
+id:cf499665-21b7-4146-a2e4-a9e3ba9c7ede
+event:message
+data: {"jsonrpc":"2.0","id":2,"result":{"tools":[{"name":"club","description":"Look up a book club by id: name, member count, current book.","inputSchema":{"$schema":"https://json-schema.org/draft/2020-12/schema","additionalProperties":false,"type":"object","properties":{"id":{"type":"string","description":"Club id, e.g. c1"}},"required":["id"]}}]}}
+
+
+== tools/call
+id:cf499665-21b7-4146-a2e4-a9e3ba9c7ede
+event:message
+data: {"jsonrpc":"2.0","id":3,"result":{"content":[{"type":"text","text":"{\"data\":{\"club\":{\"name\":\"The Midnight Readers\",\"memberCount\":8,\"currentBook\":{\"title\":\"The Left Hand of Darkness\",\"averageRating\":4.2}}},\"ctxKeys\":\"[exchange]\",\"thread\":\"Thread[#70,http-nio-4100-exec-5,5,main]\",\"header\":\"u1\"}"}],"isError":false}}
+
+

@@ -1,0 +1,13 @@
+query ReaderProfile($id: ID!) {
+  user(id: $id) {
+    id
+    name
+    handle
+    bio
+    location
+    clubs {
+      id
+      name
+    }
+  }
+}

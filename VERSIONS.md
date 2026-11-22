@@ -103,3 +103,10 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | Jazzer | `com.code-intelligence:jazzer-junit` 0.30.0 (2026-02-24), Apache-2.0 | — | lab 17.3 fuzz test; needs the JUnit BOM 6.1.3 import and `jazzer.instrument` |
 | graphql-http | 1.23.1 (2026-09-28), MIT, graphql 16.15.0 | — | lab 17.8 audit, npm lockfile in `modules/m17-under-the-hood/contract/http-audit/`, course Node 24 |
 | maven-surefire-plugin (Module 17) | 3.5.4 | — | the engine's test pom (fuzz test), outside Spring Boot |
+| Spring AI | 2.0.2 (2026-10-22; BOM `spring-ai-bom`), built on Boot 4.1.2, runs on 4.2.0 | — | Module 18 MCP server (`spring-ai-starter-mcp-server-webmvc`); 2.0.3 and 2.1.0 (2026-11-19) too new |
+| MCP Java SDK | 2.1.0 (from Spring AI 2.0.2) | — | negotiates MCP up to 2025-11-25; the current spec is 2026-07-28 |
+| MCP protocol | 2025-11-25 (asked by `contract/mcp.sh`) | — | spec text read: 2025-06-18 (transports, elicitation, authorization) |
+| PostGraphile | 5.2.1 (2026-11-02), MIT, graphql 16.15.0 | — | lab 18.4, npm lockfile in the lab |
+| GraphQL Yoga / Pothos | graphql-yoga 6.0.1; @pothos/core 4.16.0, plugin-federation 4.5.4, plugin-directives 4.3.3 (ISC) | — | lab 18.6 TypeScript port; Node 24.22.1, TypeScript 6.0.3, @types/node 24.19.2 |
+| @apollo/subgraph (with Pothos) | 2.14.4 | 2.17.0 latest | 2.15.0+ drops the `EntityType` export the Pothos federation plugin imports (Module 18 finding 4) |
+| Viaduct | v3.0.0 (2026-10-21), Apache-2.0 | — | lab 18.4 rubric part; Gradle starter not run |

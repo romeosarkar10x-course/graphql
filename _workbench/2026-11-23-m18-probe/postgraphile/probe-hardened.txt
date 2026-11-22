@@ -1,0 +1,11 @@
+The GRAPHILE_ENV environmental variable is not set; Grafast will run in production mode. In your development environments, it's recommended that you set `GRAPHILE_ENV=development` to opt in to additional checks that will provide guidance and help you to catch issues in your code earlier, and other changes such as formatting to improve your development experience.
+Server listening on port 5678 at http://0.0.0.0:5678/graphql
+== query fields
+["query","id","node","bookByRowId","clubByRowId","membershipByClubIdAndReaderId","readerByRowId","readerByHandle","reviewByRowId","book","club","membership","reader","review","allBooks","allClubs","allMemberships","allReaders","allReviews"]
+[]
+== club 1
+{"errors":[{"message":"Cannot query field \"clubById\" on type \"Query\". Did you mean \"clubByRowId\" or \"club\"?","locations":[{"line":1,"column":3}],"extensions":{}}]}
+== books top
+{"data":{"allBooks":{"totalCount":2000,"pageInfo":{"hasNextPage":true,"endCursor":"WyJhMGQyMzg3OWZlIiwiMiJd"},"nodes":[{"id":"WyJCb29rIiwiMSJd","title":"The Iron Forest","reviewsByBookId":{"totalCount":9}},{"id":"WyJCb29rIiwiMiJd","title":"The Broken House","reviewsByBookId":{"totalCount":10}}]}}}
+== sdl
+["id","rowId","name","ownerId","currentBookId","bookByCurrentBookId","readerByOwnerId","membershipsByClubId"]

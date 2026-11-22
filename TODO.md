@@ -1,12 +1,16 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 17
+## Now: user review of Module 18
 
-The user said "continue..." (2026-11-23) after Module 16's report; Module 17 is built. Wait for review before
-Module 18.
+The user said "continue..." (2026-11-23) after Module 17's report; Module 18 is built. Wait for review before
+the capstone.
 
-Decision for the user:
+Decisions for the user:
 
+- [ ] Viaduct (lab 18.4): its starter (`viaduct-dev/cli-starter`, `./gradlew -q run --args="'{ greeting }'"`) was
+      not run: running its Gradle wrapper (in the course's Gradle image) was blocked in the authoring session, as
+      graphql-java's was for 17.7. Run it (or allow it), then record the output and time in lab 18.4's
+      reference `GAPS.md` and lecture 18.4.
 - [ ] Lab 17.7's local build of graphql-java (`RELEASE_VERSION=26.1-local ./gradlew publishToMavenLocal
       -PpublishToMavenLocal`) was not run: running graphql-java's Gradle wrapper was blocked in the authoring
       session. Run it yourself (or allow it), then confirm the flags and record the test count and time in the
@@ -132,9 +136,25 @@ Decisions still open from Module 15:
 - [ ] Jazzer 0.30.0 needs the JUnit BOM import and `jazzer.instrument`; re-check on a new release. The fuzz test
       uses about 2 GB.
 
+- [ ] Module 18: no assistant was connected to the MCP servers (tested with `contract/mcp.sh` only); connect one
+      (Claude Code's `claude mcp add --transport http ...` is from its documentation) and record a transcript in
+      lab 18.2's reference `CONNECT.md`. Lab 18.1's sample LLM run is the authoring model's, after seeing the
+      data: replace it with a fair run (schema only, then schema and operations) when an LLM is available.
+- [ ] Module 18: re-check each term: Spring AI (2.0.2 pinned; 2.1 for Boot 4.2), the MCP versions the SDK
+      negotiates (2025-11-25; spec current 2026-07-28), whether `@apollo/subgraph` 2.15+ works with a newer
+      `@pothos/plugin-federation` (then lift the 2.14.4 pin), PostGraphile 5.x (behaviours, Ruru at `/`, its
+      graphql-js and Operation Type Existence), the seven RFC stages in `labs/05-spec-frontier/tests/stages.key.json`
+      (regenerate from `solution/stages.tsv`) and lecture 18.5's table.
+- [ ] Module 18: a Go (gqlgen) reference port for lab 18.6 and a `bin/course go` (or a Go toolchain in the image);
+      until then the Go path is unverified.
+- [ ] Module 18: the MCP SDK's 404 for an unknown session carries a serialized exception with a stack trace;
+      re-check on SDK updates (lecture 18.2, lab 18.3's REDTEAM notes).
+- [ ] Module 18: Hasura, pg_graphql, Neo4j GraphQL Library and Dgraph are lecture-only (licences and versions
+      checked on GitHub; behaviour from documentation). Apollo MCP Server's design is from its documentation.
+
 ## Next modules (in order)
 
-- [ ] M18, capstone, per plan/syllabus.md
+- [ ] Capstone, per plan/syllabus.md
 
 ## Infra backlog
 

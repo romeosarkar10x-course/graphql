@@ -212,4 +212,16 @@ in Docker.
     "fires" for cycles and overlaps.
   - Hashed answers (17.1, 17.10): `contract/answers/answers.sh`, keys from `_workbench/2026-11-23-m17-build/gen-keys.sh`.
   - Lab 17.7's Gradle build was not run (blocked in the authoring session); the lab is rubric-graded.
+- Module 18 (2026-11-23), probes in `_workbench/2026-11-23-m18-probe/` (`FINDINGS.md`, 25 findings):
+  - No LLM account: lab 18.1 scores any ten queries (`agent score`); the solution's sample run was written by
+    Claude Opus 5.5 while it built the lab, after seeing the data, and is labelled as such.
+  - MCP is tested with the course's own client (`contract/mcp.sh`), not an assistant; connecting one is the
+    learner's experiment. The lab 18.2 question changed (no reading history in the seed, which stays as it is).
+  - Agent safety is server-side code (guard, approvals, audit); approvals are out of band with a token, bound to
+    the reader, single use, expiring. Mini-project 18.7's starter is lab 18.3's solution with seven seeded
+    weaknesses.
+  - The port is TypeScript (Yoga + Pothos); Go is allowed but unverified (no reference, no Go in the image).
+    The contract (`contract/port/`) is held to Java's subgraph first.
+  - Viaduct's starter was not run (its Gradle wrapper was blocked in the authoring session); other platforms are
+    lecture-only, licences checked on GitHub.
 

@@ -1,0 +1,10 @@
+{
+  "name": "m18-postgraphile-probe",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "postgraphile": "5.2.1",
+    "graphql": "16.15.0"
+  },
+  "overrides": { "graphql": "16.15.0" }
+}

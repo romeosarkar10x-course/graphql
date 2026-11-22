@@ -1,0 +1,19 @@
+"""
+Publish a review as the signed-in reader: $bookId (a book id such as b2), $rating from 1 to 5 and $body
+of 10 to 2000 characters. Changes data and is public at once; a reader can review a book only once (DUPLICATE).
+Rule violations come back in userErrors with the input field, a code and a message.
+"""
+mutation CreateReview($bookId: ID!, $rating: Int!, $body: String!) {
+  createReview(input: {bookId: $bookId, rating: $rating, body: $body}) {
+    review {
+      id
+      rating
+      body
+    }
+    userErrors {
+      field
+      code
+      message
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "_": "Seed of the reviews subgraph, exported from Module 15's Java subgraphs. Reviews in id order; new ones get r16, r17, ...",
+  "users": [
+    {
+      "id": "u1",
+      "handle": "asha"
+    },
+    {
+      "id": "u2",
+      "handle": "benok"
+    },
+    {
+      "id": "u3",
+      "handle": "chloem"
+    },
+    {
+      "id": "u4",
+      "handle": "devp"
+    },
+    {
+      "id": "u5",
+      "handle": "elenap"
+    },
+    {
+      "id": "u6",
+      "handle": "farid"
+    },
+    {
+      "id": "u7",
+      "handle": "gracek"
+    },
+    {
+      "id": "u8",
+      "handle": "hugos"
+    },
+    {
+      "id": "u9",
+      "handle": "inesd"
+    },
+    {
+      "id": "u10",
+      "handle": "jonasb"
+    },
+    {
+      "id": "u11",
+      "handle": "kemia"
+    },
+    {
+      "id": "u12",
+      "handle": "liuw"
+    }
+  ],
+  "books": [
+    "b1",
+    "b2",
+    "b3",
+    "b4",
+    "b5",
+    "b6",
+    "b7",
+    "b8",
+    "b9",
+    "b10"
+  ],
+  "reviews": [
+    {
+      "id": "r1",
+      "bookId": "b1",
+      "authorId": "u1",
+      "rating": 5,
+      "body": "Changed how I think about gender in fiction."
+    },
+    {
+      "id": "r2",
+      "bookId": "b1",
+      "authorId": "u2",
+      "rating": 4,
+      "body": "Slow first half, devastating second."
+    },
+    {
+      "id": "r3",
+      "bookId": "b1",
+      "authorId": "u3",
+      "rating": 5,
+      "body": "The ice crossing chapter. That's it, that's the review."
+    },
+    {
+      "id": "r4",
+      "bookId": "b1",
+      "authorId": "u10",
+      "rating": 3,
+      "body": "Beautiful but I wanted more physics."
+    },
+    {
+      "id": "r5",
+      "bookId": "b1",
+      "authorId": "u8",
+      "rating": 4,
+      "body": "Estraven deserved better."
+    },
+    {
+      "id": "r6",
+      "bookId": "b2",
+      "authorId": "u1",
+      "rating": 5,
+      "body": "A house with infinite halls and one perfect narrator."
+    },
+    {
+      "id": "r7",
+      "bookId": "b2",
+      "authorId": "u6",
+      "rating": 4,
+      "body": "Listened twice in a row."
+    },
+    {
+      "id": "r8",
+      "bookId": "b4",
+      "authorId": "u7",
+      "rating": 5,
+      "body": "Labyrinthine in every sense."
+    },
+    {
+      "id": "r9",
+      "bookId": "b4",
+      "authorId": "u12",
+      "rating": 4,
+      "body": "Read every Latin footnote. Worth it."
+    },
+    {
+      "id": "r10",
+      "bookId": "b6",
+      "authorId": "u10",
+      "rating": 5,
+      "body": "Finally, physics."
+    },
+    {
+      "id": "r11",
+      "bookId": "b6",
+      "authorId": "u4",
+      "rating": 4,
+      "body": "Rocky is the best character of the decade."
+    },
+    {
+      "id": "r12",
+      "bookId": "b9",
+      "authorId": "u5",
+      "rating": 5,
+      "body": "Funny and furious."
+    },
+    {
+      "id": "r13",
+      "bookId": "b9",
+      "authorId": "u3",
+      "rating": 4,
+      "body": "The afterlife as bureaucracy, brilliant."
+    },
+    {
+      "id": "r14",
+      "bookId": "b3",
+      "authorId": "u9",
+      "rating": 5,
+      "body": "Quietly crushing."
+    },
+    {
+      "id": "r15",
+      "bookId": "b8",
+      "authorId": "u1",
+      "rating": 4,
+      "body": "Survival is insufficient."
+    }
+  ]
+}

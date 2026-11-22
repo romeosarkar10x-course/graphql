@@ -1,0 +1,16 @@
+"""
+The meetups of one club ($clubId, for example c1): title, start time (UTC, ISO 8601) and location. By
+default only upcoming meetups; set $upcomingOnly to false to include past ones, for example to answer "when was
+the last meetup".
+"""
+query ClubMeetups($clubId: ID!, $upcomingOnly: Boolean = true) {
+  club(id: $clubId) {
+    id
+    name
+    meetups(upcomingOnly: $upcomingOnly) {
+      title
+      startsAt
+      location
+    }
+  }
+}

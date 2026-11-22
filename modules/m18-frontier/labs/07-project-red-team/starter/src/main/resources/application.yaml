@@ -1,0 +1,28 @@
+server:
+  port: 4000
+spring:
+  main:
+    banner-mode: off
+  ai:
+    mcp:
+      server:
+        name: shelfie
+        version: 1.0.0
+        # Streamable HTTP (MCP 2025-06-18) at /mcp; SYNC tools run on the request's thread
+        protocol: STREAMABLE
+        type: SYNC
+        instructions: >-
+          Shelfie is a social network for book clubs. These tools read its catalogue, clubs and readers.
+          Ids look like b1 (books), c1 (clubs) and u1 (readers); search turns a name into an id.
+shelfie:
+  # Not "shelfie.url": Boot binds the environment variable SHELFIE_URL (set in the course image) onto that name.
+  graphql-url: ${SHELFIE_URL:http://shelfie-ref:8080}/graphql
+  mcp:
+    # Writes are what the product team wanted.
+    writes: true
+    raw-queries: true
+    max-cost: 200
+    max-depth: 6
+    # The human's secret for /approvals and /audit; without one nobody can approve.
+    approver-token: ${APPROVER_TOKEN:}
+    approval-ttl: 5m

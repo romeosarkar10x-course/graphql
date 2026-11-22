@@ -1,0 +1,10 @@
+{"data":{"allClubs":{"nodes":[{"rowId":"1"},{"rowId":"2"}],"pageInfo":{"endCursor":"WyJiNWJlMjZhYzQ2IiwiMiJd"}}}}
+{"data":{"allClubs":{"nodes":[{"rowId":"3"},{"rowId":"4"}],"pageInfo":{"endCursor":"WyJiNWJlMjZhYzQ2IiwiNCJd"}}}}
+{"data":{"allClubs":{"nodes":[{"rowId":"1"},{"rowId":"2"}],"pageInfo":{"endCursor":"WyJiNWJlMjZhYzQ2IiwiMiJd"}}}}
+{"data":{"allClubs":{"nodes":[{"rowId":"3"},{"rowId":"4"}],"pageInfo":{"endCursor":"WyJiNWJlMjZhYzQ2IiwiNCJd"}}}}
+["NATURAL","PRIMARY_KEY_ASC","PRIMARY_KEY_DESC","ROW_ID_ASC","ROW_ID_DESC","BOOK_ID_ASC","BOOK_ID_DESC","AUTHOR_ID_ASC","AUTHOR_ID_DESC","CREATED_AT_ASC","CREATED_AT_DESC"]
+["rowId","bookId","authorId","createdAt"]
+{"errors":[{"message":"An error occurred (logged with hash: 'rUoqMhggpG9N2TsasvMF25xdN0c', id: 'HPB9WBYETW')","extensions":{"errorId":"HPB9WBYETW"}}]}
+Error: Query planning error: No mutation type found in schema
+  [cause]: SafeError: No mutation type found in schema
+    Symbol(safeError): true

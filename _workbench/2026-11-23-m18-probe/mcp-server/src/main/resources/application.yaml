@@ -1,0 +1,9 @@
+server.port: 4100
+spring:
+  ai:
+    mcp:
+      server:
+        name: shelfie-probe
+        version: 1.0.0
+        protocol: STREAMABLE
+        type: SYNC

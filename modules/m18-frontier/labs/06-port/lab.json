@@ -1,0 +1,1 @@
+{"title": "Porting a subgraph to another language: reviews in TypeScript (Yoga + Pothos), same Hurl suite, same supergraph", "lecture": "18.6", "kind": "lab", "grading": "both", "needs": ["node", "fed", "internet"]}

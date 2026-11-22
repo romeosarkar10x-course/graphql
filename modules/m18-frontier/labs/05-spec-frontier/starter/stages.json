@@ -1,0 +1,10 @@
+{
+  "_": "The stage of each proposal on the RFC tracker (https://rfcs.graphql.org/rfcs/) today: 0, 1, 2 or 3 (RFC 0 Strawman, 1 Proposal, 2 Draft, 3 Accepted), or for the HTTP one: \"open\" (a pull request not yet merged), \"merged\", or \"edition\" (in the September 2026 edition).",
+  "incremental-delivery": "",
+  "error-behaviors": "",
+  "fragment-arguments": "",
+  "service-capabilities": "",
+  "full-schemas": "",
+  "composite-schemas": "",
+  "persisted-documents-http": ""
+}

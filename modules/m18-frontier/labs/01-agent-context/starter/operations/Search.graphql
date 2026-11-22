@@ -1,0 +1,18 @@
+query Search($text: String!) {
+  search(text: $text) {
+    __typename
+    ... on Book {
+      id
+      title
+    }
+    ... on Club {
+      id
+      name
+    }
+    ... on User {
+      id
+      name
+      handle
+    }
+  }
+}

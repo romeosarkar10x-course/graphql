@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>Service capabilities | GraphQL RFC Tracker</title><meta name="description" content="Service capabilities. 5 commits pushed on 2026-04-02."/><link rel="canonical" href="https://rfcs.graphql.org/rfcs/1208/"/><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="stylesheet" href="/styles.css"/></head><body><div class="page-shell"><header class="site-header"><a class="brand" href="/"><span class="brand-mark">GraphQL</span> <span class="brand-copy">RFC Tracker</span></a><nav class="site-nav"><a href="/rfcs/">All RFCs</a><a href="/activity/">Activity</a><a href="https://github.com/graphql/graphql-spec">graphql-spec</a><a href="https://github.com/graphql/graphql-wg">graphql-wg</a></nav></header><main><section class="hero hero-compact"><p class="eyebrow">RFC 1 / Proposal</p><h1>Service capabilities</h1><div class="hero-meta"><div><span class="meta-label">Opened on</span><strong>2026-01-01</strong></div><div><span class="meta-label">Updated on</span><strong>2026-06-23</strong></div></div></section><section class="section-grid"><aside class="summary-card"><h2>Summary</h2><dl class="meta-grid"><dt>Identifier</dt><dd>#1208</dd><dt>Stage</dt><dd>RFC 1 / Proposal</dd><dt>Champion</dt><dd><a href="https://github.com/benjie">@benjie</a></dd><dt>Updated</dt><dd>2026-06-23</dd></dl><ul class="link-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1208">Spec PR</a></li></ul><h3>Related</h3><ul class="link-list"><li><a href="/rfcs/1163/">#1163</a></li><li><a href="/rfcs/wg1887/">wg#1887</a></li></ul></aside><article class="markdown-body"><h2>At a glance</h2>
+<ul>
+<li>Identifier: #1208</li>
+<li>Stage: RFC 1 / Proposal</li>
+<li>Champion: <a href="https://github.com/benjie">@benjie</a></li>
+<li>Latest activity: 5 commits pushed on 2026-04-02</li>
+<li>Spec PR: <a href="https://github.com/graphql/graphql-spec/pull/1208">https://github.com/graphql/graphql-spec/pull/1208</a></li>
+<li>Related:
+<ul>
+<li><a href="/rfcs/1163/">#1163</a></li>
+<li><a href="/rfcs/wg1887/">wg#1887</a></li>
+</ul>
+</li>
+</ul>
+<h2>Spec PR description</h2>
+<p><em>(Extracted and reworked from the error behaviors PR (#1163) to stand alone, since it has broader utility and can progress faster alone.)</em></p>
+<p>This PR introduces &quot;service capabilities&quot; - a mechanism for GraphQL services to advertise features and configuration that exist outside the type system - for example support for syntax features (executable descriptions, fragment arguments, document directives, etc), details of transport support (websocket endpoint, SSE endpoint, how to be notified of new schema versions), and other details that can enable automated client configuration.</p>
+<h3>Motivation</h3>
+<p>In addition to being a prerequisite of the <a href="https://github.com/graphql/graphql-spec/pull/1163">error behaviors</a> proposal, this is a desired feature for composite schemas and a key component of <a href="https://github.com/graphql/graphql-wg/issues/1887">The GraphQL Golden Path Initiative</a> (specifically enabling <strong>client auto-configuration</strong>).</p>
+<p>The goal is that a user can point tooling at a GraphQL endpoint and much of the configuration can be implied based on the service&#x27;s advertised capabilities - this massively reduces the amount of &quot;out of band&quot; communication required.</p>
+<p>Example use cases:</p>
+<ul>
+<li>Does the service support fragment arguments, or must the client transpile them?</li>
+<li>Does it support customizing error propagation behavior?</li>
+<li>Are subscriptions available over WebSockets? If so, what endpoint and protocol?</li>
+<li>Does it support incremental delivery (<code>@defer</code>/<code>@stream</code>)? Which version?</li>
+<li>Does it support automated document persistence? Which protocol?</li>
+</ul>
+<h3>Why &quot;capabilities&quot; not &quot;metadata&quot;?</h3>
+<p>Capabilities inform automated tooling/client decisions and actions. Metadata is ancillary and often intended for human consumption. The name &quot;capabilities&quot; is intentional - it signals the purpose and discourages using this system as a dumping ground for arbitrary metadata. Every capability should be actionable by clients or tooling.</p>
+<h3>Design</h3>
+<p><strong>Introspection</strong> via <code>__service: __Service</code> meta-field (similar to <code>__schema: __Schema</code>):</p>
+<pre><code class="language-graphql">type __Service {
+  capabilities: [__Capability!]!
+}
+
+type __Capability {
+  identifier: String!
+  description: String
+  value: String
+}
+</code></pre>
+<p>Support can be probed via: <code>{ __type(name: &quot;__Service&quot;) { name } }</code> - if no result, then the service does not support service capabilities.</p>
+<h3>SDL syntax</h3>
+<p>Slightly changed from previous proposals, here&#x27;s the syntax I now propose:</p>
+<pre><code class="language-graphql">service {
+  &quot;Descriptions on operations and fragments are supported&quot;
+  capability graphql.operationDescriptions
+
+  &quot;WebSocket transport is supported via the given endpoint&quot;
+  capability example.transport.ws(&quot;wss://api.example.com/graphql&quot;)
+}
+
+extend service {
+  capability com.example.customFeature
+}
+</code></pre>
+<p>Notes on this choice:</p>
+<ul>
+<li>Capabilities without &quot;values&quot; should look neat</li>
+<li>Capabilities with values followed by capabilities without descriptions should not introduce easy syntax clashes (<code>service { capability foo.bar &quot;Value&quot; capability foo.baz }</code> would apply <code>&quot;Value&quot;</code> as the description for <code>foo.baz</code> rather than the value for <code>foo.bar</code>)</li>
+<li>The <code>extend</code> syntax feels very natural</li>
+<li>Avoids double-nesting of curly braces</li>
+<li>Leaves space for additional <code>service</code> properties in future</li>
+<li>Inserting other keywords between capabilities is acceptable, in the same way that inserting different directives between repeatable directives is acceptable</li>
+<li>A directive-based syntax could be used (<code>service @capability(identifier: &quot;...&quot;, value: &quot;...&quot;)</code>), but the <code>service</code> keyword already introduces new syntax so it doesn&#x27;t seem necessary to be constrained to using ugly directives when a neater and more palatable syntax is available; this also allows for descriptions for each capability.</li>
+</ul>
+<h3>Capability identifiers</h3>
+<p>A <code>QualifiedName</code> syntax (<code>Name(.Name)+</code>) inspired by reverse-domain notation encourages global uniqueness. The <code>graphql.</code> prefix is reserved for official GraphQL Foundation specifications (not just the main spec; e.g. <code>graphql.http.*</code> could be used by the GraphQL-over-HTTP spec).</p><section class="detail-timeline"><h2>Timeline</h2><div class="activity-groups detail-timeline-groups"><section class="activity-month"><div class="activity-month-divider"><span>April 2026</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/commit/289f6896f25baf22e431f2b9cd97c421d0412765">5 commits pushed</a> on 2026-04-02<ul class="activity-event-commits"><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/5b2f7b3d529e51ddf399b70bd48458510ebb9b5c">Capability identifier -&gt; capability name</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/a8bc03180e23ecf2178e0a3cbe620fad2af081e9">Missed one</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/d951d88aa6c373a1693451de0e12e30259393d02">Further expand on uniqueness</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/c1a0ac35d0e4a741f0c023120937a64a7143927f">Another identifier-&gt;name</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/289f6896f25baf22e431f2b9cd97c421d0412765">Add missing description for a service</a>&quot;</li></ul></li><li><a href="https://github.com/graphql/graphql-spec/pull/1208">Advanced to RFC 1</a> on 2026-04-02 by leebyron</li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2026/04-Apr/02-wg-primary.md">WG agenda</a> on 2026-04-02</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>February 2026</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1208">Advanced to RFC 0</a> on 2026-02-19 by benjie</li></ul></section><section class="activity-month"><div class="activity-month-divider"><span>January 2026</span></div><ul class="detail-timeline-list"><li><a href="https://github.com/graphql/graphql-spec/pull/1208">Spec PR</a> created on 2026-01-15 by benjie</li><li><a href="https://github.com/graphql/graphql-spec/commit/9f612a518ac7cbd2e0ae53317800d44c5b926e36">13 commits pushed</a> on 2026-01-15<ul class="activity-event-commits"><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/9588af4c120175e3ec10fcf0a344206ed6723f3a">Extract service capabilities</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/e648df438ea45b313003f019d749e9a84afd72f8">Reserve example.* identifiers</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/0640e1ddbdcd783aeab6684fbe4eed6ade7fb3ef">Replace default capabilities</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/53b5b04f32205b65ddf7699d164f4ce07cda2b82">Update syntax, add examples</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/46c875880dece0a054d1d0db3a8eb54bd9aec01d">Editorial</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/665f5b67a0d5ab7617e7ef82aa934deccfc621eb">Extend syntax</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/a18d117ffbbf50851633effc610e6217d8891834">Note that IANA reserved domains are also reserved</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/1ad059239becf9745d18df1667ac8d8d00e1e239">Clearer</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/a7920acb2e399c01c9d98313be059d40c67092e4">Lee suggested to not use +</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/c7e95f07e0c9ab51f5ab2d67b7025274e171d17c">Move Service stuff to bottom of lists</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/cfcc1293323f5bdb0a99fa1c8650c9824daf91fc">More editorial</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/6b77ae783eabd5f6466085904e0d3efed1911981">Format</a>&quot;</li><li>@benjie committed &quot;<a href="https://github.com/graphql/graphql-spec/commit/9f612a518ac7cbd2e0ae53317800d44c5b926e36">Typo</a>&quot;</li></ul></li><li>Added to <a href="https://github.com/graphql/graphql-wg/blob/main/agendas/2026/01-Jan/15-wg-primary.md">WG agenda</a> on 2026-01-15</li><li>Mentioned in <a href="https://github.com/graphql/graphql-wg/blob/main/notes/2026/2026-01.md">WG notes</a> on 2026-01-01</li></ul></section></div></section></article></section></main><footer class="site-footer"><p>Copyright © GraphQL Contributors</p></footer></div></body></html>

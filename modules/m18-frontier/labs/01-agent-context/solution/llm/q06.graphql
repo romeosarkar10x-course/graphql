@@ -1,0 +1,1 @@
+query UnreviewedBooks { books(first: 50) { title reviews(last: 1) { id } } }

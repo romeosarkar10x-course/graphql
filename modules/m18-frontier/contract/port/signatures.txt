@@ -1,0 +1,15 @@
+Book.averageRating: Float
+Book.id: ID!
+Book.reviewCount: Int!
+Book.reviews: [Review!]!
+Mutation.addReview(body: String!, bookId: ID!, rating: Int!): Review
+Query.latestReviews(first: Int = 5): [Review!]!
+Query.review(id: ID!): Review
+Review.author: User!
+Review.body: String!
+Review.book: Book!
+Review.id: ID!
+Review.rating: Int!
+User.handle: String!
+User.id: ID!
+User.reviews: [Review!]!
