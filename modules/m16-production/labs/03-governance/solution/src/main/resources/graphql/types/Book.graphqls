@@ -1,0 +1,17 @@
+# Owner: @shelfie/catalog (see .github/CODEOWNERS)
+
+"A book in the catalogue."
+type Book {
+  id: ID!
+  title: String!
+  authors: [String!]!
+  year: Int!
+  pages: Int!
+  isbn13: String!
+  "Reviews from the reviews service, newest first; null (with an error) when that service cannot answer."
+  reviews: [Review!]
+  "Mean rating, null without reviews or when the reviews service cannot answer."
+  averageRating: Float
+  "Books by the same authors or from the same decade, at most `first`."
+  similar(first: Int = 3): [Book!]!
+}

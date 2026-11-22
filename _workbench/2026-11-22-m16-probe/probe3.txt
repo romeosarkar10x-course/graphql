@@ -1,0 +1,13 @@
+trace found after 2 polls of 0.5 s
+service.name=shelfie telemetry.sdk.language=java telemetry.sdk.name=opentelemetry telemetry.sdk.version=1.68.0
+service.name=shelfie telemetry.sdk.language=java telemetry.sdk.name=opentelemetry telemetry.sdk.version=1.68.0
+4.1 ms  graphql dataloader arraylist  [org.springframework.boot]  graphql.error.type=NONE graphql.loader.name=Book.reviews graphql.loader.size=4 graphql.outcome=SUCCESS
+3.1 ms  graphql field club  [org.springframework.boot]  graphql.error.type=NONE graphql.field.name=club graphql.field.path=/club graphql.outcome=SUCCESS
+0.5 ms  graphql field readingList  [org.springframework.boot]  graphql.error.type=NONE graphql.field.name=readingList graphql.field.path=/club/readingList graphql.outcome=SUCCESS
+34.8 ms  graphql field similar  [org.springframework.boot]  graphql.error.type=NONE graphql.field.name=similar graphql.field.path=/club/readingList[0]/similar graphql.outcome=SUCCESS
+31.6 ms  graphql field similar  [org.springframework.boot]  graphql.error.type=NONE graphql.field.name=similar graphql.field.path=/club/readingList[1]/similar graphql.outcome=SUCCESS
+30.9 ms  graphql field similar  [org.springframework.boot]  graphql.error.type=NONE graphql.field.name=similar graphql.field.path=/club/readingList[2]/similar graphql.outcome=SUCCESS
+30.6 ms  graphql field similar  [org.springframework.boot]  graphql.error.type=NONE graphql.field.name=similar graphql.field.path=/club/readingList[3]/similar graphql.outcome=SUCCESS
+75.4 ms  http post /graphql  [org.springframework.boot]  exception=none http.url=/graphql method=POST outcome=SUCCESS status=200 uri=/graphql
+55.2 ms  graphql query  [org.springframework.boot]  graphql.execution.id=aa4f6c49-c6e2-d0a9-2184-38e8516f31cc graphql.operation.name=ClubPage graphql.operation.type=query graphql.outcome=SUCCESS
+spans: 9

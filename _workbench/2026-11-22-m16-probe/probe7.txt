@@ -1,0 +1,26 @@
+android 1.4.0: 149
+ios 2.7.0: 60
+ios 2.8.0: 22
+ios 2.9.1: 311
+partner-bulk 1.0.0: 65
+web 3.2.0: 853
+failed: 0
+
+real	0m14.761s
+user	0m2.900s
+sys	0m0.144s
+{"rejected":0,"reports":23,"operations":1460}
+{"operationMapKey":"0a56815c2ca887f7","timestamp":1793250789502,"execution":{"duration":38927301,"ok":true,"errorsTotal":0},"metadata":{"client":{"name":"ios","version":"2.7.0"}}}
+["Query.book","Query.book.id","Book.title","Book.isbn10","Book.averageRating"]
+36
+Book.authors Book.averageRating Book.id Book.isbn13 Book.pages Book.reviews Book.similar Book.similar.first Book.title Book.year Club.currentBook Club.id Club.memberCount Club.members Club.name Club.readingList Mutation.addReview Mutation.addReview.body Mutation.addReview.bookId Mutation.addReview.rating Query.book Query.book.id Query.books Query.books.first Query.club Query.club.id Query.clubs Query.search Query.search.text Review.author Review.body Review.id Review.rating Review.seq User.handle User.name 
+== cost
+{"cost":11}
+{"cost":38}
+graphql_cost_count{graphql_client_name="android",graphql_operation_name="Rate"} 32
+graphql_cost_sum{graphql_client_name="android",graphql_operation_name="Rate"} 128.0
+graphql_cost_count{graphql_client_name="android",graphql_operation_name="Shelf"} 117
+graphql_cost_sum{graphql_client_name="android",graphql_operation_name="Shelf"} 1872.0
+	Field nullness errors: {}
+	Argument nullness errors: {CatalogController#similar[2 args]=[int first should be NULLABLE], CatalogController#books[1 args]=[int first should be NULLABLE]}
+2026-11-22T16:58:40.312Z ERROR 58 --- [shelfie] [alhost:4318/...] [                                                 ] i.o.exporter.otlp.internal.HttpExporter  : Failed to export 1 spans. The request could not be executed.

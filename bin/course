@@ -28,6 +28,8 @@
 #                                         bin/course node npm ci, bin/course node npx eslint (Module 13.6-13.7)
 #   bin/course fed                        Module 15: fetch Apollo Router 2.19.0 and Hive Router 0.3.9 into .cache/fed/bin
 #                                         (labs that need "fed" do it by themselves)
+#   bin/course ops                        Module 16: fetch Prometheus 3.16.0, Tempo 3.1.1 and Grafana 13.3.0 into .cache/ops
+#                                         (about 670 MB; labs that need "ops" do it by themselves)
 #   bin/course web <npm args>             Module 12's web lab: npm in a Node.js 24 image on the course network
 #   bin/course mobile <cmd>               Module 12's mobile lab: Gradle 9.9 + JDK 21 image on the course network
 #   bin/course seckit <tool> <args>       Module 10 scanners (graphql-cop, clairvoyance), own image; shares the
@@ -106,6 +108,33 @@ ensure_fed() {
   done
 }
 if wants_need fed "${1:-}" "${@:2}" || [[ "${1:-}" == fed ]]; then ensure_node; ensure_fed; fi
+
+# "ops" (Module 16): Prometheus, Tempo and Grafana from their official releases into .cache/ops (binaries in
+# .cache/ops/bin, Grafana's home in .cache/ops/grafana), checked against these SHA-256 sums. Linux x86_64 builds: they
+# run inside the course image, started and stopped by the tests (modules/m16-production/contract/ops.sh).
+OPS_FILES=(
+  "prometheus|https://github.com/prometheus/prometheus/releases/download/v3.16.0/prometheus-3.16.0.linux-amd64.tar.gz|68727009472a2c02e1ff7f062fd5b3e637285bffc8fc2d340c76fb449d6e0f34"
+  "tempo|https://github.com/grafana/tempo/releases/download/v3.1.1/tempo_3.1.1_linux_amd64.tar.gz|cc7efc370d2e5cfdf93792060da4ea9d6c2a3aae348ccc95cbaaaf3393e1d339"
+  "grafana|https://dl.grafana.com/oss/release/grafana-13.3.0.linux-amd64.tar.gz|cec8f98cc59bc1a1945833b652371a073be678c5c159a9b1695ad63c04fae5a7"
+)
+ensure_ops() {
+  local entry name url sum dir="$ROOT/.cache/ops" tmp
+  mkdir -p "$dir/bin" "$dir/dl"
+  for entry in "${OPS_FILES[@]}"; do
+    IFS='|' read -r name url sum <<<"$entry"
+    [[ -x "$dir/bin/$name" || -x "$dir/$name/bin/$name" ]] && continue
+    tmp="$dir/dl/$(basename "$url")"
+    echo "course: downloading $name ($(basename "$url")) into .cache/ops (once)" >&2
+    [[ -f "$tmp" ]] || curl -fsSL -o "$tmp" "$url" || die "download failed: $url"
+    echo "$sum  $tmp" | sha256sum -c --quiet - || { rm -f "$tmp"; die "checksum mismatch for $tmp"; }
+    case "$name" in
+      prometheus) tar -xzf "$tmp" -C "$dir/bin" --strip-components=1 prometheus-3.16.0.linux-amd64/prometheus prometheus-3.16.0.linux-amd64/promtool ;;
+      tempo) tar -xzf "$tmp" -C "$dir/bin" tempo ;;
+      grafana) rm -rf "$dir/grafana" && tar -xzf "$tmp" -C "$dir" && mv "$dir/grafana-13.3.0" "$dir/grafana" ;;
+    esac
+  done
+}
+if wants_need ops "${1:-}" "${@:2}" || [[ "${1:-}" == ops ]]; then ensure_ops; fi
 
 # Run a command in the course image, on the course network when it exists.
 in_image() {
@@ -206,6 +235,8 @@ case "$cmd" in
       graphql-course-inspector:1 "$@" ;;
   fed)    # Module 15's routers are already fetched above (ensure_fed); show what is there
     ls -1 "$ROOT/.cache/fed/bin" ;;
+  ops)    # Module 16's observability stack is already fetched above (ensure_ops); show what is there
+    ls -1 "$ROOT/.cache/ops/bin" "$ROOT/.cache/ops/grafana/bin" ;;
   node)   # Node.js and npm from .cache/node inside the course image (graphql-eslint, SpectaQL); npm's cache in .cache/npm
     [[ $# -ge 1 ]] || die "usage: bin/course node npm ci | node <script> | npx <tool> ..."
     in_image bash -c 'PATH="/course/.cache/node/bin:$PATH" npm_config_cache=/course/.cache/npm npm_config_update_notifier=false exec "$@"' node "$@" ;;

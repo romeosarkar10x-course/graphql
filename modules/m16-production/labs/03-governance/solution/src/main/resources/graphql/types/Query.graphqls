@@ -1,0 +1,15 @@
+# Owner: @shelfie/platform (see .github/CODEOWNERS)
+
+"Every read starts here."
+type Query {
+  "A book by id, or null when there is none."
+  book(id: ID!): Book
+  "Books in catalogue order; `first` caps the list."
+  books(first: Int = 10): [Book!]!
+  "A club by id, or null when there is none."
+  club(id: ID!): Club
+  "Every club, in id order."
+  clubs: [Club!]!
+  "Books whose title contains `text`, ignoring case."
+  search(text: String!): [Book!]!
+}

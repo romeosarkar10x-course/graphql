@@ -1,0 +1,10 @@
+# Prometheus 3.16.0 for Module 16: scrapes Shelfie's /actuator/prometheus every second on the ports labs use
+# (4000 one app; 4001-4003 replicas). A port with nothing on it is just up == 0.
+global:
+  scrape_interval: 1s
+  evaluation_interval: 1s
+scrape_configs:
+  - job_name: shelfie
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [localhost:4000, localhost:4001, localhost:4002, localhost:4003]

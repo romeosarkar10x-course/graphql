@@ -41,3 +41,6 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-22-m14-check-starters.log` | `bin/course check m14 --starters` after Module 14 |
 | `2026-11-22-m15-probe/` | Module 15: `FINDINGS.md` (13 findings), version and licence probes, router docs (Apollo, Hive JSON Schema), Spring federation probe (`spring/`, entity forms), composer probes, both routers' ops and plans, no-key errors, Nadel gateway runs (`nadel/`), graphql-kotlin probe (`kotlin/`), lab 15.4 variants and 15.7 wrong order, compose up on the host |
 | `2026-11-22-m15-check-starters.log` | `bin/course check m15 --starters` after Module 15 |
+| `2026-11-22-m16-probe/` | Module 16: `FINDINGS.md` (14 findings), release dates and sums, Hive and Kubernetes and Shopify docs, observability probes (Spring defaults, conventions, Java agent), rollout and reliability runs, usage replay, knee and HPA simulations, game day seeds |
+| `2026-11-22-m16-build/` | Module 16 build notes and `assemble.py` (labs from the reference app), stubs, plain variants, comparison apps (naive, resume-only, fragile, parse-once) |
+| `2026-11-22-m16-check-starters.log` | `bin/course check m16 --starters` after Module 16 |

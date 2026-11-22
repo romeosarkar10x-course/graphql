@@ -1,0 +1,10 @@
+{"clients":200,"written":490,"reconnects":300,"dropped":1318,"duplicates":0,"unsubscribedAtEnd":0}
+== balancer
+    82 balancing :4000 over 4001,4002
+  1328 4001 ready
+  2898 4002 ready
+  8951 4001 not-ready
+ 19702 4001 ready
+ 23081 4002 not-ready
+ 35024 4002 ready
+== rollout

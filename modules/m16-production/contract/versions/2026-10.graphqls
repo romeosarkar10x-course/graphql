@@ -1,0 +1,73 @@
+# Shelfie API, version 2026-10 (Module 16.7: the version in production). Reviews live in their own service (contract/ReviewsService.java, :4100),
+# so Shelfie has a dependency that can be slow or down.
+
+"Every read starts here."
+type Query {
+  "A book by id, or null when there is none."
+  book(id: ID!): Book
+  "Books in catalogue order; `first` caps the list."
+  books(first: Int = 10): [Book!]!
+  "A club by id, or null when there is none."
+  club(id: ID!): Club
+  "Every club, in id order."
+  clubs: [Club!]!
+  "Books whose title contains `text`, ignoring case."
+  search(text: String!): [Book!]!
+}
+
+"Writes."
+type Mutation {
+  "Store a review (rating 1 to 5) in the reviews service."
+  addReview(bookId: ID!, rating: Int!, body: String!): Review!
+}
+
+"Live updates over WebSocket (graphql-transport-ws) at /graphql."
+type Subscription {
+  "Every review stored from now on. `after`: also replay the reviews with a larger `seq` first (resume)."
+  reviewAdded(after: Int): Review!
+}
+
+"A book in the catalogue."
+type Book {
+  id: ID!
+  title: String!
+  authors: [String!]!
+  year: Int!
+  pages: Int!
+  isbn13: String!
+  isbn10: String @deprecated(reason: "Use isbn13. ISBN-10 is not issued any more.")
+  "Reviews from the reviews service, newest first; null (with an error) when that service cannot answer."
+  reviews: [Review!]
+  "Mean rating, null without reviews or when the reviews service cannot answer."
+  averageRating: Float
+  "Books by the same authors or from the same decade, at most `first`."
+  similar(first: Int = 3): [Book!]!
+}
+
+"A reading group."
+type Club {
+  id: ID!
+  name: String!
+  members: [User!]!
+  memberCount: Int! @deprecated(reason: "Use members; count them on the client.")
+  currentBook: Book
+  readingList: [Book!]!
+}
+
+"A Shelfie member."
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+}
+
+"A review, stored by the reviews service."
+type Review {
+  "Order of arrival in the reviews service: 1, 2, 3..."
+  seq: Int!
+  id: ID!
+  book: Book!
+  rating: Int!
+  body: String!
+  author: User
+}

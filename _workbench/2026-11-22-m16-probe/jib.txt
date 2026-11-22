@@ -1,0 +1,11 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/course/.cache/m2/com/google/guava/guava/32.1.2-jre/guava-32.1.2-jre.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+-rw-r--r-- 1 ubuntu ubuntu 159098880 Nov 22 17:14 target/jib-image.tar
+517b871c26eac1b24d47992388bcc20e2afba3643a89e8c4a3921bfa5e1d1d28.tar.gz
+96aae9022e0e1b310a415e7c2ff1b435d853e8eabb2711cc70f4ad4010cc81b7.tar.gz
+5050cb6f090605117f6479974571b27436b3c6e64b95f715ab2aa6d7018f31f0.tar.gz
+dbda3fb9544c99c267dc2f95071420591030ae46271d99bb8ba8bb3c231ee9f5.tar.gz
+4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1.tar.gz
+1000:1000 map[4000/tcp:{}] ["java","-XX:MaxRAMPercentage=75","-cp","@/app/jib-classpath-file","dev.shelfie.ops.ShelfieOps"]

@@ -1,0 +1,100 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.2.0)
+
+2026-11-22T16:55:26.361Z  INFO 934 --- [shelfie] [           main] [                                                 ] dev.shelfie.ops.ShelfieOps               : Starting ShelfieOps v1 using Java 25.0.5.1 with PID 934 (/course/modules/m16-production/contract/ops-app/target/shelfie-ops.jar started by ubuntu in /course/modules/m16-production/contract/ops-app)
+2026-11-22T16:55:26.363Z  INFO 934 --- [shelfie] [           main] [                                                 ] dev.shelfie.ops.ShelfieOps               : No active profile set, falling back to 1 default profile: "default"
+2026-11-22T16:55:26.879Z  INFO 934 --- [shelfie] [           main] [                                                 ] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 4001 (http)
+2026-11-22T16:55:26.885Z  INFO 934 --- [shelfie] [           main] [                                                 ] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-22T16:55:26.886Z  INFO 934 --- [shelfie] [           main] [                                                 ] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-22T16:55:26.896Z  INFO 934 --- [shelfie] [           main] [                                                 ] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 514 ms
+2026-11-22T16:55:27.368Z  INFO 934 --- [shelfie] [           main] [                                                 ] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-11-22T16:55:27.436Z  INFO 934 --- [shelfie] [           main] [                                                 ] o.s.b.g.a.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Field nullness errors: {}
+	Argument nullness errors: {CatalogController#similar[2 args]=[int first should be NULLABLE], CatalogController#books[1 args]=[int first should be NULLABLE]}
+	Skipped types: []
+2026-11-22T16:55:27.443Z  INFO 934 --- [shelfie] [           main] [                                                 ] s.b.g.a.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP [POST] /graphql
+2026-11-22T16:55:27.509Z  INFO 934 --- [shelfie] [           main] [                                                 ] s.b.g.a.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint WebSocket /graphql
+2026-11-22T16:55:27.537Z  INFO 934 --- [shelfie] [           main] [                                                 ] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-22T16:55:27.561Z  INFO 934 --- [shelfie] [           main] [                                                 ] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 4001 (http) with context path '/'
+2026-11-22T16:55:27.569Z  INFO 934 --- [shelfie] [           main] [                                                 ] dev.shelfie.ops.ShelfieOps               : Started ShelfieOps in 1.382 seconds (process running for 1.548)
+2026-11-22T16:55:27.659Z  INFO 934 --- [shelfie] [omcat-handler-0] [                                                 ] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-22T16:55:27.659Z  INFO 934 --- [shelfie] [omcat-handler-0] [                                                 ] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-22T16:55:27.660Z  INFO 934 --- [shelfie] [omcat-handler-0] [                                                 ] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-22T16:55:36.101Z ERROR 934 --- [shelfie] [alhost:4318/...] [                                                 ] i.o.exporter.otlp.internal.HttpExporter  : Failed to export 7 spans. The request could not be executed.
+
+java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
+	at okhttp3.internal.connection.ConnectPlan.connectSocket(ConnectPlan.kt:286) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at okhttp3.internal.connection.ConnectPlan.connectTcp(ConnectPlan.kt:145) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at okhttp3.internal.connection.FastFallbackExchangeFinder$launchTcpConnect$1.runOnce(FastFallbackExchangeFinder.kt:147) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at okhttp3.internal.concurrent.TaskRunner$runnable$1.run(TaskRunner.kt:81) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:4318
+		... 7 common frames omitted
+	Caused by: java.net.ConnectException: Connection refused (connect failed)
+		at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
+		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:307)
+		at java.base/java.net.Socket.connect(Socket.java:659)
+		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:173)
+		at okhttp3.internal.connection.ConnectPlan.connectSocket(ConnectPlan.kt:284)
+		... 6 common frames omitted
+Caused by: java.net.ConnectException: Connection refused (connect failed)
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:307) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:173) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at okhttp3.internal.connection.ConnectPlan.connectSocket(ConnectPlan.kt:284) ~[okhttp-jvm-5.5.1.jar!/:na]
+	... 6 common frames omitted
+
+2026-11-22T16:55:36.104Z  WARN 934 --- [shelfie] [_WorkerThread-1] [                                                 ] i.o.sdk.trace.export.BatchSpanProcessor  : BatchSpanProcessor dropped 2039 span(s) since the last export because the queue is full (maxQueueSize=2048)
+2026-11-22T16:55:44.014Z ERROR 934 --- [shelfie] [alhost:4318/...] [                                                 ] i.o.exporter.otlp.internal.HttpExporter  : Failed to export 512 spans. The request could not be executed.
+
+java.net.ConnectException: Failed to connect to localhost/[0:0:0:0:0:0:0:1]:4318
+	at okhttp3.internal.connection.ConnectPlan.connectSocket(ConnectPlan.kt:286) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at okhttp3.internal.connection.ConnectPlan.connectTcp(ConnectPlan.kt:145) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at okhttp3.internal.connection.FastFallbackExchangeFinder$launchTcpConnect$1.runOnce(FastFallbackExchangeFinder.kt:147) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at okhttp3.internal.concurrent.TaskRunner$runnable$1.run(TaskRunner.kt:81) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+	Suppressed: java.net.ConnectException: Failed to connect to localhost/127.0.0.1:4318
+		... 7 common frames omitted
+	Caused by: java.net.ConnectException: Connection refused (connect failed)
+		at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+		at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+		at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543)
+		at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+		at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:307)
+		at java.base/java.net.Socket.connect(Socket.java:659)
+		at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:173)
+		at okhttp3.internal.connection.ConnectPlan.connectSocket(ConnectPlan.kt:284)
+		... 6 common frames omitted
+Caused by: java.net.ConnectException: Connection refused (connect failed)
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:543) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:307) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:659) ~[na:na]
+	at okhttp3.internal.platform.Platform.connectSocket(Platform.kt:173) ~[okhttp-jvm-5.5.1.jar!/:na]
+	at okhttp3.internal.connection.ConnectPlan.connectSocket(ConnectPlan.kt:284) ~[okhttp-jvm-5.5.1.jar!/:na]
+	... 6 common frames omitted
+
+2026-11-22T16:55:44.015Z  WARN 934 --- [shelfie] [_WorkerThread-1] [                                                 ] i.o.sdk.trace.export.BatchSpanProcessor  : BatchSpanProcessor dropped 275 span(s) since the last export because the queue is full (maxQueueSize=2048)

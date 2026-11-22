@@ -1,0 +1,10 @@
+== io/opentelemetry/javaagent/opentelemetry-javaagent
+<version>2.31.1 <version>2.32.0 <version>2.33.0 <version>2.33.1 <version>2.34.0 
+== io/github/resilience4j/resilience4j-circuitbreaker
+<version>2.0.2 <version>2.1.0 <version>2.2.0 <version>2.3.0 <version>2.4.0 
+== io/github/resilience4j/resilience4j-spring-boot4
+<version>2.4.0 
+== io/github/resilience4j/resilience4j-spring-boot3
+<version>2.0.2 <version>2.1.0 <version>2.2.0 <version>2.3.0 <version>2.4.0 
+== com/google/cloud/tools/jib-maven-plugin
+<version>3.4.5 <version>3.4.6 <version>3.5.0 <version>3.5.1 <version>3.5.2 

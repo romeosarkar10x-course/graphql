@@ -1,0 +1,8 @@
+# Grafana provisioning: every *.json in $OPS_DASHBOARDS (default: this folder) becomes a dashboard.
+apiVersion: 1
+providers:
+  - name: course
+    type: file
+    allowUiUpdates: true
+    options:
+      path: ${OPS_DASHBOARDS}

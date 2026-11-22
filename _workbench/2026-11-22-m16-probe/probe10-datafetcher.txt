@@ -1,0 +1,15 @@
+-rw-r--r-- 1 ubuntu ubuntu 26507624 Oct 26 20:17 /course/.cache/ops/opentelemetry-javaagent-2.33.1.jar
+7.1 ms  club  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=club graphql.field.path=/club
+0.5 ms  readingList  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=readingList graphql.field.path=/club/readingList
+14.9 ms  reviews  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=reviews graphql.field.path=/club/readingList[0]/reviews
+14.2 ms  reviews  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=reviews graphql.field.path=/club/readingList[1]/reviews
+14.2 ms  reviews  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=reviews graphql.field.path=/club/readingList[2]/reviews
+13.6 ms  reviews  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=reviews graphql.field.path=/club/readingList[3]/reviews
+32.2 ms  similar  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=similar graphql.field.path=/club/readingList[1]/similar
+31.5 ms  similar  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=similar graphql.field.path=/club/readingList[2]/similar
+30.9 ms  similar  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=similar graphql.field.path=/club/readingList[3]/similar
+32.8 ms  similar  [io.opentelemetry.graphql-java-20.0]  graphql.field.name=similar graphql.field.path=/club/readingList[0]/similar
+67.6 ms  query  [io.opentelemetry.graphql-java-20.0]  graphql.operation.type=query graphql.document=query ClubPage{club(id:?){name readingList{title reviews{rating}similar{title}}}} graphql.operation.name=ClubPage
+4.3 ms  GET  [io.opentelemetry.http-url-connection]  url.full=http://localhost:4100/reviews?books=b1%2Cb7%2Cb6%2Cb2
+101.7 ms  POST /graphql  [io.opentelemetry.tomcat-10.0]  url.path=/graphql url.scheme=http http.route=/graphql
+spans: 13

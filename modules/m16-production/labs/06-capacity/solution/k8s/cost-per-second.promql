@@ -1,0 +1,1 @@
+sum by (instance) (rate(graphql_cost_sum[30s]))

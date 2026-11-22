@@ -34,6 +34,11 @@
       <groupId>tools.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>
+    <!-- Module 16: Kubernetes manifests (HPA) read as YAML in single-file programs -->
+    <dependency>
+      <groupId>tools.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
+    </dependency>
     <dependency>
       <!-- JDBC for Module 8's single-file SQL labs (keyset paging, EXPLAIN ANALYZE) -->
       <groupId>org.postgresql</groupId>

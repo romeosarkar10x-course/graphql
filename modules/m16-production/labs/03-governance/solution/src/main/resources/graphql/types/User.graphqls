@@ -1,0 +1,8 @@
+# Owner: @shelfie/community (see .github/CODEOWNERS)
+
+"A Shelfie member."
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+}

@@ -1,0 +1,34 @@
+ok    m16/01 solution passes
+ok    m16/01 starter fails, as it should
+ok    m16/02 solution passes
+ok    m16/02 starter fails, as it should
+ok    m16/03 solution passes
+ok    m16/03 starter fails, as it should
+ok    m16/04 solution passes
+ok    m16/04 starter fails, as it should
+FAIL  m16/05 solution fails
+        [32mpass[0m  mvn package builds target/shelfie-ops.jar
+        [32mpass[0m  the club page with reviews, normally
+      modules/m16-production/labs/05-reliability/tests/run.sh: line 17: kill: (5405) - No such process
+              peak: {"requests":1200,"p50":1,"p95":5,"p99":502,"max":505,"failed":0,"degraded":838,"p95PerSecond":[9,7,5,502,3,2,3,2,2,2,2,2]}
+        [32mpass[0m  every page rendered (1,200 club pages, reviews slow then dead)
+        [32mpass[0m  p95 under 250 ms (5 ms)
+        [32mpass[0m  p99 under 1 s (502 ms)
+        [32mpass[0m  the slow service was spared: 25 calls in its 4 slow seconds (400 pages asked)
+        [32mpass[0m  degraded answers carry REVIEWS_UNAVAILABLE (838)
+        [32mpass[0m  while it is down: the page renders, reviews are null with REVIEWS_UNAVAILABLE at their path
+        [31mfail[0m  still failing 10 s after the reviews service came back
+              {"message":"The reviews service is unavailable","locations":[{"line":1,"column":77}],"path":["club","currentBook","averageRating"],"extensions":{"code":"REVIEWS_UNAVAILABLE","classification":"INTERNAL_ERROR"}}
+        1 check(s) failed
+ok    m16/05 starter fails, as it should
+ok    m16/06 solution passes
+ok    m16/06 starter fails, as it should
+ok    m16/07 solution passes
+ok    m16/07 starter fails, as it should
+ok    m16/08 solution passes
+ok    m16/08 starter fails, as it should
+ok    m16/10 solution passes
+ok    m16/10 starter fails, as it should
+9 auto-graded labs checked, 1 problem(s)
+
+# 2026-11-23: m16/05 recovery check fixed (warm the restarted reviews service, 20 s); rerun alone: solution PASS twice, starter FAIL.

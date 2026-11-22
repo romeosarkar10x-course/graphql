@@ -1,0 +1,4 @@
+16k {"target":16000.0,"minReplicas":2,"maxReplicas":12,"peakReplicas":12,"finalReplicas":5,"overloadedSeconds":0,"podSeconds":13002}
+32k {"target":32000.0,"minReplicas":2,"maxReplicas":12,"peakReplicas":8,"finalReplicas":3,"overloadedSeconds":15,"podSeconds":7814}
+42k {"target":42000.0,"minReplicas":2,"maxReplicas":12,"peakReplicas":6,"finalReplicas":2,"overloadedSeconds":214,"podSeconds":5970}
+64k {"target":64000.0,"minReplicas":2,"maxReplicas":12,"peakReplicas":4,"finalReplicas":2,"overloadedSeconds":566,"podSeconds":4440}

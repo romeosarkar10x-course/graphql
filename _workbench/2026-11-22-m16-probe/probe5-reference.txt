@@ -1,0 +1,16 @@
+{"clients":200,"written":489,"reconnects":300,"dropped":0,"duplicates":0,"unsubscribedAtEnd":0}
+== balancer
+    77 balancing :4000 over 4001,4002
+  1322 4001 ready
+  3399 4002 ready
+ 10424 4001 not-ready
+ 23413 4001 ready
+ 26786 4002 not-ready
+ 37650 4002 ready
+== rollout
+1795365618047 stop 4001
+1795365629385 start 4001
+1795365631409 ready 4001
+1795365634411 stop 4002
+1795365643652 start 4002
+1795365645675 ready 4002

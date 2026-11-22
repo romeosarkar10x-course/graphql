@@ -1,0 +1,22 @@
+== app log export lines
+	Field nullness errors: {}
+	Argument nullness errors: {CatalogController#similar[2 args]=[int first should be NULLABLE], CatalogController#books[1 args]=[int first should be NULLABLE]}
+== tempo received
+tempo_distributor_spans_received_total{tenant="single-tenant"} 25
+tempo_live_store_back_pressure_duration_seconds_bucket{le="0.005"} 0
+tempo_live_store_back_pressure_duration_seconds_bucket{le="0.01"} 0
+tempo_live_store_back_pressure_duration_seconds_bucket{le="0.025"} 0
+tempo_live_store_back_pressure_duration_seconds_bucket{le="0.05"} 0
+tempo_live_store_back_pressure_duration_seconds_bucket{le="0.1"} 0
+tempo_live_store_back_pressure_duration_seconds_bucket{le="0.25"} 0
+tempo_live_store_back_pressure_duration_seconds_bucket{le="0.5"} 0
+tempo_live_store_back_pressure_duration_seconds_bucket{le="1"} 0
+tempo_live_store_back_pressure_duration_seconds_bucket{le="2.5"} 0
+== search all
+{"traces":[],"metrics":{"completedJobs":3,"totalJobs":3}}
+== search tags
+{"tagNames":[],"metrics":{}}
+level=warn ts=2026-11-22T16:15:17.746829846Z caller=modules.go:409 msg="Worker address is empty in single binary mode. Attempting automatic worker configuration. If queries are unresponsive consider configuring the worker explicitly." address=127.0.0.1:9096
+level=warn ts=2026-11-22T16:15:17.746968335Z caller=modules.go:687 msg="Scheduler address is empty in single binary mode. Attempting automatic worker configuration." address=127.0.0.1:9096
+level=warn ts=2026-11-22T16:15:17.747053824Z caller=modules.go:304 msg="metrics-generator is not configured." err="no metrics_generator.storage.path configured, metrics generator will be disabled"
+level=warn ts=2026-11-22T16:15:17.748757811Z caller=wal.go:101 msg="unowned file entry ignored during wal replay" file=blocks err=null

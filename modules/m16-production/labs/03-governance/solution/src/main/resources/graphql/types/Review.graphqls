@@ -1,0 +1,12 @@
+# Owner: @shelfie/reviews (see .github/CODEOWNERS)
+
+"A review, stored by the reviews service."
+type Review {
+  "Order of arrival in the reviews service: 1, 2, 3..."
+  seq: Int!
+  id: ID!
+  book: Book!
+  rating: Int!
+  body: String!
+  author: User
+}

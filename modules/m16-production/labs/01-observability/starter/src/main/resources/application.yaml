@@ -1,0 +1,29 @@
+server:
+  port: 4000
+  # Module 16.4: finish in-flight requests on SIGTERM (Shutdown.java runs first and completes subscriptions)
+  shutdown: graceful
+spring:
+  application:
+    name: shelfie
+  graphql:
+    websocket:
+      path: /graphql
+  threads:
+    virtual:
+      enabled: true
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      # /actuator/health/liveness and /actuator/health/readiness, as Kubernetes probes use them
+      probes:
+        enabled: true
+shelfie:
+  reviews:
+    url: http://localhost:4100
+  clients: web,ios,android,partner-bulk

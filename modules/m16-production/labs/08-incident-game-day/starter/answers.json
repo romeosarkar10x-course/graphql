@@ -1,0 +1,6 @@
+{
+  "seed": 0,
+  "slowField": "Type.field",
+  "leakingClient": "",
+  "abusiveClient": ""
+}

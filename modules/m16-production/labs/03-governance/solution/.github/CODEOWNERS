@@ -1,0 +1,17 @@
+# Who reviews a change to each part of the schema. GitHub asks these teams for a review on any pull request that
+# touches the file; with branch protection ("Require review from Code Owners") their approval is required.
+# One file per type, so ownership is per type. The last matching line wins.
+
+# Anything not listed below: the platform team.
+*                                                          @shelfie/platform
+
+/src/main/resources/graphql/types/Query.graphqls           @shelfie/platform
+/src/main/resources/graphql/types/Mutation.graphqls        @shelfie/platform
+/src/main/resources/graphql/types/Subscription.graphqls    @shelfie/live
+/src/main/resources/graphql/types/Book.graphqls            @shelfie/catalog
+/src/main/resources/graphql/types/Club.graphqls            @shelfie/community
+/src/main/resources/graphql/types/User.graphqls            @shelfie/community
+/src/main/resources/graphql/types/Review.graphqls          @shelfie/reviews
+
+# Changes to the review rules themselves need the platform team and one more owner.
+/.github/                                                  @shelfie/platform @shelfie/catalog

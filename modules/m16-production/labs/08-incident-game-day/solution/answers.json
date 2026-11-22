@@ -1,0 +1,6 @@
+{
+  "seed": 7,
+  "slowField": "Query.book",
+  "leakingClient": "web",
+  "abusiveClient": "partner-bulk"
+}

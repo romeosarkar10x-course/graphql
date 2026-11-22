@@ -1,0 +1,7 @@
+# Owner: @shelfie/platform (see .github/CODEOWNERS)
+
+"Writes."
+type Mutation {
+  "Store a review (rating 1 to 5) in the reviews service."
+  addReview(bookId: ID!, rating: Int!, body: String!): Review!
+}

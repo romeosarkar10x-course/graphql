@@ -1,0 +1,5 @@
+-rw-r--r-- 1 ubuntu ubuntu 26507624 Oct 26 20:17 /course/.cache/ops/opentelemetry-javaagent-2.33.1.jar
+66.3 ms  query  [io.opentelemetry.graphql-java-20.0]  graphql.operation.type=query graphql.document=query ClubPage{club(id:?){name readingList{title reviews{rating}similar{title}}}} graphql.operation.name=ClubPage
+3.8 ms  GET  [io.opentelemetry.http-url-connection]  url.full=http://localhost:4100/reviews?books=b1%2Cb7%2Cb6%2Cb2
+98.2 ms  POST /graphql  [io.opentelemetry.tomcat-10.0]  url.path=/graphql url.scheme=http http.route=/graphql
+spans: 3

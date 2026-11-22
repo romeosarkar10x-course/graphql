@@ -1,0 +1,4 @@
+== fragile (no timeouts, no breaker)
+{"requests":1200,"p50":2,"p95":2002,"p99":2006,"max":2096,"failed":0,"degraded":0,"p95PerSecond":[4,4,3,2003,2004,2034,1659,651,2,1,2,2]}
+== resilient (bulkhead, breaker, 500 ms timeout)
+{"requests":1200,"p50":1,"p95":3,"p99":502,"max":505,"failed":0,"degraded":839,"p95PerSecond":[4,3,2,502,3,2,2,1,1,1,1,1]}

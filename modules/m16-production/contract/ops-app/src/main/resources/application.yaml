@@ -1,0 +1,49 @@
+server:
+  port: 4000
+  # Module 16.4: finish in-flight requests on SIGTERM (Shutdown.java runs first and completes subscriptions)
+  shutdown: graceful
+spring:
+  application:
+    name: shelfie
+  graphql:
+    websocket:
+      path: /graphql
+  threads:
+    virtual:
+      enabled: true
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  endpoint:
+    health:
+      # /actuator/health/liveness and /actuator/health/readiness, as Kubernetes probes use them
+      probes:
+        enabled: true
+  metrics:
+    distribution:
+      # buckets, so Prometheus can compute p95/p99 with histogram_quantile
+      percentiles-histogram:
+        graphql.request: true
+        graphql.datafetcher: true
+  tracing:
+    sampling:
+      probability: 1.0
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: ${OTLP_TRACES:http://localhost:4318/v1/traces}
+        schedule-delay: 500ms
+  otlp:
+    metrics:
+      export:
+        # metrics are scraped by Prometheus; OTLP is for traces only
+        enabled: false
+shelfie:
+  reviews:
+    url: http://localhost:4100
+  clients: web,ios,android,partner-bulk

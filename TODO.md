@@ -1,10 +1,11 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 15
+## Now: user review of Module 16
 
-The user said "continue..." (2026-11-22) after Module 14; Module 15 is built. Wait for review before Module 16.
+The user said "continue.." (2026-11-22) after Module 15's report; Module 16 is built. Wait for review before
+Module 17.
 
-Decisions for the user (Module 15):
+Decisions still open from Module 15:
 
 - [ ] Rover: accept the Elastic License 2.0 for its composition plugin (then labs could use Rover), or keep The
       Guild's MIT composer (current).
@@ -12,6 +13,17 @@ Decisions for the user (Module 15):
       `contract/fed.sh` and `compose.yaml` if you prefer.
 
 ## Verification debt
+
+- [ ] Module 16: re-check pins each term: Prometheus, Tempo (does search still lag 20–30 s behind ingest?),
+      Grafana, the OpenTelemetry Java agent, Jib; Hive's usage report schema and client header names.
+- [ ] Module 16: usage reports were checked against the course collector only; send one to a real Hive target
+      once (needs an account and token).
+- [ ] Module 16: no Kubernetes run: the manifests (lab 16.4 Deployment, 16.6 HPA) are checked as YAML and the HPA is
+      simulated (`HpaSim.java`); apply them to a cluster (kind or k3s) once, with prometheus-adapter.
+- [ ] Module 16: timing-based checks green on one 24-core machine: lab 16.4's 0 failed queries (2 s drain vs 1 s
+      propagation), lab 16.5's p95 < 250 ms, lab 16.10's top series; the knee (lab 16.6) is per machine by design.
+- [ ] Module 16: the ops stack is Linux x86_64 binaries; arm64 hosts need the arm64 archives and sums.
+- [ ] Module 16: CRaC is lecture-only; Jib's `jib:buildTar` needs internet (Docker Hub) and was run once.
 
 - [ ] Rerun the full `bin/course check --starters` (the 2026-11-21 run after Module 10 was stopped at m10/01;
       after Modules 11 to 14 only their own module checks ran). It is CPU-heavy: run it when the machine is free.
@@ -105,7 +117,7 @@ Decisions for the user (Module 15):
 
 ## Next modules (in order)
 
-- [ ] M16–M18, capstone, per plan/syllabus.md
+- [ ] M17–M18, capstone, per plan/syllabus.md
 
 ## Infra backlog
 

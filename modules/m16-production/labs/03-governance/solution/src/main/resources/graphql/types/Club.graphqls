@@ -1,0 +1,11 @@
+# Owner: @shelfie/community (see .github/CODEOWNERS)
+
+"A reading group."
+type Club {
+  id: ID!
+  name: String!
+  members: [User!]!
+  memberCount: Int! @deprecated(reason: "Use members; count them on the client.")
+  currentBook: Book
+  readingList: [Book!]!
+}

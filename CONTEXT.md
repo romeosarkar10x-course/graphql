@@ -189,3 +189,15 @@ in Docker.
   - The checkpoint's `docker compose up` runs on the host: `bin/course checkpoint NN` now runs
     `modules/mNN-*/checkpoint-host.sh` first when it exists (only Module 15 has one).
   - 15.7's zero errors: traffic every 50 ms through blue/green deploys with Apollo's hot reload.
+- Module 16 (2026-11-22), probes in `_workbench/2026-11-22-m16-probe/` (`FINDINGS.md`, 14 findings):
+  - Prometheus 3.16.0, Tempo 3.1.1 and Grafana 13.3.0 run as processes inside the course image, fetched by
+    `bin/course ops` into `.cache/ops` (sha256-checked, about 670 MB); labs declare `"needs": ["ops"]`. Not course
+    services, so they use CPU only while a test runs. Grafana's usage reporting and update checks are off.
+  - One reference app (`contract/ops-app`), one class per production feature; each lab's starter is it minus one
+    feature (`_workbench/2026-11-22-m16-build/assemble.py`).
+  - No Kubernetes: `ReadyBalancer.java` stands in for a Service (readiness, 1 s propagation, no retry) and
+    `HpaSim.java` for the HPA (algorithm from the Kubernetes docs); manifests are checked as YAML.
+  - Usage reports use Hive's v2 format and headers but go to `UsageCollector.java`; no Hive account was used.
+  - The knee is measured with the app pinned to one CPU (`taskset`), as a pod limit would hold it.
+  - Game day faults live in `GameDay.java` (only with `--gameday.seed`); answers are derived from the seed.
+

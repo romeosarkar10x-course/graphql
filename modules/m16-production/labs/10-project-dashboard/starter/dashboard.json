@@ -1,0 +1,10 @@
+{
+  "uid": "shelfie-ops",
+  "title": "Shelfie GraphQL ops",
+  "schemaVersion": 41,
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "panels": []
+}

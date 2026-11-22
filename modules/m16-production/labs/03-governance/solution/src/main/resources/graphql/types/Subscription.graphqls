@@ -1,0 +1,7 @@
+# Owner: @shelfie/live (see .github/CODEOWNERS)
+
+"Live updates over WebSocket (graphql-transport-ws) at /graphql."
+type Subscription {
+  "Every review stored from now on. `after`: also replay the reviews with a larger `seq` first (resume)."
+  reviewAdded(after: Int): Review!
+}

@@ -1,0 +1,28 @@
+{"data":{"club":{"name":"The Midnight Readers","readingList":[{"title":"The Left Hand of Darkness","reviews":[{"rating":4},{"rating":3},{"rating":5},{"rating":4},{"rating":5}],"similar":[{"title":"The
+{"data":{"club":{"name":"The Midnight Readers","readingList":[{"title":"The Left Hand of Darkness","reviews":[{"rating":4},{"rating":3},{"rating":5},{"rating":4},{"rating":5}],"similar":[{"title":"The
+{"data":{"club":{"name":"The Midnight Readers","readingList":[{"title":"The Left Hand of Darkness","reviews":[{"rating":4},{"rating":3},{"rating":5},{"rating":4},{"rating":5}],"similar":[{"title":"The
+{"errors":[{"message":"Validation error (FieldUndefined@[nope]) : Field 'nope' in type 'Query' is undefined","locations":[{"line":1,"column":3}],"extensions":{"classification":"ValidationError"}}]}
+== metric names
+graphql_datafetcher_seconds_count{error="none",graphql_error_type="NONE",graphql_field_name="club",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_sum{error="none",graphql_error_type="NONE",graphql_field_name="club",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_count{error="none",graphql_error_type="NONE",graphql_field_name="readingList",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_sum{error="none",graphql_error_type="NONE",graphql_field_name="readingList",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_count{error="none",graphql_error_type="NONE",graphql_field_name="similar",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_sum{error="none",graphql_error_type="NONE",graphql_field_name="similar",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_max{error="none",graphql_error_type="NONE",graphql_field_name="club",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_max{error="none",graphql_error_type="NONE",graphql_field_name="readingList",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_max{error="none",graphql_error_type="NONE",graphql_field_name="similar",graphql_outcome="SUCCESS"}
+graphql_dataloader_seconds_count{error="none",graphql_error_type="NONE",graphql_loader_name="Book.reviews",graphql_outcome="SUCCESS"}
+graphql_dataloader_seconds_sum{error="none",graphql_error_type="NONE",graphql_loader_name="Book.reviews",graphql_outcome="SUCCESS"}
+graphql_dataloader_seconds_max{error="none",graphql_error_type="NONE",graphql_loader_name="Book.reviews",graphql_outcome="SUCCESS"}
+graphql_request_ValidationError_total{graphql_operation_type="operation",graphql_outcome="INTERNAL_ERROR"}
+graphql_request_seconds_count{error="none",graphql_operation_type="operation",graphql_outcome="REQUEST_ERROR"}
+graphql_request_seconds_sum{error="none",graphql_operation_type="operation",graphql_outcome="REQUEST_ERROR"}
+graphql_request_seconds_count{error="none",graphql_operation_type="query",graphql_outcome="SUCCESS"}
+graphql_request_seconds_sum{error="none",graphql_operation_type="query",graphql_outcome="SUCCESS"}
+graphql_request_seconds_max{error="none",graphql_operation_type="operation",graphql_outcome="REQUEST_ERROR"}
+graphql_request_seconds_max{error="none",graphql_operation_type="query",graphql_outcome="SUCCESS"}
+== tempo search
+== trace null spans
+curl: (22) The requested URL returned error: 400
+== traceql slowest field

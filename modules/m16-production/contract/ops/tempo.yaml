@@ -1,0 +1,32 @@
+# Tempo 3.1.1, single binary, local storage under /tmp/ops/tempo. OTLP in on :4317 (gRPC) and :4318 (HTTP);
+# query API and TraceQL on :3200.
+server:
+  http_listen_port: 3200
+  grpc_listen_port: 9096
+  log_level: warn
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+storage:
+  trace:
+    backend: local
+    local:
+      path: /tmp/ops/tempo/blocks
+    wal:
+      path: /tmp/ops/tempo/wal
+# Tempo 3 keeps more state on disk than 2.x did; every path defaults to /var/tempo.
+# Observed (FINDINGS): a trace is readable by id at once, but TraceQL search finds it only 20-30 s later.
+live_store:
+  shutdown_marker_dir: /tmp/ops/tempo/shutdown
+  wal:
+    path: /tmp/ops/tempo/live-wal
+block_builder:
+  wal:
+    path: /tmp/ops/tempo/builder-wal
+backend_scheduler:
+  local_work_path: /tmp/ops/tempo/work

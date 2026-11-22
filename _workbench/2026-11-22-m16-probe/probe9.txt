@@ -1,0 +1,27 @@
+== slowest coordinates (avg ms)
+["Query.search",247]
+["Book.similar",30]
+["Mutation.addReview",2]
+["Subscription.reviewAdded",0]
+== subscriptions open
+["android","0"]
+["ios","0"]
+["partner-bulk","0"]
+["web","30"]
+== heap MB
+"172.930952"
+== cost per second by client
+["android",131256]
+["ios",54]
+["partner-bulk",124]
+["web",166]
+== requests per second by client
+["android",77.6]
+["ios",6]
+["partner-bulk",2.7]
+["web",8.1]
+== answer key
+(see GameTraffic.answers(3))
+Game day, seed 3. Shelfie :4000, Grafana http://localhost:3000 (publish it with COURSE_PUBLISH=3000).
+Traffic runs for 1 minutes; the stack stays up after that until Ctrl-C.
+game traffic running for 1 minutes (seed 3)

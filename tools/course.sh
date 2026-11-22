@@ -56,6 +56,8 @@ needs_check() {
               || { echo "  needs Node.js in .cache/node: bin/course copies it there for labs that need it (bin/course node --version)" >&2; return 1; } ;;
       fed) [[ -x /course/.cache/fed/bin/router && -x /course/.cache/fed/bin/hive-router && -x /course/.cache/node/bin/node ]] \
              || { echo "  needs the federation routers in .cache/fed/bin: bin/course fed fetches them" >&2; return 1; } ;;
+      ops) [[ -x /course/.cache/ops/bin/prometheus && -x /course/.cache/ops/bin/tempo && -x /course/.cache/ops/grafana/bin/grafana ]] \
+             || { echo "  needs Prometheus, Tempo and Grafana in .cache/ops: bin/course ops fetches them" >&2; return 1; } ;;
       internet) curl -fsS -o /dev/null -m 5 https://countries.trevorblades.com/graphql -X POST \
                   -H 'Content-Type: application/json' -d '{"query":"{__typename}"}' 2>/dev/null \
                   || { echo "  needs internet access to public GraphQL APIs" >&2; return 1; } ;;

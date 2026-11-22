@@ -91,4 +91,11 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | Nadel | `com.atlassian:nadel` 0.42134418907 (2026-11-06), Apache-2.0 | — | lab 15.2; brings its own graphql-java; 0.44642751879 (2026-11-20) probed, too new to pin |
 | graphql-kotlin | 11.0.0 (2026-10-07), Kotlin 2.4.20 (`kotlin-maven-plugin`, 2026-09-07), maven-shade-plugin 3.6.2 | — | mini-project 15.10; federation link pinned to v2.9 (default v2.13) |
 | GitHub Actions (Module 15) | `actions/checkout@v7`, `actions/setup-node@v7`, `actions/upload-artifact@v7` | — | lab 15.5 workflow, read by the test, not run |
+| Prometheus | 3.16.0 (2026-11-05) | — | Module 16; `bin/course ops`, sha256-checked into `.cache/ops`, runs in the course image |
+| Tempo | 3.1.1 (2026-10-21) | — | Module 16; single binary, paths set off `/var/tempo`; search lags 20–30 s |
+| Grafana | 13.3.0 (2026-10-27) | — | Module 16; 13.3.1 (2026-11-10) too new; anonymous admin, reporting off |
+| OpenTelemetry Java agent | 2.33.1 (2026-10-26) | — | Module 16.1 bonus, via Maven Central; 2.34.0 too new |
+| Jib Maven plugin | 3.5.2 (2026-07-14) | Jib or Buildpacks | lab 16.4; `jib:buildTar` probed, image run on the host |
+| Resilience4j bulkhead | 2.4.0 | — | lab 16.5, with the circuit breaker |
+| Jackson YAML | `tools.jackson.dataformat:jackson-dataformat-yaml` 3.1.8 (snakeyaml-engine 3.0.1) | — | course-lib, Module 16 manifests |
 | Jackson / slf4j-nop in standalone Module 15 jars | `tools.jackson.core:jackson-databind` 3.1.8 (2026-10-18); slf4j-nop 1.7.36 (Nadel's slf4j 1.x) / 2.0.17 (Kotlin) | — | lab 15.2 and mini-project 15.10, outside Spring Boot |

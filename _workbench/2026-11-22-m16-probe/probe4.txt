@@ -1,0 +1,25 @@
+{"errors":[{"message":"rating must be 1 to 5, was 9","locations":[{"line":1,"column":16}],"path":["addReview"],"extensions":{"code":"BAD_USER_INPUT","classification":"BAD_REQUEST"}}],"data":null}
+0.7 ms  graphql field Club.readingList  graphql.field.coordinate=Club.readingList
+31.4 ms  graphql field Book.similar  graphql.field.coordinate=Book.similar
+60.4 ms  graphql query  graphql.client.name=web graphql.operation.name=ClubPage
+32.1 ms  graphql field Book.similar  graphql.field.coordinate=Book.similar
+4.4 ms  http get  client.name=localhost http.url=http://localhost:4100/reviews?books=b1%2Cb7%2Cb6%2Cb2 uri=/reviews?books={ids}
+30.8 ms  graphql field Book.similar  graphql.field.coordinate=Book.similar
+89.1 ms  http post /graphql  http.url=/graphql uri=/graphql
+5.7 ms  graphql field Query.club  graphql.field.coordinate=Query.club
+6.1 ms  graphql dataloader arraylist  
+31.1 ms  graphql field Book.similar  graphql.field.coordinate=Book.similar
+graphql_datafetcher_seconds_count{error="none",graphql_error_type="NONE",graphql_field_coordinate="Book.similar",graphql_field_name="similar",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_count{error="none",graphql_error_type="NONE",graphql_field_coordinate="Club.readingList",graphql_field_name="readingList",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_count{error="none",graphql_error_type="NONE",graphql_field_coordinate="Mutation.addReview",graphql_field_name="addReview",graphql_outcome="SUCCESS"}
+graphql_datafetcher_seconds_count{error="none",graphql_error_type="NONE",graphql_field_coordinate="Query.club",graphql_field_name="club",graphql_outcome="SUCCESS"}
+graphql_errors_total{code="BAD_USER_INPUT",graphql_client_name="ios"}
+graphql_errors_total{code="ValidationError",graphql_client_name="unknown"}
+graphql_request_seconds_count{error="none",graphql_client_name="ios",graphql_operation_name="anonymous",graphql_operation_type="mutation",graphql_outcome="REQUEST_ERROR"}
+graphql_request_seconds_count{error="none",graphql_client_name="other",graphql_operation_name="ClubPage",graphql_operation_type="query",graphql_outcome="SUCCESS"}
+graphql_request_seconds_count{error="none",graphql_client_name="unknown",graphql_operation_name="anonymous",graphql_operation_type="operation",graphql_outcome="REQUEST_ERROR"}
+graphql_request_seconds_count{error="none",graphql_client_name="web",graphql_operation_name="ClubPage",graphql_operation_type="query",graphql_outcome="SUCCESS"}
+== PromQL p95 by operation
+[]
+{"status":"UP"}
+{"status":"UP"}

@@ -1,0 +1,7 @@
+== naive-app/target
+{"clients":200,"written":492,"reconnects":340,"dropped":1429,"duplicates":0,"unsubscribedAtEnd":0,"queries":4184,"failedQueries":4}
+== resume-app/target
+{"clients":200,"written":492,"reconnects":360,"dropped":0,"duplicates":0,"unsubscribedAtEnd":0,"queries":4103,"failedQueries":6}
+== /course/modules/m16-production/contract/ops-app/target
+{"clients":200,"written":492,"reconnects":336,"dropped":0,"duplicates":0,"unsubscribedAtEnd":0,"queries":4164,"failedQueries":1}
+{"clients":200,"written":492,"reconnects":338,"dropped":0,"duplicates":0,"unsubscribedAtEnd":0,"queries":4166,"failedQueries":0}

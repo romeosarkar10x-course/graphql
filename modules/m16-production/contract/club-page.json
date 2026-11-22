@@ -1,0 +1,1 @@
+{"operationName":"ClubPage","query":"query ClubPage { club(id: \"c1\") { name members { name } currentBook { title averageRating } readingList { title reviews { rating body } } } }"}

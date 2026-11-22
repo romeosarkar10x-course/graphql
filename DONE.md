@@ -285,3 +285,20 @@ one by one on its solution and starter.
 (`_workbench/2026-11-21-m02-check-starters.log`).
 
 Earlier: `bin/course check --starters` (2026-11-21): 11 auto-graded labs, 0 problems; Module 1 re-checked after the rubric additions (`_workbench/2026-11-21-check-starters.log`).
+
+## Module 16 (7 lectures, 7 labs, 1 mini-project, 2 games)
+
+- [x] Contract: `ops-app/` (reference Shelfie, one class per production feature, `GameDay` faults), `ReviewsService`,
+      `ops.sh` + `ops/` configs, `Peak`, `ramp.sh`, `Traffic`, `Subscribers`, `ReadyBalancer`, `rollout.sh`,
+      `UsageCollector` (Hive report v2), `HpaSim`, `Yaml`, `GameTraffic` + `gameday.sh`, `versions/`;
+      `bin/course ops` (Prometheus 3.16.0, Tempo 3.1.1, Grafana 13.3.0, sha256-checked) and the `ops` need;
+      Jackson YAML 3.1.8 in course-lib
+- [x] Lectures 16.1–16.7 (Hook / Concept / Java build / Experiment / Check)
+- [x] Labs: m16/01 metrics by operation/client/coordinate, errors by code, traces in Tempo, slowest field ·
+      m16/02 Hive-format usage reports, unused fields over 7 and 30 days · m16/03 schema per type, CODEOWNERS,
+      review template, `Book.isbn10` removed with usage proof · m16/04 probes, resume, drain; rolling deploy with
+      200 subscriptions (0 dropped, 0 failed queries), Jib, manifest · m16/05 timeout, breaker, bulkhead at peak
+      (p95 3 ms vs 2,002) · m16/06 cost metric, per-pod PromQL, HPA simulated, the knee · m16/07 dated version,
+      changelog, migration guide validated against both schemas, announcement
+- [x] Mini-project and games: m16/08 incident game day (seeded faults, answers checked) · m16/09 governance
+      council (rubric) · m16/10 Grafana ops dashboard checked panel by panel, and the runbook
