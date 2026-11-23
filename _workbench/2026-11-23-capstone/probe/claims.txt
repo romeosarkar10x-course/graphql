@@ -1,0 +1,8 @@
+--- cost of ToolPage at 12 (default) and MyLoans
+x-cost-estimated: 77
+--- plan of ToolPage
+["queryPlan"]
+[{"serviceName":"inventory","op":"query($after:String, $filter:ToolFilter, $first:Int!=12, $sort:ToolSort!=NAME_AS"},{"serviceName":"lending","op":"query($representations:[_Any!]!){_entities(representations: $representations){.."}]
+--- lending down
+{"data":null,"errors":[{"message":"Failed to send request to subgraph: client error (Connect)","extensions":{"code":"SUBREQUEST_HTTP_ERROR","service":"lending","affectedPath":"tools.edges.@.node"}}]}
+

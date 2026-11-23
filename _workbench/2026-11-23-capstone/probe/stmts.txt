@@ -1,0 +1,4 @@
+ToolPage: inventory 4, lending 1 {"data":{"tools":{"totalCount":30,"edges":[{"cursor":"TkFNRV
+ToolPage-filter: inventory 4, lending 1 {"data":{"tools":{"totalCount":17,"edges":[{"cursor":"TkVXRV
+ToolDetail: inventory 3, lending 1 {"data":{"tool":{"id":"t05","name":"Circular saw","condition
+MyLoans: inventory 2, lending 2 {"data":{"me":{"id":"m-ada","displayName":"Ada Okafor","emai

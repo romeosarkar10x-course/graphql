@@ -1,0 +1,68 @@
+# The lending subgraph. Listens on localhost only: clients reach it through the router (docs/adr/0002).
+server:
+  port: 4002
+  address: ${TOOLSHED_BIND:127.0.0.1}
+spring:
+  application:
+    name: lending
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    url: ${TOOLSHED_DB_URL:jdbc:postgresql://postgres:5432/shelfie}
+    username: ${TOOLSHED_DB_USER:shelfie}
+    password: ${TOOLSHED_DB_PASSWORD:shelfie}
+  sql:
+    init:
+      mode: always
+  graphql:
+    websocket:
+      path: /graphql
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # The decoder is SecurityConfig's (offline, course key); these two shape the authentication.
+          principal-claim-name: preferred_username
+          authorities-claim-name: roles
+          authority-prefix: ROLE_
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,metrics
+  metrics:
+    tags:
+      # every series says which subgraph it came from
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        graphql.request: true
+        http.server.requests: true
+  tracing:
+    sampling:
+      probability: 1.0
+  observations:
+    enable:
+      # Spring Security's filter-chain spans would bury the GraphQL spans; its metrics are not needed either
+      spring.security: false
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: ${OTLP_TRACES:http://localhost:4318/v1/traces}
+        schedule-delay: 500ms
+  otlp:
+    metrics:
+      export:
+        enabled: false
+toolshed:
+  jwt:
+    # Tokens from bin/course token <user> --aud toolshed-api, verified offline with the course public key
+    # (Module 10). Setting issuer-uri instead would make Spring fetch Keycloak's discovery document.
+    public-key: classpath:course-public.pem
+    issuer: http://keycloak:8180/realms/shelfie
+    audience: toolshed-api
+  # open loans a member may have at once
+  loan-limit: 3
+  max-days: 14

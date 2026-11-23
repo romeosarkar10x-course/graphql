@@ -16,7 +16,13 @@ lab_dir() {
   [[ -n "$d" && -f "$d/lab.json" ]] || die "no lab $id (try bin/course list)"
   echo "$d"
 }
-workspace_dir() { local d="$1"; echo "workspace/${d#modules/}" | sed 's#/labs/#/#'; }
+# A lab's copy in workspace/: workspace/mNN-slug/NN-slug, or the shared directory its lab.json names in
+# "workspace" (the capstone's stages all work on one repository).
+workspace_dir() {
+  local d="$1" w
+  w=$(jq -r '.workspace // empty' "$d/lab.json" 2>/dev/null)
+  if [[ -n "$w" ]]; then echo "workspace/$w"; else echo "workspace/${d#modules/}" | sed 's#/labs/#/#'; fi
+}
 
 run_tests() { # $1 lab dir, $2 dir under test
   local lab="$1" target="$2" grading
@@ -86,6 +92,10 @@ case "$cmd" in
   start)
     id="${1:-}"; [[ -n "$id" ]] || usage
     d=$(lab_dir "$id"); ws=$(workspace_dir "$d")
+    if [[ -d "$ws" && "${2:-}" != "--force" ]] && jq -e '.workspace' "$d/lab.json" >/dev/null 2>&1; then
+      echo "$id works on $ws, which already exists: carry on there (the files are yours; nothing was copied)"
+      echo "Read $d/README.md, then: bin/course test $id"; exit 0
+    fi
     if [[ -d "$ws" && "${2:-}" != "--force" ]]; then die "$ws already exists (use --force to overwrite)"; fi
     rm -rf "$ws"; mkdir -p "$ws"
     [[ -d "$d/starter" ]] && cp -r "$d/starter/." "$ws/"

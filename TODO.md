@@ -1,9 +1,9 @@
 # TODO.md — remaining work
 
-## Now: user review of Module 18
+## Now: user review of the capstone
 
-The user said "continue..." (2026-11-23) after Module 17's report; Module 18 is built. Wait for review before
-the capstone.
+The user said "let's go" (2026-11-23) after Module 18's report; the capstone is built (`modules/m19-capstone`).
+Every module and the capstone exist; what is left is review, the decisions below and the verification debt.
 
 Decisions for the user:
 
@@ -25,6 +25,10 @@ Decisions still open from Module 15:
 
 ## Verification debt
 
+Supported host: Linux (the user's machines run Arch Linux, 2026-11-23); Docker Desktop, macOS and Windows are
+out of scope.
+
+
 - [ ] Module 16: re-check pins each term: Prometheus, Tempo (does search still lag 20–30 s behind ingest?),
       Grafana, the OpenTelemetry Java agent, Jib; Hive's usage report schema and client header names.
 - [ ] Module 16: usage reports were checked against the course collector only; send one to a real Hive target
@@ -33,14 +37,12 @@ Decisions still open from Module 15:
       simulated (`HpaSim.java`); apply them to a cluster (kind or k3s) once, with prometheus-adapter.
 - [ ] Module 16: timing-based checks green on one 24-core machine: lab 16.4's 0 failed queries (2 s drain vs 1 s
       propagation), lab 16.5's p95 < 250 ms, lab 16.10's top series; the knee (lab 16.6) is per machine by design.
-- [ ] Module 16: the ops stack is Linux x86_64 binaries; arm64 hosts need the arm64 archives and sums.
 - [ ] Module 16: CRaC is lecture-only; Jib's `jib:buildTar` needs internet (Docker Hub) and was run once.
 
 - [ ] Rerun the full `bin/course check --starters` (the 2026-11-21 run after Module 10 was stopped at m10/01;
       after Modules 11 to 14 only their own module checks ran). It is CPU-heavy: run it when the machine is free.
-- [ ] Module 15: `checkpoint-host.sh` and `docker compose up` verified on Linux (Docker Compose 5.8.0) only; check
-      Docker Desktop (paths for `COURSE_ROOT`, user ids). The full `bin/course checkpoint 15` flow (with a learner
-      workspace) has not been run end to end; the compose run itself was run by hand.
+- [ ] Module 15: the full `bin/course checkpoint 15` flow (with a learner workspace) has not been run end to end;
+      the compose run itself was run by hand.
 - [ ] Module 15: re-check pins each term: Apollo Router (2.19.1 and newer), Hive Router (0.3.19), federation-jvm
       7.1.1, composition 0.27.2 and federation v2.10+ support, Nadel (fast releases), graphql-kotlin's default link.
 - [ ] Module 15: lab 15.5's GitHub Actions workflow is read by the test, not run on GitHub.
@@ -51,8 +53,6 @@ Decisions still open from Module 15:
 - [ ] Module 14: lab 14.2's expected strings are CLDR output of the course image's JDK 25; a JDK update may change
       them (re-run the solution and diff).
 - [ ] Module 14: SOAP (14.4) and backups/topics/exports in erasure (14.6) are lecture-only.
-- [ ] Module 13: lab 13.3 mounts the Docker socket; verified on Linux (Docker 29.10) only. Check Docker Desktop
-      (macOS, Windows): socket path, group id (`stat -f %g` fallback), and whether Testcontainers finds the host.
 - [ ] Module 13: the MockMvc `HttpGraphQlTester` + bearer token `UNAUTHORIZED` (FINDINGS 7) is observed, not
       explained; find the cause or a Spring issue before teaching more than "use a real port".
 - [ ] Module 13: GitHub Actions workflow (lab 13.5) is read, not run; its graphql-java class path (4 jars) was
@@ -149,12 +149,26 @@ Decisions still open from Module 15:
       until then the Go path is unverified.
 - [ ] Module 18: the MCP SDK's 404 for an unknown session carries a serialized exception with a stack trace;
       re-check on SDK updates (lecture 18.2, lab 18.3's REDTEAM notes).
+- [ ] Capstone: the web page (`reference/ui/index.html`) was not opened in a browser (none in the course image);
+      its server (`client ui`) and its requests were checked with curl. Open it once (`COURSE_PUBLISH=4005`).
+- [ ] Capstone: `bin/course checkpoint 19` end to end with a learner workspace, and the group variant (one
+      subgraph each, a shared repository) have not been run. The stage checks were run on the reference and on
+      the starter only.
+- [ ] Capstone: the checker's real-time probe speaks SSE only; a WebSocket-only subscription needs
+      `realtime.url` pointing at an SSE endpoint, or the rubric. Add a graphql-transport-ws path (Module 11's
+      `Ws.java`) if learners hit it.
+- [ ] Module 10 FINDINGS 4 ("`public-key-location` plus `issuer-uri` makes no request to Keycloak") disagrees with
+      the capstone's probe on Boot 4.2.0 (the decoder fetched Keycloak's discovery document and failed without
+      Keycloak; `_workbench/2026-11-23-capstone/FINDINGS.md` 10). Re-run lab 10.2's solution with Keycloak stopped.
+- [ ] Capstone: re-check each term Hive Router's config keys (persisted documents, demand control, JWT, error
+      masking, dedupe; the reference pins 0.3.9 through `bin/course fed`) and the Actions majors in
+      `reference/.github/workflows/ci.yml`.
 - [ ] Module 18: Hasura, pg_graphql, Neo4j GraphQL Library and Dgraph are lecture-only (licences and versions
       checked on GitHub; behaviour from documentation). Apollo MCP Server's design is from its documentation.
 
 ## Next modules (in order)
 
-- [ ] Capstone, per plan/syllabus.md
+None: Modules 0 to 18 and the capstone are built.
 
 ## Infra backlog
 

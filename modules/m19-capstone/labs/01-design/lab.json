@@ -1,0 +1,11 @@
+{
+  "title": "Capstone stage 1: pitch, design doc and contract",
+  "lecture": "capstone",
+  "kind": "project",
+  "grading": "both",
+  "needs": [
+    "node",
+    "fed"
+  ],
+  "workspace": "m19-capstone/capstone"
+}

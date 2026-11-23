@@ -224,4 +224,17 @@ in Docker.
     The contract (`contract/port/`) is held to Java's subgraph first.
   - Viaduct's starter was not run (its Gradle wrapper was blocked in the authoring session); other platforms are
     lecture-only, licences checked on GitHub.
+- Capstone (2026-11-23), probes in `_workbench/2026-11-23-capstone/` (`FINDINGS.md`, 23 findings):
+  - `modules/m19-capstone`, lab ids `m19/01` to `m19/05` (stages 1 to 4 and demo day); no lectures. Supported host:
+    Linux only (the user: "we will be doing the exercises in linux or arch linux").
+  - One learner repository for all stages: lab.json `"workspace": "m19-capstone/capstone"` (runner change in
+    `tools/course.sh`); `start` of a later stage keeps it. Stages 2 to 4 symlink stage 1's starter (a template).
+  - The checker is generic: the learner's `capstone.json` (`contract/MANIFEST.md`) says where things are, how to
+    build and run, which course tokens to mint and which probes to send. `contract/Capcheck.java` analyses schema
+    and operations (graphql-java), `contract/capstone.sh` runs the stack and the probes, stage 4 starts Module
+    16's Tempo and Grafana and a Prometheus that scrapes the manifest's endpoints.
+  - One reference product, Toolshed (not a brief), in `reference/`; every stage's `solution` is a symlink to it.
+    Its router is Hive Router 0.3.9: trusted documents and cost limits in a federated graph belong at the router.
+  - Stage 1's "Module 7 rubric" is `contract/design-review.md`, a single review built from Module 7's questions
+    (Module 7 has one rubric per lab). CI workflows and tests are read, not run (as in Module 13).
 

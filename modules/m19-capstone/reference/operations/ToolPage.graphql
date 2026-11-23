@@ -1,0 +1,17 @@
+#import "ToolCard.graphql"
+# The catalogue screen: one page of tools, filtered and sorted, with the total for "30 tools".
+query ToolPage($first: Int! = 12, $after: String, $filter: ToolFilter, $sort: ToolSort! = NAME_ASC) {
+  tools(first: $first, after: $after, filter: $filter, sort: $sort) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...ToolCard
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}

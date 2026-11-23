@@ -1,0 +1,82 @@
+{
+  "product": "Toolshed",
+  "docs": {
+    "pitch": "docs/PITCH.md",
+    "design": "docs/DESIGN.md",
+    "adrs": "docs/adr",
+    "review": "docs/REVIEW.md",
+    "attacks": "docs/ATTACKS.md",
+    "load": "docs/LOAD.md",
+    "runbook": "docs/RUNBOOK.md",
+    "demo": "docs/DEMO.md"
+  },
+  "subgraphs": [
+    { "name": "inventory", "schema": "contract/inventory.graphqls", "url": "http://localhost:4001/graphql" },
+    { "name": "lending", "schema": "contract/lending.graphqls", "url": "http://localhost:4002/graphql" }
+  ],
+  "operations": "operations",
+  "hurl": { "file": "tests/api.hurl", "variablesFile": "tests/ids.env" },
+  "build": "mvn -q -DskipTests package",
+  "run": [
+    { "name": "inventory", "cmd": "java -Xmx256m -XX:TieredStopAtLevel=1 -jar inventory/target/inventory.jar", "ready": "http://localhost:4001/actuator/health" },
+    { "name": "lending", "cmd": "java -Xmx256m -XX:TieredStopAtLevel=1 -jar lending/target/lending.jar", "ready": "http://localhost:4002/actuator/health" },
+    { "name": "router", "cmd": "scripts/router.sh", "ready": "http://localhost:4000/health" }
+  ],
+  "api": "http://localhost:4000/graphql",
+  "send": "documentId",
+  "trusted": { "manifest": "router/persisted-documents.json" },
+  "tokens": {
+    "member": ["ada", "--aud", "toolshed-api"],
+    "other": ["olu", "--aud", "toolshed-api"],
+    "admin": ["root", "--aud", "toolshed-api"]
+  },
+  "client": {
+    "cmd": "java -jar client/target/toolshed-client.jar loans",
+    "env": { "TOOLSHED_TOKEN": "{{token:member}}" }
+  },
+  "ui": "ui/index.html",
+  "metrics": ["http://localhost:4001/actuator/prometheus", "http://localhost:4002/actuator/prometheus"],
+  "dashboard": "ops/dashboard.json",
+  "ci": ".github/workflows/ci.yml",
+  "probes": {
+    "pagination": { "operation": "ToolPage", "connection": ".tools", "pageSize": 4 },
+    "typedError": {
+      "operation": "BorrowTool",
+      "variables": { "input": { "toolId": "t05", "idempotencyKey": "{{run}}-busy" } },
+      "as": "other",
+      "expect": "ToolUnavailable"
+    },
+    "idempotent": {
+      "operation": "BorrowTool",
+      "variables": { "input": { "toolId": "t07", "days": 2, "idempotencyKey": "{{run}}-twice" } },
+      "as": "member",
+      "count": { "operation": "MyLoans", "variables": { "status": "OPEN" }, "as": "member", "path": ".me.loans.edges" }
+    },
+    "auth": [
+      { "name": "signed out, borrowing", "operation": "BorrowTool", "variables": { "input": { "toolId": "t03", "idempotencyKey": "{{run}}-anon" } }, "expect": "denied" },
+      { "name": "an expired token", "operation": "MyLoans", "as": "member", "token": "--expired", "expect": "denied" },
+      { "name": "a token signed with another key", "operation": "MyLoans", "as": "member", "token": "--forged", "expect": "denied" },
+      { "name": "a member, the overdue report", "operation": "OverdueReport", "as": "member", "expect": "denied" },
+      { "name": "a member, who has someone else's tool", "operation": "DeskLookup", "variables": { "barcode": "TS-0005" }, "as": "other", "expect": "denied" },
+      { "name": "the librarian, the overdue report", "operation": "OverdueReport", "as": "admin", "expect": "allowed" },
+      { "name": "a member, their own loans", "operation": "MyLoans", "as": "member", "expect": "allowed" }
+    ],
+    "expensive": { "operation": "OverdueReport", "variables": { "first": 50, "history": 50 }, "as": "admin" },
+    "n1": {
+      "operation": "ToolPage",
+      "small": { "first": 2 },
+      "large": { "first": 30 },
+      "counters": [
+        { "url": "http://localhost:4001/actuator/metrics/toolshed.db.statements", "path": ".measurements[0].value" },
+        { "url": "http://localhost:4002/actuator/metrics/toolshed.db.statements", "path": ".measurements[0].value" }
+      ]
+    },
+    "realtime": {
+      "kind": "subscription",
+      "operation": "Availability",
+      "variables": { "toolId": "t09" },
+      "trigger": { "operation": "BorrowTool", "variables": { "input": { "toolId": "t09", "idempotencyKey": "{{run}}-live" } }, "as": "other" }
+    },
+    "crossSubgraph": { "operation": "MyLoans", "as": "member" }
+  }
+}

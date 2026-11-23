@@ -1,0 +1,21 @@
+# The search box: tools, categories and branches in one list.
+query Search($text: String!, $first: Int! = 8) {
+  search(text: $text, first: $first) {
+    __typename
+    ... on Tool {
+      id
+      name
+      available
+    }
+    ... on Category {
+      id
+      name
+      toolCount
+    }
+    ... on Branch {
+      id
+      name
+      address
+    }
+  }
+}

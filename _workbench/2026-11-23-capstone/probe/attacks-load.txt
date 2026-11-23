@@ -1,0 +1,27 @@
+=== attacks
+A01  a query that is not a persisted document                   BLOCKED  "PERSISTED_DOCUMENT_ID_REQUIRED"
+A02  introspection, as a raw query                              BLOCKED  "PERSISTED_DOCUMENT_ID_REQUIRED"
+A03  a made-up document id                                      BLOCKED  "PERSISTED_DOCUMENT_NOT_FOUND"
+A04  an expired token                                           BLOCKED  "DOWNSTREAM_SERVICE_ERROR"
+A05  a token signed with another key, claiming the course kid   BLOCKED  "DOWNSTREAM_SERVICE_ERROR"
+A06  alg none, no signature                                     BLOCKED  "DOWNSTREAM_SERVICE_ERROR"
+A07  a valid token for another API (aud shelfie-api)            BLOCKED  "DOWNSTREAM_SERVICE_ERROR"
+A08  OverdueReport at 50 x 50 (cost)                            BLOCKED  "COST_ESTIMATED_TOO_EXPENSIVE"
+A09  a page of 10,000 tools                                     BLOCKED  "COST_ESTIMATED_TOO_EXPENSIVE"
+A10  return someone else's loan (olu returns ada's l2)          BLOCKED  "LoanNotFound"
+A11  a member reads who borrowed a tool (DeskLookup)            BLOCKED  "DOWNSTREAM_SERVICE_ERROR"
+A12  a member reads the librarians' overdue report              BLOCKED  "DOWNSTREAM_SERVICE_ERROR"
+A13  SQL wildcards and quotes in search text                    BLOCKED  0
+A14  a hand-made cursor with SQL in it                          BLOCKED  "DOWNSTREAM_SERVICE_ERROR"
+A15  reuse another member's idempotency key to read their result BLOCKED  "ToolUnavailable"
+A16  a batch of 50 operations in one request                    BLOCKED  "Failed to parse GraphQL request payload"
+A17  lending directly, past the router (http://172.17.0.3:4002) BLOCKED  connection refused
+open: 0
+exit 0
+=== load (nproc 24)
+54222 requests in 20 s at concurrency 8: 2711/s, 0 errors, 2.48 SQL statements per request
+operation           count   p50 ms   p95 ms   p99 ms
+MyLoans              5488      3.0      5.3      6.8
+ToolDetail           5389      2.3      4.4      5.4
+ToolPage            32180      2.7      4.9      6.2
+ToolPage+filter     11165      2.8      5.0      6.4

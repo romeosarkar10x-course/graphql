@@ -1,0 +1,18 @@
+# The librarian's desk: scan a barcode, see whether it is out and with whom.
+query DeskLookup($barcode: String!) {
+  tool(by: {barcode: $barcode}) {
+    id
+    name
+    condition
+    available
+    currentLoan {
+      id
+      dueAt
+      status
+      member {
+        displayName
+        email
+      }
+    }
+  }
+}

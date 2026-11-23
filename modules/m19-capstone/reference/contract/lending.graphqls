@@ -1,0 +1,181 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.9", import: ["@key", "@shareable", "@listSize", "@cost"])
+
+"""
+The lending subgraph: members, loans and whether a tool is on the shelf. It knows tools only by id.
+Signed in means a bearer token; librarians have the admin role.
+"""
+type Query {
+  "The signed-in member; null when signed out."
+  me: Member
+
+  "A loan you can see: your own, or any loan for a librarian. Null otherwise."
+  loan(id: ID!): Loan
+
+  "Librarians only: open loans past their due date, oldest due first."
+  overdueLoans(first: Int! = 10, after: String): LoanConnection!
+    @listSize(slicingArguments: ["first"], sizedFields: ["edges"])
+}
+
+"Changes: borrowing and returning."
+type Mutation {
+  """
+  Borrow a tool for `days` (1 to 14). Signed in only. Sending the same `idempotencyKey` again returns the
+  first answer and borrows nothing more.
+  """
+  borrowTool(input: BorrowInput!): BorrowResult!
+
+  "Return a loan: your own, or any loan for a librarian."
+  returnTool(input: ReturnInput!): ReturnResult!
+}
+
+"Live updates."
+type Subscription {
+  "Each time the tool is borrowed or returned."
+  availabilityChanged(toolId: ID!): AvailabilityChange!
+}
+
+"Inventory's tool, with what lending knows about it."
+type Tool @key(fields: "id") {
+  id: ID!
+  """
+  On the shelf now. Null only when lending cannot answer (an outage): the catalogue still loads, and the
+  page shows "ask at the desk" instead of guessing.
+  """
+  available: Boolean
+  "The open loan. Signed in only; the member is shown to that member and to librarians."
+  currentLoan: Loan
+}
+
+"Someone who borrows tools: the token's preferred_username is their handle."
+type Member @key(fields: "id") {
+  id: ID!
+  handle: String!
+  displayName: String!
+  "Only the member and librarians see it; null and an error for anyone else."
+  email: String
+  "Newest first."
+  loans(first: Int! = 10, after: String, status: LoanStatus): LoanConnection!
+    @listSize(slicingArguments: ["first"], sizedFields: ["edges"])
+}
+
+"One tool lent to one member, from borrowing to return."
+type Loan {
+  id: ID!
+  tool: Tool!
+  "Only the member and librarians see it; null and an error for anyone else."
+  member: Member
+  borrowedAt: DateTime!
+  dueAt: DateTime!
+  "Null while the tool is out."
+  returnedAt: DateTime
+  status: LoanStatus!
+}
+
+"OVERDUE is an open loan past its due time; it is computed, not stored."
+enum LoanStatus {
+  OPEN
+  OVERDUE
+  RETURNED
+}
+
+"What borrowTool needs."
+input BorrowInput {
+  toolId: ID!
+  days: Int! = 7
+  "Any string up to 64 characters, new for each borrow the member means to make."
+  idempotencyKey: String!
+}
+
+"What returnTool needs."
+input ReturnInput {
+  loanId: ID!
+}
+
+"Borrowed, or why not: every member is something the client shows, not an error."
+union BorrowResult = Borrowed | ToolUnavailable | LoanLimitReached | ToolNotFound | InvalidInput
+
+"Returned, or why not."
+union ReturnResult = Returned | LoanNotFound | AlreadyReturned
+
+"What every expected failure has: something to show the member."
+interface Problem {
+  message: String!
+}
+
+"The new loan (or, for a repeated idempotencyKey, the first one)."
+type Borrowed {
+  loan: Loan!
+}
+
+"The loan, now returned."
+type Returned {
+  loan: Loan!
+}
+
+"Someone else has it."
+type ToolUnavailable implements Problem {
+  message: String!
+  tool: Tool!
+  "When the open loan is due back."
+  expectedBack: DateTime!
+}
+
+"Return a tool before borrowing another."
+type LoanLimitReached implements Problem {
+  message: String!
+  "Open loans a member may have at once."
+  limit: Int!
+}
+
+"Lending does not know a tool with that id."
+type ToolNotFound implements Problem {
+  message: String!
+  toolId: ID!
+}
+
+"An input value outside its range."
+type InvalidInput implements Problem {
+  message: String!
+  "The input field that is wrong, for example \"days\"."
+  field: String!
+}
+
+"No loan with that id that you may see (someone else's loan is not found, not forbidden)."
+type LoanNotFound implements Problem {
+  message: String!
+  loanId: ID!
+}
+
+"Returning twice changes nothing."
+type AlreadyReturned implements Problem {
+  message: String!
+  loan: Loan!
+}
+
+"A tool went out or came back."
+type AvailabilityChange {
+  tool: Tool!
+  available: Boolean!
+  at: DateTime!
+}
+
+"One page of loans."
+type LoanConnection {
+  edges: [LoanEdge!]!
+  pageInfo: PageInfo!
+}
+
+"A loan and the cursor to continue after it."
+type LoanEdge {
+  cursor: String!
+  node: Loan!
+}
+
+"Where a page ends, and whether there is another."
+type PageInfo @shareable {
+  hasNextPage: Boolean!
+  endCursor: String
+}
+
+"RFC 3339, with an offset, for example 2026-11-23T10:15:00Z."
+scalar DateTime

@@ -1,0 +1,16 @@
+--- error message passes now?
+{"data":null,"errors":[{"message":"librarians only","locations":[{"line":1,"column":55}],"path":["overdueLoans"],"extensions":{"code":"DOWNSTREAM_SERVICE_ERROR","service":"lending","classification":"FORBIDDEN"}}]}
+--- SSE subscription through router (documentId)
+{"data":{"borrowTool":{"__typename":"Borrowed","loan":{"id":"l100","dueAt":"2026-11-30T15:12:13Z","status":"OPEN","tool"
+
+SSE got:
+event: next
+data: {"data":{"availabilityChanged":{"available":false,"at":"2026-11-23T15:12:13Z","tool":{"id":"t09"}}}}
+
+--- direct SSE on lending
+000 
+head: cannot open '/tmp/sse2.txt' for reading: No such file or directory
+{"timestamp":"2026-11-23T15:12:11.053308Z","level":"INFO","target":"router::request","request_id":"01a208f6-f0cd-7271-945e-d4e0596225cf","operation_name":"OverdueReport","operation_type":"query","operation_hash":"6f894a5503dba90b71fcbecb85224c2b","persisted_document_id":"36b7a512a141302eda38e0c01fd2
+{"timestamp":"2026-11-23T15:12:13.497559Z","level":"INFO","target":"router::request","request_id":"01a208f6-fa55-7138-8ead-74dec0dc3f40","operation_name":"BorrowTool","operation_type":"mutation","operation_hash":"0f164cf76ce4e97f56f58a5b707e8571","persisted_document_id":"cdf90a4ce7adb67a675368a9fe37
+{"timestamp":"2026-11-23T15:12:17.058731Z","level":"INFO","target":"router::request","request_id":"01a208f6-f131-7641-ac2e-11502bb12315","operation_name":"Availability","operation_type":"subscription","operation_hash":"d5b8815e9a7e98e825f3867c926ba93b","persisted_document_id":"8d72da6688a5b1e1d2143e
+{"timestamp":"2026-11-23T15:12:20.145435Z","level":"ERROR","target":"opentelemetry_sdk","name":"BatchSpanProcessor.Flush.ExportError","reason":"InternalFailure(\"HTTP export failed: network error\")","message":"Failed during the export process"}

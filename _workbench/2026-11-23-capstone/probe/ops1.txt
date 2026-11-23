@@ -1,0 +1,13 @@
+hurl run 1: 0
+hurl run 2: 4
+hurl run 3: 4
+--- traces
+trace with both: null
+--- panels
+4 series: sum by (application, graphql_outcome) (rate(graphql_request_seconds_count[1m]))
+2 series: histogram_quantile(0.95, sum by (le, application) (rate(graphql_request_seconds_bucket[1m]
+2 series: sum by (application) (rate(toolshed_db_statements_total[1m])) / sum by (application) (rate
+2 series: sum by (application, graphql_field_name) (rate(graphql_datafetcher_seconds_count{graphql_o
+3 series: sum by (result) (rate(toolshed_borrow_results_total[1m]))
+2 series: sum by (application) (jvm_memory_used_bytes{area="heap"})
+{"folderUid":"","id":3690543868551168,"slug":"toolshed","status":"success","uid":"toolshed","url":"/d/toolshed/toolshed","version":1}

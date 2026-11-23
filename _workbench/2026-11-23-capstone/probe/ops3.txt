@@ -1,0 +1,14 @@
+hurl run 1: 0
+hurl run 2: 0
+hurl run 3: 0
+--- trace by id
+{"data":{"me":{"id":"m-ada","displayName":"Ada Okafor","email":"ada@example.org","loans":{"edges":[{
+
+1: ["inventory","lending"]
+2: ["inventory","lending"]
+3: ["inventory","lending","router"]
+[{"svc":"lending","spans":["security filterchain after"]},{"svc":"lending","spans":["graphql field status"]},{"svc":"lending","spans":["authenticate bearertoken"]},{"svc":"lending","spans":["http post /graphql"]},{"svc":"lending","spans":["secured request"]},{"svc":"lending","spans":["graphql field status"]},{"svc":"lending","spans":["security filterchain before"]},{"svc":"lending","spans":["graphql field tool"]},{"svc":"lending","spans":["graphql query"]},{"svc":"lending","spans":["authorize request"]},{"svc":"lending","spans":["secured request"]},{"svc":"lending","spans":["graphql field loan
+--- search after 25s
+      3 {"rootServiceName":"lending","rootTraceName":"security filterchain after"}
+      1 {"rootServiceName":"lending","rootTraceName":"security filterchain before"}
+      6 {"rootServiceName":"router","rootTraceName":"http.server"}

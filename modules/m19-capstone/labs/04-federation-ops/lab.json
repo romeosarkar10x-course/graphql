@@ -1,0 +1,13 @@
+{
+  "title": "Capstone stage 4: federation, observability and CI",
+  "lecture": "capstone",
+  "kind": "project",
+  "grading": "both",
+  "needs": [
+    "postgres",
+    "node",
+    "fed",
+    "ops"
+  ],
+  "workspace": "m19-capstone/capstone"
+}

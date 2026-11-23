@@ -1,0 +1,22 @@
+#import "ToolCard.graphql"
+# One tool's page, from its id or from the barcode scanned at the desk.
+query ToolDetail($by: ToolLookup!) {
+  tool(by: $by) {
+    ...ToolCard
+    barcode
+    addedAt
+    branch {
+      address
+      openingHours
+    }
+    specs {
+      ... on PowerSpecs {
+        volts
+        cordless
+      }
+      ... on HandSpecs {
+        weightGrams
+      }
+    }
+  }
+}

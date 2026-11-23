@@ -1,0 +1,20 @@
+17 tools
+  t29  Angle grinder            18 V, cordless Market Hall        on the shelf
+  t13  Belt sander              230 V, mains   Northside Library  on the shelf
+  t05  Circular saw             230 V, mains   Northside Library  out
+  t01  Cordless drill driver    18 V, cordless Northside Library  on the shelf
+  more: --after TkFNRV9BU0MfY29yZGxlc3MgZHJpbGwgZHJpdmVyH3QwMQ
+exit 0
+Ada Okafor <ada@example.org>
+  l2    OPEN     Circular saw             due 2026-11-28
+  l1    RETURNED Cordless drill driver    due 2026-10-01
+borrowed: loan l100, due 2026-11-25T15:19:48Z
+ToolUnavailable: this tool is out until 2026-11-28
+exit 3
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewp
+10
+{"data":{"categories":[{"id":"cat-drill","name":"Drills and drivers","toolCount":5},{"id":"cat-garden","name":"Garden","toolCount":7},{"id":"cat-acces

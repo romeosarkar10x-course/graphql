@@ -68,7 +68,7 @@ Playing with friends: [docs/GROUP_PLAY.md](docs/GROUP_PLAY.md).
 | | [M16 Running GraphQL in production](modules/m16-production/README.md) | Ready |
 | | [M17 Under the hood: spec, parser and executor in Java](modules/m17-under-the-hood/README.md) | Ready |
 | | [M18 The frontier: AI agents, open RFCs and other languages](modules/m18-frontier/README.md) | Ready |
-| | Capstone | Planned |
+| | [Capstone: a new product from an empty repository](modules/m19-capstone/README.md) | Ready |
 
 ## Layout
 

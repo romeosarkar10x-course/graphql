@@ -1,0 +1,17 @@
+# The card the catalogue and the search show for one tool (web UI and CLI).
+fragment ToolCard on Tool {
+  id
+  name
+  condition
+  available
+  specs {
+    __typename
+    summary
+  }
+  category {
+    name
+  }
+  branch {
+    name
+  }
+}

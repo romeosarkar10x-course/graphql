@@ -13,6 +13,7 @@ modules/mNN-slug/
   labs/NN-slug/
     README.md             the brief: what, how to run, done-when; group variant for games
     lab.json              {"title","lecture","kind": lab|project|game,"grading": auto|rubric|both,"needs": [ref|toxiproxy|postgres|redis|kafka|keycloak|varnish|internet|docker|node|fed|ops]}
+                          optional "workspace": "<dir>": labs that share one workspace/<dir> (the capstone's stages)
     HINTS.md              exactly three escalating hints; the third is still not the answer
     rubric.md             for rubric/both labs: points table and pass mark
     starter/              copied to workspace/ by bin/course start; must FAIL the tests

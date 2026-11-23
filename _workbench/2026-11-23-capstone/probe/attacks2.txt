@@ -1,0 +1,21 @@
+=== attacks
+A01  a query that is not a persisted document                   BLOCKED  "PERSISTED_DOCUMENT_ID_REQUIRED"
+A02  introspection, as a raw query                              BLOCKED  "PERSISTED_DOCUMENT_ID_REQUIRED"
+A03  a made-up document id                                      BLOCKED  "PERSISTED_DOCUMENT_NOT_FOUND"
+A04  an expired token                                           BLOCKED  "UNAUTHORIZED"
+A05  a token signed with another key, claiming the course kid   BLOCKED  "UNAUTHORIZED"
+A06  alg none, no signature                                     BLOCKED  "UNAUTHORIZED"
+A07  a valid token for another API (aud shelfie-api)            BLOCKED  "UNAUTHORIZED"
+A08  OverdueReport at 50 x 50 (cost)                            BLOCKED  "COST_ESTIMATED_TOO_EXPENSIVE"
+A09  a page of 10,000 tools                                     BLOCKED  "COST_ESTIMATED_TOO_EXPENSIVE"
+A10  return someone else's loan (olu returns ada's l2)          BLOCKED  "LoanNotFound"
+A11  a member reads who borrowed a tool (DeskLookup)            BLOCKED  "FORBIDDEN"
+A12  a member reads the librarians' overdue report              BLOCKED  "FORBIDDEN"
+A13  SQL wildcards and quotes in search text                    BLOCKED  0
+A14  a hand-made cursor with SQL in it                          BLOCKED  "BAD_REQUEST"
+A15  reuse another member's idempotency key to read their result BLOCKED  "ToolUnavailable"
+A16  a batch of 50 operations in one request                    BLOCKED  "Failed to parse GraphQL request payload"
+A18  60 concurrent MyLoans, Ada and Olu interleaved             BLOCKED  each got their own
+A17  lending directly, past the router (http://172.17.0.3:4002) BLOCKED  connection refused
+open: 0
+exit 0

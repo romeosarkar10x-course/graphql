@@ -1,0 +1,27 @@
+== m19/04 Capstone stage 4: federation, observability and CI  [modules/m19-capstone/labs/04-federation-ops/solution]
+  [32mpass[0m  capstone.json: Toolshed, 2 subgraph(s)
+  [32mpass[0m  2 subgraphs
+  [32mpass[0m  the contract composes (2 subgraph schema(s))
+  [32mpass[0m  build: mvn -q -DskipTests package
+  [32mpass[0m  inventory is up (http://localhost:4001/actuator/health)
+  [32mpass[0m  lending is up (http://localhost:4002/actuator/health)
+  [32mpass[0m  router is up (http://localhost:4000/health)
+  -- the graph
+  [32mpass[0m  contract first: the running subgraphs serve exactly the contract's schema (101 coordinates)
+  [32mpass[0m  hurl tests/api.hurl: 24 requests green
+  -- observability
+  [32mpass[0m  tracing: one trace for MyLoans holds spans from ["inventory","lending","router"]
+  [32mpass[0m  Grafana imports ops/dashboard.json
+  [32mpass[0m  dashboard: 6 of 6 panels show data after the suite ran
+  [32mpass[0m  docs/RUNBOOK.md: 424 words
+  [32mpass[0m  docs/RUNBOOK.md: 6 alerts or symptoms, 4 PromQL conditions
+  -- CI gates (read, not run)
+  [32mpass[0m  CI: build and tests (mvn verify or test)
+  [32mpass[0m  CI: mutation testing (PIT)
+  [32mpass[0m  CI: the composed schema and trusted documents are up to date
+  [31mfail[0m  a test with GraphQlTester (or HttpGraphQlTester)
+  [31mfail[0m  a Testcontainers test
+  [31mfail[0m  an N+1 test that counts statements
+  [32mpass[0m  a schema-diff gate
+  3 check(s) failed
+FAIL m19/04   (stuck? modules/m19-capstone/labs/04-federation-ops/HINTS.md has three escalating hints)

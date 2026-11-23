@@ -1,0 +1,15 @@
+  [32mpass[0m  capstone.json: Toolshed, 2 subgraph(s)
+  [32mpass[0m  the contract composes (2 subgraph schema(s))
+  [32mpass[0m  build: mvn -q -DskipTests package
+  [32mpass[0m  inventory is up (http://localhost:4001/actuator/health)
+  [32mpass[0m  lending is up (http://localhost:4002/actuator/health)
+  [32mpass[0m  router is up (http://localhost:4000/health)
+  -- contract first
+  [32mpass[0m  contract first: the running subgraphs serve exactly the contract's schema (101 coordinates)
+  -- the conformance suite
+  [32mpass[0m  hurl tests/api.hurl: 24 requests green
+  -- core behaviour
+  [32mpass[0m  pagination: ToolPage pages by cursor without overlap (["t29","t13","t05","t30"] then ["t09","t01","t11","t22"])
+  [32mpass[0m  typed error: BorrowTool answers ToolUnavailable in data, with no errors
+  [32mpass[0m  idempotency: the repeated BorrowTool got the same answer
+  [32mpass[0m  idempotency: MyLoans counted 1 then 2: one effect for two requests

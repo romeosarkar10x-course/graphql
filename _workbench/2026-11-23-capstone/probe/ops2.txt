@@ -1,0 +1,5 @@
+hurl run 1: 0
+hurl run 2: 0
+hurl run 3: 0
+--- traces
+trace with both: null

@@ -1,0 +1,20 @@
+# Return, from "My loans" or at the librarian's desk.
+mutation ReturnTool($loanId: ID!) {
+  returnTool(input: {loanId: $loanId}) {
+    __typename
+    ... on Returned {
+      loan {
+        id
+        status
+        returnedAt
+        tool {
+          id
+          available
+        }
+      }
+    }
+    ... on Problem {
+      message
+    }
+  }
+}

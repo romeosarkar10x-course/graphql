@@ -1,0 +1,31 @@
+{
+  "product": "",
+  "docs": {
+    "pitch": "docs/PITCH.md",
+    "design": "docs/DESIGN.md",
+    "adrs": "docs/adr",
+    "review": "docs/REVIEW.md",
+    "attacks": "docs/ATTACKS.md",
+    "load": "docs/LOAD.md",
+    "runbook": "docs/RUNBOOK.md",
+    "demo": "docs/DEMO.md"
+  },
+  "subgraphs": [],
+  "operations": "operations",
+  "hurl": { "file": "tests/api.hurl" },
+  "build": "mvn -q -DskipTests package",
+  "run": [],
+  "api": "http://localhost:4000/graphql",
+  "send": "query",
+  "trusted": { "manifest": "" },
+  "tokens": {
+    "member": ["ada", "--aud", "CHANGE-ME-api"],
+    "admin": ["root", "--aud", "CHANGE-ME-api"]
+  },
+  "client": { "cmd": "", "env": {} },
+  "ui": "",
+  "metrics": [],
+  "dashboard": "ops/dashboard.json",
+  "ci": ".github/workflows/ci.yml",
+  "probes": {}
+}

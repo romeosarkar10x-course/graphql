@@ -85,7 +85,8 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | graphql-java-extended-scalars | 24.0 (`DateTime`, `Date`) | — | lab 14.2; no release newer than 24.0 on Central (2026-11-22) |
 | Resilience4j circuit breaker | 2.4.0 | — | lab 14.4 (as Module 12) |
 | Apollo Router | 2.19.0 (2026-10-22), Elastic License 2.0, run unlicensed | Apollo Router | Module 15; `bin/course fed` (sha256-checked into `.cache/fed`); subscriptions need a licence; 2.19.1 was 6 days old |
-| Hive Router | 0.3.9 (2026-10-29), MIT | — | Module 15, second router; no `@defer`; 0.3.19 was 2 days old |
+| Hive Router | 0.3.9 (2026-10-29), MIT | — | Module 15, second router; no `@defer`; 0.3.19 was 2 days old. Capstone reference: persisted documents (file), demand control, JWT (local JWKS), header propagation, SSE subscriptions |
+| GitHub Actions (capstone reference CI) | checkout v7, setup-java v6, setup-node v7, upload-artifact v7 (majors; latest v7.0.1, v6.3.0, v7.1.0, v7.0.2 on 2026-11-23) | — | Read by the stage 4 checker, not run |
 | federation-jvm | `federation-graphql-java-support` 7.0.0 (2026-08-03) | — | Module 15 subgraphs; not in Boot's BOM; 7.1.1 (2026-11-17) too new |
 | Federation composition | `@theguild/federation-composition` 0.27.0 (2026-09-23, MIT), graphql 16.15.0 | Rover / Hive CLI | Module 15; supports federation v2.0 to v2.9; Rover's composition needs ELv2 acceptance (not accepted) |
 | Nadel | `com.atlassian:nadel` 0.42134418907 (2026-11-06), Apache-2.0 | — | lab 15.2; brings its own graphql-java; 0.44642751879 (2026-11-20) probed, too new to pin |

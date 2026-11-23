@@ -49,3 +49,5 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-23-m17-check-starters.log` | `bin/course check m17 --starters` after Module 17 |
 | `2026-11-23-m18-probe/` | Module 18: `FINDINGS.md` (25 findings), MCP server probes (`mcp-server/`: handshake, tools, versions, guard messages, red-team runs), the MCP 2025-06-18 spec pages (`mcp-spec/`), agent scoring sample (`agent/`), PostGraphile probes (`postgraphile/`), the reviews port (`port/`: Java baseline, TS run, numbers, the @apollo/subgraph break), RFC tracker snapshot and pages (`rfcs/`), Viaduct's starter sources (not run) |
 | `2026-11-23-m18-check-starters.log` | `bin/course check m18 --starters` after Module 18 |
+| `2026-11-23-capstone/` | Capstone: `PLAN.md`, `FINDINGS.md` (23 findings), `probe/` (inventory, lending, router, subscriptions, tracing and dashboard, claims, statements per operation, attacks and load, stage runs on the reference) |
+| `2026-11-23-capstone-check-starters.log` | `bin/course check m19 --starters` after the capstone |

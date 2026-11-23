@@ -1,0 +1,32 @@
+--- anon me, anon borrow
+{"data":{"me":null}}
+{"errors":[{"message":"sign in as a member first","locations":[{"line":1,"column":12}],"path":["borrowTool"],"extensions":{"classification":"UNAUTHORIZED"}}],"data":null}
+--- expired, wrong aud, forged, none
+401
+401
+401
+401
+--- ada me
+{"data":{"me":{"handle":"ada","email":"ada@example.org","loans":{"edges":[{"node":{"id":"l2","status":"OPEN","tool":{"id":"t05"},"member":{"handle":"ada"}}},{"node":{"id":"l1","status":"RETURNED","tool":{"id":"t01"},"member":{"handle":"ada"}}}]}}}}
+--- borrows
+{"data":{"borrowTool":{"__typename":"Borrowed","loan":{"id":"l100","status":"OPEN","dueAt":"2026-11-26T15:07:00Z","tool":{"id":"t03","available":false}}}}}
+{"data":{"borrowTool":{"__typename":"Borrowed","loan":{"id":"l100","status":"OPEN","dueAt":"2026-11-26T15:07:00Z","tool":{"id":"t03","available":false}}}}}
+{"data":{"borrowTool":{"__typename":"ToolUnavailable","message":"this tool is out until 2026-11-28","expectedBack":"2026-11-28T15:06:57Z"}}}
+{"data":{"borrowTool":{"__typename":"ToolNotFound","message":"no tool with id t99"}}}
+{"data":{"borrowTool":{"__typename":"InvalidInput","message":"days must be between 1 and 14","field":"days"}}}
+{"data":{"borrowTool":{"__typename":"Borrowed","loan":{"id":"l102","status":"OPEN","dueAt":"2026-11-30T15:07:01Z","tool":{"id":"t06","available":false}}}}}
+{"data":{"borrowTool":{"__typename":"LoanLimitReached","message":"you already have 3 tools out; return one first"}}}
+{"data":{"borrowTool":{"__typename":"InvalidInput","message":"idempotencyKey must be 1 to 64 characters","field":"idempotencyKey"}}}
+--- visibility
+{"data":{"loan":null}}
+{"errors":[{"message":"only that member and librarians can see this","locations":[{"line":1,"column":144}],"path":["_entities",0,"currentLoan","member"],"extensions":{"classification":"FORBIDDEN"}}],"data":{"_entities":[{"id":"t05","available":false,"currentLoan":{"id":"l2","member":null}},{"id":"t09","available":true,"currentLoan":null}]}}
+{"errors":[{"message":"sign in as a member first","locations":[{"line":1,"column":91}],"path":["_entities",0,"currentLoan"],"extensions":{"classification":"UNAUTHORIZED"}}],"data":{"_entities":[{"available":false,"currentLoan":null}]}}
+{"errors":[{"message":"librarians only","locations":[{"line":1,"column":3}],"path":["overdueLoans"],"extensions":{"classification":"FORBIDDEN"}}],"data":null}
+{"data":{"overdueLoans":{"edges":[{"node":{"id":"l5","status":"OVERDUE","member":{"handle":"olu"}}}],"pageInfo":{"hasNextPage":true,"endCursor":"MjAyNi0xMS0xMFQxNTowNjo1Ny40MTI4NjNaH2w1"}}}}
+--- return
+{"data":{"returnTool":{"__typename":"LoanNotFound","message":"no loan of yours with id l2"}}}
+{"data":{"returnTool":{"__typename":"Returned","loan":{"status":"RETURNED"}}}}
+{"data":{"returnTool":{"__typename":"AlreadyReturned","message":"this loan was returned on 2026-11-23"}}}
+--- N+1: entities 2 vs 20 with currentLoan member
+n=2 statements 78.0 -> 81.0
+n=20 statements 81.0 -> 85.0

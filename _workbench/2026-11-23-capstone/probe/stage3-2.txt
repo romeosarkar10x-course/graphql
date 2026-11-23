@@ -1,0 +1,28 @@
+  [32mpass[0m  lending is up (http://localhost:4002/actuator/health)
+  [32mpass[0m  router is up (http://localhost:4000/health)
+  -- security
+  [32mpass[0m  auth: signed out, borrowing: refused
+  [32mpass[0m  auth: an expired token: refused
+  [32mpass[0m  auth: a token signed with another key: refused
+  [32mpass[0m  auth: a member, the overdue report: refused
+  [32mpass[0m  auth: a member, who has someone else's tool: refused
+  [32mpass[0m  auth: the librarian, the overdue report: allowed
+  [32mpass[0m  auth: a member, their own loans: allowed
+  [32mpass[0m  trusted documents: a document that is not in the manifest is refused
+  [32mpass[0m  trusted documents: every operation has an id in router/persisted-documents.json
+  [32mpass[0m  demand control: OverdueReport with {"first":50,"history":50} is refused before it runs
+  -- performance
+  [32mpass[0m  N+1: ToolPage runs 5 statements for {"first":2} and 5 for {"first":30}
+  -- real time and clients
+  [32mpass[0m  real time: Availability delivered an event after BorrowTool (data: {"data":{"availabilityChanged":{"available":false,"at":"2026-11-23T15:49:10Z","tool":{"id":"t09"}}}})
+  [32mpass[0m  the Java client runs: java -jar client/target/toolshed-client.jar loans (Ada Okafor <ada@example.org>)
+  [32mpass[0m  a UI: ui/index.html
+  -- evidence in the code
+  [32mpass[0m  batch loading in the server (@BatchMapping or DataLoader)
+  [32mpass[0m  sealed types for the abstract types
+  [32mpass[0m  Spring Security in a pom.xml
+  -- written evidence
+  [31mfail[0m  docs/ATTACKS.md: at least 300 words of your own (254 now)
+  [32mpass[0m  docs/LOAD.md: 324 words
+  1 check(s) failed
+FAIL m19/03   (stuck? modules/m19-capstone/labs/03-hardening/HINTS.md has three escalating hints)

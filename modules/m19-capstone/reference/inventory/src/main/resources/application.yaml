@@ -1,0 +1,43 @@
+# The inventory subgraph. Listens on localhost only: clients reach it through the router (docs/adr/0002).
+server:
+  port: 4001
+  address: ${TOOLSHED_BIND:127.0.0.1}
+spring:
+  application:
+    name: inventory
+  threads:
+    virtual:
+      enabled: true
+  datasource:
+    url: ${TOOLSHED_DB_URL:jdbc:postgresql://postgres:5432/shelfie}
+    username: ${TOOLSHED_DB_USER:shelfie}
+    password: ${TOOLSHED_DB_PASSWORD:shelfie}
+  sql:
+    init:
+      mode: always
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,metrics
+  metrics:
+    tags:
+      # every series says which subgraph it came from
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        graphql.request: true
+        http.server.requests: true
+  tracing:
+    sampling:
+      probability: 1.0
+  opentelemetry:
+    tracing:
+      export:
+        otlp:
+          endpoint: ${OTLP_TRACES:http://localhost:4318/v1/traces}
+        schedule-delay: 500ms
+  otlp:
+    metrics:
+      export:
+        enabled: false

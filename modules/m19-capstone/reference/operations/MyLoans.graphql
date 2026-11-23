@@ -1,0 +1,30 @@
+# "My loans": the signed-in member and their loans, with each tool's name from inventory.
+query MyLoans($first: Int! = 10, $after: String, $status: LoanStatus) {
+  me {
+    id
+    displayName
+    email
+    loans(first: $first, after: $after, status: $status) {
+      edges {
+        node {
+          id
+          status
+          borrowedAt
+          dueAt
+          returnedAt
+          tool {
+            id
+            name
+            branch {
+              name
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+# Borrow from the tool page. The client makes a new idempotencyKey per click and reuses it on a retry.
+mutation BorrowTool($input: BorrowInput!) {
+  borrowTool(input: $input) {
+    __typename
+    ... on Borrowed {
+      loan {
+        id
+        dueAt
+        status
+        tool {
+          id
+          name
+          available
+        }
+      }
+    }
+    ... on Problem {
+      message
+    }
+    ... on ToolUnavailable {
+      expectedBack
+    }
+    ... on LoanLimitReached {
+      limit
+    }
+    ... on InvalidInput {
+      field
+    }
+  }
+}

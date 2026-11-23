@@ -1,0 +1,13 @@
+# The catalogue's filter bar: categories with counts, and branches.
+query Filters {
+  categories {
+    id
+    name
+    toolCount
+  }
+  branches {
+    id
+    name
+    openingHours
+  }
+}

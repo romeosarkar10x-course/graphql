@@ -1,0 +1,12 @@
+{
+  "title": "Capstone stage 3: client, real time, performance and security",
+  "lecture": "capstone",
+  "kind": "project",
+  "grading": "both",
+  "needs": [
+    "postgres",
+    "node",
+    "fed"
+  ],
+  "workspace": "m19-capstone/capstone"
+}

@@ -1,0 +1,74 @@
+# Hive Router 0.3.9 (MIT) in front of both subgraphs: the only address clients use (docs/adr/0002).
+# scripts/run.sh starts it with SUPERGRAPH_FILE_PATH=router/supergraph.graphql, PORT=4000, HOST=127.0.0.1.
+
+# Tokens are checked here first (offline, router/jwks.json from scripts/Jwks.java): an expired, forged or
+# unsigned token is refused before any subgraph is called. No token is allowed: anonymous browsing.
+jwt:
+  enabled: true
+  require_authentication: false
+  issuers:
+    - http://keycloak:8180/realms/shelfie
+  audiences:
+    - toolshed-api
+  allowed_algorithms:
+    - RS256
+  jwks_providers:
+    - source: file
+      path: jwks.json
+
+# The client's token goes to every subgraph; lending verifies it (inventory ignores it).
+headers:
+  all:
+    request:
+      - propagate:
+          named: authorization
+
+# Trusted documents: only the operations in operations/ run, by id (scripts/persist.sh builds the file).
+persisted_documents:
+  enabled: true
+  require_id: true
+  storage:
+    type: file
+    path: persisted-documents.json   # relative to this file
+    watch: false
+
+# Demand control: the cost of an operation from the schema's @listSize and @cost (IBM cost spec), before any
+# subgraph is called. The catalogue page at 50 tools costs about 400; OverdueReport at 50 x 50 about 10,000.
+demand_control:
+  enabled: true
+  operation_cost:
+    max: 2000
+    mode: enforce
+    expose_headers:
+      estimated: true
+      max: true
+  # lists without @listSize count as 10 (all of the contract's lists have one; this is the safety net)
+  default_list_size:
+    all: 10
+  subgraphs_budget:
+    mode: measure
+
+# The subgraphs' error messages are written for clients (Spring already hides unexpected errors as
+# INTERNAL_ERROR without the exception's text), so the router passes them through.
+error_masking:
+  all:
+    enabled: false
+
+limits:
+  max_depth:
+    n: 10
+
+subscriptions:
+  enabled: true
+websocket:
+  enabled: true
+
+telemetry:
+  resource:
+    attributes:
+      service.name: router
+  tracing:
+    exporters:
+      - kind: otlp
+        protocol: http
+        endpoint: http://localhost:4318/v1/traces

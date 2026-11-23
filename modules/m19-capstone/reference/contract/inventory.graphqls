@@ -1,0 +1,132 @@
+extend schema @link(url: "https://specs.apollo.dev/federation/v2.9", import: ["@key", "@shareable", "@listSize", "@cost"])
+
+"""
+The inventory subgraph: what the library owns and where it is. It knows nothing about loans or members.
+"""
+type Query {
+  "One tool, by id or by the barcode on its label."
+  tool(by: ToolLookup!): Tool
+
+  "The catalogue, one page at a time. `first` is at most 50."
+  tools(first: Int! = 10, after: String, filter: ToolFilter, sort: ToolSort! = NAME_ASC): ToolConnection!
+    @listSize(slicingArguments: ["first"], sizedFields: ["edges"])
+
+  "Every category, by name."
+  categories: [Category!]! @listSize(assumedSize: 20)
+
+  "Every branch, by name."
+  branches: [Branch!]! @listSize(assumedSize: 10)
+
+  "Tools, categories and branches whose name contains the text (case-insensitive). At most `first` results."
+  search(text: String!, first: Int! = 10): [SearchResult!]! @listSize(slicingArguments: ["first"])
+}
+
+"Exactly one of the fields."
+input ToolLookup @oneOf {
+  id: ID
+  barcode: String
+}
+
+"All given fields must match."
+input ToolFilter {
+  categoryId: ID
+  branchId: ID
+  "Any of these conditions."
+  condition: [Condition!]
+  "Case-insensitive part of the name."
+  nameContains: String
+  "True for power tools only, false for hand tools only."
+  powered: Boolean
+}
+
+"The catalogue's sort orders. Each has its own index and its own cursors."
+enum ToolSort {
+  NAME_ASC
+  NAME_DESC
+  "Most recently added first."
+  NEWEST
+}
+
+"The state a librarian records when a tool comes back."
+enum Condition {
+  NEW
+  GOOD
+  WORN
+  NEEDS_REPAIR
+}
+
+"A tool the library owns. Lending adds whether it is on the shelf."
+type Tool @key(fields: "id") {
+  id: ID!
+  barcode: String!
+  name: String!
+  condition: Condition!
+  category: Category!
+  "Where it lives when it is not on loan."
+  branch: Branch!
+  addedAt: DateTime!
+  "What kind of tool it is: the fields differ."
+  specs: ToolSpecs!
+}
+
+"What every kind of tool has."
+interface ToolSpecs {
+  "One line for a list: \"18 V, cordless\" or \"450 g\"."
+  summary: String!
+}
+
+"A tool with a motor: mains or battery."
+type PowerSpecs implements ToolSpecs {
+  summary: String!
+  volts: Int!
+  cordless: Boolean!
+}
+
+"A tool without a motor."
+type HandSpecs implements ToolSpecs {
+  summary: String!
+  weightGrams: Int!
+}
+
+"A shelf in the catalogue: Saws, Garden, ..."
+type Category {
+  id: ID!
+  name: String!
+  "The number of tools in it."
+  toolCount: Int!
+}
+
+"A place where tools are kept, collected and returned."
+type Branch {
+  id: ID!
+  name: String!
+  address: String!
+  "Free text, for example \"Sat 10:00-14:00\"."
+  openingHours: String!
+}
+
+"One hit in the search box."
+union SearchResult = Tool | Category | Branch
+
+"One page of tools (the Relay connection shape)."
+type ToolConnection {
+  edges: [ToolEdge!]!
+  pageInfo: PageInfo!
+  "All tools that match the filter, not just this page."
+  totalCount: Int! @cost(weight: 5)
+}
+
+"A tool and the cursor to continue after it."
+type ToolEdge {
+  cursor: String!
+  node: Tool!
+}
+
+"Where a page ends, and whether there is another."
+type PageInfo @shareable {
+  hasNextPage: Boolean!
+  endCursor: String
+}
+
+"RFC 3339, with an offset, for example 2026-11-23T10:15:00Z."
+scalar DateTime

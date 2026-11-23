@@ -1,0 +1,490 @@
+schema @link(url: "https://specs.apollo.dev/link/v1.0") @link(url: "https://specs.apollo.dev/join/v0.5", for: EXECUTION) @link(url: "https://specs.apollo.dev/cost/v0.1", import: ["@listSize"]) {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+directive @join__enumValue(graph: join__Graph!) repeatable on ENUM_VALUE
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__field(
+  graph: join__Graph
+  requires: join__FieldSet
+  provides: join__FieldSet
+  type: String
+  external: Boolean
+  override: String
+  usedOverridden: Boolean
+  overrideLabel: String
+  contextArguments: [join__ContextArgument!]
+) repeatable on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+input join__ContextArgument {
+  name: String!
+  type: String!
+  context: String!
+  selection: join__FieldValue!
+}
+
+directive @join__implements(graph: join__Graph!, interface: String!) repeatable on OBJECT | INTERFACE
+
+directive @join__type(
+  graph: join__Graph!
+  key: join__FieldSet
+  extension: Boolean! = false
+  resolvable: Boolean! = true
+  isInterfaceObject: Boolean! = false
+) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
+
+directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on UNION
+
+scalar join__FieldSet
+
+scalar join__FieldValue
+
+directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+
+scalar link__Import
+
+enum link__Purpose {
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+  """
+  `EXECUTION` features provide metadata necessary for operation execution.
+  """
+  EXECUTION
+}
+
+directive @cost(weight: Int!) on ARGUMENT_DEFINITION | ENUM | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | OBJECT | SCALAR
+
+directive @listSize(
+  assumedSize: Int
+  slicingArguments: [String!]
+  sizedFields: [String!]
+  requireOneSlicingArgument: Boolean = true
+) on FIELD_DEFINITION
+
+enum join__Graph {
+  INVENTORY @join__graph(name: "inventory", url: "http://localhost:4001/graphql")
+  LENDING @join__graph(name: "lending", url: "http://localhost:4002/graphql")
+}
+
+directive @oneOf on INPUT_OBJECT
+
+"""
+RFC 3339, with an offset, for example 2026-11-23T10:15:00Z.
+"""
+scalar DateTime @join__type(graph: INVENTORY) @join__type(graph: LENDING)
+
+"""
+The inventory subgraph: what the library owns and where it is. It knows nothing about loans or members.
+"""
+type Query @join__type(graph: INVENTORY) @join__type(graph: LENDING) {
+  """
+  One tool, by id or by the barcode on its label.
+  """
+  tool(by: ToolLookup!): Tool @join__field(graph: INVENTORY)
+  """
+  The catalogue, one page at a time. `first` is at most 50.
+  """
+  tools(
+    first: Int! = 10
+    after: String
+    filter: ToolFilter
+    sort: ToolSort! = NAME_ASC
+  ): ToolConnection! @join__field(graph: INVENTORY) @listSize(slicingArguments: ["first"], sizedFields: ["edges"])
+  """
+  Every category, by name.
+  """
+  categories: [Category!]! @join__field(graph: INVENTORY) @listSize(assumedSize: 20)
+  """
+  Every branch, by name.
+  """
+  branches: [Branch!]! @join__field(graph: INVENTORY) @listSize(assumedSize: 10)
+  """
+  Tools, categories and branches whose name contains the text (case-insensitive). At most `first` results.
+  """
+  search(text: String!, first: Int! = 10): [SearchResult!]! @join__field(graph: INVENTORY) @listSize(slicingArguments: ["first"])
+  """
+  The signed-in member; null when signed out.
+  """
+  me: Member @join__field(graph: LENDING)
+  """
+  A loan you can see: your own, or any loan for a librarian. Null otherwise.
+  """
+  loan(id: ID!): Loan @join__field(graph: LENDING)
+  """
+  Librarians only: open loans past their due date, oldest due first.
+  """
+  overdueLoans(first: Int! = 10, after: String): LoanConnection! @join__field(graph: LENDING) @listSize(slicingArguments: ["first"], sizedFields: ["edges"])
+}
+
+"""
+A tool the library owns. Lending adds whether it is on the shelf.
+"""
+type Tool @join__type(graph: INVENTORY, key: "id") @join__type(graph: LENDING, key: "id") {
+  id: ID!
+  barcode: String! @join__field(graph: INVENTORY)
+  name: String! @join__field(graph: INVENTORY)
+  condition: Condition! @join__field(graph: INVENTORY)
+  category: Category! @join__field(graph: INVENTORY)
+  """
+  Where it lives when it is not on loan.
+  """
+  branch: Branch! @join__field(graph: INVENTORY)
+  addedAt: DateTime! @join__field(graph: INVENTORY)
+  """
+  What kind of tool it is: the fields differ.
+  """
+  specs: ToolSpecs! @join__field(graph: INVENTORY)
+  """
+  On the shelf now. Null only when lending cannot answer (an outage): the catalogue still loads, and the
+  page shows "ask at the desk" instead of guessing.
+  """
+  available: Boolean @join__field(graph: LENDING)
+  """
+  The open loan. Signed in only; the member is shown to that member and to librarians.
+  """
+  currentLoan: Loan @join__field(graph: LENDING)
+}
+
+"""
+A tool with a motor: mains or battery.
+"""
+type PowerSpecs implements ToolSpecs @join__type(graph: INVENTORY) @join__implements(graph: INVENTORY, interface: "ToolSpecs") {
+  summary: String!
+  volts: Int!
+  cordless: Boolean!
+}
+
+"""
+A tool without a motor.
+"""
+type HandSpecs implements ToolSpecs @join__type(graph: INVENTORY) @join__implements(graph: INVENTORY, interface: "ToolSpecs") {
+  summary: String!
+  weightGrams: Int!
+}
+
+"""
+A shelf in the catalogue: Saws, Garden, ...
+"""
+type Category @join__type(graph: INVENTORY) {
+  id: ID!
+  name: String!
+  """
+  The number of tools in it.
+  """
+  toolCount: Int!
+}
+
+"""
+A place where tools are kept, collected and returned.
+"""
+type Branch @join__type(graph: INVENTORY) {
+  id: ID!
+  name: String!
+  address: String!
+  """
+  Free text, for example "Sat 10:00-14:00".
+  """
+  openingHours: String!
+}
+
+"""
+One page of tools (the Relay connection shape).
+"""
+type ToolConnection @join__type(graph: INVENTORY) {
+  edges: [ToolEdge!]!
+  pageInfo: PageInfo!
+  """
+  All tools that match the filter, not just this page.
+  """
+  totalCount: Int! @cost(weight: 5)
+}
+
+"""
+A tool and the cursor to continue after it.
+"""
+type ToolEdge @join__type(graph: INVENTORY) {
+  cursor: String!
+  node: Tool!
+}
+
+"""
+Where a page ends, and whether there is another.
+"""
+type PageInfo @join__type(graph: INVENTORY) @join__type(graph: LENDING) {
+  hasNextPage: Boolean!
+  endCursor: String
+}
+
+"""
+Changes: borrowing and returning.
+"""
+type Mutation @join__type(graph: LENDING) {
+  """
+  Borrow a tool for `days` (1 to 14). Signed in only. Sending the same `idempotencyKey` again returns the
+  first answer and borrows nothing more.
+  """
+  borrowTool(input: BorrowInput!): BorrowResult!
+  """
+  Return a loan: your own, or any loan for a librarian.
+  """
+  returnTool(input: ReturnInput!): ReturnResult!
+}
+
+"""
+Live updates.
+"""
+type Subscription @join__type(graph: LENDING) {
+  """
+  Each time the tool is borrowed or returned.
+  """
+  availabilityChanged(toolId: ID!): AvailabilityChange!
+}
+
+"""
+Someone who borrows tools: the token's preferred_username is their handle.
+"""
+type Member @join__type(graph: LENDING, key: "id") {
+  id: ID!
+  handle: String!
+  displayName: String!
+  """
+  Only the member and librarians see it; null and an error for anyone else.
+  """
+  email: String
+  """
+  Newest first.
+  """
+  loans(first: Int! = 10, after: String, status: LoanStatus): LoanConnection! @listSize(slicingArguments: ["first"], sizedFields: ["edges"])
+}
+
+"""
+One tool lent to one member, from borrowing to return.
+"""
+type Loan @join__type(graph: LENDING) {
+  id: ID!
+  tool: Tool!
+  """
+  Only the member and librarians see it; null and an error for anyone else.
+  """
+  member: Member
+  borrowedAt: DateTime!
+  dueAt: DateTime!
+  """
+  Null while the tool is out.
+  """
+  returnedAt: DateTime
+  status: LoanStatus!
+}
+
+"""
+The new loan (or, for a repeated idempotencyKey, the first one).
+"""
+type Borrowed @join__type(graph: LENDING) {
+  loan: Loan!
+}
+
+"""
+The loan, now returned.
+"""
+type Returned @join__type(graph: LENDING) {
+  loan: Loan!
+}
+
+"""
+Someone else has it.
+"""
+type ToolUnavailable implements Problem @join__type(graph: LENDING) @join__implements(graph: LENDING, interface: "Problem") {
+  message: String!
+  tool: Tool!
+  """
+  When the open loan is due back.
+  """
+  expectedBack: DateTime!
+}
+
+"""
+Return a tool before borrowing another.
+"""
+type LoanLimitReached implements Problem @join__type(graph: LENDING) @join__implements(graph: LENDING, interface: "Problem") {
+  message: String!
+  """
+  Open loans a member may have at once.
+  """
+  limit: Int!
+}
+
+"""
+Lending does not know a tool with that id.
+"""
+type ToolNotFound implements Problem @join__type(graph: LENDING) @join__implements(graph: LENDING, interface: "Problem") {
+  message: String!
+  toolId: ID!
+}
+
+"""
+An input value outside its range.
+"""
+type InvalidInput implements Problem @join__type(graph: LENDING) @join__implements(graph: LENDING, interface: "Problem") {
+  message: String!
+  """
+  The input field that is wrong, for example "days".
+  """
+  field: String!
+}
+
+"""
+No loan with that id that you may see (someone else's loan is not found, not forbidden).
+"""
+type LoanNotFound implements Problem @join__type(graph: LENDING) @join__implements(graph: LENDING, interface: "Problem") {
+  message: String!
+  loanId: ID!
+}
+
+"""
+Returning twice changes nothing.
+"""
+type AlreadyReturned implements Problem @join__type(graph: LENDING) @join__implements(graph: LENDING, interface: "Problem") {
+  message: String!
+  loan: Loan!
+}
+
+"""
+A tool went out or came back.
+"""
+type AvailabilityChange @join__type(graph: LENDING) {
+  tool: Tool!
+  available: Boolean!
+  at: DateTime!
+}
+
+"""
+One page of loans.
+"""
+type LoanConnection @join__type(graph: LENDING) {
+  edges: [LoanEdge!]!
+  pageInfo: PageInfo!
+}
+
+"""
+A loan and the cursor to continue after it.
+"""
+type LoanEdge @join__type(graph: LENDING) {
+  cursor: String!
+  node: Loan!
+}
+
+"""
+What every kind of tool has.
+"""
+interface ToolSpecs @join__type(graph: INVENTORY) {
+  """
+  One line for a list: "18 V, cordless" or "450 g".
+  """
+  summary: String!
+}
+
+"""
+What every expected failure has: something to show the member.
+"""
+interface Problem @join__type(graph: LENDING) {
+  message: String!
+}
+
+"""
+One hit in the search box.
+"""
+union SearchResult @join__type(graph: INVENTORY) @join__unionMember(graph: INVENTORY, member: "Tool") @join__unionMember(graph: INVENTORY, member: "Category") @join__unionMember(graph: INVENTORY, member: "Branch") = Tool | Category | Branch
+
+"""
+Borrowed, or why not: every member is something the client shows, not an error.
+"""
+union BorrowResult @join__type(graph: LENDING) @join__unionMember(graph: LENDING, member: "Borrowed") @join__unionMember(graph: LENDING, member: "ToolUnavailable") @join__unionMember(graph: LENDING, member: "LoanLimitReached") @join__unionMember(graph: LENDING, member: "ToolNotFound") @join__unionMember(graph: LENDING, member: "InvalidInput") = Borrowed | ToolUnavailable | LoanLimitReached | ToolNotFound | InvalidInput
+
+"""
+Returned, or why not.
+"""
+union ReturnResult @join__type(graph: LENDING) @join__unionMember(graph: LENDING, member: "Returned") @join__unionMember(graph: LENDING, member: "LoanNotFound") @join__unionMember(graph: LENDING, member: "AlreadyReturned") = Returned | LoanNotFound | AlreadyReturned
+
+"""
+The catalogue's sort orders. Each has its own index and its own cursors.
+"""
+enum ToolSort @join__type(graph: INVENTORY) {
+  NAME_ASC @join__enumValue(graph: INVENTORY)
+  NAME_DESC @join__enumValue(graph: INVENTORY)
+  """
+  Most recently added first.
+  """
+  NEWEST @join__enumValue(graph: INVENTORY)
+}
+
+"""
+The state a librarian records when a tool comes back.
+"""
+enum Condition @join__type(graph: INVENTORY) {
+  NEW @join__enumValue(graph: INVENTORY)
+  GOOD @join__enumValue(graph: INVENTORY)
+  WORN @join__enumValue(graph: INVENTORY)
+  NEEDS_REPAIR @join__enumValue(graph: INVENTORY)
+}
+
+"""
+OVERDUE is an open loan past its due time; it is computed, not stored.
+"""
+enum LoanStatus @join__type(graph: LENDING) {
+  OPEN @join__enumValue(graph: LENDING)
+  OVERDUE @join__enumValue(graph: LENDING)
+  RETURNED @join__enumValue(graph: LENDING)
+}
+
+"""
+Exactly one of the fields.
+"""
+input ToolLookup @join__type(graph: INVENTORY) @oneOf {
+  id: ID
+  barcode: String
+}
+
+"""
+All given fields must match.
+"""
+input ToolFilter @join__type(graph: INVENTORY) {
+  categoryId: ID
+  branchId: ID
+  """
+  Any of these conditions.
+  """
+  condition: [Condition!]
+  """
+  Case-insensitive part of the name.
+  """
+  nameContains: String
+  """
+  True for power tools only, false for hand tools only.
+  """
+  powered: Boolean
+}
+
+"""
+What borrowTool needs.
+"""
+input BorrowInput @join__type(graph: LENDING) {
+  toolId: ID!
+  days: Int! = 7
+  """
+  Any string up to 64 characters, new for each borrow the member means to make.
+  """
+  idempotencyKey: String!
+}
+
+"""
+What returnTool needs.
+"""
+input ReturnInput @join__type(graph: LENDING) {
+  loanId: ID!
+}

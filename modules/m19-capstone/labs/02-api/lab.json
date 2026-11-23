@@ -1,0 +1,12 @@
+{
+  "title": "Capstone stage 2: a working API",
+  "lecture": "capstone",
+  "kind": "project",
+  "grading": "both",
+  "needs": [
+    "postgres",
+    "node",
+    "fed"
+  ],
+  "workspace": "m19-capstone/capstone"
+}

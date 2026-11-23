@@ -342,3 +342,24 @@ Earlier: `bin/course check --starters` (2026-11-21): 11 auto-graded labs, 0 prob
       lightning talks (rubric)
 - [x] `bin/course check m18 --starters`: 8 auto-graded labs, 0 problems
       (`_workbench/2026-11-23-m18-check-starters.log`)
+
+## Capstone (5 stages, a generic checker, a reference product)
+
+- [x] `modules/m19-capstone`: README (briefs, requirement-to-check table, stages, solo and group variants,
+      grading, shorter tracks, changes from the plan), checkpoint.md (8 questions about your own product),
+      checkpoint.json (stages 1 to 4 and the demo script)
+- [x] Contract: `MANIFEST.md` (every `capstone.json` key and probe), `Capcheck.java` (schema requirements,
+      operations with cross-file fragments validated, documents and persisted ids, schema coordinates, SDL
+      from introspection), `capstone.sh` (build, run the stack, course tokens, 12 probes, the observability
+      stack with the manifest's scrape targets), `docs.sh`, `design-review.md` (stage 1's ten-row review)
+- [x] Labs: m19/01 pitch, design, contract (19 checks plus design lint advice) · m19/02 working API (build, run,
+      served schema equals the contract, Hurl, pagination, typed error, idempotency) · m19/03 hardening (7 auth
+      cases, trusted documents, cost, N+1, real time over SSE, Java client, UI, attack report, load test) ·
+      m19/04 federation and ops (served schemas compose, suite through the router, one trace across three
+      services, the dashboard's panels with data, runbook, CI gates) · m19/05 demo day (the syllabus's rubric)
+- [x] Reference product Toolshed (`reference/`): two Spring for GraphQL subgraphs on PostgreSQL behind Hive
+      Router 0.3.9 (JWT, trusted documents, demand control, depth limit), 34 types, 10 operations, 24-request Hurl
+      suite, 19 tests (Testcontainers, GraphQlTester, N+1, schema diff) and PIT 19/19, Java CLI and web UI, OTLP
+      tracing, a six-panel dashboard, 7 ADRs, runbook, 18 attacks (all blocked), load test (2,711 req/s)
+- [x] Runner: lab.json `"workspace"` for labs that share one workspace directory
+- [x] `bin/course check m19 --starters`: 4 auto-graded labs, 0 problems (`_workbench/2026-11-23-capstone-check-starters.log`)

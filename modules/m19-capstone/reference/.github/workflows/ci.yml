@@ -1,0 +1,55 @@
+# Toolshed CI. Read by the course checker (stage 4), not run in the course; on GitHub it runs as written.
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  contract:
+    # The contract is the source: the composed supergraph and the trusted-documents manifest must match it.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Compose the supergraph (The Guild's composition, MIT)
+        run: |
+          npm install --no-save @theguild/federation-composition@0.27.0 graphql@16.15.0
+          node scripts/compose-ci.mjs router/supergraph.yaml /tmp/supergraph.graphql
+          diff -u router/supergraph.graphql /tmp/supergraph.graphql
+      - name: Trusted documents are up to date
+        run: |
+          scripts/persist.sh
+          git diff --exit-code router/persisted-documents.json tests/ids.env
+
+  test:
+    # Unit tests, GraphQlTester tests on PostgreSQL (Testcontainers), the N+1 detector and the schema-diff gate.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+          cache: maven
+      - name: mvn verify
+        run: mvn -B verify
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: surefire-reports
+          path: '**/target/surefire-reports/'
+
+  mutation:
+    # PIT on the lending rules; fails under 80% killed mutants.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+          cache: maven
+      - name: PIT gate
+        run: mvn -B -pl lending -am verify -Ppit -Dtest='LendingRulesTest,SchemaCompatibilityTest' -Dsurefire.failIfNoSpecifiedTests=false

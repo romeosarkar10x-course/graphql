@@ -1,0 +1,37 @@
+# The librarian's weekly report: overdue loans, who has them, and each member's recent history.
+query OverdueReport($first: Int! = 10, $after: String, $history: Int! = 3) {
+  overdueLoans(first: $first, after: $after) {
+    edges {
+      node {
+        id
+        dueAt
+        tool {
+          id
+          name
+          branch {
+            name
+          }
+        }
+        member {
+          displayName
+          email
+          loans(first: $history) {
+            edges {
+              node {
+                id
+                status
+                tool {
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}

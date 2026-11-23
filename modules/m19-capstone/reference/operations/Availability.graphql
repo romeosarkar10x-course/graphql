@@ -1,0 +1,10 @@
+# The tool page's live "on the shelf" badge.
+subscription Availability($toolId: ID!) {
+  availabilityChanged(toolId: $toolId) {
+    available
+    at
+    tool {
+      id
+    }
+  }
+}
