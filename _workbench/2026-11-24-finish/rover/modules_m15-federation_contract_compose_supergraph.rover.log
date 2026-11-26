@@ -1,0 +1,6 @@
+There is a newer version of Rover available: v1.1.0 (currently running v1.0.1)
+
+For instructions on how to install, run `rover docs open start`
+merging supergraph schema files
+Using the `supergraph` plugin v2.9.0 (already installed).
+Supergraph Schema was printed to /course/_workbench/2026-11-24-finish/rover/modules_m15-federation_contract_compose_supergraph.rover.graphql

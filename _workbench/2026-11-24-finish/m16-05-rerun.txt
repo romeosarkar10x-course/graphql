@@ -1,0 +1,6 @@
+  [32mpass[0m  recovers once the reviews service is back (within 20 s)
+PASS m16/05
+  [32mpass[0m  recovers once the reviews service is back (within 20 s)
+PASS m16/05
+  [32mpass[0m  recovers once the reviews service is back (within 20 s)
+PASS m16/05

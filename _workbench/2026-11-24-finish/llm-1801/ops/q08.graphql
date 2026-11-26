@@ -1,0 +1,1 @@
+query { search(text: "Asha Rao") { __typename ... on User { id name handle clubs { id name } } } }

@@ -1,0 +1,1 @@
+query { books(first: 1000) { id title averageRating reviews(last: 1) { id } } }

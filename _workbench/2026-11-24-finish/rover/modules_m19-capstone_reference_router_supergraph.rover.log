@@ -1,0 +1,8 @@
+merging supergraph schema files
+Using the `supergraph` plugin v2.9.0 (already installed).
+error[E029]: Encountered 1 build error while trying to build a supergraph.
+
+Caused by:
+    INVALID_GRAPHQL: [inventory] Unknown directive "@oneOf".
+    
+        The subgraph schema you provided is invalid. See https://www.apollographql.com/docs/federation/errors/ for more information on resolving build errors.

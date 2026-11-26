@@ -1,0 +1,155 @@
+schema
+  @link(url: "https://specs.apollo.dev/link/v1.0")
+  @link(url: "https://specs.apollo.dev/join/v0.5", for: EXECUTION)
+{
+  query: Query
+  mutation: Mutation
+}
+
+directive @join__directive(graphs: [join__Graph!], name: String!, args: join__DirectiveArguments) repeatable on SCHEMA | OBJECT | INTERFACE | FIELD_DEFINITION
+
+directive @join__enumValue(graph: join__Graph!) repeatable on ENUM_VALUE
+
+directive @join__field(graph: join__Graph, requires: join__FieldSet, provides: join__FieldSet, type: String, external: Boolean, override: String, usedOverridden: Boolean, overrideLabel: String, contextArguments: [join__ContextArgument!]) repeatable on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__implements(graph: join__Graph!, interface: String!) repeatable on OBJECT | INTERFACE
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet, extension: Boolean! = false, resolvable: Boolean! = true, isInterfaceObject: Boolean! = false) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
+
+directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on UNION
+
+directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+
+"""
+A book in Shelfie's catalogue. Owned by the catalog team; other teams add fields to it.
+"""
+type Book
+  @join__type(graph: CATALOG, key: "id")
+  @join__type(graph: CATALOG, key: "isbn")
+  @join__type(graph: CLUBS, key: "id")
+  @join__type(graph: REVIEWS, key: "id")
+{
+  id: ID!
+  isbn: String! @join__field(graph: CATALOG)
+  title: String! @join__field(graph: CATALOG)
+  authors: [String!]! @join__field(graph: CATALOG)
+  year: Int! @join__field(graph: CATALOG)
+  pages: Int! @join__field(graph: CATALOG) @join__field(graph: CLUBS, external: true)
+
+  """
+  Weeks a club needs at Shelfie's pace of 100 pages a week: the catalog's page count, rounded up.
+  """
+  weeksToRead: Int! @join__field(graph: CLUBS, requires: "pages")
+  clubsReading: [Club!]! @join__field(graph: CLUBS)
+
+  """Oldest first."""
+  reviews: [Review!]! @join__field(graph: REVIEWS)
+  reviewCount: Int! @join__field(graph: REVIEWS)
+
+  """Null without reviews."""
+  averageRating: Float @join__field(graph: REVIEWS)
+}
+
+type Club
+  @join__type(graph: CLUBS, key: "id")
+{
+  id: ID!
+  name: String!
+  owner: User!
+  members: [User!]!
+  memberCount: Int!
+  currentBook: Book
+}
+
+input join__ContextArgument {
+  name: String!
+  type: String!
+  context: String!
+  selection: join__FieldValue!
+}
+
+scalar join__DirectiveArguments
+
+scalar join__FieldSet
+
+scalar join__FieldValue
+
+enum join__Graph {
+  ACCOUNTS @join__graph(name: "accounts", url: "http://localhost:4001/graphql")
+  CATALOG @join__graph(name: "catalog", url: "http://localhost:4002/graphql")
+  CLUBS @join__graph(name: "clubs", url: "http://localhost:4004/graphql")
+  REVIEWS @join__graph(name: "reviews", url: "http://localhost:4003/graphql")
+}
+
+scalar link__Import
+
+enum link__Purpose {
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+
+  """
+  `EXECUTION` features provide metadata necessary for operation execution.
+  """
+  EXECUTION
+}
+
+type Mutation
+  @join__type(graph: REVIEWS)
+{
+  """Signed in only (X-Shelfie-User); null and an error otherwise."""
+  addReview(bookId: ID!, rating: Int!, body: String!): Review
+}
+
+type Query
+  @join__type(graph: ACCOUNTS)
+  @join__type(graph: CATALOG)
+  @join__type(graph: CLUBS)
+  @join__type(graph: REVIEWS)
+{
+  """
+  The signed-in reader: the user named by the X-Shelfie-User header, null without one.
+  """
+  me: User @join__field(graph: ACCOUNTS)
+  user(id: ID!): User @join__field(graph: ACCOUNTS)
+  users: [User!]! @join__field(graph: ACCOUNTS)
+  books(first: Int = 10): [Book!]! @join__field(graph: CATALOG)
+  book(id: ID!): Book @join__field(graph: CATALOG)
+  clubs: [Club!]! @join__field(graph: CLUBS)
+  club(id: ID!): Club @join__field(graph: CLUBS)
+  review(id: ID!): Review @join__field(graph: REVIEWS)
+
+  """Newest first."""
+  latestReviews(first: Int = 5): [Review!]! @join__field(graph: REVIEWS)
+}
+
+type Review
+  @join__type(graph: REVIEWS, key: "id")
+{
+  id: ID!
+  rating: Int!
+  body: String!
+
+  """
+  Reviews keeps a copy of each author's handle, so it can answer that without accounts.
+  """
+  author: User! @join__field(graph: REVIEWS, provides: "handle")
+  book: Book!
+}
+
+"""A Shelfie reader. Owned by the accounts team."""
+type User
+  @join__type(graph: ACCOUNTS, key: "id")
+  @join__type(graph: CLUBS, key: "id")
+  @join__type(graph: REVIEWS, key: "id")
+{
+  id: ID!
+  name: String! @join__field(graph: ACCOUNTS)
+  handle: String! @join__field(graph: ACCOUNTS) @join__field(graph: REVIEWS, external: true)
+  city: String @join__field(graph: ACCOUNTS)
+  clubs: [Club!]! @join__field(graph: CLUBS)
+  reviews: [Review!]! @join__field(graph: REVIEWS)
+}

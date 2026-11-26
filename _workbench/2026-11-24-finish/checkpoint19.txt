@@ -1,0 +1,10 @@
+pass     m19/01
+pass     m19/02
+pass     m19/03
+pass     m19/04
+present  workspace/m19-capstone/capstone/docs/DEMO.md
+Tagged checkpoint-19 in workspace/ (1391529)
+
+real	2m24.029s
+user	0m0.037s
+sys	0m0.018s

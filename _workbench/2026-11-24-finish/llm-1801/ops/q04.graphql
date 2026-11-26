@@ -1,0 +1,1 @@
+query { search(text: "Booker Shortlist Survivors") { __typename ... on Club { id name memberCount } } }

@@ -60,7 +60,7 @@ leave it out for an anonymous request). Paths (`connection`, `count.path`) are j
 | `auth [{name, operation, variables, as, token, expect}]` | 3 | At least 4 cases, at least one `allowed` (HTTP 200, no errors) and two `denied` (HTTP 401/403, or errors); `token` adds a `bin/course token` flag such as `--expired` or `--forged` |
 | `expensive {operation, variables, as}` | 3 | Refused: errors and no data |
 | `n1 {operation, as, small, large, counters: [{url, path}]}` | 3 | The sum of your statement counters (jq `path` into each URL's JSON) grows by at most 2 more for `large` than for `small` |
-| `realtime {kind, operation, variables, as, trigger, url}` | 3 | `subscription`: an event arrives over SSE (`Accept: text/event-stream`, at `url` or `api`) within 8 s of the `trigger` operation. `defer`: the response has incremental parts |
+| `realtime {kind, operation, variables, as, trigger, url}` | 3 | `subscription`: an event arrives within 8 s of the `trigger` operation, over SSE (`Accept: text/event-stream`, at `url` or `api`), or over graphql-transport-ws when `url` is `ws://...` (the document's text is sent, no token). `defer`: the response has incremental parts |
 | `crossSubgraph {operation, variables, as}` | 4 | Sent with a fresh `traceparent`, Tempo holds that trace with spans from at least two services within 30 s |
 
 The checker also sends, by itself: `query CapcheckProbe { __typename }` as raw text (stage 3, must be refused),

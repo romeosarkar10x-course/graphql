@@ -2,8 +2,11 @@
 // .cache/m2 (kafka_cp in kafka.sh).
 //   KafkaTool send <topic> <key> <value>       one record
 //   KafkaTool dump <topic> [seconds]           every record from the beginning as "key<TAB>value", then exit
+//   KafkaTool prune <prefix>                   delete every topic whose name starts with prefix (a test's
+//                                              leftovers from earlier runs); prints how many
 import java.time.Duration;
 import java.util.*;
+import org.apache.kafka.clients.admin.Admin;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.*;
@@ -15,6 +18,12 @@ public class KafkaTool {
     if (a[0].equals("send")) {
       try (var producer = new KafkaProducer<>(p, new StringSerializer(), new StringSerializer())) {
         producer.send(new ProducerRecord<>(a[1], a[2], a[3])).get();
+      }
+    } else if (a[0].equals("prune")) {
+      try (var admin = Admin.create(p)) {
+        var old = admin.listTopics().names().get().stream().filter(t -> t.startsWith(a[1])).toList();
+        if (!old.isEmpty()) admin.deleteTopics(old).all().get();
+        System.out.println(old.size());
       }
     } else if (a[0].equals("dump")) {
       p.put("group.id", "kafkatool-" + UUID.randomUUID());

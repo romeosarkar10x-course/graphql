@@ -1,0 +1,81 @@
+"Lab 10.2: only callers with this role (or ADMIN) may resolve the field."
+directive @auth(role: Role!) on FIELD_DEFINITION
+
+enum Role {
+  MEMBER
+  MODERATOR
+  ADMIN
+}
+
+interface Node {
+  id: ID!
+}
+
+type Query {
+  "The signed-in reader, or null when the request carries no token."
+  viewer: Reader
+  node(id: ID!): Node
+  "A club the viewer may see: a public one, or a private one the viewer belongs to."
+  club(id: ID!): Club
+  "Public clubs, plus private clubs the viewer belongs to."
+  clubs(first: Int = 10): [Club!]!
+  book(id: ID!): Book
+  books(first: Int = 10): [Book!]!
+  "Every reader. Moderators only."
+  readers(first: Int = 10): [Reader!]! @auth(role: MODERATOR)
+}
+
+type Reader implements Node {
+  id: ID!
+  name: String!
+  "Only the reader themself and admins see this; null for everyone else."
+  email: String
+  roles: [Role!]!
+  "The clubs of this reader that the viewer may see."
+  clubs(first: Int = 10): [Club!]!
+}
+
+type Club implements Node {
+  id: ID!
+  name: String!
+  private: Boolean!
+  owner: Reader!
+  members(first: Int = 10): [Reader!]!
+  reviews(first: Int = 10): [Review!]!
+  "The code that lets a reader join a private club. The owner only; null for everyone else."
+  inviteCode: String
+}
+
+type Book implements Node {
+  id: ID!
+  title: String!
+  "Reviews the viewer may see: those in public clubs and in the viewer's own clubs."
+  reviews(first: Int = 10): [Review!]!
+  "Books like this one. Slow on purpose: the recommender takes 300 ms per call (lab 10.4's timeout)."
+  recommendations(first: Int = 3): [Book!]!
+}
+
+type Review implements Node {
+  id: ID!
+  rating: Int!
+  body: String!
+  author: Reader!
+  book: Book!
+  club: Club!
+}
+
+type Mutation {
+  "Members of the club only."
+  addReview(clubId: ID!, bookId: ID!, rating: Int!, body: String!): Review!
+  "The author, a moderator, or the club's owner. Returns the removed review's id."
+  removeReview(id: ID!): ID!
+  "The club's owner only."
+  renameClub(id: ID!, name: String!): Club!
+  "Anyone signed in, with the right code. Null when the code is wrong."
+  joinClub(id: ID!, inviteCode: String!): Club
+}
+
+type Subscription {
+  "Lab 10.7: new reviews in one club, for its members."
+  reviewAdded(clubId: ID!): Review!
+}

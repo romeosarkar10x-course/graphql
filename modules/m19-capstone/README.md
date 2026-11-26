@@ -112,8 +112,11 @@ setup (Module 10): `bin/course token <user> --aud <your-api>`, verified offline 
 - The checker reads CI workflows and test sources; it does not run them (as in Module 13). It does run your
   services, your Hurl suite, the probes, Tempo, Prometheus and Grafana.
 - Real-time checks use server-sent events (Accept: text/event-stream) at your API, which Spring for GraphQL
-  and Hive Router both speak; a WebSocket-only subscription can be checked by pointing `realtime.url` at a
-  service that also speaks SSE, or the rubric covers it.
+  and Hive Router both speak, or graphql-transport-ws when `realtime.url` is a `ws://` URL (Module 11's client).
+
+If you compose with Rover (`bin/course rover`), declare `directive @oneOf on INPUT_OBJECT` in each subgraph
+that uses it: Apollo's composition does not define it (it then drops it from the supergraph; your subgraph still
+enforces it). The course's composer needs no declaration.
 
 ## Reference product notes
 

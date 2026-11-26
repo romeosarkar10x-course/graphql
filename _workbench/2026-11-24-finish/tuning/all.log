@@ -1,0 +1,7 @@
+run 1 done
+run 2 done
+run 3 done
+run 4 done
+run 5 done
+bin/course: line 282: -ge: command not found
+course: usage: bin/course seckit graphql-cop -t http://localhost:4000/graphql | clairvoyance <url> -o schema.json

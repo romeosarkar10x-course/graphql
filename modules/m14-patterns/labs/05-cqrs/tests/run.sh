@@ -7,6 +7,7 @@ JAR=target/shelfie-cqrs.jar; TOPIC="m14-reviews-$(date +%s)-$RANDOM"
 sql() { java -cp "$(lib_cp)" /course/modules/m11-realtime/contract/Sql.java "$1" 2>&1; }
 gql() { curl -s "$URL" -H 'Content-Type: application/json' -d "{\"query\":\"$1\"}"; }
 app_build $JAR || finish
+kafka_tool prune m14-reviews- >/dev/null   # earlier runs' topics (each run uses a fresh one)
 app_start java -jar $JAR --shelfie.topic=$TOPIC || finish
 app_hurl $LAB_HOME/tests/cqrs.hurl "a command, then the read model (cqrs.hurl)"
 id=$(sql "SELECT id FROM m14_05.reviews WHERE author = 'kim' AND book_id = 'b1'" | head -1)

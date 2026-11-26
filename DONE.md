@@ -363,3 +363,26 @@ Earlier: `bin/course check --starters` (2026-11-21): 11 auto-graded labs, 0 prob
       tracing, a six-panel dashboard, 7 ADRs, runbook, 18 attacks (all blocked), load test (2,711 req/s)
 - [x] Runner: lab.json `"workspace"` for labs that share one workspace directory
 - [x] `bin/course check m19 --starters`: 4 auto-graded labs, 0 problems (`_workbench/2026-11-23-capstone-check-starters.log`)
+
+## Finishing (2026-11-24): every open check that could be run
+
+- [x] Gradle runs allowed: graphql-java v26.1 for lab 17.7 (219 parser tests, the CRLF fix and its test, publish
+      to Maven local with the documented flags) and Viaduct's starter for lab 18.4 (`Hello, World!`)
+- [x] Licences and telemetry: Rover 1.0.1 with ELv2 accepted (`bin/course rover`), composition parity with The
+      Guild's composer on every course supergraph (and Rover's `@oneOf` gap); Apollo Router telemetry off
+- [x] Module 10's offline JWT fixed for Boot 4.2 (16 apps: `JwtIssuerValidator` instead of `issuer-uri`); labs
+      10.2 to 10.8, 14.3 and 14.6 pass with Keycloak stopped
+- [x] Module 13 finding 7 explained (MockMvc without filters when only `@AutoConfigureHttpGraphQlTester` is used)
+- [x] Measured instead of described: lab 7.1's SDL-only test, lab 18.1's two fair LLM runs, lab 18.2 with a real MCP
+      client, lab 9.8 five runs with medians, Apollo Client's `@defer` header, Apollo Kotlin's APIs from source,
+      PayPal's 700 ms from PayPal's blog
+- [x] Kubernetes once on kind: lab 16.4's rollout with 0 failed requests (twice), lab 16.6's HPA 2 to 12 to 2 on
+      the cost metric via prometheus-adapter
+- [x] Lab 18.6 Go reference port (gqlgen; `bin/course go`): passes the unchanged test
+- [x] Capstone: WebSocket real-time probe; `bin/course checkpoint 19` and `checkpoint 15` end to end
+- [x] Lab 14.5 prunes its Kafka topics; labs 7.6 and 13.5 on current Actions majors
+- [x] TODO.md reduced to what needs the user and per-term maintenance
+- [x] Full `bin/course check --starters`, every module (`_workbench/2026-11-24-check-starters.log`): 184 auto-graded
+      labs. 182 green in that run, starters failing as they should; m16/05 (a timing check, on a machine running
+      the whole suite) and m19/04 (PostgreSQL went away as the course's containers were stopped) were re-run on
+      2026-11-26 and pass: m16/05 three times in three, m19/04 once (`_workbench/2026-11-24-finish/`).

@@ -1,0 +1,1 @@
+query { books(first: 1, titleContains: "Project Hail Mary") { title reviews(last: 1000) { body rating createdAt author { name handle } } } }

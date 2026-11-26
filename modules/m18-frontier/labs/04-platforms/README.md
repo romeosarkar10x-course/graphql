@@ -39,8 +39,11 @@ git clone https://github.com/viaduct-dev/cli-starter.git && cd cli-starter
 ./gradlew -q run --args="'{ greeting }'"
 ```
 
-(The course did not run that build: the authoring session was not allowed to run a Gradle wrapper. The command
-is copied from Viaduct's README at v3.0.0; record what happened on your machine.)
+(The course ran it on 2026-11-24 inside the course image, Java 25, commit `d111e57` "release/v3.0.0": it prints
+`{"data": {"greeting": "Hello, World!"}}` after about a minute the first time, while Gradle 9.1.0 and
+Viaduct's jars download, and in about 4 s after that, with JDK warnings about native access and `sun.misc.Unsafe`
+that you can ignore. Inside `bin/course shell`, `export GRADLE_USER_HOME=/course/.cache/gradle` first so the
+download lands in the course cache. Record what happened on your machine.)
 
 ## Done when
 

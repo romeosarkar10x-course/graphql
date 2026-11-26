@@ -19,8 +19,9 @@
    checked: 2.13.3, 2.14.0, 2.14.1, 2.14.4 export it, 2.15.0 does not. The plugin's peer range is `^2.0.0`; its
    devDependency is 2.13.3. Pinned 2.14.4 (`port/apollo-subgraph-2.15.txt`).
 5. **Viaduct v3.0.0** (2026-10-21, Apache-2.0); starter `viaduct-dev/cli-starter` at d111e575 (2026-10-21), Gradle
-   wrapper 9.1.0. **Not run**: running its `./gradlew` (inside the course's Gradle image) was denied in the
-   authoring session, as graphql-java's was for Module 17 (finding 22 there). The starter sources are kept in
+   wrapper 9.1.0. Not run in the authoring session (its `./gradlew` was
+   denied then); run on 2026-11-24 in the course image, Java 25: `Hello, World!`
+   (`_workbench/2026-11-24-finish/viaduct-run1.txt`). The starter sources are kept in
    `viaduct-cli-starter/` (without `.git`).
 6. Platform repositories (GitHub API, 2026-11-23): hasura/graphql-engine Apache-2.0, v2.51.9 (2026-11-19);
    supabase/pg_graphql Apache-2.0, v1.6.3 (2026-11-02); neo4j/graphql Apache-2.0; dgraph-io/dgraph Apache-2.0,

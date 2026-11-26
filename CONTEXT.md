@@ -125,7 +125,7 @@ in Docker.
   - Scanners run in their own image (`bin/course seckit`), sharing the network namespace of the newest
     course container; the lab test re-implements graphql-cop's HIGH checks in Hurl. InQL, DVGA and ZAP are
     described, not run.
-- Module 11 (2026-11-21), probes in `_workbench/2026-11-21-m11-probe/` (`FINDINGS.md`, 20 findings):
+- Module 11 (2026-11-21), probes in `_workbench/2026-11-21-m11-probe/` (`FINDINGS.md`, 21 findings):
   - Kafka 4.4.0 is a course service (one KRaft node); PostgreSQL runs with `wal_level=logical` for Debezium.
   - Replicas run inside one course container on :4001-4003 behind `contract/Balancer.java` (a TCP
     round-robin balancer with a drop switch), not nginx; the same tool simulates network drops in lab 11.2.
@@ -237,4 +237,16 @@ in Docker.
     Its router is Hive Router 0.3.9: trusted documents and cost limits in a federated graph belong at the router.
   - Stage 1's "Module 7 rubric" is `contract/design-review.md`, a single review built from Module 7's questions
     (Module 7 has one rubric per lab). CI workflows and tests are read, not run (as in Module 13).
+- Finishing (2026-11-24), the user: "you do the unfinished checks, accepting licenses, etc; No need to do open the
+  html pages in the browser". Probes in `_workbench/2026-11-24-finish/` (`FINDINGS.md`, 21 findings):
+  - Licences: Rover's ELv2 accepted by the course owner; `bin/course rover` passes `APOLLO_ELV2_LICENSE=accept`.
+    Tests keep The Guild's MIT composer. Apollo Router's anonymous telemetry is off course-wide.
+  - Gradle allowed for one-off runs of other people's builds (graphql-java for 17.7, Viaduct for 18.4); Maven
+    stays the course's build tool.
+  - Offline JWT verification no longer uses `issuer-uri` (Boot 4.2 fetches discovery with it): a
+    `JwtIssuerValidator` bean in each lab app's `SecurityConfig`.
+  - Go is a supported port language for lab 18.6 (`bin/course go`, official Go image, static binaries run in the
+    course image); a gqlgen reference port is in `solution-go/`.
+  - Kubernetes stays out of the labs (simulated); the manifests were applied once to kind to check them.
+  - LLM runs for labs 7.1, 18.1 and 18.2 used the Claude Code CLI on the host in print mode with no tools.
 

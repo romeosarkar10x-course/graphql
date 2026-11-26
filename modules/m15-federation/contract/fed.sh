@@ -13,6 +13,8 @@
 #   fed_stop                        stop everything started here (also on exit)
 FED=/course/modules/m15-federation/contract
 FED_BIN=/course/.cache/fed/bin
+# Apollo Router sends anonymous usage telemetry unless this is set; the course turns it off (lecture 15.6).
+export APOLLO_TELEMETRY_DISABLED=true
 FED_PIDS=()
 fed_stop() { local p; for p in "${FED_PIDS[@]}"; do kill "$p" 2>/dev/null; done; for p in "${FED_PIDS[@]}"; do wait "$p" 2>/dev/null; done; FED_PIDS=(); return 0; }
 trap fed_stop EXIT

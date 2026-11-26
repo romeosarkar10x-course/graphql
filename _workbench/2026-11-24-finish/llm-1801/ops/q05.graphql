@@ -1,0 +1,1 @@
+query { search(text: "Jonas Berg") { __typename ... on User { id name handle reviews { rating body createdAt book { id title } } } } }

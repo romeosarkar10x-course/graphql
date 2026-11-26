@@ -1,0 +1,22 @@
+# Scale Shelfie on what requests cost, not on CPU (Module 16.6). The metric is served to Kubernetes by an adapter
+# (prometheus-adapter or KEDA) from the PromQL in k8s/cost-per-second.promql, per pod.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: shelfie
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: shelfie
+  minReplicas: 2
+  maxReplicas: 12
+  metrics:
+    - type: Pods
+      pods:
+        metric:
+          name: graphql_cost_per_second
+        target:
+          type: AverageValue
+          # 75% of one pod's measured capacity (CAPACITY.md: about 42,700 cost/s on one CPU)
+          averageValue: "500"

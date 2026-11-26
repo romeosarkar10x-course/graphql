@@ -51,3 +51,5 @@ ignore it. One folder or file per topic, dated.
 | `2026-11-23-m18-check-starters.log` | `bin/course check m18 --starters` after Module 18 |
 | `2026-11-23-capstone/` | Capstone: `PLAN.md`, `FINDINGS.md` (23 findings), `probe/` (inventory, lending, router, subscriptions, tracing and dashboard, claims, statements per operation, attacks and load, stage runs on the reference) |
 | `2026-11-23-capstone-check-starters.log` | `bin/course check m19 --starters` after the capstone |
+| `2026-11-24-finish/` | Finishing the open checks: `FINDINGS.md` (21 findings); graphql-java and Viaduct Gradle runs, Rover parity (`rover/`), offline JWT, MockMvc bearer repro, Apollo Client `@defer`, SDL-only and agent LLM runs (`sdl-only/`, `llm-1801/`), a real MCP client (`mcp-connect/`), lab 9.8's five runs (`tuning/`), kind (`k8s/`), Go port numbers, checkpoints 15 and 19 |
+| `2026-11-24-check-starters.log` | The full `bin/course check --starters`, every module, after finishing |

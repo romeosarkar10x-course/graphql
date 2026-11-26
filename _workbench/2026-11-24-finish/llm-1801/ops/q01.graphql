@@ -1,0 +1,1 @@
+query { clubs { id name visibility currentBook { id title averageRating } } }

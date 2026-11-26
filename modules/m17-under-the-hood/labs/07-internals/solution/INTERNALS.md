@@ -55,8 +55,9 @@ and resolves them from the schema's records. Built in Java, the built-ins carry 
 
 ## Tests
 
-`./gradlew test --tests 'graphql.parser.*'`: not run while writing this module (see the note in the README);
-record your own count and time.
+`./gradlew test --tests 'graphql.parser.*'`: 219 tests in under a second of test time, 1 min 4 s wall clock
+on the first run (Gradle 9.4.0 and the dependencies downloaded; 24 cores, `--max-workers=8`). The learner's
+own count and time are what the rubric wants.
 
 ## The one-line change
 
@@ -71,4 +72,9 @@ case: `removeIndentation("\r\n    one\r\n    two\r\n")` is `"one\ntwo"`.
 ## Building and using it
 
 `RELEASE_VERSION=26.1-local ./gradlew publishToMavenLocal -PpublishToMavenLocal`, then
-`com.graphql-java:graphql-java:26.1-local` in a pom. Not run while writing this module: unverified.
+`com.graphql-java:graphql-java:26.1-local` in a pom. Run on 2026-11-24: both flags work as read from
+`build.gradle` (`RELEASE_VERSION` sets the version, `-PpublishToMavenLocal` skips signing; 12 s). One change
+inside the course image: `-Dmaven.repo.local=/course/.cache/m2`, because the image's Maven uses that repository
+and Gradle writes to `~/.m2`. With the fix, the test class passes (16 tests), and parsing
+`"""\r\n    one\r\n    two\r\n"""` gives `one\ntwo` on 26.1-local where stock 26.1 gives
+`\r\none\r\ntwo\r`.

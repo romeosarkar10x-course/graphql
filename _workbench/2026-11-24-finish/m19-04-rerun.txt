@@ -1,0 +1,4 @@
+  [32mpass[0m  a test counts statements (the N+1 detector)
+  [32mpass[0m  a schema-diff gate
+PASS m19/04
+  This lab also has a rubric part: bin/course grade m19/04

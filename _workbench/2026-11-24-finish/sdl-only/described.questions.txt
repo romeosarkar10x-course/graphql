@@ -1,0 +1,27 @@
+1. What does the club page layout look like: which sections, in what order, and which fields appear in each (no design or mockup was provided)?
+2. What is the club's current-book section expected to show (title, cover, authors, rating, review count), and what should be displayed when `currentBook` is null ("between books")?
+3. What should the page show when `nextMeetup` is null, and how should `startsAt` be displayed (which time zone, which format, relative or absolute)?
+4. How should the page behave when `club(id:)` returns null: a 404 page, a redirect, or a message?
+5. How do I get the club id: from the URL, and what is the route format?
+6. How do I know who the viewer is, and how does authentication work (token, cookie, header, endpoint URL)? The schema defines no `viewer` or `me` field.
+7. What should `viewerIsMember` null (signed out), false and true each look like (e.g. join button, sign-in prompt, "member" badge)?
+8. Is there a join or leave mutation? The schema has no Mutation type, so how does a viewer join the club, and how do owners or moderators manage it?
+9. Should the member list show the first 5 only, and is there a "see all" link or pagination? `members` has only `first` and no cursor or offset, so how do I load more than the first page?
+10. Does `members` include the owner, and in what order should I display the owner relative to the others (the join-date ordering is stated, but the owner is not mentioned)?
+11. `members` returns `User`, not `Membership`, so how do I show each member's role (owner, moderator) and club join date on the club page without N extra queries via `memberships`?
+12. Should the club page show roles (OWNER, MODERATOR, MEMBER) at all, and if so how?
+13. How should `memberCount` relate to the displayed list (e.g. "+N more" after 5), and can `memberCount` and the members list be out of sync?
+14. Is `description` plain text, markdown or HTML, and is it safe to render as is? What are the length limits and how should long text be truncated?
+15. What should be shown when `description` is null: hide the section or show a placeholder?
+16. What are the size, aspect ratio and fallback for `avatarUrl` and `coverUrl`, and how are initials computed from `name` (e.g. multi-word, non-Latin names)? Can I request resized images?
+17. What is the GraphQL endpoint URL, and is it the same for all environments (dev, staging, production)? Are there CORS rules?
+18. How should errors be handled: what do partial results (data plus `errors`), network failures and authorization errors look like, and is there an error extensions convention?
+19. Are the `Url` and `DateTime` scalars guaranteed valid, and do the URLs have a restricted scheme or host (e.g. is it safe to put them in `src`/`href`)?
+20. Should member names and the owner link to a profile page (`/@handle`) and the book to a book page, and what are those routes?
+21. Should the page update live (polling, subscriptions) or is a single fetch enough? The schema has no Subscription type, and what is the caching/refresh policy?
+22. Does `Query.club` have limits or rate limiting, and is there a maximum for `members(first:)` (e.g. negative or very large values)?
+23. Is the club's `name` unique and stable enough to use for the page title and URL, and is there a slug field? Can it change?
+24. What are the loading, empty and skeleton states, and what accessibility, localisation and i18n requirements apply (language, plural forms such as "1 member")?
+25. Which browsers, devices and screen sizes should be supported, and which framework, GraphQL client and codegen tools should I use?
+26. Should the "Owner" be displayed separately from the members list, given that `owner` is a distinct field and the first five members may or may not include them?
+27. Is there any private or hidden club concept (e.g. visibility rules), and what does a non-member see versus a member?

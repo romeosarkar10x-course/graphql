@@ -21,7 +21,10 @@ Everything below was run in this folder or by the labs' tests; files are named p
 7. **Bearer tokens through `@AutoConfigureHttpGraphQlTester` (MockMvc)**: with Spring Security's resource server, a
    valid Keycloak token still gave `UNAUTHORIZED` "Unauthorized" in the controller, and security debug logging
    showed no request through the filter chain; the same test on a real port (`RANDOM_PORT`, `WebTestClient`)
-   authenticated. Root cause not investigated.
+   authenticated. **Cause found 2026-11-24** (`_workbench/2026-11-24-finish/mockmvc-bearer/`): with no `MockMvc`
+   bean, Boot 4.2.0's `WebTestClientAutoConfiguration` uses `MockMvcWebTestClient.bindToApplicationContext`, a
+   MockMvc with no servlet filters, so the security filter chain never runs. With `@AutoConfigureMockMvc` added,
+   the client is bound to Boot's MockMvc (filters registered) and the same token gives `viewer.name = Ada`.
 8. **Module 5's server and Spring against the same suites** (lab 13.3's run): Module 6's 14 behaviour checks and a
    10-entry black-box contract pass on both; Module 5's 25-check GraphQL-over-HTTP audit: 25 of 25 on the
    graphql-java server, 11 of 25 on Spring for GraphQL (as Module 6 found).

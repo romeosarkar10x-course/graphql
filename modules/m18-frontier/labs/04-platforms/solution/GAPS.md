@@ -1,8 +1,8 @@
 # What PostGraphile does not give Shelfie
 
 Reference notes. Observations are from PostGraphile 5.2.1 (amber preset, graphql 16.15.0) on Module 9's club
-dataset, 2026-11-23 (`_workbench/2026-11-23-m18-probe/postgraphile/`). Viaduct's starter was not run (see the
-README).
+dataset, 2026-11-23 (`_workbench/2026-11-23-m18-probe/postgraphile/`). Viaduct's starter was run on 2026-11-24
+(`_workbench/2026-11-24-finish/viaduct-run1.txt`): `{ greeting }` answers `Hello, World!`.
 
 ## Schema shape
 

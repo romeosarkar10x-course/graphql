@@ -232,10 +232,23 @@ probe_realtime() {
     return
   fi
   local body url; body=$(cap_body "$op" "$(jq -c '.variables // {}' <<<"$p")"); url=$(jq -r ".url // \"$(m .api)\"" <<<"$p")
+  t=$(jq -c .trigger <<<"$p")
+  if [[ $url == ws://* || $url == wss://* ]]; then   # graphql-transport-ws (Module 11's client), document text
+    : > "$CAP_TMP/ws.txt"
+    java /course/modules/m11-realtime/contract/Ws.java "$url" "$(capcheck doc "$LAB_DIR/$(m .operations)" "$op")" \
+      --seconds 12 --count 1 --vars "$(cap_vars "$(jq -c '.variables // {}' <<<"$p")")" > "$CAP_TMP/ws.txt" 2>&1 &
+    local wp=$!
+    for _ in $(seq 1 20); do grep -q ' ready$' "$CAP_TMP/ws.txt" && break; sleep 0.5; done
+    cap_send "$(jq -r .operation <<<"$t")" "$(jq -c '.variables // {}' <<<"$t")" "$(jq -r '.as // empty' <<<"$t")" > "$CAP_TMP/trigger.json"
+    for _ in $(seq 1 16); do grep -q ' next ' "$CAP_TMP/ws.txt" && break; sleep 0.5; done
+    kill $wp 2>/dev/null; wait $wp 2>/dev/null
+    if grep -q ' next .*"data"' "$CAP_TMP/ws.txt"; then pass "real time: $op delivered an event over WebSocket after $(jq -r .operation <<<"$t") ($(grep -m1 ' next ' "$CAP_TMP/ws.txt" | cut -c1-120))"
+    else fail "real time: no event on $op (WebSocket, $url) within 8 s of $(jq -r .operation <<<"$t")" "$(head -c 300 "$CAP_TMP/ws.txt"); trigger: $(head -c 150 "$CAP_TMP/trigger.json")"; fi
+    return
+  fi
   curl -s -N -m 12 "$url" -H 'Content-Type: application/json' -H 'Accept: text/event-stream' --data-binary "$body" > "$CAP_TMP/sse.txt" 2>/dev/null &
   local cp=$!
   sleep 2
-  t=$(jq -c .trigger <<<"$p")
   cap_send "$(jq -r .operation <<<"$t")" "$(jq -c '.variables // {}' <<<"$t")" "$(jq -r '.as // empty' <<<"$t")" > "$CAP_TMP/trigger.json"
   for _ in $(seq 1 16); do grep -q '^data:.*"data"' "$CAP_TMP/sse.txt" && break; sleep 0.5; done
   kill $cp 2>/dev/null; wait $cp 2>/dev/null

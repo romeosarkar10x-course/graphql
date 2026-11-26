@@ -50,8 +50,10 @@ RELEASE_VERSION=26.1-local ./gradlew publishToMavenLocal -PpublishToMavenLocal
 `com.graphql-java:graphql-java:26.1-local`: any earlier lab's server will do. Show that the CRLF block string now
 comes out the spec's way.
 
-The course has not run step 4 for you: its build was not run while this module was written, so treat these two
-flags as read from `build.gradle` and check them yourself. Note in `INTERNALS.md` what you had to change.
+The course ran these steps on v26.1 inside the course image (2026-11-24): the parser tests took about a minute
+the first time (Gradle downloads itself and the dependencies), the publish about 12 s. Gradle publishes to
+`~/.m2` unless told otherwise; inside `bin/course shell` add `-Dmaven.repo.local=/course/.cache/m2` so Maven
+finds the jar. Note in `INTERNALS.md` anything you had to change.
 
 ## Done when
 

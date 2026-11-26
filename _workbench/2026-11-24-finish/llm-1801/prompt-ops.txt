@@ -1,0 +1,505 @@
+You are an agent that answers questions about Shelfie, a book-club platform, by writing GraphQL queries against its API. You cannot run anything: you get one chance per question, with no feedback. For each question below, write exactly one GraphQL query (a single operation, all values written in, no variables) whose response would contain the answer. Answer in this exact format and nothing else, for q01 to q10:
+
+### q01
+```graphql
+query { ... }
+```
+
+## Schema
+```graphql
+"This directive allows results to be deferred during execution"
+directive @defer(
+    "Deferred behaviour is controlled by this argument"
+    if: Boolean! = true,
+    "A unique label that represents the fragment being deferred"
+    label: String
+  ) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Marks the field, argument, input field or enum value as deprecated"
+directive @deprecated(
+    "The reason for the deprecation"
+    reason: String! = "No longer supported"
+  ) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"This directive disables error propagation when a non nullable field returns null for the given operation."
+directive @experimental_disableErrorPropagation on QUERY | MUTATION | SUBSCRIPTION
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Indicates an Input Object is a OneOf Input Object."
+directive @oneOf on INPUT_OBJECT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
+
+union CreateReviewResult = NotAllowed | ReviewCreated | ValidationFailed
+
+"Anything `search` can return. Module 2.4 selects from it with inline fragments."
+union SearchResult = Book | Club | User
+
+type Book {
+  authors: [String!]!
+  "Mean rating rounded to 2 decimals, null when there are no reviews."
+  averageRating: Float
+  coverUrl: String
+  id: ID!
+  isbn: String
+  pageCount: Int
+  publishedYear: Int
+  "Newest first. `last` caps the list."
+  reviews(last: Int = 5): [Review!]!
+  synopsis: String
+  title: String!
+}
+
+type Club {
+  createdAt: String!
+  "The book the club is reading right now, if any."
+  currentBook: Book
+  description: String
+  id: ID!
+  meetups(upcomingOnly: Boolean = true): [Meetup!]!
+  memberCount: Int!
+  "Members in join order. `first` caps the list."
+  members(first: Int = 10): [User!]!
+  name: String!
+  owner: User!
+  visibility: Visibility!
+}
+
+type CreateCoverUploadPayload {
+  "Pass to `confirmCoverUpload`."
+  uploadId: ID
+  "PUT the bytes here with the same Content-Type. Valid for 10 minutes."
+  uploadUrl: String
+  userErrors: [UserError!]!
+}
+
+type CreateReviewPayload {
+  "Null when `userErrors` is not empty."
+  review: Review
+  userErrors: [UserError!]!
+}
+
+type DeleteReviewPayload {
+  "The reviewed book, so a client can refresh `averageRating` from the same response."
+  book: Book
+  "The id that was deleted, null when nothing was."
+  deletedReviewId: ID
+  userErrors: [UserError!]!
+}
+
+type FieldProblem {
+  field: [String!]!
+  message: String!
+}
+
+type JoinClubPayload {
+  club: Club
+  userErrors: [UserError!]!
+}
+
+type LeaveClubPayload {
+  club: Club
+  userErrors: [UserError!]!
+}
+
+type Meetup {
+  club: Club!
+  id: ID!
+  location: String!
+  startsAt: String!
+  title: String!
+}
+
+"""
+Writes, Module 4. Every mutation takes one `input` argument and returns a payload (4.2), except
+`uploadCover`, whose `file` must be a separate argument for the multipart request convention (4.6).
+"""
+type Mutation {
+  "Signed-URL alternative, step 2: tell Shelfie the upload finished; it checks the object and links it."
+  confirmCoverUpload(input: ConfirmCoverUploadInput!): UploadCoverPayload!
+  "Signed-URL alternative (4.6), step 1: get a short-lived URL and PUT the bytes to object storage."
+  createCoverUpload(input: CreateCoverUploadInput!): CreateCoverUploadPayload!
+  "Payload style: rule violations come back in `userErrors`, never as top-level errors (4.3)."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+  "Result-union style: the same rules as `createReview`, one member type per outcome (4.3)."
+  createReviewTyped(input: CreateReviewInput!): CreateReviewResult!
+  "Only the review's author may delete it."
+  deleteReview(input: DeleteReviewInput!): DeleteReviewPayload!
+  "Joining a club you are already in succeeds and changes nothing: the mutation is idempotent (4.4)."
+  joinClub(input: JoinClubInput!): JoinClubPayload!
+  "Leaving a club you are not in succeeds and changes nothing. The owner cannot leave."
+  leaveClub(input: LeaveClubInput!): LeaveClubPayload!
+  """
+  GraphQL multipart request convention (4.6): send `multipart/form-data` with `operations`, `map` and
+  the file parts, plus a `GraphQL-Require-Preflight: 1` header (CSRF protection). The server holds the
+  whole file in memory, which `serverBufferedBytes` reports.
+  """
+  uploadCover(bookId: ID!, file: Upload!): UploadCoverPayload!
+}
+
+type NotAllowed {
+  reason: String!
+}
+
+"""
+Shelfie reference schema, Modules 0 to 4. Deliberately small: timestamps are plain Strings until
+custom scalars arrive in Module 3, and lists are plain lists until connections arrive in Module 8.
+Mutations (Module 4) act as the user named in the `X-Shelfie-User` header, e.g. `X-Shelfie-User: u1`.
+POST /_course/reset-data puts the data back to the seed.
+"""
+type Query {
+  book(id: ID!): Book
+  "All books in catalogue order. `titleContains` filters, ignoring case; `first` caps the list."
+  books(first: Int = 20, titleContains: String): [Book!]!
+  club(id: ID!): Club
+  clubs: [Club!]!
+  "A friendly smoke-test field. Module 0.1 asserts on it."
+  hello: String!
+  "Books, clubs and users whose title, name or handle contains `text`, ignoring case. Books first, then clubs, then users."
+  search(text: String!): [SearchResult!]!
+  user(id: ID!): User
+}
+
+type Review {
+  author: User!
+  body: String!
+  book: Book!
+  createdAt: String!
+  id: ID!
+  "1 to 5."
+  rating: Int!
+}
+
+type ReviewCreated {
+  review: Review!
+}
+
+type Subscription {
+  "Fires when a club schedules a meetup. Declared for Module 2.5 validation exercises; Module 11 delivers events."
+  meetupScheduled(clubId: ID!): Meetup!
+}
+
+type UploadCoverPayload {
+  book: Book
+  "Bytes received and their SHA-256 (hex), so a client can check nothing was lost."
+  bytes: Int
+  "How many bytes of the file the GraphQL server held in memory to handle this upload."
+  serverBufferedBytes: Int
+  sha256: String
+  userErrors: [UserError!]!
+}
+
+type User {
+  avatarUrl: String
+  bio: String
+  clubs: [Club!]!
+  handle: String!
+  id: ID!
+  location: String
+  name: String!
+  reviews: [Review!]!
+}
+
+"A rule the input broke. `field` is the path to the offending input field, e.g. [\"input\", \"rating\"]."
+type UserError {
+  code: UserErrorCode!
+  field: [String!]
+  message: String!
+}
+
+type ValidationFailed {
+  "At least one."
+  problems: [FieldProblem!]!
+}
+
+enum UserErrorCode {
+  DUPLICATE
+  FORBIDDEN
+  INVALID
+  NOT_FOUND
+  UNAUTHENTICATED
+}
+
+enum Visibility {
+  PRIVATE
+  PUBLIC
+}
+
+"A file part of a multipart request"
+scalar Upload
+
+input ConfirmCoverUploadInput {
+  uploadId: ID!
+}
+
+input CreateCoverUploadInput {
+  bookId: ID!
+  "image/jpeg or image/png."
+  contentType: String!
+}
+
+input CreateReviewInput {
+  "10 to 2000 characters."
+  body: String!
+  bookId: ID!
+  "1 to 5."
+  rating: Int!
+}
+
+input DeleteReviewInput {
+  id: ID!
+}
+
+input JoinClubInput {
+  clubId: ID!
+}
+
+input LeaveClubInput {
+  clubId: ID!
+}
+```
+
+## Operations the API's owners describe for agents (you may copy and adapt them)
+```graphql
+"""
+One book by its id ($id, for example b1; get ids from FindBooks or Search): title, authors, year, page
+count, synopsis, mean rating (null without reviews) and its three newest reviews with each reviewer's handle.
+Returns null for an unknown id.
+"""
+query BookDetails($id: ID!) {
+  book(id: $id) {
+    id
+    title
+    authors
+    publishedYear
+    pageCount
+    synopsis
+    averageRating
+    reviews(last: 3) {
+      rating
+      body
+      author {
+        handle
+      }
+    }
+  }
+}
+```
+```graphql
+"""
+One club by its id ($id, for example c1; get ids from ListClubs or Search): description, visibility, its
+owner (name and handle), member count, the first 10 members in join order and the current book. Returns null for
+an unknown id.
+"""
+query ClubDetails($id: ID!) {
+  club(id: $id) {
+    id
+    name
+    description
+    visibility
+    owner {
+      id
+      name
+      handle
+    }
+    memberCount
+    members(first: 10) {
+      id
+      name
+      handle
+    }
+    currentBook {
+      id
+      title
+    }
+  }
+}
+```
+```graphql
+"""
+The meetups of one club ($clubId, for example c1): title, start time (UTC, ISO 8601) and location. By
+default only upcoming meetups; set $upcomingOnly to false to include past ones, for example to answer "when was
+the last meetup".
+"""
+query ClubMeetups($clubId: ID!, $upcomingOnly: Boolean = true) {
+  club(id: $clubId) {
+    id
+    name
+    meetups(upcomingOnly: $upcomingOnly) {
+      title
+      startsAt
+      location
+    }
+  }
+}
+```
+```graphql
+"""
+Publish a review as the signed-in reader: $bookId (a book id such as b2), $rating from 1 to 5 and $body
+of 10 to 2000 characters. Changes data and is public at once; a reader can review a book only once (DUPLICATE).
+Rule violations come back in userErrors with the input field, a code and a message.
+"""
+mutation CreateReview($bookId: ID!, $rating: Int!, $body: String!) {
+  createReview(input: {bookId: $bookId, rating: $rating, body: $body}) {
+    review {
+      id
+      rating
+      body
+    }
+    userErrors {
+      field
+      code
+      message
+    }
+  }
+}
+```
+```graphql
+"""
+Find books in the Shelfie catalogue whose title contains $titleContains (ignoring case); leave it out to list
+the catalogue in order. Returns at most $first books (default 5, the server caps nothing, keep it small) with
+authors, publication year and mean rating. Use it to turn a title into a book id. There is no author filter: to
+find an author, list the catalogue and filter yourself.
+"""
+query FindBooks($titleContains: String, $first: Int = 5) {
+  books(titleContains: $titleContains, first: $first) {
+    id
+    title
+    authors
+    publishedYear
+    averageRating
+  }
+}
+```
+```graphql
+"""
+Make the signed-in reader a member of the club $clubId. Changes data: the reader becomes visible to the
+club. Joining a club twice succeeds and changes nothing. Problems (not signed in, unknown club) come back in
+userErrors with a code, not as an error.
+"""
+mutation JoinClub($clubId: ID!) {
+  joinClub(input: {clubId: $clubId}) {
+    club {
+      id
+      name
+      memberCount
+    }
+    userErrors {
+      code
+      message
+    }
+  }
+}
+```
+```graphql
+"""
+Every book club on Shelfie with its visibility (PUBLIC or PRIVATE), member count and the book it is
+reading right now, with that book's mean rating. No arguments; there are only a few clubs. Start here for any
+question that compares clubs.
+"""
+query ListClubs {
+  clubs {
+    id
+    name
+    visibility
+    memberCount
+    currentBook {
+      id
+      title
+      averageRating
+    }
+  }
+}
+```
+```graphql
+"""
+One reader by user id ($id, for example u1; get ids from Search, which matches names and handles):
+name, handle, bio, location and the clubs they belong to. Returns null for an unknown id.
+"""
+query ReaderProfile($id: ID!) {
+  user(id: $id) {
+    id
+    name
+    handle
+    bio
+    location
+    clubs {
+      id
+      name
+    }
+  }
+}
+```
+```graphql
+"""
+Every review one reader ($id, a user id such as u1) has written: rating from 1 to 5, text, when it was
+written and which book it is about. Use ReaderProfile or Search first if you only know a name.
+"""
+query ReaderReviews($id: ID!) {
+  user(id: $id) {
+    id
+    handle
+    reviews {
+      rating
+      body
+      createdAt
+      book {
+        id
+        title
+      }
+    }
+  }
+}
+```
+```graphql
+"""
+Search Shelfie for $text, ignoring case, across book titles, club names and reader names and handles.
+Returns books first, then clubs, then readers, each with its __typename and id, so a follow-up tool can fetch
+details. The quickest way to turn a name into an id.
+"""
+query Search($text: String!) {
+  search(text: $text) {
+    __typename
+    ... on Book {
+      id
+      title
+    }
+    ... on Club {
+      id
+      name
+    }
+    ... on User {
+      id
+      name
+      handle
+    }
+  }
+}
+```
+
+## Questions
+q01: Which public club is reading the highest-rated book right now?
+q02: Which books by Kazuo Ishiguro are in Shelfie's catalogue?
+q03: Who owns The Midnight Readers, and in which city do they live?
+q04: How many members does Booker Shortlist Survivors have?
+q05: What did Jonas Berg write about Project Hail Mary?
+q06: Which books have no reviews yet?
+q07: What is the oldest book in the catalogue, and who wrote it?
+q08: Which clubs is Asha Rao a member of?
+q09: When did The Midnight Readers hold their October wrap-up meetup?
+q10: Which book in the catalogue has the most pages?

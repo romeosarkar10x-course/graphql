@@ -8,8 +8,10 @@ subgraphs on Spring for GraphQL, composition and query plans, two routers, and m
 `bin/course fed` downloads the routers once into `.cache/fed/bin` (checksummed): **Apollo Router 2.19.0**
 (Elastic License 2.0; every feature the labs use runs unlicensed) and **Hive Router 0.3.9** (MIT). Tests fetch
 them on their own (`"needs": ["fed"]`). Composition is [@theguild/federation-composition](https://github.com/graphql-hive/federation-composition)
-0.27.0 (MIT, Node.js from the course cache). Mini-project 15.8 and the checkpoint need Docker Compose on your
-machine.
+0.27.0 (MIT, Node.js from the course cache). Apollo's **Rover 1.0.1** comes too, for comparison:
+`bin/course rover supergraph compose --config supergraph.yaml` (its composition plugin is under the Elastic
+License 2.0, which that command accepts; see "Changes from the plan"). Mini-project 15.8 and the checkpoint need
+Docker Compose on your machine.
 
 Shared material in [contract/](contract/):
 
@@ -47,9 +49,16 @@ Labs chain: 15.1 → 15.3 → 15.4 → 15.5 → game 15.9; 15.6 and 15.7 → min
 
 ## Changes from the plan
 
-- **Composition uses The Guild's MIT library, not Rover or the Hive CLI.** Rover's composition asks you to accept
-  the Elastic License 2.0; the course does not accept licences on your behalf. The rules and error codes are the
-  same; Rover is in the lectures.
+- **Composition uses The Guild's MIT library; Rover is the optional second composer.** The course owner accepted
+  Rover's Elastic License 2.0 on 2026-11-24, so `bin/course rover` runs it with `APOLLO_ELV2_LICENSE=accept`;
+  the tests keep The Guild's composer (MIT, no licence step). Every course `supergraph.yaml` composed with both
+  (`_workbench/2026-11-24-finish/rover/`): the same supergraphs up to directive order, Rover's extra
+  `@join__directive` definitions and which subgraph's description wins for a shared type; the same error code on
+  lab 15.3's broken starter (`TYPE_KIND_MISMATCH`). One real difference: Rover (composition 2.9.0 and 2.15.6)
+  rejects `@oneOf` unless the subgraph declares `directive @oneOf on INPUT_OBJECT`, and even then leaves it out
+  of the supergraph, where The Guild's composer keeps it. graphql-java accepts the declaration.
+- **Apollo Router's anonymous telemetry is off** (`APOLLO_TELEMETRY_DISABLED=true` in `contract/fed.sh` and the
+  mini-project's compose files): the course owner's choice, 2026-11-24.
 - **Two routers, both run**: Apollo Router (ELv2, unlicensed) and Hive Router (MIT). Subscriptions through Apollo
   Router need a licence (it refuses to start), so the labs use none; Hive Router has no `@defer` (rejected as an
   unknown directive). Cosmo, Hive Gateway, Hot Chocolate Fusion and feddi (a JVM-native gateway by graphql-java's

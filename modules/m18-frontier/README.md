@@ -51,13 +51,16 @@ Labs chain: 18.1 → 18.2 → 18.3 → mini-project 18.7; 18.6 → game 18.8.
 - **18.2's question changed.** The plan asks "which club read the most books last month?"; the reference
   server's seed has no reading history (and the seed is load-bearing for earlier labs), so the lab asks "Which
   public club is reading the highest-rated book right now?", which needs the same reasoning over tools.
-- **Connecting a real assistant is the learner's step.** No assistant was connected while the module was built;
-  the MCP labs are tested with `contract/mcp.sh`. The Claude Code command in lab 18.2 is from its documentation.
-- **Viaduct was not run.** Its starter is Gradle-based upstream and the authoring session was not allowed to run a
-  Gradle wrapper. Lab 18.4 gives the README's command and asks you to run it; the lecture describes Viaduct from
-  its README and starter sources.
-- **The port is TypeScript.** Go (gqlgen) is allowed by the plan but has no reference port and no Go toolchain
-  in the course image, so the test path for Go is unverified.
+- **Connecting a real assistant is the learner's step; the course did it once.** The MCP labs are tested with
+  `contract/mcp.sh`. On 2026-11-24 Claude Code 2.1.330 was connected to lab 18.2's solution (an `--mcp-config`
+  file with `"type": "http"`): it listed the eight tools and answered the club question with one call
+  (`labs/02-mcp-server/solution/CONNECT.md`). Lab 18.1's LLM runs were made the same day with the same client.
+- **Viaduct is run once, with its own Gradle wrapper** (the course's other Gradle builds are labs 17.7 and
+  12.7): its starter answers `{ greeting }` on the course image's Java 25 (2026-11-24). Lab 18.4 gives the
+  README's command and asks you to run it.
+- **The port is TypeScript, with a Go reference too.** Go (gqlgen v0.17.98, `labs/06-port/solution-go/`) passes
+  the same test (2026-11-24), built with `bin/course go` (the official Go image; the course image has no Go):
+  startup 3 to 5 ms and 16 to 18 MB against Java's 986 ms and 173 MB.
 - **18.4's other platforms** (Hasura, pg_graphql, Neo4j, Dgraph) are lecture-only; licences and versions were
   checked on GitHub, behaviour is from their documentation.
 

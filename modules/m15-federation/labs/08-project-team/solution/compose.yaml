@@ -12,6 +12,7 @@ x-course: &course
   user: "${COURSE_UID:-1000}:${COURSE_GID:-1000}"
   environment:
     HOME: /tmp
+    APOLLO_TELEMETRY_DISABLED: "true"
   working_dir: /app
   volumes:
     - .:/app

@@ -1,176 +1,75 @@
 # TODO.md — remaining work
 
-## Now: user review of the capstone
+## Status
 
-The user said "let's go" (2026-11-23) after Module 18's report; the capstone is built (`modules/m19-capstone`).
-Every module and the capstone exist; what is left is review, the decisions below and the verification debt.
+The course is complete (2026-11-24): Modules 0 to 18 and the capstone are built, every open check that could be
+run here was run (`_workbench/2026-11-24-finish/FINDINGS.md`), and `bin/course check --starters` covers every
+module. What is left needs something only you have, or is maintenance for each new term.
 
-Decisions for the user:
+Supported host: Linux (the user's machines run Arch Linux); Docker Desktop, macOS and Windows are out of scope.
 
-- [ ] Viaduct (lab 18.4): its starter (`viaduct-dev/cli-starter`, `./gradlew -q run --args="'{ greeting }'"`) was
-      not run: running its Gradle wrapper (in the course's Gradle image) was blocked in the authoring session, as
-      graphql-java's was for 17.7. Run it (or allow it), then record the output and time in lab 18.4's
-      reference `GAPS.md` and lecture 18.4.
-- [ ] Lab 17.7's local build of graphql-java (`RELEASE_VERSION=26.1-local ./gradlew publishToMavenLocal
-      -PpublishToMavenLocal`) was not run: running graphql-java's Gradle wrapper was blocked in the authoring
-      session. Run it yourself (or allow it), then confirm the flags and record the test count and time in the
-      reference `INTERNALS.md`.
+## Needs you
 
-Decisions still open from Module 15:
+- [ ] **A GitHub token** (`export GITHUB_TOKEN=...` before `bin/course`): run m02/09's bonus holes and m02/12's
+      live check, record the CLI query's `rateLimit { cost }` in m02/12's reference notes, and confirm the notes'
+      claims that GitHub REST has no pinned-items endpoint and that contributions are GraphQL-only.
+- [ ] **A Hive account and token**: send one of Module 16's usage reports to a real Hive target (checked against the
+      course's collector only).
+- [ ] **PayPal's "3 to 52 products in 2 years"** (`plan/company-case-studies.md`): Medium refuses automated fetches;
+      read "Scaling GraphQL at PayPal" in a browser and confirm or drop it. The 700 ms figure is verified.
+- [ ] **By eye, if you want** (skipped on purpose, 2026-11-24): Voyager at `/voyager.html` (game 3c) and the
+      capstone's web page (`COURSE_PUBLISH=4005`, `client ui`); both were checked with curl only.
 
-- [ ] Rover: accept the Elastic License 2.0 for its composition plugin (then labs could use Rover), or keep The
-      Guild's MIT composer (current).
-- [ ] Apollo Router's anonymous telemetry: tests run with its default; set `APOLLO_TELEMETRY_DISABLED=true` in
-      `contract/fed.sh` and `compose.yaml` if you prefer.
+## Each term (maintenance)
 
-## Verification debt
+Pins and outside facts drift. Re-check, re-run the solution, and update the lecture or notes when one moves.
 
-Supported host: Linux (the user's machines run Arch Linux, 2026-11-23); Docker Desktop, macOS and Windows are
-out of scope.
+- **Pins** (VERSIONS.md): Spring Boot, Spring for GraphQL, graphql-java; PostgreSQL (19.0 came out 2026-11-19:
+  move off 18.7 and re-run lab 8.2's plans); Keycloak (26.8.2; a realm import with an `rsa` provider creates no
+  other keys, `kid` is the SHA-256 of the DER key); Prometheus, Tempo (does search still lag 20–30 s?), Grafana,
+  the OpenTelemetry agent, Jib; Apollo Router (2.19.1+), Hive Router (0.3.19+), Rover (1.1.0+), federation-jvm
+  (7.1.1), composition (0.27.2, federation v2.10+), Nadel, graphql-kotlin; graphql-inspector (off 7.0.2 after a
+  stable 7.0.x; recheck lab 7.6's two disagreements); Spring AI (2.0.2; 2.1 for Boot 4.2) and the MCP versions it
+  negotiates; PostGraphile 5.x; `@apollo/subgraph` 2.15+ with a newer `@pothos/plugin-federation` (lift the 2.14.4
+  pin); npm pins of Module 12 (Apollo Client 4.3, React 19.3, Relay 21; re-run lab 12.6's measure; does
+  relay-compiler still panic on a `.graphqls` schema name?); Go and gqlgen (lab 18.6's Go port); Jazzer (0.30.0
+  needs the JUnit BOM import and `jazzer.instrument`); graphql-cop (1.15 pins requests 2.25.1; its 13 checks
+  against `tests/cop.hurl`) and Clairvoyance; MinIO (the course uses SeaweedFS 4.54); the GitHub Actions majors
+  (checkout v7, setup-java v6, setup-node v7, upload-artifact v7).
+- **Lifted pins, when upstream catches up**: graphql-java-extended-validation built for graphql-java 26 and
+  Hibernate Validator 9 (lift the HV 8 pin); DGS on graphql-java 26 (lift lab 6.7's 25.0 pin); the Quarkus 4.0
+  platform BOM final (4.0.0.CR1 on 2026-11-21; move lab 6.8).
+- **graphql-java behaviour the course teaches around**: the subscription-root `@skip` gap and operation
+  descriptions (lectures 2.5, 2.7); never suggesting field names, the good-faith introspection default, the
+  15,000-token parser limit (Module 10); SchemaDiff on a non-null argument with a default and its truncated
+  message (Module 13 FINDINGS 14; game 13.9 round 06 relies on it); `@stream` and RFC 1110 payloads (simplify lab
+  11.6 if they land); Module 17's `harness/Known.java` list (lone CR, U+2028/U+2029, block strings, operation
+  descriptions, empty `{}` in SDL, missing error locations); the APQ hash check on hits.
+- **Spring behaviour**: DataLoader chaining (2.1.0: never), Cache-Control on GET (none), the GET-mutation `Allow`
+  header; `spring.graphql.cors` reaching the WebSocket handler (lab 10.7), `AuthenticationWebSocketInterceptor`'s
+  4401 close; `documentName` sending `operationName` and `HttpSyncGraphQlClient` wrapping I/O errors (labs 12.2,
+  12.8); Spring Data JPA's keyset scroll SQL and the cursor strategy bean condition (lectures 8.2, 8.5); Boot's
+  JWT decoder choice (the labs avoid `issuer-uri` for offline tokens); re-run lab 5.4's audit (11/25 on 2.1.0).
+- **Outside data and specs**: Open Library recordings (`m14-patterns/contract/openlibrary/data/`; labs 14.4 and
+  14.10 expect values from them); public API answers in m00/03 and the GitHub schema answers in m00/06;
+  `tools/schemas/github-*.graphql` and m02/06's type counts; game 4b signatures and game 7b's AniList and GitHub
+  counts; lab 14.2's CLDR strings after a JDK update; the RFC stages in Modules 7, 8, 11 and 18
+  (`labs/05-spec-frontier/tests/stages.key.json`, regenerate from `solution/stages.tsv`); MockSpec (RFC 0) for
+  mini-project 13.10; a new spec edition (the hunt's 15 answers, lab 17.1's sections, RFC #1227); graphql-http
+  against lab 17.8; Hive's usage report schema and header names; the MCP SDK's 404 body with a stack trace.
 
+## Known limits (by design, documented where they apply)
 
-- [ ] Module 16: re-check pins each term: Prometheus, Tempo (does search still lag 20–30 s behind ingest?),
-      Grafana, the OpenTelemetry Java agent, Jib; Hive's usage report schema and client header names.
-- [ ] Module 16: usage reports were checked against the course collector only; send one to a real Hive target
-      once (needs an account and token).
-- [ ] Module 16: no Kubernetes run: the manifests (lab 16.4 Deployment, 16.6 HPA) are checked as YAML and the HPA is
-      simulated (`HpaSim.java`); apply them to a cluster (kind or k3s) once, with prometheus-adapter.
-- [ ] Module 16: timing-based checks green on one 24-core machine: lab 16.4's 0 failed queries (2 s drain vs 1 s
-      propagation), lab 16.5's p95 < 250 ms, lab 16.10's top series; the knee (lab 16.6) is per machine by design.
-- [ ] Module 16: CRaC is lecture-only; Jib's `jib:buildTar` needs internet (Docker Hub) and was run once.
-
-- [ ] Rerun the full `bin/course check --starters` (the 2026-11-21 run after Module 10 was stopped at m10/01;
-      after Modules 11 to 14 only their own module checks ran). It is CPU-heavy: run it when the machine is free.
-- [ ] Module 15: the full `bin/course checkpoint 15` flow (with a learner workspace) has not been run end to end;
-      the compose run itself was run by hand.
-- [ ] Module 15: re-check pins each term: Apollo Router (2.19.1 and newer), Hive Router (0.3.19), federation-jvm
-      7.1.1, composition 0.27.2 and federation v2.10+ support, Nadel (fast releases), graphql-kotlin's default link.
-- [ ] Module 15: lab 15.5's GitHub Actions workflow is read by the test, not run on GitHub.
-- [ ] Module 14: re-record Open Library each term (`contract/openlibrary/data/`; FINDINGS 8) and re-check its API
-      shape; lab 14.4's and 14.10's expected values come from the recording.
-- [ ] Module 14: lab 14.5 creates one Kafka topic per test run (`m14-reviews-<time>-<n>`); they pile up in the
-      course Kafka. Add a cleanup (admin client delete) or a retention setting.
-- [ ] Module 14: lab 14.2's expected strings are CLDR output of the course image's JDK 25; a JDK update may change
-      them (re-run the solution and diff).
-- [ ] Module 14: SOAP (14.4) and backups/topics/exports in erasure (14.6) are lecture-only.
-- [ ] Module 13: the MockMvc `HttpGraphQlTester` + bearer token `UNAUTHORIZED` (FINDINGS 7) is observed, not
-      explained; find the cause or a Spring issue before teaching more than "use a real port".
-- [ ] Module 13: GitHub Actions workflow (lab 13.5) is read, not run; its graphql-java class path (4 jars) was
-      checked locally. Run it once in a real repository. Hive and GraphOS checks are described, not run.
-- [ ] Module 13: re-check graphql-java's SchemaDiff on a non-null argument with a default (FINDINGS 14) and the
-      truncated default-value message; game 13.9 round 06 relies on the false positive.
-- [ ] Module 13: MockSpec is RFC 0 (strawman, updated 2026-11-21): re-read before each term; mini-project 13.10
-      follows its algorithm names. IntelliJ GraphQL plugin support for `graphql.config.yml` is from its docs.
-- [ ] Module 12: npm pins (Apollo Client 4.2.12, React 19.2.9, jsdom 27.4.0, Relay 20.1.1) skip lines that were
-      days old on 2026-11-22; move to Apollo Client 4.3, React 19.3, Relay 21 next term and re-run lab 12.6's
-      measure. Re-check whether relay-compiler still panics on a `.graphqls` schema name.
-- [ ] Module 12: re-check for a Maven plugin for Apollo Kotlin 5 (lab 12.7 would leave Gradle), and whether
-      Spring's `documentName` starts sending `operationName` and `HttpSyncGraphQlClient` starts wrapping I/O
-      errors in `GraphQlTransportException` (labs 12.2, 12.8).
-- [ ] Module 12: lab 12.8's 97% and 85% thresholds are statistical (four runs: 99–100% and 65–71%); watch for
-      flakes. Lab 12.10's pty check sleeps 8 s for startup; slow machines may need more.
-- [ ] Module 12: Apollo Kotlin's Android `SqlNormalizedCacheFactory` signature and the in-memory nature of
-      `optimisticUpdates` are from documentation knowledge, not run (no Android SDK).
-- [ ] Module 11: Apollo Client's `Accept: multipart/mixed;deferSpec=20220824` is from Apollo's documentation,
-      not tested; RFC 1110 is a draft (re-read before each term; its PR links graphql-java issue #4497, not read).
-- [ ] Module 11: lab 11.5's load numbers are single runs on one 24-core machine, first runs include the JIT.
-- [ ] Module 11: re-check graphql-java for `@stream` and RFC 1110 payloads, and Spring for GraphQL for an
-      incremental transport; simplify lab 11.6 if either lands.
-- [ ] PayPal "700 ms p99 per round trip" and "3 to 52 products in 2 years": the Medium post blocks
-      automated fetches (403). Verify by hand or replace with another source (lecture 1.2, case-studies tab).
-- [ ] Re-verify public API answers in m00/03 and the GitHub schema answers in m00/06 each term.
-- [ ] With a GITHUB_TOKEN: run m02/09 bonus holes and m02/12's live check; record the CLI query's
-      `rateLimit { cost }` in m02/12's reference notes. Confirm the reference notes' claims that GitHub
-      REST has no pinned-items endpoint and that contributions are GraphQL-only.
-- [ ] Refresh `tools/schemas/github-*.graphql` and the m02/06 public API type counts each term.
-- [ ] Open `/voyager.html` in a browser once (game 3c): only the CDN assets and the JS API names were
-      checked with curl, not the rendering.
-- [ ] Re-check graphql-java-extended-validation for a release built against graphql-java 26 and Hibernate
-      Validator 9; lift the HV 8 pin if so.
-- [ ] Re-check MinIO image availability; the course uses SeaweedFS 4.54 meanwhile.
-- [ ] Game 4b signatures: refresh from the GitHub snapshot and AniList introspection each term.
-- [ ] Re-check DGS for a release built on graphql-java 26; lift lab 6.7's 25.0 pin if so.
-- [ ] Re-check the Quarkus 4.0 platform BOM (4.0.0.CR1 on 2026-11-21); move lab 6.8 when it is final.
-- [ ] Game 6b numbers came from one 24-core machine; JVM build times for 6b were not timed.
-- [ ] m05/11 bug B1 (common pool) is only detectable with parallelism > 1; fine on any multi-core machine.
-- [ ] Re-run lab 5.4's audit against Spring for GraphQL each release (11/25 on 2.1.0).
-- [ ] Check whether a newer graphql-java fixes the subscription-root `@skip` gap and parses operation
-      descriptions; update lectures 2.5 and 2.7 and the module README table if so.
-
-- [ ] Game 7b cards: re-check AniList's `UpdateUser` (19 args), `Media` (75 args), `Json` fields and the
-      GitHub counts (73 `databaseId`, 253 of 298 inputs with `clientMutationId`, 147 `Repository` fields).
-- [ ] graphql-inspector: move off 7.0.2 once a 7.0.x has been stable two weeks; recheck lab 7.6's two
-      tool disagreements (optional argument, deprecation) after any upgrade.
-- [ ] RFC stages in Module 7 (ObjectIdentification, SemanticNullability, #1163, #1231, #997) each term.
-- [ ] Lab 7.1's SDL-only experiment: the reference notes describe a good answer; no measured run.
-- [ ] PostgreSQL 19.0 (released 2026-11-19): move the course service off 18.7 next term; re-run lab 8.2's
-      plans (the OR-form filter vs row-value seek) on it.
-- [ ] Re-check Spring Data JPA's keyset scroll SQL (OR form, 4.2.0) and Spring for GraphQL's cursor
-      strategy bean condition and status codes (400/200) each release; update lectures 8.2 and 8.5.
-- [ ] RFC stages in Module 8 (#1163 RFC 1, #1183 RFC 3, #1184 RFC 2, #1073 RFC 3, #1200 RFC 0) each term.
-- [ ] Module 9 timing checks (game 9a's p95 at half the baseline, lab 9.6's 90% hit rate, lab 9.7's JMH 2x,
-      lab 9.8's winner re-run) were green on one machine; watch them on slow or busy machines.
-- [ ] Lab 9.8's reference report has one run per configuration; repeat 5x and report medians.
-- [ ] Re-check each release: Spring for GraphQL enabling DataLoader chaining (2.1.0: never), sending
-      Cache-Control on GET (2.1.0: none), the GET-mutation `Allow` header; graphql-java's APQ hash check on hits.
-- [ ] Keycloak: move off 26.8.2 each term; re-check that a realm import with an `rsa` key provider still
-      creates no other keys and that `kid` is still the SHA-256 of the DER public key.
-- [ ] Re-check each release: Spring Boot passing `spring.graphql.cors` to the GraphQL WebSocket handler
-      (lab 10.7's origin rule depends on it), `AuthenticationWebSocketInterceptor`'s 4401 close, graphql-java
-      never suggesting field names and its good-faith introspection default, the 15,000-token parser limit.
-- [ ] graphql-cop: 1.15 pins requests 2.25.1; re-check for a release, and that its 13 checks still decide as
-      `tests/cop.hurl` re-implements them. Try Clairvoyance releases against graphql-java's messages.
-- [ ] GitHub's and Shopify's rate-limit models in lecture 10.6 are from their documentation, not measured.
-- [ ] Lab 10.6's Spender (15 s ceiling) and lab 10.4's 1 s timeout (2.5 s ceiling) are time-based; green on one machine.
-- [ ] Module 7's CI workflow pins actions/checkout@v4 and setup-java@v4; current majors are v7 and v6.
-- [ ] Mini-project 8 and game 8a time-based checks (bot every 20/30 ms) were green on one machine;
-      watch for flakiness on slow machines.
-
-- [ ] Module 17: re-check each graphql-java release against `harness/Known.java` (lone CR, U+2028/U+2029, block
-      strings with CR or short blank lines, descriptions on operations, empty `{}` in SDL, the fieldless-type
-      lookahead, missing locations on result-coercion and null-for-non-null errors); drop rules it fixes.
-- [ ] Module 17: re-run graphql-http against lab 17.8 on each release; the four edition conflicts (572B, FDE2,
-      7B9B, 86EE) and the 18 MAY-400 notices may be updated to the September 2026 edition.
-- [ ] Module 17: the spec baseline is the September 2025 edition; when a new edition ships, re-check the hunt's 15
-      answers, lab 17.1's sections and the draft-only features (RFC #1227 empty selection sets).
-- [ ] Jazzer 0.30.0 needs the JUnit BOM import and `jazzer.instrument`; re-check on a new release. The fuzz test
-      uses about 2 GB.
-
-- [ ] Module 18: no assistant was connected to the MCP servers (tested with `contract/mcp.sh` only); connect one
-      (Claude Code's `claude mcp add --transport http ...` is from its documentation) and record a transcript in
-      lab 18.2's reference `CONNECT.md`. Lab 18.1's sample LLM run is the authoring model's, after seeing the
-      data: replace it with a fair run (schema only, then schema and operations) when an LLM is available.
-- [ ] Module 18: re-check each term: Spring AI (2.0.2 pinned; 2.1 for Boot 4.2), the MCP versions the SDK
-      negotiates (2025-11-25; spec current 2026-07-28), whether `@apollo/subgraph` 2.15+ works with a newer
-      `@pothos/plugin-federation` (then lift the 2.14.4 pin), PostGraphile 5.x (behaviours, Ruru at `/`, its
-      graphql-js and Operation Type Existence), the seven RFC stages in `labs/05-spec-frontier/tests/stages.key.json`
-      (regenerate from `solution/stages.tsv`) and lecture 18.5's table.
-- [ ] Module 18: a Go (gqlgen) reference port for lab 18.6 and a `bin/course go` (or a Go toolchain in the image);
-      until then the Go path is unverified.
-- [ ] Module 18: the MCP SDK's 404 for an unknown session carries a serialized exception with a stack trace;
-      re-check on SDK updates (lecture 18.2, lab 18.3's REDTEAM notes).
-- [ ] Capstone: the web page (`reference/ui/index.html`) was not opened in a browser (none in the course image);
-      its server (`client ui`) and its requests were checked with curl. Open it once (`COURSE_PUBLISH=4005`).
-- [ ] Capstone: `bin/course checkpoint 19` end to end with a learner workspace, and the group variant (one
-      subgraph each, a shared repository) have not been run. The stage checks were run on the reference and on
-      the starter only.
-- [ ] Capstone: the checker's real-time probe speaks SSE only; a WebSocket-only subscription needs
-      `realtime.url` pointing at an SSE endpoint, or the rubric. Add a graphql-transport-ws path (Module 11's
-      `Ws.java`) if learners hit it.
-- [ ] Module 10 FINDINGS 4 ("`public-key-location` plus `issuer-uri` makes no request to Keycloak") disagrees with
-      the capstone's probe on Boot 4.2.0 (the decoder fetched Keycloak's discovery document and failed without
-      Keycloak; `_workbench/2026-11-23-capstone/FINDINGS.md` 10). Re-run lab 10.2's solution with Keycloak stopped.
-- [ ] Capstone: re-check each term Hive Router's config keys (persisted documents, demand control, JWT, error
-      masking, dedupe; the reference pins 0.3.9 through `bin/course fed`) and the Actions majors in
-      `reference/.github/workflows/ci.yml`.
-- [ ] Module 18: Hasura, pg_graphql, Neo4j GraphQL Library and Dgraph are lecture-only (licences and versions
-      checked on GitHub; behaviour from documentation). Apollo MCP Server's design is from its documentation.
-
-## Next modules (in order)
-
-None: Modules 0 to 18 and the capstone are built.
-
-## Infra backlog
-
-- [ ] Testcontainers needs a Docker socket in the course container (PostgreSQL itself is a course service since Module 8)
-- [ ] A per-module Shelfie checkpoint repo layout once learners build their own server (Module 5)
+- Timing-based checks were green on one 24-core machine; watch them on slow or busy machines: game 9a's p95,
+  labs 9.6 (90% hit rate), 9.7 (JMH 2x), 10.4 and 10.6 (time ceilings), 11.5 (single load runs), 12.8 (97% and
+  85% thresholds, statistical), 12.10 (8 s pty start-up), 16.4, 16.5 and 16.10, mini-project 8 and game 8a (bots
+  every 20/30 ms), game 6b's numbers. m05/11's bug B1 needs parallelism above 1.
+- Lecture-only by design: SOAP (14.4), backups/topics/exports in erasure (14.6), CRaC (16), Hasura, pg_graphql,
+  Neo4j GraphQL and Dgraph (18.4), Apollo MCP Server, GitHub's and Shopify's rate-limit models (10.6), Hive and
+  GraphOS schema checks (13.5), the IntelliJ GraphQL plugin's `graphql.config.yml` support (13, from its docs),
+  Android (12.7; the API was checked from Apollo Kotlin's source).
+- CI workflows in labs 7.6, 13.5, 15.5 and the capstone are read by the tests, not run on GitHub.
+- Kubernetes is simulated in the labs (`ReadyBalancer`, `HpaSim`); the manifests were applied once to kind.
+- Lab 14.5 prunes its own Kafka topics; other labs' topics are left to the course Kafka's retention.
+- The capstone's group variant (one subgraph each) is the same checker on a shared repository; it was not run
+  with several people.

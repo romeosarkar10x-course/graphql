@@ -1,0 +1,6 @@
+go run 1 startup_ms=5
+go run 1 {"requests":1000,"errors":0,"p50Ms":0,"p95Ms":0,"p99Ms":1,"maxMs":10,"rssMb":16,"peakRssMb":16}
+go run 2 startup_ms=3
+go run 2 {"requests":1000,"errors":0,"p50Ms":0,"p95Ms":0,"p99Ms":1,"maxMs":10,"rssMb":17,"peakRssMb":17}
+go run 3 startup_ms=3
+go run 3 {"requests":1000,"errors":0,"p50Ms":0,"p95Ms":0,"p99Ms":1,"maxMs":10,"rssMb":18,"peakRssMb":18}

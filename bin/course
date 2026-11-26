@@ -26,12 +26,14 @@
 #   bin/course inspector <args>           graphql-inspector 7.0.2 (Node.js, own image), e.g. diff old.graphql new.graphql
 #   bin/course node <cmd>                 Node.js 24 (copied from the official image) inside the course image, e.g.
 #                                         bin/course node npm ci, bin/course node npx eslint (Module 13.6-13.7)
-#   bin/course fed                        Module 15: fetch Apollo Router 2.19.0 and Hive Router 0.3.9 into .cache/fed/bin
+#   bin/course fed                        Module 15: fetch Apollo Router 2.19.0, Hive Router 0.3.9 and Rover 1.0.1 into .cache/fed/bin
 #                                         (labs that need "fed" do it by themselves)
 #   bin/course ops                        Module 16: fetch Prometheus 3.16.0, Tempo 3.1.1 and Grafana 13.3.0 into .cache/ops
 #                                         (about 670 MB; labs that need "ops" do it by themselves)
 #   bin/course web <npm args>             Module 12's web lab: npm in a Node.js 24 image on the course network
 #   bin/course mobile <cmd>               Module 12's mobile lab: Gradle 9.9 + JDK 21 image on the course network
+#   bin/course go <args>                  Module 18's Go port: Go 1.27.2 image, static builds, caches in .cache/go
+#   bin/course rover <args>               Module 15: Apollo's Rover CLI (accepts its Elastic License 2.0)
 #   bin/course seckit <tool> <args>       Module 10 scanners (graphql-cop, clairvoyance), own image; shares the
 #                                         network of your running course container, so target localhost:4000
 #   bin/course image                      (re)build the course image
@@ -83,12 +85,13 @@ ensure_node() {
 }
 if wants_need node "${1:-}" "${@:2}" || [[ "${1:-}" == node ]]; then ensure_node; fi
 
-# "fed" (Module 15): two federation routers, downloaded once from their official GitHub releases into .cache/fed/bin
+# "fed" (Module 15): two federation routers and Apollo's Rover CLI, downloaded once from their official GitHub releases into .cache/fed/bin
 # and checked against these SHA-256 sums, plus Node.js for the composer (contract/compose). Linux x86_64 builds: the
 # routers run inside the course image. bin/course fed fetches them by hand.
 FED_FILES=(
   "router|https://github.com/apollographql/router/releases/download/v2.19.0/router-v2.19.0-x86_64-unknown-linux-gnu.tar.gz|b606982f3cfe986e01bbde12d8cf5cd0fd783df2fc754998d3bdf0e5d2b9b308"
   "hive-router|https://github.com/graphql-hive/router/releases/download/hive-router/v0.3.9/hive_router_linux_amd64|f18ea5e8e0398b3bb34e56a16b056219f2a56f289e4be06d7f745e4faa1c852d"
+  "rover|https://github.com/apollographql/rover/releases/download/v1.0.1/rover-v1.0.1-x86_64-unknown-linux-gnu.tar.gz|9ef34ab03683a2bcf680e7e890ffeca2ddaf9b7f9059589ad1bcfbf684a912db"
 )
 ensure_fed() {
   local entry name url sum dir="$ROOT/.cache/fed" tmp
@@ -101,13 +104,13 @@ ensure_fed() {
     [[ -f "$tmp" ]] || curl -fsSL -o "$tmp" "$url" || die "download failed: $url"
     echo "$sum  $tmp" | sha256sum -c --quiet - || { rm -f "$tmp"; die "checksum mismatch for $tmp"; }
     case "$tmp" in
-      *.tar.gz) tar -xzf "$tmp" -C "$dir/dl" && mv "$dir/dl/dist/router" "$dir/bin/$name" ;;
+      *.tar.gz) tar -xzf "$tmp" -C "$dir/dl" && mv "$dir/dl/dist/$name" "$dir/bin/$name" ;;
       *) cp "$tmp" "$dir/bin/$name" ;;
     esac
     chmod +x "$dir/bin/$name"
   done
 }
-if wants_need fed "${1:-}" "${@:2}" || [[ "${1:-}" == fed ]]; then ensure_node; ensure_fed; fi
+if wants_need fed "${1:-}" "${@:2}" || [[ "${1:-}" == fed || "${1:-}" == rover ]]; then ensure_node; ensure_fed; fi
 
 # "ops" (Module 16): Prometheus, Tempo and Grafana from their official releases into .cache/ops (binaries in
 # .cache/ops/bin, Grafana's home in .cache/ops/grafana), checked against these SHA-256 sums. Linux x86_64 builds: they
@@ -235,6 +238,13 @@ case "$cmd" in
       graphql-course-inspector:1 "$@" ;;
   fed)    # Module 15's routers are already fetched above (ensure_fed); show what is there
     ls -1 "$ROOT/.cache/fed/bin" ;;
+  rover)  # Apollo's Rover CLI inside the course image (Module 15, optional). Its composition plugin is under the
+          # Elastic License 2.0: this command accepts it (APOLLO_ELV2_LICENSE=accept), as the course owner decided
+          # on 2026-11-24. Plugins in .cache/fed/rover; Apollo's anonymous telemetry off.
+    [[ $# -ge 1 ]] || die "usage: bin/course rover supergraph compose --config supergraph.yaml [--output out.graphql]"
+    echo "course: rover's composition is under the Elastic License 2.0 (https://www.elastic.co/licensing/elastic-license); running it accepts that licence" >&2
+    in_image env APOLLO_ELV2_LICENSE=accept APOLLO_TELEMETRY_DISABLED=true APOLLO_HOME=/course/.cache/fed/rover \
+      /course/.cache/fed/bin/rover "$@" ;;
   ops)    # Module 16's observability stack is already fetched above (ensure_ops); show what is there
     ls -1 "$ROOT/.cache/ops/bin" "$ROOT/.cache/ops/grafana/bin" ;;
   node)   # Node.js and npm from .cache/node inside the course image (graphql-eslint, SpectaQL); npm's cache in .cache/npm
@@ -248,6 +258,16 @@ case "$cmd" in
     net=(); docker network inspect "$NETWORK" >/dev/null 2>&1 && net=(--network "$NETWORK")
     docker run --rm "${net[@]}" -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -e npm_config_cache=/course/.cache/npm \
       -e npm_config_update_notifier=false -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" node:24.22.1-slim npm "$@" ;;
+  go)     # lab 18.6's Go path: the official Go image (the course image has no Go), on the course network; modules
+          # and the build cache in .cache/go. Builds are static Linux binaries (CGO_ENABLED=0), which then run in
+          # the course image. Run it from the Go project's directory.
+    [[ $# -ge 1 ]] || die "usage: bin/course go <go args>   e.g. bin/course go run github.com/99designs/gqlgen generate, bin/course go build -o reviews ."
+    case "$PWD/" in "$ROOT"/*) ;; *) die "run bin/course go from a directory inside the course repo" ;; esac
+    mkdir -p "$ROOT/.cache/go"
+    net=(); docker network inspect "$NETWORK" >/dev/null 2>&1 && net=(--network "$NETWORK")
+    docker run --rm "${net[@]}" -u "$COURSE_UID:$COURSE_GID" -e HOME=/tmp -e GOPATH=/course/.cache/go \
+      -e GOMODCACHE=/course/.cache/go/mod -e GOCACHE=/course/.cache/go/build -e CGO_ENABLED=0 -e GOOS=linux \
+      -e GOTOOLCHAIN=local -v "$ROOT":/course -w "/course${PWD#"$ROOT"}" golang:1.27.2-bookworm go "$@" ;;
   mobile)   # lab 12.7: Apollo Kotlin needs Gradle (its code generator is a Gradle plugin only). The official Gradle
             # image, on the course network; Gradle's caches in .cache/gradle. Run it from the lab's mobile/ directory.
     [[ $# -ge 1 ]] || die "usage: bin/course mobile <cmd>   e.g. bin/course mobile gradle -q installDist, bin/course mobile ./airplane.sh"

@@ -31,7 +31,7 @@ The shared contract for 1.2 and 1.3: [contract/club-page.md](contract/club-page.
 
 [Facebook's 2015 announcement](https://engineering.fb.com/2015/09/14/web/graphql-a-data-query-language/),
 [GitHub's 2016 launch post](https://github.blog/2016-09-14-the-github-graphql-api/),
-[PayPal Checkout story](https://medium.com/paypal-engineering/3482f724fb53); companies in `plan/company-case-studies.md`.
+[PayPal Checkout story](https://developer.paypal.com/community/blog/graphql-a-success-story-for-paypal-checkout/); companies in `plan/company-case-studies.md`.
 
 ## Checkpoint
 

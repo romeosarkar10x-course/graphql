@@ -1,0 +1,20 @@
+merging supergraph schema files
+Using the `supergraph` plugin v2.9.0 (already installed).
+HINT: [OVERRIDE_MIGRATION_IN_PROGRESS]: Field "User.clubCount" is currently being migrated with progressive @override. Once the migration is complete, remove the field from subgraph "accounts".
+HINT: [INCONSISTENT_DESCRIPTION]: Element "User.clubCount" has inconsistent descriptions across subgraphs. The supergraph will use description (from subgraph "accounts"):
+  """
+  Moving to clubs (see clubs.graphqls): accounts still answers the rest of the traffic.
+  """
+In subgraph "clubs", the description is:
+  """
+  Moving from accounts: a quarter of the traffic is answered here until the label says 100.
+  """
+HINT: [INCONSISTENT_DESCRIPTION]: Element "Media" has inconsistent descriptions across subgraphs. The supergraph will use description (from subgraph "catalog"):
+  """
+  Anything Shelfie catalogues: books and audiobooks.
+  """
+In subgraph "reviews", the description is:
+  """
+  Reviews works on any Media without knowing its implementations: catalog's interface, seen as one type.
+  """
+Supergraph Schema was printed to /course/_workbench/2026-11-24-finish/rover/modules_m15-federation_labs_03-federation-sdl_solution_supergraph.rover.graphql

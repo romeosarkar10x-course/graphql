@@ -1,0 +1,12 @@
+00:56:22 targets=14178659m/500 replicas=2
+00:56:37 targets=16036968m/500 replicas=4
+00:56:52 targets=7498492m/500 replicas=8
+00:57:07 targets=5194653m/500 replicas=12
+00:57:22 targets=5092230m/500 replicas=12
+00:57:37 targets=5330916m/500 replicas=12
+00:57:52 targets=5348936m/500 replicas=12
+00:58:07 targets=5412006m/500 replicas=12
+00:58:23 targets=5387980m/500 replicas=12
+00:58:38 targets=5396990m/500 replicas=12
+00:58:53 targets=5366956m/500 replicas=12
+00:59:08 targets=5366956m/500 replicas=12

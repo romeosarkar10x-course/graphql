@@ -33,6 +33,11 @@ stopped with SIGTERM and started again in turn.
 The Kubernetes manifest matches: `maxUnavailable: 0`, readiness `periodSeconds: 2` and
 `terminationGracePeriodSeconds: 30`, which is more than the drain plus the 20 s shutdown phase.
 
+Applied to a real cluster once (kind 0.33.0, Kubernetes 1.37.0, 2026-11-24, `_workbench/2026-11-24-finish/k8s/`):
+`kubectl rollout restart` with four clients querying the Service every 20 ms (a new connection each, curl in a
+pod), twice: 0 failed of 2,425 and 0 of 2,579 requests, the rollout reported done in 7 s. The image was Jib's
+`jib:buildTar`, loaded with `kind load docker-image`.
+
 ## Native image and CRaC: would you use them here?
 
 Both shorten start-up, which matters for scaling out quickly, not for this rolling deploy: here the start took

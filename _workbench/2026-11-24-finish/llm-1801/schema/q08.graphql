@@ -1,0 +1,1 @@
+query { search(text: "Asha") { ... on User { name handle clubs { name } } } }

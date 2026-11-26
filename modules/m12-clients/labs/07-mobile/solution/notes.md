@@ -48,7 +48,8 @@ tell the user what is still unsent.
 ## Android
 
 The same Apollo Kotlin code runs on Android; the build adds the Android Gradle plugin and the SQLite cache
-uses Android's SQLite driver (`SqlNormalizedCacheFactory` given a database name, not a JDBC URL; check the
-factory's Android signature for your Apollo version). Airplane mode is real: `ConnectivityManager`
+uses Android's SQLite driver: in Apollo Kotlin 5.2.0 the Android `SqlNormalizedCacheFactory` takes a
+`Context` and a database name (`SqlNormalizedCacheFactory(context, "shelfie.db")`), not a JDBC URL (read from
+its `androidMain` source, 2026-11-24; not run, no Android SDK in the course). Airplane mode is real: `ConnectivityManager`
 callbacks start the sync, ideally as a `WorkManager` job with a network constraint so it survives the app
 being killed. Codegen and the cache are identical to this lab.

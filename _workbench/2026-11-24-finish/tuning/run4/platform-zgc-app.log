@@ -1,0 +1,63 @@
+Profiling started
+[0.200s][info][jfr,startup] Started recording 1. No limit specified, using maxsize=250MB as default.
+[0.200s][info][jfr,startup] 
+[0.200s][info][jfr,startup] Use jcmd 12457 JFR.dump name=1 to copy recording data to file.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.2.0)
+
+2026-11-23T19:10:57.513Z  INFO 12457 --- [           main] dev.shelfie.perf.PerfApplication         : Starting PerfApplication v1 using Java 25.0.5.1 with PID 12457 (/course/_workbench/2026-11-24-finish/tuning/lab/app/target/shelfie-perf.jar started by ubuntu in /course/_workbench/2026-11-24-finish/tuning/lab)
+2026-11-23T19:10:57.515Z  INFO 12457 --- [           main] dev.shelfie.perf.PerfApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-11-23T19:10:57.812Z  INFO 12457 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-23T19:10:57.856Z  INFO 12457 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40 ms. Found 4 JPA repository interfaces.
+2026-11-23T19:10:58.134Z  INFO 12457 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 4000 (http)
+2026-11-23T19:10:58.140Z  INFO 12457 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-23T19:10:58.140Z  INFO 12457 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-23T19:10:58.152Z  INFO 12457 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 619 ms
+2026-11-23T19:10:58.306Z  INFO 12457 --- [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-11-23T19:10:58.323Z  INFO 12457 --- [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.15.Final
+2026-11-23T19:10:58.453Z  INFO 12457 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-23T19:10:58.465Z  INFO 12457 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-23T19:10:58.524Z  INFO 12457 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@65c689e7
+2026-11-23T19:10:58.524Z  INFO 12457 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-23T19:10:58.549Z  INFO 12457 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://postgres:5432/shelfie?currentSchema=m09_08]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 18.7
+	Default catalog/schema: shelfie/m09_08
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-23T19:10:58.839Z  INFO 12457 --- [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-23T19:10:58.842Z  INFO 12457 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-23T19:10:58.876Z  INFO 12457 --- [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-23T19:10:59.141Z  INFO 12457 --- [           main] efaultSchemaResourceGraphQlSourceBuilder : Loaded 1 resource(s) in the GraphQL schema.
+2026-11-23T19:10:59.202Z  INFO 12457 --- [           main] o.s.b.g.a.GraphQlAutoConfiguration       : GraphQL schema inspection:
+	Unmapped fields: {}
+	Unmapped registrations: {}
+	Unmapped arguments: {}
+	Field nullness errors: {}
+	Argument nullness errors: {BatchController#reviews[3 args]=[int first should be NULLABLE], BatchController#ownerPicks[4 args]=[int first should be NULLABLE], BatchController#members[3 args]=[int first should be NULLABLE], ClubController#clubs[1 args]=[int first should be NULLABLE]}
+	Skipped types: []
+2026-11-23T19:10:59.210Z  INFO 12457 --- [           main] s.b.g.a.s.GraphQlWebMvcAutoConfiguration : GraphQL endpoint HTTP [POST] /graphql
+2026-11-23T19:10:59.316Z  INFO 12457 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-11-23T19:10:59.341Z  INFO 12457 --- [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 4000 (http) with context path '/'
+2026-11-23T19:10:59.349Z  INFO 12457 --- [           main] dev.shelfie.perf.PerfApplication         : Started PerfApplication in 1.993 seconds (process running for 2.323)
+2026-11-23T19:11:02.170Z  INFO 12457 --- [nio-4000-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-23T19:11:02.170Z  INFO 12457 --- [nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-23T19:11:02.171Z  INFO 12457 --- [nio-4000-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-23T19:11:34.989Z  INFO 12457 --- [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-23T19:11:34.996Z  INFO 12457 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-11-23T19:11:34.999Z  INFO 12457 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-23T19:11:35.000Z  INFO 12457 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-23T19:11:35.001Z  INFO 12457 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

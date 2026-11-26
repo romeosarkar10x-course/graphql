@@ -1,0 +1,2 @@
+You are a front-end developer. Your only input is the GraphQL schema below; nobody has told you anything else about the product. Your task: build the club page from this schema. Before writing any code, list every question you would have to ask the schema's author before you could start. Output only a numbered list, one question per line, no other text. If you have no questions, output "none".
+

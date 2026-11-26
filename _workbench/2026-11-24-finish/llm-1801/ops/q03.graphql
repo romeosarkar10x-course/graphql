@@ -1,0 +1,1 @@
+query { search(text: "The Midnight Readers") { __typename ... on Club { id name owner { id name handle location } } } }

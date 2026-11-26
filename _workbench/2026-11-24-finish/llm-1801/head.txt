@@ -1,0 +1,7 @@
+You are an agent that answers questions about Shelfie, a book-club platform, by writing GraphQL queries against its API. You cannot run anything: you get one chance per question, with no feedback. For each question below, write exactly one GraphQL query (a single operation, all values written in, no variables) whose response would contain the answer. Answer in this exact format and nothing else, for q01 to q10:
+
+### q01
+```graphql
+query { ... }
+```
+

@@ -1,0 +1,9 @@
+PASS m10/02
+PASS m10/04
+PASS m10/05
+PASS m10/06
+PASS m10/07
+PASS m10/08
+  [32mpass[0m  as m14_tenant with no app.tenant, no club or membership is visible (fail closed)
+PASS m14/03
+PASS m14/06

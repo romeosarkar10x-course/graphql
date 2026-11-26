@@ -22,7 +22,16 @@
 
 ## 3. The SDL-only test
 
-(Reference notes: this is the shape of a good answer, not a measured run. Your count is yours.)
+(Reference notes: the shape of a good answer, plus one measured run. Your count is yours.)
+
+Measured 2026-11-24 (`_workbench/2026-11-24-finish/sdl-only/`): the AI-assistant variant, Claude Code 2.1.330
+in print mode with no tools, given only the schema and "build the club page; list every question you would have
+to ask first". On this reference schema with its descriptions stripped: **50 questions**. With the descriptions:
+**27**. The questions the descriptions removed are the description gaps below (null meanings, sort orders,
+scales). What remained were mostly about the product, not the schema (the page layout, routes, how sign-in
+works), plus real design findings: no join or leave mutation, and `members` returns `User`, so a member's role
+needs another query. One run per version, by a model from the same family as the course's author: treat the
+counts as an illustration, not a benchmark.
 An answer here names the tester, lists each question verbatim, and sorts them: questions a
 description would have answered (is the rating 1 to 5 or 0 to 10? is `members` sorted? null or false
 for `viewerIsMember` when signed out? what does a null `currentBook` mean?) and questions that show a

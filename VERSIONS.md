@@ -88,7 +88,8 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | Hive Router | 0.3.9 (2026-10-29), MIT | — | Module 15, second router; no `@defer`; 0.3.19 was 2 days old. Capstone reference: persisted documents (file), demand control, JWT (local JWKS), header propagation, SSE subscriptions |
 | GitHub Actions (capstone reference CI) | checkout v7, setup-java v6, setup-node v7, upload-artifact v7 (majors; latest v7.0.1, v6.3.0, v7.1.0, v7.0.2 on 2026-11-23) | — | Read by the stage 4 checker, not run |
 | federation-jvm | `federation-graphql-java-support` 7.0.0 (2026-08-03) | — | Module 15 subgraphs; not in Boot's BOM; 7.1.1 (2026-11-17) too new |
-| Federation composition | `@theguild/federation-composition` 0.27.0 (2026-09-23, MIT), graphql 16.15.0 | Rover / Hive CLI | Module 15; supports federation v2.0 to v2.9; Rover's composition needs ELv2 acceptance (not accepted) |
+| Federation composition | `@theguild/federation-composition` 0.27.0 (2026-09-23, MIT), graphql 16.15.0 | Rover / Hive CLI | Module 15; supports federation v2.0 to v2.9; Rover's composition needs ELv2 acceptance (accepted 2026-11-24: `bin/course rover`) |
+| Rover | 1.0.1 (2026-10-21), MIT CLI, composition plugin ELv2 (accepted by the course owner) | — | Module 15, optional second composer (`bin/course rover`); plugins supergraph-v2.9.0 and v2.15.6 fetched on first use; 1.1.0 was 5 days old |
 | Nadel | `com.atlassian:nadel` 0.42134418907 (2026-11-06), Apache-2.0 | — | lab 15.2; brings its own graphql-java; 0.44642751879 (2026-11-20) probed, too new to pin |
 | graphql-kotlin | 11.0.0 (2026-10-07), Kotlin 2.4.20 (`kotlin-maven-plugin`, 2026-09-07), maven-shade-plugin 3.6.2 | — | mini-project 15.10; federation link pinned to v2.9 (default v2.13) |
 | GitHub Actions (Module 15) | `actions/checkout@v7`, `actions/setup-node@v7`, `actions/upload-artifact@v7` | — | lab 15.5 workflow, read by the test, not run |
@@ -111,3 +112,17 @@ Verified against Maven Central and GitHub releases on **2026-11-21**
 | GraphQL Yoga / Pothos | graphql-yoga 6.0.1; @pothos/core 4.16.0, plugin-federation 4.5.4, plugin-directives 4.3.3 (ISC) | — | lab 18.6 TypeScript port; Node 24.22.1, TypeScript 6.0.3, @types/node 24.19.2 |
 | @apollo/subgraph (with Pothos) | 2.14.4 | 2.17.0 latest | 2.15.0+ drops the `EntityType` export the Pothos federation plugin imports (Module 18 finding 4) |
 | Viaduct | v3.0.0 (2026-10-21), Apache-2.0 | — | lab 18.4 rubric part; Gradle starter not run |
+
+## Added 2026-11-24 (finishing the open checks, `_workbench/2026-11-24-finish/`)
+
+| Component | Pinned | Note |
+|---|---|---|
+| Go | `golang:1.27.2-bookworm` (image 2026-10-14) | `bin/course go`, lab 18.6's Go port; 1.27.3 and 1.27.4 were under two weeks old |
+| gqlgen | v0.17.98 (2026-10-22) | lab 18.6 `solution-go/` |
+| kind | v0.33.0 (2026-08-26), node `kindest/node:v1.37.0` | one-off Kubernetes run of Modules 16.4 and 16.6 (not part of any test) |
+| kubectl | v1.37.0 | matches the kind node |
+| prometheus-adapter | v0.12.0 (2024-05-17, the latest release) | the HPA run's custom metrics |
+| curl image | `curlimages/curl:8.17.0` | the in-cluster load client |
+| graphql-java build | v26.1 source, Gradle 9.4.0 wrapper | lab 17.7, run once |
+| Viaduct cli-starter | `d111e57` (release/v3.0.0), Gradle 9.1.0 wrapper | lab 18.4, run once |
+

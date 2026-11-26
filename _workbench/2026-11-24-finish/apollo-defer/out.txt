@@ -1,0 +1,3 @@
+accept (plain): application/graphql-response+json,application/json;q=0.9
+accept (@defer): multipart/mixed;deferSpec=20220824,application/graphql-response+json,application/json;q=0.9
+result: {"book":{"__typename":"Book","id":"b1","title":"Kindred","reviews":[]}}

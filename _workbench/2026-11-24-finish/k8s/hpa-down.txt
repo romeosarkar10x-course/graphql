@@ -1,0 +1,16 @@
+00:59:45 targets=1117240m/500 replicas=12
+01:00:15 targets=0/500 replicas=12
+01:00:45 targets=0/500 replicas=12
+01:01:15 targets=0/500 replicas=12
+01:01:45 targets=0/500 replicas=12
+01:02:15 targets=0/500 replicas=12
+01:02:45 targets=0/500 replicas=12
+01:03:15 targets=0/500 replicas=12
+01:03:45 targets=0/500 replicas=12
+01:04:15 targets=0/500 replicas=12
+01:04:45 targets=0/500 replicas=12
+01:05:15 targets=0/500 replicas=2
+01:05:45 targets=0/500 replicas=2
+01:06:15 targets=0/500 replicas=2
+01:06:45 targets=0/500 replicas=2
+01:07:15 targets=0/500 replicas=2

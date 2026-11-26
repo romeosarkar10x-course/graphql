@@ -1,0 +1,1 @@
+query { books(first: 1000) { title pageCount } }

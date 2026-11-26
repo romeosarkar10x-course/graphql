@@ -1,0 +1,180 @@
+schema
+  @link(url: "https://specs.apollo.dev/link/v1.0")
+  @link(url: "https://specs.apollo.dev/join/v0.5", for: EXECUTION)
+  @link(url: "https://specs.apollo.dev/tag/v0.3", import: ["@tag"])
+  @link(url: "https://specs.apollo.dev/inaccessible/v0.2", import: ["@inaccessible"], for: SECURITY)
+{
+  query: Query
+}
+
+directive @inaccessible on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @join__directive(graphs: [join__Graph!], name: String!, args: join__DirectiveArguments) repeatable on SCHEMA | OBJECT | INTERFACE | FIELD_DEFINITION
+
+directive @join__enumValue(graph: join__Graph!) repeatable on ENUM_VALUE
+
+directive @join__field(graph: join__Graph, requires: join__FieldSet, provides: join__FieldSet, type: String, external: Boolean, override: String, usedOverridden: Boolean, overrideLabel: String, contextArguments: [join__ContextArgument!]) repeatable on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__implements(graph: join__Graph!, interface: String!) repeatable on OBJECT | INTERFACE
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet, extension: Boolean! = false, resolvable: Boolean! = true, isInterfaceObject: Boolean! = false) repeatable on OBJECT | INTERFACE | UNION | ENUM | INPUT_OBJECT | SCALAR
+
+directive @join__unionMember(graph: join__Graph!, member: String!) repeatable on UNION
+
+directive @link(url: String, as: String, for: link__Purpose, import: [link__Import]) repeatable on SCHEMA
+
+directive @tag(name: String!) repeatable on FIELD_DEFINITION | OBJECT | INTERFACE | UNION | ARGUMENT_DEFINITION | SCALAR | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION | SCHEMA
+
+type Audiobook implements Media
+  @join__implements(graph: CATALOG, interface: "Media")
+  @join__type(graph: CATALOG, key: "id")
+{
+  id: ID!
+  title: String!
+  narrator: String!
+  minutes: Int!
+  reviews: [Review!]! @join__field
+  reviewCount: Int! @join__field
+
+  """Null without reviews."""
+  averageRating: Float @join__field
+}
+
+"""Two keys: other subgraphs may point at a book by id or by ISBN."""
+type Book implements Media
+  @join__implements(graph: CATALOG, interface: "Media")
+  @join__type(graph: CATALOG, key: "id")
+  @join__type(graph: CATALOG, key: "isbn")
+  @join__type(graph: CLUBS, key: "id")
+{
+  id: ID! @tag(name: "public")
+  isbn: String! @join__field(graph: CATALOG) @tag(name: "public")
+  title: String! @join__field(graph: CATALOG) @tag(name: "public")
+  authors: [String!]! @join__field(graph: CATALOG) @tag(name: "public")
+  pages: Int! @join__field(graph: CATALOG) @join__field(graph: CLUBS, external: true)
+
+  """Weeks at 100 pages a week; needs catalog's page count."""
+  weeksToRead: Int! @join__field(graph: CLUBS, requires: "pages")
+  clubsReading: [Club!]! @join__field(graph: CLUBS)
+  reviews: [Review!]! @join__field
+  reviewCount: Int! @join__field
+
+  """Null without reviews."""
+  averageRating: Float @join__field
+}
+
+type Club
+  @join__type(graph: CLUBS, key: "id")
+{
+  id: ID!
+  name: String!
+  members: [User!]!
+  currentBook: Book
+}
+
+input join__ContextArgument {
+  name: String!
+  type: String!
+  context: String!
+  selection: join__FieldValue!
+}
+
+scalar join__DirectiveArguments
+
+scalar join__FieldSet
+
+scalar join__FieldValue
+
+enum join__Graph {
+  ACCOUNTS @join__graph(name: "accounts", url: "http://localhost:4001/graphql")
+  CATALOG @join__graph(name: "catalog", url: "http://localhost:4002/graphql")
+  CLUBS @join__graph(name: "clubs", url: "http://localhost:4004/graphql")
+  REVIEWS @join__graph(name: "reviews", url: "http://localhost:4003/graphql")
+}
+
+scalar link__Import
+
+enum link__Purpose {
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+
+  """
+  `EXECUTION` features provide metadata necessary for operation execution.
+  """
+  EXECUTION
+}
+
+"""Anything Shelfie catalogues: books and audiobooks."""
+interface Media
+  @join__type(graph: CATALOG, key: "id")
+  @join__type(graph: REVIEWS, key: "id", isInterfaceObject: true)
+{
+  id: ID!
+  title: String! @join__field(graph: CATALOG)
+  reviews: [Review!]! @join__field(graph: REVIEWS)
+  reviewCount: Int! @join__field(graph: REVIEWS)
+
+  """Null without reviews."""
+  averageRating: Float @join__field(graph: REVIEWS)
+}
+
+type Query
+  @join__type(graph: ACCOUNTS)
+  @join__type(graph: CATALOG)
+  @join__type(graph: CLUBS)
+  @join__type(graph: REVIEWS)
+{
+  """The signed-in reader."""
+  me: User @join__field(graph: ACCOUNTS)
+  user(id: ID!): User @join__field(graph: ACCOUNTS) @tag(name: "public")
+  books(first: Int = 10): [Book!]! @join__field(graph: CATALOG) @tag(name: "public")
+  book(id: ID!): Book @join__field(graph: CATALOG) @tag(name: "public")
+  bookByIsbn(isbn: String!): Book @join__field(graph: CATALOG) @tag(name: "public")
+  media(id: ID!): Media @join__field(graph: CATALOG)
+  clubs: [Club!]! @join__field(graph: CLUBS)
+  club(id: ID!): Club @join__field(graph: CLUBS)
+
+  """Newest first."""
+  latestReviews(first: Int = 5): [Review!]! @join__field(graph: REVIEWS)
+}
+
+type Review
+  @join__type(graph: REVIEWS, key: "id")
+{
+  id: ID!
+  rating: Int!
+  body: String!
+
+  """
+  Reviews stores each author's handle with the review, so it can answer that much itself.
+  """
+  author: User! @join__field(graph: REVIEWS, provides: "handle")
+  media: Media!
+}
+
+"""A reader. The accounts team owns who people are."""
+type User
+  @join__type(graph: ACCOUNTS, key: "id")
+  @join__type(graph: CLUBS, key: "id")
+  @join__type(graph: REVIEWS, key: "id")
+{
+  id: ID! @tag(name: "public")
+  name: String! @join__field(graph: ACCOUNTS) @tag(name: "public")
+
+  """Reviews keeps a copy, so both subgraphs may answer it."""
+  handle: String! @join__field(graph: ACCOUNTS) @join__field(graph: REVIEWS, external: true) @tag(name: "public")
+
+  """For sign-in and mail only: in the supergraph, never in the API."""
+  email: String! @inaccessible @join__field(graph: ACCOUNTS)
+
+  """
+  Moving to clubs (see clubs.graphqls): accounts still answers the rest of the traffic.
+  """
+  clubCount: Int! @join__field(graph: ACCOUNTS, overrideLabel: "percent(25)") @join__field(graph: CLUBS, override: "accounts", overrideLabel: "percent(25)")
+  clubs: [Club!]! @join__field(graph: CLUBS)
+  reviews: [Review!]! @join__field(graph: REVIEWS)
+}

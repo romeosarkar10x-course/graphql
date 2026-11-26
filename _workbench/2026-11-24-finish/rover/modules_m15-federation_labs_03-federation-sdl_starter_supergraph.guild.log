@@ -1,0 +1,1 @@
+TYPE_KIND_MISMATCH: Type "Media" has mismatched kind: it is defined as Interface Type in subgraph "catalog" but Object Type in subgraph "reviews"

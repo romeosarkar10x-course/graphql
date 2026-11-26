@@ -1,0 +1,391 @@
+ok    m00/01 solution passes
+ok    m00/01 starter fails, as it should
+ok    m00/02 solution passes
+ok    m00/02 starter fails, as it should
+ok    m00/03 solution passes
+ok    m00/03 starter fails, as it should
+ok    m00/04 solution passes
+ok    m00/04 starter fails, as it should
+ok    m00/05 solution passes
+ok    m00/05 starter fails, as it should
+ok    m00/06 solution passes
+ok    m00/06 starter fails, as it should
+ok    m01/01 solution passes
+ok    m01/01 starter fails, as it should
+ok    m01/02 solution passes
+ok    m01/02 starter fails, as it should
+ok    m01/03 solution passes
+ok    m01/03 starter fails, as it should
+ok    m01/04 solution passes
+ok    m01/04 starter fails, as it should
+ok    m01/06 solution passes
+ok    m01/06 starter fails, as it should
+ok    m02/01 solution passes
+ok    m02/01 starter fails, as it should
+ok    m02/02 solution passes
+ok    m02/02 starter fails, as it should
+ok    m02/03 solution passes
+ok    m02/03 starter fails, as it should
+ok    m02/04 solution passes
+ok    m02/04 starter fails, as it should
+ok    m02/05 solution passes
+ok    m02/05 starter fails, as it should
+ok    m02/06 solution passes
+ok    m02/06 starter fails, as it should
+ok    m02/07 solution passes
+ok    m02/07 starter fails, as it should
+ok    m02/08 solution passes
+ok    m02/08 starter fails, as it should
+ok    m02/09 solution passes
+ok    m02/09 starter fails, as it should
+ok    m02/10 solution passes
+ok    m02/10 starter fails, as it should
+ok    m02/11 solution passes
+ok    m02/11 starter fails, as it should
+ok    m02/12 solution passes
+ok    m02/12 starter fails, as it should
+ok    m03/01 solution passes
+ok    m03/01 starter fails, as it should
+ok    m03/02 solution passes
+ok    m03/02 starter fails, as it should
+ok    m03/03 solution passes
+ok    m03/03 starter fails, as it should
+ok    m03/04 solution passes
+ok    m03/04 starter fails, as it should
+ok    m03/05 solution passes
+ok    m03/05 starter fails, as it should
+ok    m03/06 solution passes
+ok    m03/06 starter fails, as it should
+ok    m03/07 solution passes
+ok    m03/07 starter fails, as it should
+ok    m03/08 solution passes
+ok    m03/08 starter fails, as it should
+ok    m03/09 solution passes
+ok    m03/09 starter fails, as it should
+ok    m03/10 solution passes
+ok    m03/10 starter fails, as it should
+ok    m03/11 solution passes
+ok    m03/11 starter fails, as it should
+ok    m03/13 solution passes
+ok    m03/13 starter fails, as it should
+ok    m04/01 solution passes
+ok    m04/01 starter fails, as it should
+ok    m04/02 solution passes
+ok    m04/02 starter fails, as it should
+ok    m04/03 solution passes
+ok    m04/03 starter fails, as it should
+ok    m04/04 solution passes
+ok    m04/04 starter fails, as it should
+ok    m04/05 solution passes
+ok    m04/05 starter fails, as it should
+ok    m04/06 solution passes
+ok    m04/06 starter fails, as it should
+ok    m04/07 solution passes
+ok    m04/07 starter fails, as it should
+ok    m04/08 solution passes
+ok    m04/08 starter fails, as it should
+ok    m04/09 solution passes
+ok    m04/09 starter fails, as it should
+ok    m05/01 solution passes
+ok    m05/01 starter fails, as it should
+ok    m05/02 solution passes
+ok    m05/02 starter fails, as it should
+ok    m05/03 solution passes
+ok    m05/03 starter fails, as it should
+ok    m05/04 solution passes
+ok    m05/04 starter fails, as it should
+ok    m05/05 solution passes
+ok    m05/05 starter fails, as it should
+ok    m05/06 solution passes
+ok    m05/06 starter fails, as it should
+ok    m05/07 solution passes
+ok    m05/07 starter fails, as it should
+ok    m05/08 solution passes
+ok    m05/08 starter fails, as it should
+ok    m05/09 solution passes
+ok    m05/09 starter fails, as it should
+ok    m05/10 solution passes
+ok    m05/10 starter fails, as it should
+ok    m05/11 solution passes
+ok    m05/11 starter fails, as it should
+ok    m06/01 solution passes
+ok    m06/01 starter fails, as it should
+ok    m06/02 solution passes
+ok    m06/02 starter fails, as it should
+ok    m06/03 solution passes
+ok    m06/03 starter fails, as it should
+ok    m06/04 solution passes
+ok    m06/04 starter fails, as it should
+ok    m06/05 solution passes
+ok    m06/05 starter fails, as it should
+ok    m06/06 solution passes
+ok    m06/06 starter fails, as it should
+ok    m06/07 solution passes
+ok    m06/07 starter fails, as it should
+ok    m06/08 solution passes
+ok    m06/08 starter fails, as it should
+ok    m06/09 solution passes
+ok    m06/09 starter fails, as it should
+ok    m06/11 solution passes
+ok    m06/11 starter fails, as it should
+ok    m07/01 solution passes
+ok    m07/01 starter fails, as it should
+ok    m07/02 solution passes
+ok    m07/02 starter fails, as it should
+ok    m07/03 solution passes
+ok    m07/03 starter fails, as it should
+ok    m07/04 solution passes
+ok    m07/04 starter fails, as it should
+ok    m07/05 solution passes
+ok    m07/05 starter fails, as it should
+ok    m07/06 solution passes
+ok    m07/06 starter fails, as it should
+ok    m07/07 solution passes
+ok    m07/07 starter fails, as it should
+ok    m07/08 solution passes
+ok    m07/08 starter fails, as it should
+ok    m07/10 solution passes
+ok    m07/10 starter fails, as it should
+ok    m08/01 solution passes
+ok    m08/01 starter fails, as it should
+ok    m08/02 solution passes
+ok    m08/02 starter fails, as it should
+ok    m08/03 solution passes
+ok    m08/03 starter fails, as it should
+ok    m08/04 solution passes
+ok    m08/04 starter fails, as it should
+ok    m08/05 solution passes
+ok    m08/05 starter fails, as it should
+ok    m08/06 solution passes
+ok    m08/06 starter fails, as it should
+ok    m08/07 solution passes
+ok    m08/07 starter fails, as it should
+ok    m08/08 solution passes
+ok    m08/08 starter fails, as it should
+ok    m08/09 solution passes
+ok    m08/09 starter fails, as it should
+ok    m08/10 solution passes
+ok    m08/10 starter fails, as it should
+ok    m08/11 solution passes
+ok    m08/11 starter fails, as it should
+ok    m09/01 solution passes
+ok    m09/01 starter fails, as it should
+ok    m09/02 solution passes
+ok    m09/02 starter fails, as it should
+ok    m09/03 solution passes
+ok    m09/03 starter fails, as it should
+ok    m09/04 solution passes
+ok    m09/04 starter fails, as it should
+ok    m09/05 solution passes
+ok    m09/05 starter fails, as it should
+ok    m09/06 solution passes
+ok    m09/06 starter fails, as it should
+ok    m09/07 solution passes
+ok    m09/07 starter fails, as it should
+ok    m09/08 solution passes
+ok    m09/08 starter fails, as it should
+ok    m09/09 solution passes
+ok    m09/09 starter fails, as it should
+ok    m09/10 solution passes
+ok    m09/10 starter fails, as it should
+ok    m09/11 solution passes
+ok    m09/11 starter fails, as it should
+ok    m10/01 solution passes
+ok    m10/01 starter fails, as it should
+ok    m10/02 solution passes
+ok    m10/02 starter fails, as it should
+ok    m10/03 solution passes
+ok    m10/03 starter fails, as it should
+ok    m10/04 solution passes
+ok    m10/04 starter fails, as it should
+ok    m10/05 solution passes
+ok    m10/05 starter fails, as it should
+ok    m10/06 solution passes
+ok    m10/06 starter fails, as it should
+ok    m10/07 solution passes
+ok    m10/07 starter fails, as it should
+ok    m10/08 solution passes
+ok    m10/08 starter fails, as it should
+ok    m10/09 solution passes
+ok    m10/09 starter fails, as it should
+ok    m10/10 solution passes
+ok    m10/10 starter fails, as it should
+ok    m10/11 solution passes
+ok    m10/11 starter fails, as it should
+ok    m11/01 solution passes
+ok    m11/01 starter fails, as it should
+ok    m11/02 solution passes
+ok    m11/02 starter fails, as it should
+ok    m11/03 solution passes
+ok    m11/03 starter fails, as it should
+ok    m11/04 solution passes
+ok    m11/04 starter fails, as it should
+ok    m11/05 solution passes
+ok    m11/05 starter fails, as it should
+ok    m11/06 solution passes
+ok    m11/06 starter fails, as it should
+ok    m11/08 solution passes
+ok    m11/08 starter fails, as it should
+ok    m11/09 solution passes
+ok    m11/09 starter fails, as it should
+ok    m11/10 solution passes
+ok    m11/10 starter fails, as it should
+ok    m12/01 solution passes
+ok    m12/01 starter fails, as it should
+ok    m12/02 solution passes
+ok    m12/02 starter fails, as it should
+ok    m12/03 solution passes
+ok    m12/03 starter fails, as it should
+ok    m12/04 solution passes
+ok    m12/04 starter fails, as it should
+ok    m12/05 solution passes
+ok    m12/05 starter fails, as it should
+ok    m12/08 solution passes
+ok    m12/08 starter fails, as it should
+ok    m12/09 solution passes
+ok    m12/09 starter fails, as it should
+ok    m12/10 solution passes
+ok    m12/10 starter fails, as it should
+ok    m13/01 solution passes
+ok    m13/01 starter fails, as it should
+ok    m13/02 solution passes
+ok    m13/02 starter fails, as it should
+ok    m13/03 solution passes
+ok    m13/03 starter fails, as it should
+ok    m13/04 solution passes
+ok    m13/04 starter fails, as it should
+ok    m13/05 solution passes
+ok    m13/05 starter fails, as it should
+ok    m13/06 solution passes
+ok    m13/06 starter fails, as it should
+ok    m13/07 solution passes
+ok    m13/07 starter fails, as it should
+ok    m13/08 solution passes
+ok    m13/08 starter fails, as it should
+ok    m13/09 solution passes
+ok    m13/09 starter fails, as it should
+ok    m13/10 solution passes
+ok    m13/10 starter fails, as it should
+ok    m14/01 solution passes
+ok    m14/01 starter fails, as it should
+ok    m14/02 solution passes
+ok    m14/02 starter fails, as it should
+ok    m14/03 solution passes
+ok    m14/03 starter fails, as it should
+ok    m14/04 solution passes
+ok    m14/04 starter fails, as it should
+ok    m14/05 solution passes
+ok    m14/05 starter fails, as it should
+ok    m14/06 solution passes
+ok    m14/06 starter fails, as it should
+ok    m14/07 solution passes
+ok    m14/07 starter fails, as it should
+ok    m14/08 solution passes
+ok    m14/08 starter fails, as it should
+ok    m14/09 solution passes
+ok    m14/09 starter fails, as it should
+ok    m14/10 solution passes
+ok    m14/10 starter fails, as it should
+ok    m15/01 solution passes
+ok    m15/01 starter fails, as it should
+ok    m15/02 solution passes
+ok    m15/02 starter fails, as it should
+ok    m15/03 solution passes
+ok    m15/03 starter fails, as it should
+ok    m15/04 solution passes
+ok    m15/04 starter fails, as it should
+ok    m15/05 solution passes
+ok    m15/05 starter fails, as it should
+ok    m15/06 solution passes
+ok    m15/06 starter fails, as it should
+ok    m15/07 solution passes
+ok    m15/07 starter fails, as it should
+ok    m15/08 solution passes
+ok    m15/08 starter fails, as it should
+ok    m15/09 solution passes
+ok    m15/09 starter fails, as it should
+ok    m15/10 solution passes
+ok    m15/10 starter fails, as it should
+ok    m16/01 solution passes
+ok    m16/01 starter fails, as it should
+ok    m16/02 solution passes
+ok    m16/02 starter fails, as it should
+ok    m16/03 solution passes
+ok    m16/03 starter fails, as it should
+ok    m16/04 solution passes
+ok    m16/04 starter fails, as it should
+FAIL  m16/05 solution fails
+        [32mpass[0m  mvn package builds target/shelfie-ops.jar
+        [32mpass[0m  the club page with reviews, normally
+              peak: {"requests":1200,"p50":1,"p95":5,"p99":502,"max":506,"failed":0,"degraded":837,"p95PerSecond":[9,6,5,502,4,2,2,2,2,2,1,2]}
+        [32mpass[0m  every page rendered (1,200 club pages, reviews slow then dead)
+        [32mpass[0m  p95 under 250 ms (5 ms)
+        [32mpass[0m  p99 under 1 s (502 ms)
+        [32mpass[0m  the slow service was spared: 25 calls in its 4 slow seconds (400 pages asked)
+        [32mpass[0m  degraded answers carry REVIEWS_UNAVAILABLE (837)
+        [32mpass[0m  while it is down: the page renders, reviews are null with REVIEWS_UNAVAILABLE at their path
+        [31mfail[0m  still failing 20 s after the reviews service came back
+              {"message":"The reviews service is unavailable","locations":[{"line":1,"column":113}],"path":["club","readingList",0,"reviews"],"extensions":{"code":"REVIEWS_UNAVAILABLE","classification":"INTERNAL_ERROR"}}
+        1 check(s) failed
+ok    m16/05 starter fails, as it should
+ok    m16/06 solution passes
+ok    m16/06 starter fails, as it should
+ok    m16/07 solution passes
+ok    m16/07 starter fails, as it should
+ok    m16/08 solution passes
+ok    m16/08 starter fails, as it should
+ok    m16/10 solution passes
+ok    m16/10 starter fails, as it should
+ok    m17/01 solution passes
+ok    m17/01 starter fails, as it should
+ok    m17/02 solution passes
+ok    m17/02 starter fails, as it should
+ok    m17/03 solution passes
+ok    m17/03 starter fails, as it should
+ok    m17/04 solution passes
+ok    m17/04 starter fails, as it should
+ok    m17/05 solution passes
+ok    m17/05 starter fails, as it should
+ok    m17/06 solution passes
+ok    m17/06 starter fails, as it should
+ok    m17/08 solution passes
+ok    m17/08 starter fails, as it should
+ok    m17/09 solution passes
+ok    m17/09 starter fails, as it should
+ok    m17/10 solution passes
+ok    m17/10 starter fails, as it should
+ok    m18/01 solution passes
+ok    m18/01 starter fails, as it should
+ok    m18/02 solution passes
+ok    m18/02 starter fails, as it should
+ok    m18/03 solution passes
+ok    m18/03 starter fails, as it should
+ok    m18/04 solution passes
+ok    m18/04 starter fails, as it should
+ok    m18/05 solution passes
+ok    m18/05 starter fails, as it should
+ok    m18/06 solution passes
+ok    m18/06 starter fails, as it should
+ok    m18/07 solution passes
+ok    m18/07 starter fails, as it should
+ok    m18/08 solution passes
+ok    m18/08 starter fails, as it should
+ok    m19/01 solution passes
+ok    m19/01 starter fails, as it should
+ok    m19/02 solution passes
+ok    m19/02 starter fails, as it should
+ok    m19/03 solution passes
+ok    m19/03 starter fails, as it should
+FAIL  m19/04 solution fails
+        [32mpass[0m  capstone.json: Toolshed, 2 subgraph(s)
+        [32mpass[0m  2 subgraphs
+        [32mpass[0m  the contract composes (2 subgraph schema(s))
+        [32mpass[0m  build: mvn -q -DskipTests package
+        [31mfail[0m  inventory did not get ready at http://localhost:4001/actuator/health
+              	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:367) ~[postgresql-42.7.14.jar!/:42.7.14]
+      	... 83 common frames omitted
+        1 check(s) failed
+ok    m19/04 starter fails, as it should
+184 auto-graded labs checked, 2 problem(s)
+exit 1
+(after the run: Docker was stopped at 02:01:55 IST, status 0; re-runs of m16/05 could not start: docker.sock EOF)

@@ -1,0 +1,37 @@
+# gqlgen (schema first): graph/schema.graphqls is Module 15's reviews.graphqls, unchanged.
+schema:
+  - graph/schema.graphqls
+exec:
+  filename: graph/generated.go
+  package: graph
+federation:
+  filename: graph/federation.go
+  package: graph
+  version: 2
+model:
+  filename: graph/model/models_gen.go
+  package: model
+resolver:
+  layout: follow-schema
+  dir: graph
+  package: graph
+models:
+  ID:
+    model: github.com/99designs/gqlgen/graphql.ID
+  Int:
+    model: github.com/99designs/gqlgen/graphql.Int
+  Review:
+    model: shelfie/reviews/graph/model.Review
+    fields:
+      author: { resolver: true }
+      book: { resolver: true }
+  Book:
+    model: shelfie/reviews/graph/model.Book
+    fields:
+      reviews: { resolver: true }
+      reviewCount: { resolver: true }
+      averageRating: { resolver: true }
+  User:
+    model: shelfie/reviews/graph/model.User
+    fields:
+      reviews: { resolver: true }

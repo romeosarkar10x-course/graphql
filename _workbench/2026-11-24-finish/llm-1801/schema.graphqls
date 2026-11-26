@@ -1,0 +1,265 @@
+"This directive allows results to be deferred during execution"
+directive @defer(
+    "Deferred behaviour is controlled by this argument"
+    if: Boolean! = true,
+    "A unique label that represents the fragment being deferred"
+    label: String
+  ) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Marks the field, argument, input field or enum value as deprecated"
+directive @deprecated(
+    "The reason for the deprecation"
+    reason: String! = "No longer supported"
+  ) on FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM_VALUE | INPUT_FIELD_DEFINITION
+
+"This directive disables error propagation when a non nullable field returns null for the given operation."
+directive @experimental_disableErrorPropagation on QUERY | MUTATION | SUBSCRIPTION
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Indicates an Input Object is a OneOf Input Object."
+directive @oneOf on INPUT_OBJECT
+
+"Directs the executor to skip this field or fragment when the `if` argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+  ) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
+
+union CreateReviewResult = NotAllowed | ReviewCreated | ValidationFailed
+
+"Anything `search` can return. Module 2.4 selects from it with inline fragments."
+union SearchResult = Book | Club | User
+
+type Book {
+  authors: [String!]!
+  "Mean rating rounded to 2 decimals, null when there are no reviews."
+  averageRating: Float
+  coverUrl: String
+  id: ID!
+  isbn: String
+  pageCount: Int
+  publishedYear: Int
+  "Newest first. `last` caps the list."
+  reviews(last: Int = 5): [Review!]!
+  synopsis: String
+  title: String!
+}
+
+type Club {
+  createdAt: String!
+  "The book the club is reading right now, if any."
+  currentBook: Book
+  description: String
+  id: ID!
+  meetups(upcomingOnly: Boolean = true): [Meetup!]!
+  memberCount: Int!
+  "Members in join order. `first` caps the list."
+  members(first: Int = 10): [User!]!
+  name: String!
+  owner: User!
+  visibility: Visibility!
+}
+
+type CreateCoverUploadPayload {
+  "Pass to `confirmCoverUpload`."
+  uploadId: ID
+  "PUT the bytes here with the same Content-Type. Valid for 10 minutes."
+  uploadUrl: String
+  userErrors: [UserError!]!
+}
+
+type CreateReviewPayload {
+  "Null when `userErrors` is not empty."
+  review: Review
+  userErrors: [UserError!]!
+}
+
+type DeleteReviewPayload {
+  "The reviewed book, so a client can refresh `averageRating` from the same response."
+  book: Book
+  "The id that was deleted, null when nothing was."
+  deletedReviewId: ID
+  userErrors: [UserError!]!
+}
+
+type FieldProblem {
+  field: [String!]!
+  message: String!
+}
+
+type JoinClubPayload {
+  club: Club
+  userErrors: [UserError!]!
+}
+
+type LeaveClubPayload {
+  club: Club
+  userErrors: [UserError!]!
+}
+
+type Meetup {
+  club: Club!
+  id: ID!
+  location: String!
+  startsAt: String!
+  title: String!
+}
+
+"""
+Writes, Module 4. Every mutation takes one `input` argument and returns a payload (4.2), except
+`uploadCover`, whose `file` must be a separate argument for the multipart request convention (4.6).
+"""
+type Mutation {
+  "Signed-URL alternative, step 2: tell Shelfie the upload finished; it checks the object and links it."
+  confirmCoverUpload(input: ConfirmCoverUploadInput!): UploadCoverPayload!
+  "Signed-URL alternative (4.6), step 1: get a short-lived URL and PUT the bytes to object storage."
+  createCoverUpload(input: CreateCoverUploadInput!): CreateCoverUploadPayload!
+  "Payload style: rule violations come back in `userErrors`, never as top-level errors (4.3)."
+  createReview(input: CreateReviewInput!): CreateReviewPayload!
+  "Result-union style: the same rules as `createReview`, one member type per outcome (4.3)."
+  createReviewTyped(input: CreateReviewInput!): CreateReviewResult!
+  "Only the review's author may delete it."
+  deleteReview(input: DeleteReviewInput!): DeleteReviewPayload!
+  "Joining a club you are already in succeeds and changes nothing: the mutation is idempotent (4.4)."
+  joinClub(input: JoinClubInput!): JoinClubPayload!
+  "Leaving a club you are not in succeeds and changes nothing. The owner cannot leave."
+  leaveClub(input: LeaveClubInput!): LeaveClubPayload!
+  """
+  GraphQL multipart request convention (4.6): send `multipart/form-data` with `operations`, `map` and
+  the file parts, plus a `GraphQL-Require-Preflight: 1` header (CSRF protection). The server holds the
+  whole file in memory, which `serverBufferedBytes` reports.
+  """
+  uploadCover(bookId: ID!, file: Upload!): UploadCoverPayload!
+}
+
+type NotAllowed {
+  reason: String!
+}
+
+"""
+Shelfie reference schema, Modules 0 to 4. Deliberately small: timestamps are plain Strings until
+custom scalars arrive in Module 3, and lists are plain lists until connections arrive in Module 8.
+Mutations (Module 4) act as the user named in the `X-Shelfie-User` header, e.g. `X-Shelfie-User: u1`.
+POST /_course/reset-data puts the data back to the seed.
+"""
+type Query {
+  book(id: ID!): Book
+  "All books in catalogue order. `titleContains` filters, ignoring case; `first` caps the list."
+  books(first: Int = 20, titleContains: String): [Book!]!
+  club(id: ID!): Club
+  clubs: [Club!]!
+  "A friendly smoke-test field. Module 0.1 asserts on it."
+  hello: String!
+  "Books, clubs and users whose title, name or handle contains `text`, ignoring case. Books first, then clubs, then users."
+  search(text: String!): [SearchResult!]!
+  user(id: ID!): User
+}
+
+type Review {
+  author: User!
+  body: String!
+  book: Book!
+  createdAt: String!
+  id: ID!
+  "1 to 5."
+  rating: Int!
+}
+
+type ReviewCreated {
+  review: Review!
+}
+
+type Subscription {
+  "Fires when a club schedules a meetup. Declared for Module 2.5 validation exercises; Module 11 delivers events."
+  meetupScheduled(clubId: ID!): Meetup!
+}
+
+type UploadCoverPayload {
+  book: Book
+  "Bytes received and their SHA-256 (hex), so a client can check nothing was lost."
+  bytes: Int
+  "How many bytes of the file the GraphQL server held in memory to handle this upload."
+  serverBufferedBytes: Int
+  sha256: String
+  userErrors: [UserError!]!
+}
+
+type User {
+  avatarUrl: String
+  bio: String
+  clubs: [Club!]!
+  handle: String!
+  id: ID!
+  location: String
+  name: String!
+  reviews: [Review!]!
+}
+
+"A rule the input broke. `field` is the path to the offending input field, e.g. [\"input\", \"rating\"]."
+type UserError {
+  code: UserErrorCode!
+  field: [String!]
+  message: String!
+}
+
+type ValidationFailed {
+  "At least one."
+  problems: [FieldProblem!]!
+}
+
+enum UserErrorCode {
+  DUPLICATE
+  FORBIDDEN
+  INVALID
+  NOT_FOUND
+  UNAUTHENTICATED
+}
+
+enum Visibility {
+  PRIVATE
+  PUBLIC
+}
+
+"A file part of a multipart request"
+scalar Upload
+
+input ConfirmCoverUploadInput {
+  uploadId: ID!
+}
+
+input CreateCoverUploadInput {
+  bookId: ID!
+  "image/jpeg or image/png."
+  contentType: String!
+}
+
+input CreateReviewInput {
+  "10 to 2000 characters."
+  body: String!
+  bookId: ID!
+  "1 to 5."
+  rating: Int!
+}
+
+input DeleteReviewInput {
+  id: ID!
+}
+
+input JoinClubInput {
+  clubId: ID!
+}
+
+input LeaveClubInput {
+  clubId: ID!
+}

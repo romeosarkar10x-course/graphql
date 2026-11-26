@@ -28,9 +28,18 @@ bin/course node sh -c 'npm ci && bash serve.sh 4003'     # by hand
 bin/course test m18/06
 ```
 
-Go instead? The plan allows gqlgen. The course image has no Go toolchain and the course has no Go reference port
-yet, so the test is unverified for Go: a Go port's `serve.sh` would have to start a static Linux binary built on
-your machine (`CGO_ENABLED=0 GOOS=linux go build`). Tell the maintainer how it went.
+Go instead? The plan allows gqlgen, and the course has a Go reference port (`solution-go/`, gqlgen v0.17.98): the
+same test passes for it. The course image has no Go, so build with `bin/course go` (the official Go image, a
+static Linux binary), and let `serve.sh` start the binary:
+
+```bash
+bin/course go mod init shelfie/reviews && bin/course go get github.com/99designs/gqlgen@v0.17.98
+# write gqlgen.yml (with a "federation:" section, version 2) and put the contract in graph/schema.graphqls, then:
+bin/course go run github.com/99designs/gqlgen generate
+bin/course go build -o reviews . && bin/course test m18/06
+```
+
+(gqlgen's own `init` scaffolds a project too; the course's port wrote `gqlgen.yml` by hand and did not try it.)
 
 Then write `PORT.md`: what was the same, what was not, and the numbers (startup time, memory, a latency sample)
 beside Java's.

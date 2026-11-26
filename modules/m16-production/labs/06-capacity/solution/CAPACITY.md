@@ -58,6 +58,18 @@ still holds 5 pods ten minutes after the peak (the 300 s scale-down window keeps
 Cost per second is a better signal than CPU here because the abusive pattern from the game day (a few huge
 queries) shows in cost long before the CPU average moves.
 
+### The same HPA on a real cluster (2026-11-24)
+
+`k8s/hpa.yaml` applied to kind 0.33.0 (Kubernetes 1.37.0) with lab 16.4's Deployment, a Prometheus scraping the
+pods and prometheus-adapter 0.12.0 serving `graphql_cost_per_second` from `k8s/cost-per-second.promql`
+(`_workbench/2026-11-24-finish/k8s/`). One change: the target was lowered to `500` so four in-cluster clients
+(a 901-cost query every 50 ms each) could cross it; 32k needs a busy CPU per pod. Replicas went 2, 4, 8, 12 in
+45 s (sampled every 15 s), within the default scale-up limit of 100% or 4 pods more per 15 s, and stopped at `maxReplicas`; per-pod cost then settled at
+about 5,400/s, the same total spread over 12. After the load stopped the metric read 0 within 30 s, and the
+replicas stayed at 12 for 5 minutes (the default `scaleDown.stabilizationWindowSeconds` of 300) before dropping
+to 2 in one step. `HpaSim.java` uses the same two rules: that scale-up limit and the 300 s window (it reads
+`behavior.scaleDown.stabilizationWindowSeconds` too); the cluster stayed within both.
+
 ## Edge caching and multi-region reads: what would they change?
 
 The club page is public and identical for everyone, so a CDN in front of persisted GET queries (Module 9) would take

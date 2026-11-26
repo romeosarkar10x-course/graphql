@@ -70,6 +70,9 @@ Playing with friends: [docs/GROUP_PLAY.md](docs/GROUP_PLAY.md).
 | | [M18 The frontier: AI agents, open RFCs and other languages](modules/m18-frontier/README.md) | Ready |
 | | [Capstone: a new product from an empty repository](modules/m19-capstone/README.md) | Ready |
 
+Every module and the capstone are built and checked (2026-11-24). What is left is in [TODO.md](TODO.md): a few
+checks that need your accounts, and the maintenance list for each new term.
+
 ## Layout
 
 ```

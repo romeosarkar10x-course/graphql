@@ -1,0 +1,93 @@
+schema {
+  query: Query
+}
+
+scalar DateTime
+
+scalar Url
+
+type Query {
+  club(id: ID!): Club
+  book(id: ID!): Book
+  user(handle: String!): User
+}
+
+type Club {
+  id: ID!
+  name: String!
+  description: String
+  memberCount: Int!
+  viewerIsMember: Boolean
+  owner: User!
+  currentBook: Book
+  nextMeetup: Meetup
+  members(first: Int = 10): [User!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  handle: String!
+  bio: String
+  avatarUrl: Url
+  joinedAt: DateTime!
+  memberships: [Membership!]!
+  shelf: [ShelfEntry!]!
+}
+
+type Membership {
+  club: Club!
+  user: User!
+  role: ClubRole!
+  joinedAt: DateTime!
+}
+
+enum ClubRole {
+  OWNER
+  MODERATOR
+  MEMBER
+}
+
+type ShelfEntry {
+  book: Book!
+  status: ShelfStatus!
+}
+
+enum ShelfStatus {
+  WANT_TO_READ
+  READING
+  FINISHED
+}
+
+type Book {
+  id: ID!
+  title: String!
+  coverUrl: Url
+  publishedYear: Int
+  authors: [Author!]!
+  averageRating: Float
+  reviewCount: Int!
+  reviews(last: Int = 10): [Review!]!
+  clubsReading: [Club!]!
+}
+
+type Author {
+  id: ID!
+  name: String!
+}
+
+type Review {
+  id: ID!
+  rating: Int!
+  body: String!
+  createdAt: DateTime!
+  author: User!
+  book: Book!
+}
+
+type Meetup {
+  id: ID!
+  startsAt: DateTime!
+  venue: String!
+  club: Club!
+}

@@ -20,6 +20,22 @@ about 20 us off each request, the same for every configuration. Full tables in `
 | platform-zgc | 1 GB | 12 ms | 16 ms | 21 ms | 0 | 3 ms |
 | virtual-zgc | 1 GB | 11 ms | 16 ms | 21 ms | 0 | 4 ms |
 
+### Five runs each at 1 GB (2026-11-24)
+
+The same `tune.sh` five times with `HEAP=1g` (`_workbench/2026-11-24-finish/tuning/`), with the app as it is
+now (DocumentCache in), on the same machine. Median of the five runs, with the range:
+
+| Config | p50 (median, range) | p95 | p99 | Failed | GC pauses ms |
+|---|---|---|---|---|---|
+| platform-g1 | 9 (9-9) | 13 (13-15) | 18 (16-26) | 0 | 431 (419-487) |
+| virtual-g1 | 9 (9-9) | 12 (12-13) | 16 (15-17) | 0 | 392 (359-434) |
+| platform-zgc | 11 (11-12) | 15 (15-16) | 19 (18-23) | 0 | 4 (3-4) |
+| virtual-zgc | 11 (11-12) | 15 (15-16) | 20 (19-21) | 0 | 4 (3-4) |
+
+The single runs above were inside these ranges. Two things only the repeats show: p50 does not move at all
+(9 ms for G1, 11 to 12 ms for ZGC, in every run), and platform-g1's p99 is the one number that jumps between runs
+(16 to 26 ms), while virtual-g1's stays within 15 to 17 ms.
+
 ## What each change did
 
 **ZGC on 256 MB fell over.** The GC log has 4,919 "Allocation Stall" lines, and the app log has
@@ -44,8 +60,9 @@ JDK default and safe on small heaps, which matters more for a 256 MB container t
 
 ## What would change the answer
 
-One run per configuration: differences of 2-5 ms are within run-to-run noise here, so the honest
-conclusion is "G1 or ZGC at 1 GB are both fine; ZGC at 256 MB is not". I'd repeat each run 5 times and
-compare medians. A heap of several GB, an app with large live data (big caches), or a latency SLO at
+Five runs per configuration at 1 GB settle what one run could not: G1's p50 is 2 ms below ZGC's in every run,
+and virtual-g1 has the steadiest tail (p99 median 16 ms, range 15 to 17). The gaps between the two ZGC variants
+(1 ms) are noise. So the winner stands, now for a measured reason; the honest summary is still "G1 or ZGC at 1 GB
+are both fine; ZGC at 256 MB is not" (not repeated: that failure is not a matter of milliseconds). A heap of several GB, an app with large live data (big caches), or a latency SLO at
 p99.9 would favour ZGC. A much higher request rate, or slow downstream calls holding threads, would
 show virtual threads' real benefit.

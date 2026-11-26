@@ -16,6 +16,13 @@ Bucket4j 8.22.0, graphql-cop 1.15, Clairvoyance 2.5.5. Raw output in this folder
    the `WWW-Authenticate` challenge.
 4. **`public-key-location` plus `issuer-uri` verifies offline and still checks `iss`**: no request to
    Keycloak at all (0 log lines), wrong issuer 401. Labs 10.2 on need no Keycloak. (`offline-probe.txt`)
+   **Corrected 2026-11-24: wrong on Spring Boot 4.2.0.** With Keycloak stopped, lab 10.2's solution answered 500
+   (`JwtDecoderInitializationException ... Unable to resolve the Configuration with the provided Issuer`): Boot's
+   `JwtDecoderConfiguration` builds the issuer-discovery decoder when `issuer-uri` is set. The 2026-11-21 probe ran
+   with Keycloak up, so the fetch succeeded and left no log line. Every lab app that verifies offline (10.2 to
+   10.8, 14.3, 14.6, solutions and starters) now drops `issuer-uri` and declares a `JwtIssuerValidator` bean:
+   200 for a good token, 401 for a wrong issuer, expired or wrong audience, with Keycloak stopped
+   (`_workbench/2026-11-24-finish/`).
 5. **Spring Security adds `Cache-Control: no-cache, no-store, max-age=0, must-revalidate`** to every
    response, GraphQL included. Module 9's finding "Spring sends no Cache-Control" holds only without Spring
    Security on the class path.

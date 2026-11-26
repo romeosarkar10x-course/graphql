@@ -68,9 +68,14 @@ Labs build on one another's ideas, not their code: each starter is the reference
 
 ## Changes from the plan
 
-- **No Kubernetes cluster.** A cluster does not fit in the course image. The rolling deploy runs two replicas
-  behind `ReadyBalancer`, which mimics a Service: readiness-aware, 1 s propagation, no retry. The HPA is the
-  algorithm from the Kubernetes documentation in `HpaSim.java`. The manifests are checked as YAML, not applied.
+- **No Kubernetes cluster in the labs.** A cluster does not fit in the course image. The rolling deploy runs two
+  replicas behind `ReadyBalancer`, which mimics a Service: readiness-aware, 1 s propagation, no retry. The HPA is
+  the algorithm from the Kubernetes documentation in `HpaSim.java`. The tests check the manifests as YAML. The
+  course applied them once to a real cluster (kind 0.33.0, Kubernetes 1.37.0, 2026-11-24;
+  `_workbench/2026-11-24-finish/k8s/`): lab 16.4's Deployment rolled twice under four clients querying every 20 ms
+  through the Service with 0 failed requests (2,425 and 2,579), and lab 16.6's HPA, fed by Prometheus and
+  prometheus-adapter 0.12.0, scaled 2 to 12 replicas in 45 s on `graphql_cost_per_second` and back to 2 about
+  5.5 minutes after the load stopped (the default 300 s scale-down window).
 - **Usage is reported to a stand-in, not to Hive.** Your `Instrumentation` speaks Hive's report format, version 2,
   with Hive's headers, but there is no Hive account. `UsageCollector.java` checks the same shape. Point
   `shelfie.usage.endpoint` at Hive with a real token to go live. GraphOS and Cosmo are lecture-only.

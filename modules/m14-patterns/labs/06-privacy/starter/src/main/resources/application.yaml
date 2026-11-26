@@ -11,7 +11,8 @@ spring:
       resourceserver:
         jwt:
           public-key-location: classpath:course-public.pem
-          issuer-uri: http://keycloak:8180/realms/shelfie
+          # "iss" is checked by SecurityConfig.courseIssuer(): issuer-uri here would make Spring Boot 4.2
+          # fetch Keycloak\'s discovery document, even with the public key above.
           audiences: shelfie-api
           principal-claim-name: preferred_username
           authorities-claim-name: roles

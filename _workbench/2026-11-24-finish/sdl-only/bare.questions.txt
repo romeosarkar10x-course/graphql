@@ -1,0 +1,50 @@
+1. Is `club(id:)` returning null meant to represent "not found," "no permission," or an error, and should I show different states for each?
+2. Is the club page public, or does it require login, and what should an anonymous viewer see?
+3. When `viewerIsMember` is null, does that mean the viewer is anonymous, unknown, or not a member, and how should the join/leave button render?
+4. Is there any mutation for joining, leaving, or editing a club, or is the page read-only? The schema has no Mutation type.
+5. How is the viewer identified (auth header, cookie, token), and how do I get the current user's identity?
+6. What should I show when `description` is null: hide the section, show a placeholder, or show an empty-state prompt?
+7. Is `description` plain text, markdown, or HTML, and is there a maximum length or truncation rule?
+8. Is `name` length-limited, and how should I handle very long names?
+9. Is `memberCount` the total across all roles, and can it disagree with the length of `members`?
+10. How do I paginate `members`? There is only `first` with a default of 10, no cursor, offset, or total, so how do I load more or open a full member list?
+11. What is the maximum value allowed for `first` on `members`?
+12. In what order does `members` return users (join date, alphabetical, role, random)?
+13. Should the owner appear in `members` as well as in `owner`, or is there duplication I need to dedupe?
+14. Should I show member roles (owner, moderator) on the page? `members` returns `User`, not `Membership`, so how do I get each member's role in this club?
+15. Is `currentBook` the book currently being read, and who sets it? What should the page show when it is null?
+16. What does "currently reading" mean when the book has finished or the club has no book?
+17. Is `nextMeetup` always a future meetup, and what happens when the meetup has passed but no new one is scheduled?
+18. Is there a way to see past meetups or a list of upcoming ones, or only one?
+19. Is `Meetup.venue` a physical address, a URL for a virtual meeting, or free text? Should it be a link, a map, or plain text?
+20. Is there an online/in-person distinction for meetups, and is there an RSVP feature?
+21. Which timezone are `DateTime` values in (UTC, ISO 8601?), and should I display them in the viewer's local timezone or the meetup's/club's timezone?
+22. What format does `DateTime` use on the wire, and how should it be formatted for display (relative, absolute, locale)?
+23. What is the `Url` scalar's guarantee: is it always absolute, http/https only, and safe to render in `href` or `src`?
+24. What should `avatarUrl` fall back to when null (initials, default image)? What image sizes are available, and can I request a specific size?
+25. What should `coverUrl` fall back to when null, and what are its dimensions and aspect ratio?
+26. Are images served from a CDN with resizing parameters, and are there CORS or caching concerns?
+27. Should user names link to a profile page, and what is the route format (by `handle` or `id`)?
+28. Should book titles, authors, and clubs link to their own pages, and what are the routes?
+29. How should `publishedYear` be displayed when null?
+30. How should `averageRating` (Float, nullable) be displayed: scale (out of 5? 10?), decimal places, stars or number, and what for null (no ratings)?
+31. What is the valid range for `Review.rating`, and does it match the scale of `averageRating`?
+32. Should the club page show reviews of the current book, and if so, what does `reviews(last: 10)` return, and in what order (newest first or oldest first)?
+33. Is `reviewCount` the total across all reviews, and how do I page for more beyond `last`?
+34. Is `Review.body` plain text or markdown, and could it contain spoilers or user-generated content that needs sanitizing?
+35. Are reviews on the club page scoped to this club's members, or are they global for the book?
+36. Should `clubsReading` be shown on this page (e.g., "other clubs reading this book"), and should it exclude the current club?
+37. Should I show the multiple authors of a book, in what order, and how should many authors be truncated?
+38. Is there any real-time updating (subscriptions, polling) for member counts, meetups, or membership state? The schema has no Subscription type.
+39. What are the expected error behaviors: partial data with errors, nullability bubbling (non-null fields like `owner` failing nulls the whole club), and how should I display them?
+40. Are there rate limits, query depth or complexity limits, or persisted-query requirements I need to follow?
+41. Is `Club.id` stable and URL-safe, and should the club page URL use the `id` or a slug? There is no slug field.
+42. Is there a club privacy setting (public, private, invite-only), and how should I display it and gate the join action? None is exposed.
+43. Are there fields I need that don't exist, such as club cover image, creation date, tags/genre, location, rules, or member limit?
+44. Is the viewer's own role in the club exposed anywhere (to show moderator/owner controls like edit or manage)?
+45. Are there deprecated fields or fields planned to change that I should avoid depending on?
+46. What are the design requirements: layout, mobile breakpoints, accessibility, internationalization, and pluralization rules (e.g., "1 member" vs "N members")?
+47. Is `memberCount` shown with abbreviation for large numbers (e.g., 1.2k)?
+48. Is the `ShelfStatus` relevant on the club page, such as showing which members are reading the current book?
+49. Do I need loading and skeleton states, and what are the caching or freshness expectations (SSR, static, client-side)?
+50. Which GraphQL client or codegen setup is standard (Apollo, urql, Relay), and what is the endpoint URL and environment configuration?

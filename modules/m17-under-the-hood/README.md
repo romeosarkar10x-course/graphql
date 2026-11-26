@@ -68,9 +68,9 @@ Shared material in [contract/](contract/):
 - **"graphql-http audit to 100%"** means no MUST broken and every remaining warning and notice explained by the
   September 2026 HTTP edition: four warnings and 18 notices of graphql-http 1.23.1 ask for status codes the
   edition contradicts.
-- **Lab 17.7's Gradle build was not run** while this module was written (running graphql-java's Gradle wrapper
-  was not authorised in the authoring session). The commands come from reading its `build.gradle` at v26.1 and are
-  marked unverified; the lab is rubric-graded.
+- **Lab 17.7's Gradle build** was run on 2026-11-24, after the module was first written (the wrapper had not been
+  authorised then): the parser tests, the CRLF fix with its test, and `publishToMavenLocal` all work as the lab
+  says (`_workbench/2026-11-24-finish/`).
 - **Jazzer** needs the JUnit BOM import to run on JUnit 6, and `jazzer.instrument` set, or coverage stays at two
   edges.
 

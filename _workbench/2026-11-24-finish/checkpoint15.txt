@@ -1,0 +1,13 @@
+  docker compose up --wait (workspace/m15-federation/08-project-team)
+  ok    four subgraphs, one router, one command: the club page answers on localhost:4000
+pass     m15/03
+pass     m15/04
+pass     m15/05
+pass     m15/06
+pass     m15/07
+pass     m15/08
+Tagged checkpoint-15 in workspace/ (bb9c6fb)
+
+real	1m23.807s
+user	0m0.175s
+sys	0m0.061s
